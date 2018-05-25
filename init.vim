@@ -88,3 +88,9 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Clipboard
 set clipboard=unnamedplus
+
+" Scripts
+map <A-b> :call RunNode() <cr>
+function RunNode()
+  exec "! node %"
+endfunction
