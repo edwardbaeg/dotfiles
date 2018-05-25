@@ -1,42 +1,42 @@
 [core]
-	autocrlf = input
-	safecrlf = true
-	editor = nvim
-	pager = cat
-	#editor = subl -n -w
+  autocrlf = input
+  safecrlf = true
+  editor = nvim
+  pager = cat
+  #editor = subl -n -w
 [user]
-	name = edwardbaeg
-	email = edwardbaeg9@gmail.com
+  name = edwardbaeg
+  email = edwardbaeg9@gmail.com
 [alias]
-	co = checkout
-	ci = commit
-	st = status
-	br = branch
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
   hist1 = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
   hist2 = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   histb = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --date-order
   hist = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all --date-order
   log2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold cyan)%aD%C(reset) %C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	type = cat-file -t
-	dump = cat-file -p
-	econfig = config --global -e
+  type = cat-file -t
+  dump = cat-file -p
+  econfig = config --global -e
 [color]
-	branch = auto
-	diff = auto
-	status = auto
+  branch = auto
+  diff = auto
+  status = auto
   showbranch = auto
-	ui = true
+  ui = true
 [commit]
-	verbose = true
+  verbose = true
 [diff]
-	tool = vimdiff
+  tool = vimdiff
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+  tool = vimdiff
+  conflictstyle = diff3
 [mergetool]
-	prompt = false
+  prompt = false
 [mergetool "meld"]
   trustExitCode = true
   cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
 [difftool]
-	prompt = false
+  prompt = false
