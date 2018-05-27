@@ -1,11 +1,7 @@
-export TERM=xterm-256color
-# export TERM="xterm-256color"
+export TERM="xterm-256color"
 source /usr/local/share/antigen/antigen.zsh
 
-# Autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
-
-# configure thefuck alias
+# Configure thefuck alias
 eval $(thefuck --alias)
 
 # Load the oh-my-zsh's library
