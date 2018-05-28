@@ -10,33 +10,42 @@ set mouse=a
 syntax enable
 filetype plugin indent on
 set encoding=utf8
+set clipboard=unnamedplus "integrate with mac
 
 "--------------------
 " Plugins
 "--------------------
 call plug#begin('~/.vim/plugged')
 
+  " Visual
   Plug 'sjl/badwolf'
-  Plug 'scrooloose/nerdtree'
   Plug 'vim-airline/vim-airline'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-repeat'
-  Plug 'jiangmiao/auto-pairs'
   Plug 'airblade/vim-gitgutter'
-  Plug 'tpope/vim-fugitive'
-  Plug '/usr/local/opt/fzf'
-  Plug 'junegunn/fzf.vim'
   Plug 'junegunn/limelight.vim'
-  Plug 'w0rp/ale'
-  Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
-  Plug 'tpope/vim-commentary'
-  Plug 'metakirby5/codi.vim'
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
-  Plug 'vimwiki/vimwiki'
   Plug 'suan/vim-instant-markdown'
   Plug 'plasticboy/vim-markdown'
-  Plug 'ryanoasis/vim-devicons' "leave this last
+
+  " Files
+  Plug 'scrooloose/nerdtree'
+  Plug '/usr/local/opt/fzf'
+  Plug 'junegunn/fzf.vim'
+  Plug 'tpope/vim-fugitive'
+
+  " Shortcuts
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-commentary'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+
+  " Utility
+  Plug 'w0rp/ale'
+  Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
+  Plug 'metakirby5/codi.vim'
+  Plug 'vimwiki/vimwiki'
+
+  Plug 'ryanoasis/vim-devicons' " leave this last
 
 call plug#end()
 
@@ -77,24 +86,32 @@ nnoremap <C-l> :Lines<CR>
 " Visual
 "--------------------
 colorscheme badwolf
+
+" Gutter
 set ruler
 set number
 set relativenumber " bad for performamnce
-set scrolloff=10
-set showmatch
-set matchtime=3
-set showcmd
-execute "set colorcolumn=" . join(range(81,335), ',')
-" set colorcolumn=90
-" set cursorline " bad for performance
+
+" Status
 set laststatus=2 " always show status line
 set cmdheight=2
+set showcmd
+
+" Text
+set showmatch
+set matchtime=3
 set list
 set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
 " set listchars=tab:│·,trail:•,precedes:«,extends:»,eol:¬
 " set listchars=tab:│·,trail:•,precedes:«,extends:»
 highlight whitespace ctermbg=white
 autocmd BufRead *.txt set cole=0 "show hyperlinks in help files
+
+" Window
+set scrolloff=10
+execute "set colorcolumn=" . join(range(81,335), ',')
+" set colorcolumn=90
+" set cursorline " bad for performance
 
 "--------------------
 " Folding
@@ -145,14 +162,9 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 "--------------------
-" Clipboard
-"--------------------
-set clipboard=unnamedplus "integrate with mac
-
-"--------------------
 " Scripts
 "--------------------
-noremap <A-b> :call RunNode() <cr>
+noremap <A-b> :call RunNode() <cr> "build with node
 function! RunNode()
   exec "! node %"
 endfunction
