@@ -4,6 +4,9 @@ source /usr/local/share/antigen/antigen.zsh
 # Configure thefuck alias
 eval $(thefuck --alias)
 
+# Enable fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Load the oh-my-zsh's library
 antigen use oh-my-zsh
 
@@ -18,9 +21,11 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle changyuheng/fz
 
+# Use below to preview colors in console
+# for code ({000..255}) print -P -- "$code: %F{$code}This is how your text would look like%f"
 # Load the theme
 POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
-POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_MODE="nerdfont-complete"
 antigen theme bhilburn/powerlevel9k powerlevel9k
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator dir vcs)
@@ -28,11 +33,27 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery time)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 #POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="⌈"
 #POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─➤➤➤ "
+# POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─ $ "
+
+POWERLEVEL9K_OS_ICON_FOREGROUND="black"
+POWERLEVEL9K_OS_ICON_BACKGROUND="white"
+
+POWERLEVEL9K_DIR_HOME_BACKGROUND="black"
+POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="black"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="black"
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
 
 POWERLEVEL9K_BATTERY_STAGES="▁▂▃▄▅▆▇█"
 POWERLEVEL9K_BATTERY_VERBOSE=false
 
-POWERLEVEL9K_TIME_FORMAT='%D{%H:%M}'
+POWERLEVEL9K_BATTERY_LOW_BACKGROUND="red"
+POWERLEVEL9K_BATTERY_CHARGING_BACKGROUND="242"
+POWERLEVEL9K_BATTERY_CHARGED_BACKGROUND="242"
+POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND="242"
+
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_SHORTEN_DELIMITER=".."
@@ -59,6 +80,5 @@ antigen apply
   alias py="python3"
   alias nf="neofetch"
   alias vtop="vtop --theme brew"
+  alias clock="tty-clock -c -C 4 -t -d 10"
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
