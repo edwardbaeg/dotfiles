@@ -76,9 +76,10 @@ antigen apply
   alias ogh="open https://github.com/edwardbaeg"
   alias ghist="git hist"
   alias ghistb="git histb"
+  alias gdt="git difftool"
   #commands
   alias py="python3"
   alias nf="neofetch"
   alias vtop="vtop --theme brew"
-  alias clock="tty-clock -c -C 4 -t -d 10"
+  alias clock="tty-clock -c -C 0 -t -d 10"
 
