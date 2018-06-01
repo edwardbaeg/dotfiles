@@ -4,8 +4,17 @@ export TERM="xterm-256color"
 # Configure thefuck alias
 eval $(thefuck --alias)
 
-# Load fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# ranger configuration
+export EDITOR=nvim
+
+# Add custom scripts
+export PATH=~/bin:$PATH
+
+# History settings
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEhist=100000
+setopt appendhistory
 
 #-------------------
 # Plugins
@@ -47,20 +56,20 @@ source /usr/local/share/antigen/antigen.zsh
   POWERLEVEL9K_OS_ICON_FOREGROUND="black"
   POWERLEVEL9K_OS_ICON_BACKGROUND="white"
 
-  POWERLEVEL9K_DIR_HOME_BACKGROUND="black"
+  POWERLEVEL9K_DIR_HOME_BACKGROUND="237"
   POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
-  POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="black"
+  POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="237"
   POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
-  POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="black"
+  POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="237"
   POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
 
   POWERLEVEL9K_BATTERY_STAGES="▁▂▃▄▅▆▇█"
   POWERLEVEL9K_BATTERY_VERBOSE=false
 
   POWERLEVEL9K_BATTERY_LOW_BACKGROUND="red"
-  POWERLEVEL9K_BATTERY_CHARGING_BACKGROUND="242"
-  POWERLEVEL9K_BATTERY_CHARGED_BACKGROUND="242"
-  POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND="242"
+  POWERLEVEL9K_BATTERY_CHARGING_BACKGROUND="237"
+  POWERLEVEL9K_BATTERY_CHARGED_BACKGROUND="237"
+  POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND="237"
 
   POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
 
@@ -83,6 +92,8 @@ alias nv="nvim ~/.config/nvim/init.vim"
 alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
+alias vt="vim ~/.tmux.conf"
+alias st="tmux source-file ~/.tmux.conf"
 
 # git
 alias ogh="open https://github.com/edwardbaeg"
@@ -95,4 +106,11 @@ alias py="python3"
 alias nf="neofetch"
 alias vtop="vtop --theme brew"
 alias clock="tty-clock -c -C 0 -t -d 10"
+alias ra="ranger"
+alias hdi="howdoi -c"
+alias npml="npm -g ls --depth=0"
+alias c="clear"
+
+# Load fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
