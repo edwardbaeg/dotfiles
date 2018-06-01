@@ -17,29 +17,32 @@ set clipboard=unnamedplus "integrate with mac
 "--------------------
 call plug#begin('~/.vim/plugged')
 
-  " Visual
+" Visual
   Plug 'sjl/badwolf'
   Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/limelight.vim'
   Plug 'suan/vim-instant-markdown'
-  Plug 'plasticboy/vim-markdown'
+  Plug 'ap/vim-css-color'
+  Plug 'kshenoy/vim-signature'
 
-  " Files
+" Files
   Plug 'scrooloose/nerdtree'
   Plug '/usr/local/opt/fzf'
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-fugitive'
 
-  " Shortcuts
+" Shortcuts
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
   Plug 'jiangmiao/auto-pairs'
   Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+  " Plug 'honza/vim-snippets'
 
-  " Utility
+" Utility
+  Plug 'kchmck/vim-coffee-script'
   Plug 'w0rp/ale'
   Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
   Plug 'metakirby5/codi.vim'
@@ -55,6 +58,7 @@ call plug#end()
 " airline
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
+let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
 " NERDTree
 let g:NERDTreeWinSize=25
@@ -70,17 +74,25 @@ let g:deoplete#enable_at_startup=1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " ultisnips
-let g:UltiSnipsExpandTrigger="<C-j>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
-set runtimepath+=~/.vim/UltiSnips
-let g:UltiSnipsSnippetDir= ['UltiSnips', '~/.vim/UltiSnips']
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" set runtimepath+=~/.vim/UltiSnips
+" let g:UltiSnipsSnippetDir= ['UltiSnips', '~/.vim/UltiSnips']
 " let g:UltiSnipsSnippetDir= ['~/.vim/UltiSnips']
-let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+" let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 " fzf.vim
 nnoremap <C-p> :FZF<CR>
 nnoremap <C-l> :Lines<CR>
+
+" vimwiki
+let g:vimwiki_hl_cb_checked = 2
+
+" vim-commentary
+" add support for coffeescript
+autocmd BufRead *.coffee setlocal filetype=coffee
+autocmd FileType coffee setlocal commentstring=#\ %s
 
 "--------------------
 " Visual
@@ -105,7 +117,6 @@ set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
 " set listchars=tab:│·,trail:•,precedes:«,extends:»,eol:¬
 " set listchars=tab:│·,trail:•,precedes:«,extends:»
 highlight whitespace ctermbg=white
-autocmd BufRead *.txt set cole=0 "show hyperlinks in help files
 
 " Window
 set scrolloff=10
@@ -117,8 +128,11 @@ execute "set colorcolumn=" . join(range(81,335), ',')
 " Folding
 "--------------------
 set foldcolumn=2
-autocmd BufWinLeave *.* mkview "save folds
-autocmd BufWinEnter *.* silent loadview "load folds
+augroup Auto_Save_Folds
+  autocmd!
+  autocmd bufwinleave *.* mkview!
+  autocmd bufwinenter *.* silent loadview
+augroup end
 
 "--------------------
 " Searching and Highlighting
@@ -150,27 +164,43 @@ set expandtab
 " Mappings
 "--------------------
 inoremap jk <esc>
+" Quick edit vimrc (init.vim)
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
-" move lines
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" Move lines
+nnoremap <S-j> :m .+1<CR>==
+nnoremap <S-k> :m .-2<CR>==
+" inoremap <S-j> <Esc>:m .+1<CR>==gi
+" inoremap <S-k> <Esc>:m .-2<CR>==gi
+vnoremap <S-j> :m '>+1<CR>gv=gv
+vnoremap <S-k> :m '<-2<CR>gv=gv
+
+" Copy line and paste below
+nmap <A-d> yygccp
+
+" Operators for text in parantheses
+onoremap p i(
+onoremap np :<c-u>normal! f(vi(<cr>
+
+" Operator for text after '='
+onoremap n= :<c-u>normal! f=wvg_<left><cr>
 
 "--------------------
 " Scripts
 "--------------------
-noremap <A-b> :call RunNode() <cr> "build with node
+noremap <A-b> :call RunNode() <cr>
 function! RunNode()
   exec "! node %"
 endfunction
 
+" show hyperlinks in help files
+augroup showHyperlinksInHelp
+  autocmd BufRead *.txt setlocal cole=0
+augroup END
+
 "--------------------
 " Abbreviations
 "--------------------
-iab @@ edwardbaeg9@gmail.com
+" use iab
 
