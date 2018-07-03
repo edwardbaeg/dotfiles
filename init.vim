@@ -5,12 +5,20 @@ noremap l <NOP>
 "--------------------
 " Core
 "--------------------
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum" " enable italcs
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum" " enable italics
 set termguicolors
 set mouse=a
 syntax enable
 filetype plugin indent on
 set encoding=utf8
-set clipboard=unnamedplus "integrate with mac
+set clipboard=unnamedplus " integrate with mac
+set updatetime=500
+set undofile " set persistent undo
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=10000
+
 
 "--------------------
 " Plugins
@@ -18,35 +26,54 @@ set clipboard=unnamedplus "integrate with mac
 call plug#begin('~/.vim/plugged')
 
 " Visual
+"----------
   Plug 'sjl/badwolf'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/limelight.vim'
-  Plug 'suan/vim-instant-markdown'
+  Plug 'junegunn/goyo.vim'
   Plug 'ap/vim-css-color'
   Plug 'kshenoy/vim-signature'
 
+" Language
+"----------
+  Plug 'kchmck/vim-coffee-script'
+  Plug 'neoclide/vim-jsx-improve'
+  Plug 'mattn/emmet-vim'
+  " Plug 'MaxMEllon/vim-jsx-pretty'
+  " Plug 'pangloss/vim-javascript'
+  " Plug 'mxw/vim-jsx'
+  " Plug 'isRuslan/vim-es6'
+  " Plug 'jelera/vim-javascript-syntax'
+
 " Files
+"----------
   Plug 'scrooloose/nerdtree'
   Plug '/usr/local/opt/fzf'
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-fugitive'
 
 " Shortcuts
+"----------
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
   Plug 'jiangmiao/auto-pairs'
   Plug 'SirVer/ultisnips'
-  " Plug 'honza/vim-snippets'
+  Plug 'honza/vim-snippets'
+  Plug 'justinmk/vim-sneak'
 
 " Utility
-  Plug 'kchmck/vim-coffee-script'
+"----------
   Plug 'w0rp/ale'
   Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
-  Plug 'metakirby5/codi.vim'
   Plug 'vimwiki/vimwiki'
+  Plug 'suan/vim-instant-markdown'
+  Plug 'zhimsel/vim-stay'
+  Plug 'simnalamburt/vim-mundo'
+  Plug 'Carpetsmoker/undofile_warn.vim'
+  " Plug 'metakirby5/codi.vim'
 
   Plug 'ryanoasis/vim-devicons' " leave this last
 
@@ -56,24 +83,39 @@ call plug#end()
 " Plugin Options
 "--------------------
 " airline
+"----------
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
+let g:airline_section_y = ''
 let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
+let g:airline_theme='badwolf'
 
 " NERDTree
+"----------
 let g:NERDTreeWinSize=25
 nnoremap <Leader>t :NERDTreeToggle<CR>
 nnoremap <Leader>f :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen = 1
 
+" Git gutter
+"----------
+let g:gitgutter_sign_added = '•'
+let g:gitgutter_sign_modified = '•'
+let g:gitgutter_sign_removed = '•'
+let g:gitgutter_sign_removed_first_line = '-'
+let g:gitgutter_sign_modified_removed = '••'
+
 " Codi
+"----------
 let g:codi#width=30
 
 " Deoplete
+"----------
 let g:deoplete#enable_at_startup=1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " ultisnips
+"----------
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -82,36 +124,98 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:UltiSnipsSnippetDir= ['~/.vim/UltiSnips']
 " let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
+" Ale
+"----------
+let g:ale_sign_error = '►'
+let g:ale_sign_warning = '-'
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
+highlight ALEErrorSign guifg=red
+highlight ALEWarningSign guifg=orange
+
 " fzf.vim
+"----------
 nnoremap <C-p> :FZF<CR>
 nnoremap <C-l> :Lines<CR>
 
 " vimwiki
+"----------
 let g:vimwiki_hl_cb_checked = 2
 
+" goyo
+"----------
+let g:goyo_width=100
+" let g:goyo_height=50
+let g:goyo_linenr=0
+nnoremap <leader>g :Goyo<CR>
+
+" limelight
+"----------
+nnoremap <leader>l :Limelight!!<CR>
+
 " vim-commentary
-" add support for coffeescript
-autocmd BufRead *.coffee setlocal filetype=coffee
-autocmd FileType coffee setlocal commentstring=#\ %s
+"----------
+augroup SyntaxForCoffee
+  autocmd BufRead *.coffee setlocal filetype=coffee
+  autocmd FileType coffee setlocal commentstring=#\ %s
+augroup END
+
+" Mundo
+"-----------
+nnoremap <leader>m :MundoToggle<CR>
+
+" webdevicons
+"-----------
+let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
+
 
 "--------------------
 " Visual
 "--------------------
 colorscheme badwolf
 
+" JavaScript colors
+"----------
+" 1, -2
+highlight javascriptvalue ctermfg=brown guifg=#f4cf86
+" Array, Date, Object
+highlight javascripttype ctermfg=brown guifg=#f4cf86
+" this, arguments
+highlight javascriptspecialreference guifg=#ff9eb8 gui=italic
+" !, ~, ^
+highlight javascriptoperatorsymbol guifg=#ff2c4b
+
+highlight javascriptboolean guifg=#b88853 gui=italic
+
+highlight comment cterm=italic gui=italic
+highlight statement cterm=italic gui=italic
+highlight conditional cterm=italic gui=italic
+highlight repeat cterm=italic gui=italic
+highlight exception cterm=italic gui=italic
+highlight operator cterm=italic gui=italic
+
+" vimwiki colors
+"----------
+highlight vimwikiheader1 guifg=red gui=italic
+highlight vimwikiheader2 guifg=lightgreen gui=italic
+highlight vimwikiheader3 guifg=red gui=italic
+
 " Gutter
+"----------
 set ruler
 set number
-set relativenumber " bad for performamnce
+set relativenumber " bad for performamnce?
 
 " Status
+"----------
 set laststatus=2 " always show status line
 set cmdheight=2
 set showcmd
 
 " Text
+"----------
 set showmatch
-set matchtime=3
+set matchtime=3 " multiple of 100ms
 set list
 set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
 " set listchars=tab:│·,trail:•,precedes:«,extends:»,eol:¬
@@ -119,20 +223,29 @@ set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
 highlight whitespace ctermbg=white
 
 " Window
+"----------
 set scrolloff=10
-execute "set colorcolumn=" . join(range(81,335), ',')
+highlight OverLength guibg=black
+match OverLength /\%81v.\+/
+" execute "set colorcolumn=" . join(range(81,335), ',')
 " set colorcolumn=90
-" set cursorline " bad for performance
+" set cursorline " bad for performance?
+set nocursorline
+set cc=
+" augroup ClearColorColumn
+"   autocmd BufRead *.* set cc=""
+" augroup END
+
 
 "--------------------
 " Folding
 "--------------------
 set foldcolumn=2
-augroup Auto_Save_Folds
-  autocmd!
-  autocmd bufwinleave *.* mkview!
-  autocmd bufwinenter *.* silent loadview
-augroup end
+" augroup Auto_Save_Folds
+"   autocmd!
+"   autocmd bufwinleave *.* mkview!
+"   autocmd bufwinenter *.* silent loadview
+" augroup end
 
 "--------------------
 " Searching and Highlighting
@@ -163,20 +276,28 @@ set expandtab
 "--------------------
 " Mappings
 "--------------------
+" Exit insert mode
 inoremap jk <esc>
+
+" Move cursor around
+nnoremap <S-h> ^
+nnoremap <S-l> $
+
 " Quick edit vimrc (init.vim)
-nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Move lines
-nnoremap <S-j> :m .+1<CR>==
-nnoremap <S-k> :m .-2<CR>==
+nnoremap <C-j> :move .+1<CR>==
+nnoremap <C-k> :move .-2<CR>==
+" nnoremap <S-j> :move .+1<CR>==
+" nnoremap <S-k> :move .-2<CR>==
 " inoremap <S-j> <Esc>:m .+1<CR>==gi
 " inoremap <S-k> <Esc>:m .-2<CR>==gi
-vnoremap <S-j> :m '>+1<CR>gv=gv
-vnoremap <S-k> :m '<-2<CR>gv=gv
+vnoremap <S-j> :move '>+1<CR>gv=gv
+vnoremap <S-k> :move '<-2<CR>gv=gv
 
-" Copy line and paste below
+" Copy line, comment out, and paste below
 nmap <A-d> yygccp
 
 " Operators for text in parantheses
@@ -186,18 +307,35 @@ onoremap np :<c-u>normal! f(vi(<cr>
 " Operator for text after '='
 onoremap n= :<c-u>normal! f=wvg_<left><cr>
 
+
 "--------------------
 " Scripts
 "--------------------
-noremap <A-b> :call RunNode() <cr>
-function! RunNode()
-  exec "! node %"
+
+" view output from running in terminal
+noremap <A-b> :call Build() <cr>
+function! Build()
+  if &filetype == "javascript"
+    exec "! node %"
+  elseif &filetype == "python"
+    exec "! python3 %"
+  endif
 endfunction
+
 
 " show hyperlinks in help files
 augroup showHyperlinksInHelp
-  autocmd BufRead *.txt setlocal cole=0
+  autocmd BufWinEnter *.txt setlocal cole=0
 augroup END
+
+" Split into two lines
+nnoremap K i<CR><ESC>
+
+" remove deleted marks from shada
+" augroup Force_Delete_Marks
+"   autocmd!
+"   autocmd bufwinleave *.* wshada!
+" augroup end
 
 "--------------------
 " Abbreviations
