@@ -28,18 +28,18 @@
 [commit]
   verbose = true
 [diff]
-  tool = vimdiff
-[difftool "vimdiff"]
+  tool = nvimdiff
+[difftool "nvimdiff"]
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [merge]
-  tool = vimdiff
+  tool = meld
   conflictstyle = diff3
 [mergetool]
   prompt = false
 [mergetool "meld"]
   trustExitCode = true
   cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
-[mergetool "vimdiff"]
+[mergetool "nvimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [difftool]
   prompt = false
