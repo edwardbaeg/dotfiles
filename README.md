@@ -4,15 +4,18 @@ This is my development set up! Always a work progress.
 
 ## Terminal
 **App**: iterm2
+- `font`: Operator Mono + Hack Nerd Font Complete
+- `margins` 30px
+- `window style` no title bar
 
 **Shell**: zsh
 
 **Framework**: oh-my-zsh
 
 **zsh plugins**:
+- `z` autojump, extendible with fzf
 - `git` lots of git aliases
 - `command-not-found` suggest package for failed commands
-- `z` autojump, extendible with fzf
 - `zsh-users/zsh-syntax-highlighting` syntax highlighting in terminal
 - `zsh-users/zsh-autosuggestions` autocomplete based on command history
 - `zsh-users/zsh-history-substring-search` cycle through previous commands
@@ -24,11 +27,14 @@ This is my development set up! Always a work progress.
 - `fzf` fuzzy finder
 - `highlight` adds syntax highlighting to ranger previews
 - `howdoi` search stackexchange
+- `hub` github wrapper
 - `neofetch` display system info
 - `neovim` better vim (async, community developed)
 - `node` for javascript
+- `ranger` visual file manager
 - `ripgrep` better grep (and faster than ag)
 - `rtv` reddit terminal viewer
+- `shpotify` control spotify
 - `thefuck` quick fix failed commands
 - `tmux` terminal multiplexer
 - `tty-clock` terminal clock
@@ -51,23 +57,32 @@ This is my development set up! Always a work progress.
 ## (neo)vim
 **Plugin Manager**: `vim-plug` minimal and super fast with parallel operations
 
-**Plugins**:
-- `sjl/badwolf` colorscheme
-- `scrooloose/nerdtree` directory tree
-- `tpope/vim-airline` lightweight statusbar
-- `tpope/vim-surround` adds surround motions
-- `jiangmia/auto-pairs` autoclose brackets/quotes
-- `airblade/vim-gitgutter` view git changes in gutter
-- `tpope/vim-fugitive` git wrapper
-- `/usr/local/opt/fzf`, `junegunn/fzf.vim` fuzzy finder
-- `w0rp/ale` async linting engine
-- `Shougo/deoplete.nvim` async autocompletions
-- `tpope/vim-commentary` adds comment motions
-- `SirVer/ultisnips` snippet engine
-- `honza/vim-snippets` default snippets
-- `vimwiki/vimwiki` personal wiki
-- `suan/vim-instant-markdown` live prewview markdown
-- `ryanoasis/vim-devicons` adds file icons to nerdtree and vim-airline
+**Custom Syntax Highlighting Rules + Colors**
+
+**Top Plugins**:
+- Visual
+  - `sjl/badwolf` colorscheme
+  - `tpope/vim-airline` lightweight statusbar
+  - `airblade/vim-gitgutter` view git diff in gutter
+  - `junegunn/goyo.vim` distraction free mode
+  - `ryanoasis/vim-devicons` adds file icons to nerdtree and vim-airline
+- File Management
+  - `/usr/local/opt/fzf`, `junegunn/fzf.vim` fuzzy finder
+  - `tpope/vim-fugitive` git wrapper
+- Shortcuts
+  - `tpope/vim-surround` adds surround motions
+  - `tpope/vim-commentary` adds comment motions
+  - `SirVer/ultisnips` snippet engine
+  - `honza/vim-snippets` default snippets
+- Utility
+  - `w0rp/ale` async linting engine
+  - `Shougo/deoplete.nvim` async autocompletions
+  - `vimwiki/vimwiki` personal wiki
+  - `suan/vim-instant-markdown` live prewview markdown
+  - `zhimsel/vim-stay` save cursor/folds/bookmarks
+  - `simnalamburt/vim-mundo` visual undo tree
+  - `Carpetsmoker/undofile_warn.vim` persistent undo warnings
 
 ## .gitconfig
-Configured to use `vimdiff` (`nvim -d`) for difftool and mergetool.
+- `difftool` vimdiff (`nvim -d`)
+- `mergetool` meld
