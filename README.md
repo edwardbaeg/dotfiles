@@ -1,5 +1,6 @@
 # .dotfiles
-These are my personal dotfiles! Always in a work in progress.
+This is my development set up! Always a work progress.
+![screenshot](media/main.png)
 
 ## Terminal
 **App**: iterm2
@@ -19,8 +20,9 @@ These are my personal dotfiles! Always in a work in progress.
 
 **Homebrew formulae** (`brew leaves`):
 - `antigen` plugin manager for zsh
-- `exa` better ls, able to draw directory trees
+- `exa` better ls, can draw directory trees
 - `fzf` fuzzy finder
+- `highlight` adds syntax highlighting to ranger previews
 - `howdoi` search stackexchange
 - `neofetch` display system info
 - `neovim` better vim (async, community developed)
@@ -39,6 +41,12 @@ These are my personal dotfiles! Always in a work in progress.
 - `instant-markdown` live preview markdown with (neo)vim
 - `tldr` community written short man pages
 - `vtop` visual terminal activity monitor
+
+**pip packages** `(pip list)`
+- `mackup` backup MacOS configuration files
+
+**pip2.7 packages** `(pip2.7 list)`
+- `gcalcli` view google calendar in calendar
 
 ## (neo)vim
 **Plugin Manager**: `vim-plug` minimal and super fast with parallel operations
