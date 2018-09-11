@@ -88,18 +88,11 @@ source /usr/local/share/antigen/antigen.zsh
   POWERLEVEL9K_HISTORY_BACKGROUND="237"
   POWERLEVEL9K_HISTORY_FOREGROUND="white"
 
-  # POWERLEVEL9K_TIME_FORMAT="%D{\uF017 %H:%M}"
   POWERLEVEL9K_TIME_FORMAT="%D{\uF017 %H:%M}"
 
 
-# Configure history substring search
-# bindkey '^[[A' history-substring-search-up
-# bindkey '^[[B' history-substring-search-down
-# HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
-
 # Tell antigen that you're done
 antigen apply
-
 
 #-------------------
 # Aliases
