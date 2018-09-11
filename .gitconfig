@@ -2,7 +2,7 @@
   autocrlf = input
   safecrlf = true
   editor = nvim
-  pager = cat
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [user]
   name = edwardbaeg
   email = edwardbaeg9@gmail.com
@@ -43,3 +43,5 @@
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [difftool]
   prompt = false
+[diff-so-fancy]
+	markEmptyLines = false
