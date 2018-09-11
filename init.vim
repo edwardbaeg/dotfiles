@@ -1,6 +1,6 @@
 " Stop using these!
-noremap h <NOP>
-noremap l <NOP>
+" noremap h <NOP>
+" noremap l <NOP>
 
 "--------------------
 " Core
@@ -35,6 +35,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/goyo.vim'
   Plug 'ap/vim-css-color'
   Plug 'kshenoy/vim-signature'
+  Plug 'unblevable/quick-scope'
+  Plug 'machakann/vim-highlightedyank'
+  Plug 'rrethy/vim-illuminate'
+  " Plug 'yggdroot/indentline'
 
 " Language
 "----------
@@ -57,12 +61,14 @@ call plug#begin('~/.vim/plugged')
 " Shortcuts
 "----------
   Plug 'tpope/vim-surround'
+  Plug 'machakann/vim-sandwich'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
   Plug 'jiangmiao/auto-pairs'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
-  Plug 'justinmk/vim-sneak'
+  Plug 'tommcdo/vim-exchange'
+  " Plug 'justinmk/vim-sneak'
 
 " Utility
 "----------
@@ -78,6 +84,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'ryanoasis/vim-devicons' " leave this last
 
 call plug#end()
+
 
 "--------------------
 " Plugin Options
@@ -164,6 +171,23 @@ augroup END
 "-----------
 nnoremap <leader>m :MundoToggle<CR>
 
+" Highlighted Yank
+"-----------
+let g:highlightedyank_highlight_duration = 500
+
+" emmet
+"-----------
+" let g:user_emmet_leader_key='<C-S>'
+
+" quick-scope
+"-----------
+let g:qs_max_chars=100
+
+" vim-illuminate
+"-----------
+let g:Illuminate_delay = 400
+hi illuminatedWord cterm=underline gui=underline
+
 " webdevicons
 "-----------
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
@@ -236,6 +260,10 @@ set cc=
 "   autocmd BufRead *.* set cc=""
 " augroup END
 
+" Spelling
+"----------
+set spelllang=en
+
 
 "--------------------
 " Folding
@@ -256,6 +284,9 @@ set hlsearch
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 set ignorecase
 set smartcase
+
+" Live substitutions
+set inccommand=nosplit
 
 " Center searches
 nnoremap n nzz
@@ -283,6 +314,10 @@ inoremap jk <esc>
 nnoremap <S-h> ^
 nnoremap <S-l> $
 
+" Line wrap navigation
+nnoremap j gj
+nnoremap k gk
+
 " Quick edit vimrc (init.vim)
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -307,6 +342,11 @@ onoremap np :<c-u>normal! f(vi(<cr>
 " Operator for text after '='
 onoremap n= :<c-u>normal! f=wvg_<left><cr>
 
+" Split into two lines
+nnoremap K i<CR><ESC>
+
+" console.log the current line
+nnoremap <m-c> _iconsole.log(<ESC>A);<ESC>
 
 "--------------------
 " Scripts
@@ -322,14 +362,10 @@ function! Build()
   endif
 endfunction
 
-
 " show hyperlinks in help files
 augroup showHyperlinksInHelp
   autocmd BufWinEnter *.txt setlocal cole=0
 augroup END
-
-" Split into two lines
-nnoremap K i<CR><ESC>
 
 " remove deleted marks from shada
 " augroup Force_Delete_Marks
@@ -341,4 +377,3 @@ nnoremap K i<CR><ESC>
 " Abbreviations
 "--------------------
 " use iab
-
