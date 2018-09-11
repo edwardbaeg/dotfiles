@@ -11,7 +11,9 @@ export EDITOR=nvim
 # add custom programs
 export PATH=~/bin:$PATH
 
+#-------------------
 # history settings
+#-------------------
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEhist=100000
@@ -28,8 +30,10 @@ source /usr/local/share/antigen/antigen.zsh
 
 # Bundles from the default repo
   antigen bundle git
-  antigen bundle command-not-found
+  # antigen bundle command-not-found
   antigen bundle z
+  antigen bundle docker
+  antigen bundle vi-mode
 
 # External bundles
   antigen bundle zsh-users/zsh-syntax-highlighting
@@ -47,12 +51,19 @@ source /usr/local/share/antigen/antigen.zsh
   POWERLEVEL9K_MODE="nerdfont-complete"
   antigen theme bhilburn/powerlevel9k powerlevel9k
 
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir_writable root_indicator dir vcs)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status history time)
+  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon vi_mode dir_writable root_indicator dir vcs)
+  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(docker_machine status history time)
   POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-  #POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="⌈"
+  # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=" "
+  # POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=" ► "
+  # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="⌈"
   #POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─➤➤➤ "
   # POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─ $ "
+
+  POWERLEVEL9K_HIDE_BRANCH_ICON=true
+
+  POWERLEVEL9K_VI_INSERT_MODE_STRING="I"
+  POWERLEVEL9K_VI_COMMAND_MODE_STRING="N"
 
   POWERLEVEL9K_OS_ICON_FOREGROUND="black"
   POWERLEVEL9K_OS_ICON_BACKGROUND="white"
@@ -81,15 +92,20 @@ source /usr/local/share/antigen/antigen.zsh
   POWERLEVEL9K_TIME_FORMAT="%D{\uF017 %H:%M}"
 
 
+# Configure history substring search
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
+# HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
+
 # Tell antigen that you're done
 antigen apply
+
 
 #-------------------
 # Aliases
 #-------------------
 
-# vim
-#----------
+#-- vim
 alias vim="nvim"
 alias vz="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
@@ -101,15 +117,13 @@ alias ovim="oldvim"
 alias vt="vim ~/.tmux.conf"
 alias st="tmux source-file ~/.tmux.conf"
 
-# git
-#----------
+#-- git
 alias ogh="open https://github.com/edwardbaeg"
 alias ghist="git hist"
 alias ghistb="git histb"
 alias gdt="git difftool"
 
-# commands
-#----------
+#-- commands
 alias py="python3"
 alias nf="neofetch"
 alias vtop="vtop --theme brew"
@@ -127,8 +141,20 @@ alias gcalt="gcalcli agenda 12am 11pm --detail_location --color_reader 'blue'"
 alias exa1="exa -T -L 1"
 alias exa2="exa -T -L 2"
 alias end="cowsay 'Thats it! Thank you for listening!!' | nms -c -a"
+alias ns="npm start"
+alias tree="exa -T"
+alias cat="bat"
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+
+
+#-- functions
+function cs () {
+  cd "$1" && exa;
+}
 
 
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
