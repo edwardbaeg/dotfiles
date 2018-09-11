@@ -15,31 +15,35 @@ This is my development set up! Always a work progress.
 **zsh plugins**:
 - `z` autojump, extendible with fzf
 - `git` lots of git aliases
-- `command-not-found` suggest package for failed commands
 - `zsh-users/zsh-syntax-highlighting` syntax highlighting in terminal
 - `zsh-users/zsh-autosuggestions` autocomplete based on command history
 - `zsh-users/zsh-history-substring-search` cycle through previous commands
 - `changyuheng/fz` fzf tab completion with z
+- `vi-mode` vi mode for shell commands
 
 **Homebrew formulae** (`brew leaves`):
-- `antigen` plugin manager for zsh
-- `exa` better ls, can draw directory trees
-- `fzf` fuzzy finder
-- `highlight` adds syntax highlighting to ranger previews
-- `howdoi` search stackexchange
-- `hub` github wrapper
-- `neofetch` display system info
-- `neovim` better vim (async, community developed)
-- `node` for javascript
-- `ranger` visual file manager
-- `ripgrep` better grep (and faster than ag)
-- `rtv` reddit terminal viewer
-- `shpotify` control spotify
-- `thefuck` quick fix failed commands
-- `tmux` terminal multiplexer
-- `tty-clock` terminal clock
-- `zsh` better shell
-- `zsh-completions` command line autocompletions
+- Utilities
+  - `antigen` plugin manager for zsh
+  - `fzf` fuzzy finder
+  - `howdoi` search stackexchange
+  - `hub` github wrapper
+  - `neovim` better vim (async, community developed)
+  - `ranger` visual file manager
+  - `ripgrep` better grep (and faster than ag)
+  - `tmux` terminal multiplexer
+  - `zsh` better shell
+- Visual
+  - `bat` better cat (syntax highlighting and pager)
+  - `diff-so-fancy` better diff
+  - `exa` better ls, can draw directory trees
+  - `highlight` adds syntax highlighting to ranger previews
+  - `tty-clock` terminal clock
+  - `zsh-completions` command line autocompletions
+- Fun
+  - `neofetch` display system info
+  - `rtv` reddit terminal viewer
+  - `thefuck` quick fix failed commands
+  - `shpotify` control spotify
 
 **npm packages** `(npm -g ls --depth=0)`:
 - `eslint` javascript linter
@@ -57,7 +61,7 @@ This is my development set up! Always a work progress.
 ## (neo)vim
 **Plugin Manager**: `vim-plug` minimal and super fast with parallel operations
 
-**Custom Syntax Highlighting Rules + Colors**
+**Custom JS Syntax Highlighting Rules + Colors**
 
 **Top Plugins**:
 - Visual
@@ -66,6 +70,9 @@ This is my development set up! Always a work progress.
   - `airblade/vim-gitgutter` view git diff in gutter
   - `junegunn/goyo.vim` distraction free mode
   - `ryanoasis/vim-devicons` adds file icons to nerdtree and vim-airline
+  - `unblevable/quick-scope` highlights `f`/`t` targets
+  - `machakann/vim-highlightedyank` highlights yanked text
+  - `rrethy/vim-illuminate` underlines matching text
 - File Management
   - `/usr/local/opt/fzf`, `junegunn/fzf.vim` fuzzy finder
   - `tpope/vim-fugitive` git wrapper
@@ -74,6 +81,7 @@ This is my development set up! Always a work progress.
   - `tpope/vim-commentary` adds comment motions
   - `SirVer/ultisnips` snippet engine
   - `honza/vim-snippets` default snippets
+  - `mattn/emmet-vim` fast html setup
 - Utility
   - `w0rp/ale` async linting engine
   - `Shougo/deoplete.nvim` async autocompletions
@@ -84,5 +92,5 @@ This is my development set up! Always a work progress.
   - `Carpetsmoker/undofile_warn.vim` persistent undo warnings
 
 ## .gitconfig
-- `difftool` vimdiff (`nvim -d`)
+- `difftool` diff-so-fancy
 - `mergetool` meld
