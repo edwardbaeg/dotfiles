@@ -1,5 +1,5 @@
 # .dotfiles
-This is my development set up! Always a work progress.
+This is my terminal-based development set up! Always a work progress.
 ![screenshot](media/main.png)
 
 ## Terminal
@@ -61,7 +61,8 @@ This is my development set up! Always a work progress.
 ## (neo)vim
 **Plugin Manager**: `vim-plug` minimal and super fast with parallel operations
 
-**Custom JS Syntax Highlighting Rules + Colors**
+**Custom JS Syntax Highlighting Rules + Colors** for minimal visual noise. Based on badwolf
+![screenshot](media/javascript-syntax.png)
 
 **Top Plugins**:
 - Visual
