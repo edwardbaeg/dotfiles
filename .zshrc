@@ -138,6 +138,7 @@ alias ns="npm start"
 alias tree="exa -T"
 alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+alias ls="exa"
 
 
 #-- functions
