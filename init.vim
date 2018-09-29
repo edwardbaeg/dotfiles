@@ -38,7 +38,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope'
   Plug 'machakann/vim-highlightedyank'
   Plug 'rrethy/vim-illuminate'
-  " Plug 'yggdroot/indentline'
 
 " Language
 "----------
@@ -68,7 +67,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'tommcdo/vim-exchange'
-  " Plug 'justinmk/vim-sneak'
 
 " Utility
 "----------
@@ -79,7 +77,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'zhimsel/vim-stay'
   Plug 'simnalamburt/vim-mundo'
   Plug 'Carpetsmoker/undofile_warn.vim'
-  " Plug 'metakirby5/codi.vim'
 
   Plug 'ryanoasis/vim-devicons' " leave this last
 
@@ -269,6 +266,8 @@ set spelllang=en
 " Folding
 "--------------------
 set foldcolumn=2
+
+" replaced with plugin
 " augroup Auto_Save_Folds
 "   autocmd!
 "   autocmd bufwinleave *.* mkview!
@@ -295,6 +294,7 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
+
 
 "--------------------
 " Tabbing
@@ -325,10 +325,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " Move lines
 nnoremap <C-j> :move .+1<CR>==
 nnoremap <C-k> :move .-2<CR>==
-" nnoremap <S-j> :move .+1<CR>==
-" nnoremap <S-k> :move .-2<CR>==
-" inoremap <S-j> <Esc>:m .+1<CR>==gi
-" inoremap <S-k> <Esc>:m .-2<CR>==gi
 vnoremap <S-j> :move '>+1<CR>gv=gv
 vnoremap <S-k> :move '<-2<CR>gv=gv
 
@@ -348,10 +344,10 @@ nnoremap K i<CR><ESC>
 " console.log the current line
 nnoremap <m-c> _iconsole.log(<ESC>A);<ESC>
 
+
 "--------------------
 " Scripts
 "--------------------
-
 " view output from running in terminal
 noremap <A-b> :call Build() <cr>
 function! Build()
@@ -367,11 +363,13 @@ augroup showHyperlinksInHelp
   autocmd BufWinEnter *.txt setlocal cole=0
 augroup END
 
+" replaced with plugin
 " remove deleted marks from shada
 " augroup Force_Delete_Marks
 "   autocmd!
 "   autocmd bufwinleave *.* wshada!
 " augroup end
+
 
 "--------------------
 " Abbreviations
