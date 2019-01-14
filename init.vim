@@ -40,6 +40,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope'
   Plug 'machakann/vim-highlightedyank'
   Plug 'rrethy/vim-illuminate'
+  Plug 'junegunn/vim-peekaboo'
 
 " Language
 "----------
@@ -143,6 +144,7 @@ highlight ALEWarningSign guifg=orange
 "----------
 nnoremap <C-p> :FZF<CR>
 nnoremap <C-l> :Lines<CR>
+nnoremap <C-g>. :Rg<CR>
 
 " vimwiki
 "----------
