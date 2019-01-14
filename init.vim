@@ -94,7 +94,7 @@ let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 let g:airline_section_y = ''
 let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
-let g:airline_theme='badwolf'
+let g:airline_theme='minimalist'
 
 " NERDTree
 "----------
