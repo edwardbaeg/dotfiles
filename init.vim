@@ -1,3 +1,5 @@
+" ~/.config/nvim/init.vim
+
 " Stop using these!
 " noremap h <NOP>
 " noremap l <NOP>
