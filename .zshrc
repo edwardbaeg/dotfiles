@@ -102,6 +102,11 @@ function cs () {
   cd "$1" && exa;
 }
 
+function mkcd () {
+  mkdir -p -- "$1" &&
+    cd -P -- "$1"
+}
+
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
