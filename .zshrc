@@ -48,13 +48,12 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-zplug load --verbose
-# zplug load
+# zplug load --verbose
+zplug load
 
 #-------------------
 # Aliases
 #-------------------
-
 #-- vim
 alias vim="nvim"
 alias vz="vim ~/.zshrc"
@@ -65,6 +64,8 @@ alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 alias vt="vim ~/.tmux.conf"
+
+#-- tmux
 alias st="tmux source-file ~/.tmux.conf"
 
 #-- git
