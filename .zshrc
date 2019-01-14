@@ -1,3 +1,5 @@
+# ~/.zshrc
+
 # improve colors
 export TERM="xterm-256color"
 
@@ -22,77 +24,32 @@ setopt appendhistory
 #-------------------
 # Plugins
 #-------------------
-# Load antigen plugin manager
-source /usr/local/share/antigen/antigen.zsh
+# load zplug
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
-# Load the oh-my-zsh's library
-  antigen use oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/z", from:oh-my-zsh
+zplug "plugins/vi-mode", from:oh-my-zsh
 
-# Bundles from the default repo
-  antigen bundle git
-  # antigen bundle command-not-found
-  antigen bundle z
-  antigen bundle docker
-  antigen bundle vi-mode
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "changyuheng/fz"
+zplug "zsh-users/zsh-syntax-highlighting"
 
-# External bundles
-  antigen bundle zsh-users/zsh-syntax-highlighting
-  antigen bundle zsh-users/zsh-autosuggestions
-  antigen bundle zsh-users/zsh-history-substring-search
-  antigen bundle changyuheng/fz
+zplug "themes/sorin", from:oh-my-zsh, as:theme
 
-#-------------------
-# Configure POWERLEVEL9K
-#-------------------
-# Use below to preview colors in console
-  # for code ({000..255}) print -P -- "$code: %F{$code}This is how your text would look like%f"
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
 
-  POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
-  POWERLEVEL9K_MODE="nerdfont-complete"
-  antigen theme bhilburn/powerlevel9k powerlevel9k
-
-  POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon vi_mode dir_writable root_indicator dir vcs)
-  POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(docker_machine status history time)
-  POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-  # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=" "
-  # POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=" ► "
-  # POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="⌈"
-  #POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─➤➤➤ "
-  # POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─ $ "
-
-  POWERLEVEL9K_HIDE_BRANCH_ICON=true
-
-  POWERLEVEL9K_VI_INSERT_MODE_STRING="I"
-  POWERLEVEL9K_VI_COMMAND_MODE_STRING="N"
-
-  POWERLEVEL9K_OS_ICON_FOREGROUND="black"
-  POWERLEVEL9K_OS_ICON_BACKGROUND="white"
-
-  POWERLEVEL9K_DIR_HOME_BACKGROUND="237"
-  POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
-  POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="237"
-  POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
-  POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="237"
-  POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
-  POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-  POWERLEVEL9K_SHORTEN_DELIMITER=".."
-  POWERLEVEL9K_SHORTEN_STRATEGY=None
-
-  POWERLEVEL9K_BATTERY_STAGES="▁▂▃▄▅▆▇█"
-  POWERLEVEL9K_BATTERY_VERBOSE=false
-  POWERLEVEL9K_BATTERY_LOW_BACKGROUND="red"
-  POWERLEVEL9K_BATTERY_CHARGING_BACKGROUND="237"
-  POWERLEVEL9K_BATTERY_CHARGED_BACKGROUND="237"
-  POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND="237"
-
-  POWERLEVEL9K_HISTORY_BACKGROUND="237"
-  POWERLEVEL9K_HISTORY_FOREGROUND="white"
-
-  POWERLEVEL9K_TIME_FORMAT="%D{\uF017 %H:%M}"
-
-
-# Tell antigen that you're done
-antigen apply
+# Then, source plugins and add commands to $PATH
+zplug load --verbose
+# zplug load
 
 #-------------------
 # Aliases
@@ -140,15 +97,12 @@ alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias ls="exa"
 
-
 #-- functions
 function cs () {
   cd "$1" && exa;
 }
 
-
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-
