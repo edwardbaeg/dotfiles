@@ -52,6 +52,7 @@ call plug#begin('~/.vim/plugged')
   " Plug 'mxw/vim-jsx'
   " Plug 'isRuslan/vim-es6'
   " Plug 'jelera/vim-javascript-syntax'
+  Plug 'elixir-editors/vim-elixir'
 
 " Files
 "----------
