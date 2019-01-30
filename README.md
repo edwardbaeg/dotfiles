@@ -15,15 +15,15 @@ This is my terminal-based development set up! Always a work progress.
 **zsh plugins**:
 - `z` autojump, extendible with fzf
 - `git` lots of git aliases
+- `vi-mode` vi mode for shell commands
 - `zsh-users/zsh-syntax-highlighting` syntax highlighting in terminal
 - `zsh-users/zsh-autosuggestions` autocomplete based on command history
 - `zsh-users/zsh-history-substring-search` cycle through previous commands
 - `changyuheng/fz` fzf tab completion with z
-- `vi-mode` vi mode for shell commands
 
 **Homebrew formulae** (`brew leaves`):
 - Utilities
-  - `antigen` plugin manager for zsh
+  - `zplug` plugin manager for zsh
   - `fzf` fuzzy finder
   - `howdoi` search stackexchange
   - `hub` github wrapper
