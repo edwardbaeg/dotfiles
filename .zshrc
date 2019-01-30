@@ -111,4 +111,13 @@ function mkcd () {
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# for mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+# Grain
+# source asdf
+source /usr/local/opt/asdf/asdf/sh
+
+# for asdf
+. /usr/local/opt/asdf/asdf.sh
+. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
