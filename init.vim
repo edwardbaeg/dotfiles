@@ -95,8 +95,8 @@ call plug#end()
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 let g:airline_section_y = ''
-let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 let g:airline_theme='minimalist'
+let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
 " NERDTree
 "----------
@@ -145,7 +145,7 @@ highlight ALEWarningSign guifg=orange
 "----------
 nnoremap <C-p> :FZF<CR>
 nnoremap <C-l> :Lines<CR>
-nnoremap <C-g>. :Rg<CR>
+nnoremap <C-g> :Rg<CR>
 
 " vimwiki
 "----------
