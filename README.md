@@ -147,6 +147,12 @@ Start ssh-agent in background
 ```
 eval "$(ssh-agent -s)"
 ```
+
+Add SSH key
+```
+ssh-add ~/.ssh/id_rsa
+```
+
 Create config file to automatically load key
 ```
 echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
