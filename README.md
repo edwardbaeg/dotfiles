@@ -96,10 +96,11 @@ This is my terminal-based development set up! Always a work progress.
 - `difftool` diff-so-fancy
 - `mergetool` meld
 
-# How to set up and configure
+# How To Set Up And Configure
 ### Initial setup from a clean Mac
 This includes installing brew, git, python, node, etc
-Install brew (will also install x-code cli)
+
+Install brew (this will also install x-code command line tools if you don't have them yet)
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
@@ -117,19 +118,19 @@ npm i -g git-open instant-markdown vtop
 ```
 
 #### Install and configure zsh and oh-my-zsh
-Install zsh
+Install zsh, zsh plugin manager, and fuzzy searching plugin
 ```
 brew install zsh zplug fzf
 ```
-Install oh-my-zsh
+Install oh-my-zsh, a zsh framework
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
-Copy over or symlink `.zshrc`. Example:
+Copy over or symlink `.zshrc` from this repo. Example:
 ```
 ln -s ~/dev/dotfiles/.zshrc ~/.zshrc
 ```
-Install `fzf` shortcuts
+Install `fzf` shortcuts (ctr-r, ctr-t, etc)
 ```
 /usr/local/opt/fzf/install
 ```
@@ -138,30 +139,32 @@ Install `fzf` shortcuts
 ```
 brew install git diff-so-fancy
 ```
-Create ssh key for git (press enter for default file location)
+- Create ssh key for git (press enter for default file location)
 ```
 ssh-keygen -t rsa -b 4096 -C "youremail@domain.com"
 ```
 
-Start ssh-agent in background
+- Start ssh-agent in background
 ```
 eval "$(ssh-agent -s)"
 ```
-Create config file to automatically load key
+- Create config file to automatically load key
 ```
 echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
 ```
 
-Add key to GH account at  https://github.com/settings/keys, using this command to copy key to clipboard:
+- Add key to GH account at  https://github.com/settings/keys, using this command to copy key to clipboard:
 ```
 pbcopy < ~/.ssh/id_rsa.pub
 ```
-Copy over or symlink `.gitconfig`. Example:
+- Copy over or symlink `.gitconfig`. Example:
 ```
 ln -s ~/dev/dotfiles/.gitconfig ~/.gitconfig
 ```
 
-#### Install and configure neovim
+#### Neovim
+Install neovim with python3
+
 ```
 brew install neovim
 pip3 install --user neovim
@@ -170,7 +173,7 @@ Copy over or symlink `init.vim` file to `~/.config/nvim/init.vim`. Example:
 ```
 ln -s ~/dev/dotfiles/init.vim ~/.config/nvim/init.vim
 ```
-Install vim-plug
+Install vim-plug, a (neo)vim plugin manager
 ```
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -194,9 +197,10 @@ ln -s ~/dev/dotfiles/.tmux.conf ~/.tmux.conf
   - Operator Mono
   - Hack Nerd Font Complete (use a different font for non-ascii text)
 - Colors (profile -> colors)
-  - Background: `1C1C1C` (same as neovim background)
-  - Color presets: tango dark; red -> `ff4949`
+  - Background: `#1C1C1C` (same as neovim background)
+  - Color presets: tango dark; red -> `#ff4949`
 - Profile -> window -> style -> no title bar
+- Profile -> keys -> Left/Right option key -> Esc+ (for tmux compatibility)
 - Margins (Advanced -> search margin)
   - 20 (Height of top and bottom margins in terminal panes)
   - 20 (Height of left and right margins in terminal panes)
