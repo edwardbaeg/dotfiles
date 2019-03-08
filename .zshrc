@@ -64,6 +64,9 @@ alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 alias vt="vim ~/.tmux.conf"
+alias vm="vim -c \"MRU\""
+alias vp="vim -c \"FZF\""
+alias vg="vim -c \"Rg\""
 
 #-- tmux
 alias st="tmux source-file ~/.tmux.conf"
@@ -73,6 +76,7 @@ alias ogh="open https://github.com/edwardbaeg"
 alias ghist="git hist"
 alias ghistb="git histb"
 alias gdt="git difftool"
+alias go="git open"
 
 #-- commands
 alias py="python3"
@@ -111,4 +115,16 @@ function mkcd () {
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# for mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+# Grain
+# source asdf
+# source /usr/local/opt/asdf/asdf/sh
+
+# for asdf
+. /usr/local/opt/asdf/asdf.sh
+. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+
+# for direnv
+eval "$(direnv hook zsh)"

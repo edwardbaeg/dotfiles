@@ -15,11 +15,11 @@ This is my terminal-based development set up! Always a work progress.
 **zsh plugins**:
 - `z` autojump, extendible with fzf
 - `git` lots of git aliases
+- `vi-mode` vi mode for shell commands
 - `zsh-users/zsh-syntax-highlighting` syntax highlighting in terminal
 - `zsh-users/zsh-autosuggestions` autocomplete based on command history
 - `zsh-users/zsh-history-substring-search` cycle through previous commands
 - `changyuheng/fz` fzf tab completion with z
-- `vi-mode` vi mode for shell commands
 
 **Homebrew formulae** (`brew leaves`):
 - Utilities
@@ -148,7 +148,13 @@ ssh-keygen -t rsa -b 4096 -C "youremail@domain.com"
 ```
 eval "$(ssh-agent -s)"
 ```
-- Create config file to automatically load key
+
+- Add SSH key
+```
+ssh-add ~/.ssh/id_rsa
+```
+
+- Set config file to automatically load key
 ```
 echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa" > ~/.ssh/config
 ```
