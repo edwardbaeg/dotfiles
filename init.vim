@@ -42,6 +42,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  " Plug 'dodie/vim-fibo-indent'
 
 " Language
 "----------
@@ -182,7 +183,7 @@ let g:highlightedyank_highlight_duration = 500
 
 " emmet
 "-----------
-" let g:user_emmet_leader_key='<C-S>'
+let g:user_emmet_leader_key='<C-E>'
 
 " quick-scope
 "-----------
@@ -253,13 +254,17 @@ highlight whitespace ctermbg=white
 
 " Window
 "----------
-set scrolloff=10
+set scrolloff=10 " buffer top and bottom
+
+" highlights past 80 chars
 highlight OverLength guibg=black
 match OverLength /\%81v.\+/
 " execute "set colorcolumn=" . join(range(81,335), ',')
 " set colorcolumn=90
-" set cursorline " bad for performance?
-set nocursorline
+
+set cursorline
+set cursorcolumn
+" set nocursorline
 set cc=
 " augroup ClearColorColumn
 "   autocmd BufRead *.* set cc=""
