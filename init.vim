@@ -29,58 +29,62 @@ call plug#begin('~/.vim/plugged')
 
 " Visual
 "----------
+  Plug 'airblade/vim-gitgutter'
+  Plug 'ap/vim-css-color'
+  Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/limelight.vim'
+  Plug 'junegunn/vim-peekaboo'
+  Plug 'kshenoy/vim-signature'
+  Plug 'machakann/vim-highlightedyank'
+  Plug 'markonm/traces.vim'
+  Plug 'rrethy/vim-illuminate'
   Plug 'sjl/badwolf'
+  Plug 'unblevable/quick-scope'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'junegunn/limelight.vim'
-  Plug 'junegunn/goyo.vim'
-  Plug 'ap/vim-css-color'
-  Plug 'kshenoy/vim-signature'
-  Plug 'unblevable/quick-scope'
-  Plug 'machakann/vim-highlightedyank'
-  Plug 'rrethy/vim-illuminate'
-  Plug 'junegunn/vim-peekaboo'
+  " Plug 'dodie/vim-fibo-indent'
 
 " Language
 "----------
+  Plug 'elixir-editors/vim-elixir'
   Plug 'kchmck/vim-coffee-script'
-  Plug 'neoclide/vim-jsx-improve'
   Plug 'mattn/emmet-vim'
+  Plug 'neoclide/vim-jsx-improve'
   " Plug 'MaxMEllon/vim-jsx-pretty'
-  " Plug 'pangloss/vim-javascript'
-  " Plug 'mxw/vim-jsx'
   " Plug 'isRuslan/vim-es6'
   " Plug 'jelera/vim-javascript-syntax'
-  Plug 'elixir-editors/vim-elixir'
+  " Plug 'mxw/vim-jsx'
+  " Plug 'pangloss/vim-javascript'
 
 " Files
 "----------
-  Plug 'scrooloose/nerdtree'
-  Plug '/usr/local/opt/fzf'
   Plug 'junegunn/fzf.vim'
+  Plug 'scrooloose/nerdtree'
   Plug 'tpope/vim-fugitive'
+
+  Plug '/usr/local/opt/fzf'
 
 " Shortcuts
 "----------
-  Plug 'tpope/vim-surround'
-  Plug 'machakann/vim-sandwich'
-  Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-commentary'
-  Plug 'jiangmiao/auto-pairs'
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'machakann/vim-sandwich'
   Plug 'tommcdo/vim-exchange'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-repeat'
+  Plug 'vim-scripts/mru.vim'
+  Plug 'tpope/vim-surround'
 
 " Utility
 "----------
-  Plug 'w0rp/ale'
-  Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
-  Plug 'vimwiki/vimwiki'
-  Plug 'suan/vim-instant-markdown'
-  Plug 'zhimsel/vim-stay'
-  Plug 'simnalamburt/vim-mundo'
   Plug 'Carpetsmoker/undofile_warn.vim'
+  Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
+  Plug 'simnalamburt/vim-mundo'
+  Plug 'suan/vim-instant-markdown'
+  Plug 'vimwiki/vimwiki'
+  Plug 'w0rp/ale'
+  Plug 'zhimsel/vim-stay'
 
   Plug 'ryanoasis/vim-devicons' " leave this last
 
@@ -179,7 +183,7 @@ let g:highlightedyank_highlight_duration = 500
 
 " emmet
 "-----------
-" let g:user_emmet_leader_key='<C-S>'
+let g:user_emmet_leader_key='<C-E>'
 
 " quick-scope
 "-----------
@@ -250,13 +254,17 @@ highlight whitespace ctermbg=white
 
 " Window
 "----------
-set scrolloff=10
+set scrolloff=10 " buffer top and bottom
+
+" highlights past 80 chars
 highlight OverLength guibg=black
 match OverLength /\%81v.\+/
 " execute "set colorcolumn=" . join(range(81,335), ',')
 " set colorcolumn=90
-" set cursorline " bad for performance?
-set nocursorline
+
+set cursorline
+set cursorcolumn
+" set nocursorline
 set cc=
 " augroup ClearColorColumn
 "   autocmd BufRead *.* set cc=""
@@ -348,6 +356,9 @@ nnoremap K i<CR><ESC>
 
 " console.log the current line
 nnoremap <m-c> _iconsole.log(<ESC>A);<ESC>
+
+" open most recents
+" nnoremap <C-m> :MRU<CR>
 
 
 "--------------------
