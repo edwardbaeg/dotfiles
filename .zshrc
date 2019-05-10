@@ -3,6 +3,11 @@
 # improve colors
 export TERM="xterm-256color"
 
+# sharing history
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt share_history
+
 # configure thefuck alias
 eval $(thefuck --alias)
 alias f="fuck"
@@ -72,11 +77,14 @@ alias vg="vim -c \"Rg\""
 alias st="tmux source-file ~/.tmux.conf"
 
 #-- git
-alias ogh="open https://github.com/edwardbaeg"
+alias gdt="git difftool"
 alias ghist="git hist"
 alias ghistb="git histb"
-alias gdt="git difftool"
 alias go="git open"
+alias ogh="open https://github.com/edwardbaeg"
+alias grp="git remote prune origin"
+alias gbdm="git branch -d $(git branch --merged=master | grep -v master)"
+alias gmm="git merge master"
 
 #-- commands
 alias py="python3"
@@ -101,6 +109,8 @@ alias tree="exa -T"
 alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias ls="exa"
+
+alias serv="python3 -m http.server"
 
 #-- functions
 function cs () {
