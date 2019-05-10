@@ -75,6 +75,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-repeat'
   Plug 'vim-scripts/mru.vim'
   Plug 'tpope/vim-surround'
+  Plug 'christoomey/vim-sort-motion'
 
 " Utility
 "----------
