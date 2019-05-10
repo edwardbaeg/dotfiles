@@ -128,3 +128,6 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # for direnv
 eval "$(direnv hook zsh)"
+
+# what is this??
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

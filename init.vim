@@ -80,6 +80,7 @@ call plug#begin('~/.vim/plugged')
 "----------
   Plug 'Carpetsmoker/undofile_warn.vim'
   Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
+  " Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
   Plug 'simnalamburt/vim-mundo'
   Plug 'suan/vim-instant-markdown'
   Plug 'vimwiki/vimwiki'
@@ -101,6 +102,11 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline_section_y = ''
 let g:airline_theme='minimalist'
 let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
+
+" === coc.nvim === "
+nmap <silent> <leader>dd <Plug>(coc-definition)
+nmap <silent> <leader>dr <Plug>(coc-references)
+nmap <silent> <leader>dj <Plug>(coc-implementation)
 
 " NERDTree
 "----------
