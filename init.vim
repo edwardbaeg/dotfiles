@@ -42,6 +42,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  " Plug 'yuttie/comfortable-motion.vim'
   " Plug 'dodie/vim-fibo-indent'
 
 " Language
@@ -117,6 +118,10 @@ let g:gitgutter_sign_modified = '•'
 let g:gitgutter_sign_removed = '•'
 let g:gitgutter_sign_removed_first_line = '-'
 let g:gitgutter_sign_modified_removed = '••'
+
+highlight GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
 
 " Codi
 "----------
@@ -199,6 +204,13 @@ hi illuminatedWord cterm=underline gui=underline
 "-----------
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
+" comfortable-motion
+"-----------
+" noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
+" noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
+let g:comfortable_motion_interval = 1000.0 / 100
+let g:comfortable_motion_friction = 150
+let g:comfortable_motion_air_drag = 2.0
 
 "--------------------
 " Visual
@@ -359,7 +371,7 @@ nnoremap K i<CR><ESC>
 nnoremap <m-c> _iconsole.log(<ESC>A);<ESC>
 
 " open most recents
-" nnoremap <C-m> :MRU<CR>
+nnoremap <C-m> :MRU<CR>
 
 
 "--------------------
