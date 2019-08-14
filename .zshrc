@@ -151,3 +151,6 @@ alias iexx="iex -S mix phx.server"
 
 # for direnv
 eval "$(direnv hook zsh)"
+
+# what is this??
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

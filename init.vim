@@ -106,6 +106,11 @@ let g:airline_section_y = ''
 let g:airline_theme='minimalist'
 let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
+" === coc.nvim === "
+nmap <silent> <leader>dd <Plug>(coc-definition)
+nmap <silent> <leader>dr <Plug>(coc-references)
+nmap <silent> <leader>dj <Plug>(coc-implementation)
+
 " NERDTree
 "----------
 let g:NERDTreeWinSize=25
