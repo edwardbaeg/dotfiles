@@ -62,6 +62,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'scrooloose/nerdtree'
   Plug 'tpope/vim-fugitive'
+  Plug 'mhinz/vim-startify'
 
   Plug '/usr/local/opt/fzf'
 
@@ -81,7 +82,8 @@ call plug#begin('~/.vim/plugged')
 " Utility
 "----------
   Plug 'Carpetsmoker/undofile_warn.vim'
-  Plug 'Shougo/deoplete.nvim' , { 'do' : ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
+  Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
   Plug 'simnalamburt/vim-mundo'
   Plug 'suan/vim-instant-markdown'
   Plug 'vimwiki/vimwiki'
