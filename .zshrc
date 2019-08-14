@@ -18,6 +18,10 @@ export EDITOR=nvim
 # add custom programs
 export PATH=~/bin:$PATH
 
+#-- key bindings
+set -o ignoreeof # disable ctr-d from exiting shell
+
+
 #-------------------
 # history settings
 #-------------------
@@ -68,10 +72,10 @@ alias nv="nvim ~/.config/nvim/init.vim"
 alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
-alias vt="vim ~/.tmux.conf"
-alias vm="vim -c \"MRU\""
-alias vp="vim -c \"FZF\""
-alias vg="vim -c \"Rg\""
+alias vt="nvim ~/.tmux.conf"
+alias vm="nvim -c \"Startify | MRU\""
+alias vp="nvim -c \"Startify | FZF\""
+alias vg="nvim -c \"Startify | Rg\""
 
 #-- tmux
 alias st="tmux source-file ~/.tmux.conf"
@@ -81,10 +85,15 @@ alias gdt="git difftool"
 alias ghist="git hist"
 alias ghistb="git histb"
 alias go="git open"
+alias gpo="git push && git open"
 alias ogh="open https://github.com/edwardbaeg"
-alias grp="git remote prune origin"
-alias gbdm="git branch -d $(git branch --merged=master | grep -v master)"
+# alias grpo="git remote prune origin"
+# alias gbdm="git branch -d $(git branch --merged=master | grep -v master)" # fix this?
 alias gmm="git merge master"
+alias gfl="git fetch && git pull"
+alias gdm="git diff master"
+alias gd1="git diff HEAD~1"
+alias gbdm="git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d"
 
 #-- commands
 alias py="python3"
@@ -131,6 +140,10 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 # Grain
 # source asdf
 # source /usr/local/opt/asdf/asdf/sh
+alias mixx="mix deps.install && mix ecto.migrate && mix phx.server"
+alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
+alias yarnl="yarn lint-full && gd"
+alias iexx="iex -S mix phx.server"
 
 # for asdf
 . /usr/local/opt/asdf/asdf.sh
