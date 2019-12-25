@@ -42,6 +42,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'psliwka/vim-smoothie'
   " Plug 'yuttie/comfortable-motion.vim'
   " Plug 'dodie/vim-fibo-indent'
 
@@ -211,13 +212,12 @@ hi illuminatedWord cterm=underline gui=underline
 "-----------
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
-" comfortable-motion
+" vim-smoothie
 "-----------
-" noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-" noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
-let g:comfortable_motion_interval = 1000.0 / 100
-let g:comfortable_motion_friction = 150
-let g:comfortable_motion_air_drag = 2.0
+" default is 20
+let g:smoothie_update_interval = 10
+" default is 10
+let g:smoothie_base_speed = 25
 
 "--------------------
 " Visual
@@ -276,7 +276,7 @@ highlight whitespace ctermbg=white
 "----------
 set scrolloff=10 " buffer top and bottom
 
-" highlights past 80 chars
+" highlight past 80 chars
 highlight OverLength guibg=black
 match OverLength /\%81v.\+/
 " execute "set colorcolumn=" . join(range(81,335), ',')
@@ -328,7 +328,6 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-
 "--------------------
 " Tabbing
 "--------------------
@@ -342,6 +341,7 @@ set expandtab
 "--------------------
 " Exit insert mode
 inoremap jk <esc>
+inoremap kj <esc>
 
 " Move cursor around
 nnoremap <S-h> ^
