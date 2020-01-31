@@ -1,0 +1,1 @@
+Directory located at ~/.config

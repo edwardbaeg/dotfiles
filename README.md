@@ -210,3 +210,13 @@ ln -s ~/dev/dotfiles/.tmux.conf ~/.tmux.conf
 - Margins (Advanced -> search margin)
   - 20 (Height of top and bottom margins in terminal panes)
   - 20 (Height of left and right margins in terminal panes)
+
+#### Install and configure mpv
+```
+brew install mpv
+brew cask install mpv
+```
+Copy over or symlink `mpv/` to `~/.config/mpv/`
+```
+ln -s ~/<your_path>/dotfiles/mpv ~/.config/mpv
+```

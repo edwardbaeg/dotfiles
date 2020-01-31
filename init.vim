@@ -44,12 +44,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'psliwka/vim-smoothie'
   " Plug 'yuttie/comfortable-motion.vim'
   " Plug 'dodie/vim-fibo-indent'
 
 " Language
 "----------
   " Javascript/Typescript
+  Plug 'elixir-editors/vim-elixir'
+  " Plug 'kchmck/vim-coffee-script'
   Plug 'mattn/emmet-vim'
   " Plug 'jelera/vim-javascript-syntax'
   " Plug 'isRuslan/vim-es6'
@@ -66,6 +69,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'elixir-editors/vim-elixir'
   Plug 'jparise/vim-graphql'
   " Plug 'kchmck/vim-coffee-script'
+
+  Plug 'tbastos/vim-lua'
+
+  Plug 'elixir-editors/vim-elixir'
+
 
 " Files
 "----------
@@ -230,13 +238,12 @@ hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg
 "-----------
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
-" comfortable-motion
+" vim-smoothie
 "-----------
-" noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(40)<CR>
-" noremap <silent> <ScrollWheelUp>   :call comfortable_motion#flick(-40)<CR>
-let g:comfortable_motion_interval = 1000.0 / 100
-let g:comfortable_motion_friction = 150
-let g:comfortable_motion_air_drag = 2.0
+" default is 20
+let g:smoothie_update_interval = 10
+" default is 10
+let g:smoothie_base_speed = 25
 
 "--------------------
 " Visual
@@ -328,7 +335,7 @@ highlight whitespace ctermbg=white
 "----------
 set scrolloff=10 " buffer top and bottom
 
-" highlights past 80 chars
+" highlight past 80 chars
 highlight OverLength guibg=black
 match OverLength /\%81v.\+/
 " execute "set colorcolumn=" . join(range(81,335), ',')
@@ -345,7 +352,6 @@ set cc=
 " Spelling
 "----------
 set spelllang=en
-
 
 "--------------------
 " Folding
@@ -379,7 +385,6 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
-
 
 "--------------------
 " Tabbing
@@ -496,6 +501,41 @@ function! CreateCenteredFloatingWindow()
   call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
   au BufWipeout <buffer> exe 'bw '.s:buf
 endfunction
+
+" Floating windows for fzf with previews
+" let g:height = float2nr(&lines * 0.9)
+" let g:width = float2nr(&columns * 0.95)
+" let g:preview_width = float2nr(&columns * 0.7)
+" let g:fzf_buffers_jump = 1
+" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+" let $FZF_DEFAULT_OPTS=" --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4 --preview 'if file -i {}|grep -q binary; then file -b {}; else bat --style=changes --color always --line-range :40 {}; fi' --preview-window right:" . g:preview_width
+" let g:fzf_layout = { 'window': 'call FloatingFZF(' . g:width . ',' . g:height . ')' }
+
+" Floating windows for fzf
+" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+" function! FloatingFZF()
+"   let buf = nvim_create_buf(v:false, v:true)
+"   call setbufvar(buf, '&signcolumn', 'no')
+
+"   let height = float2nr(10)
+"   let width = float2nr(80)
+"   let horizontal = float2nr((&columns - width) / 2)
+"   let vertical = 1
+
+"   let opts = {
+"         \ 'relative': 'editor',
+"         \ 'row': vertical,
+"         \ 'col': horizontal,
+"         \ 'width': width,
+"         \ 'height': height,
+"         \ 'style': 'minimal'
+"         \ }
+
+"   call nvim_open_win(buf, v:true, opts)
+" endfunction
 
 "--------------------
 " Abbreviations
