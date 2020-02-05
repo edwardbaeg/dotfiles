@@ -39,6 +39,8 @@ source $ZPLUG_HOME/init.zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
+zplug "plugins/colored-man-pages", from:oh-my-zsh
+# zplug "plugins/tmux", from:oh-my-zsh
 
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
@@ -73,7 +75,7 @@ alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 alias vt="nvim ~/.tmux.conf"
 alias vm="nvim -c \"Startify | MRU\""
-alias vp="nvim -c \"Startify | FZF\""
+alias vp="nvim -c \"Startify | GFiles\""
 alias vg="nvim -c \"Startify | Rg\""
 
 #-- tmux
@@ -82,17 +84,22 @@ alias st="tmux source-file ~/.tmux.conf"
 #-- git
 alias gdt="git difftool"
 alias ghist="git hist"
+alias ghista="git hista"
 alias ghistb="git histb"
 alias go="git open"
 alias gpo="git push && git open"
 alias ogh="open https://github.com/edwardbaeg"
-# alias grpo="git remote prune origin"
-# alias gbdm="git branch -d $(git branch --merged=master | grep -v master)" # fix this?
 alias gmm="git merge master"
 alias gfl="git fetch && git pull"
 alias gdm="git diff master"
 alias gd1="git diff HEAD~1"
-alias gbdm="git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d"
+alias gd2="git diff HEAD~2"
+alias gd3="git diff HEAD~3"
+
+alias glmm="git checkout master && git pull && git checkout - && git merge master"
+alias grpo="git remote prune origin"
+alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git branch -d"
+alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 
 #-- commands
 alias py="python3"
@@ -136,14 +143,18 @@ function mkcd () {
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Use ag for fzf
+FZF_DEFAULT_COMMAND='rg -g ""'
+
 # for mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # Grain
 # source asdf
 # source /usr/local/opt/asdf/asdf/sh
-alias mixx="mix deps.install && mix ecto.migrate && mix phx.server"
+alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
+alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
 alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 

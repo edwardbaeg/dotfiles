@@ -29,6 +29,8 @@ call plug#begin('~/.vim/plugged')
 
 " Visual
 "----------
+  Plug 'sjl/badwolf'
+
   Plug 'airblade/vim-gitgutter'
   Plug 'ap/vim-css-color'
   Plug 'junegunn/goyo.vim'
@@ -38,7 +40,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'machakann/vim-highlightedyank'
   Plug 'markonm/traces.vim'
   Plug 'rrethy/vim-illuminate'
-  Plug 'sjl/badwolf'
+  " Plug 'itchyny/vim-cursorword'
   Plug 'unblevable/quick-scope'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -48,14 +50,25 @@ call plug#begin('~/.vim/plugged')
 
 " Language
 "----------
-  Plug 'kchmck/vim-coffee-script'
+  " Javascript/Typescript
+  Plug 'elixir-editors/vim-elixir'
+  " Plug 'kchmck/vim-coffee-script'
   Plug 'mattn/emmet-vim'
-  Plug 'neoclide/vim-jsx-improve'
-  " Plug 'MaxMEllon/vim-jsx-pretty'
-  " Plug 'isRuslan/vim-es6'
   " Plug 'jelera/vim-javascript-syntax'
+  " Plug 'isRuslan/vim-es6'
+  Plug 'pangloss/vim-javascript'
+
+  " Jsx/Tsx
+  Plug 'neoclide/vim-jsx-improve'
+  " Plug 'leafgarland/typescript-vim'
+  " Plug 'peitalin/vim-jsx-typescript'
+  Plug 'MaxMEllon/vim-jsx-pretty'
   " Plug 'mxw/vim-jsx'
-  " Plug 'pangloss/vim-javascript'
+
+  " Misc
+  Plug 'elixir-editors/vim-elixir'
+  Plug 'jparise/vim-graphql'
+  " Plug 'kchmck/vim-coffee-script'
 
   Plug 'tbastos/vim-lua'
 
@@ -65,6 +78,8 @@ call plug#begin('~/.vim/plugged')
 " Files
 "----------
   Plug 'junegunn/fzf.vim'
+  let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+
   Plug 'scrooloose/nerdtree'
   Plug 'tpope/vim-fugitive'
   Plug 'mhinz/vim-startify'
@@ -90,10 +105,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
   Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
   Plug 'simnalamburt/vim-mundo'
-  Plug 'suan/vim-instant-markdown'
   Plug 'vimwiki/vimwiki'
   Plug 'w0rp/ale'
   Plug 'zhimsel/vim-stay'
+  Plug 'suan/vim-instant-markdown'
+
+  Plug 'semanser/vim-outdated-plugins'
+  " do not show message if all plugins are up to date
+  let g:outdated_plugins_silent_mode = 1
 
   Plug 'ryanoasis/vim-devicons' " leave this last
 
@@ -165,7 +184,8 @@ highlight ALEWarningSign guifg=orange
 
 " fzf.vim
 "----------
-nnoremap <C-p> :FZF<CR>
+" :GFiles respects .gitignore (over :FZF or :Files)
+nnoremap <C-p> :GFiles<CR>
 nnoremap <C-l> :Lines<CR>
 nnoremap <C-g> :Rg<CR>
 
@@ -209,8 +229,10 @@ let g:qs_max_chars=100
 
 " vim-illuminate
 "-----------
-let g:Illuminate_delay = 400
-hi illuminatedWord cterm=underline gui=underline
+let g:Illuminate_delay = 250 " Default is 250
+let g:Illuminate_highlightUnderCursor = 0 " don't highlight under cursor with 0
+" hi illuminatedWord cterm=cursorline gui=cursorline
+hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
 
 " webdevicons
 "-----------
@@ -230,6 +252,11 @@ colorscheme badwolf
 
 " JavaScript colors
 "----------
+" #ff2c4b
+" #ff9eb8
+" #f4cf86
+" #9edf1c
+
 " 1, -2
 highlight javascriptvalue ctermfg=brown guifg=#f4cf86
 " Array, Date, Object
@@ -238,15 +265,43 @@ highlight javascripttype ctermfg=brown guifg=#f4cf86
 highlight javascriptspecialreference guifg=#ff9eb8 gui=italic
 " !, ~, ^
 highlight javascriptoperatorsymbol guifg=#ff2c4b
-
-highlight javascriptboolean guifg=#b88853 gui=italic
+" true false
+highlight javascriptboolean guifg=#ff2c4b gui=italic
 
 highlight comment cterm=italic gui=italic
 highlight statement cterm=italic gui=italic
 highlight conditional cterm=italic gui=italic
 highlight repeat cterm=italic gui=italic
 highlight exception cterm=italic gui=italic
-highlight operator cterm=italic gui=italic
+" highlight operator cterm=italic gui=italic
+
+highlight jsNull guifg=#ff9eb8 cterm=italic gui=italic
+highlight jsThis guifg=#ff9eb8 cterm=italic gui=italic
+highlight jsUndefined guifg=#ff9eb8 cterm=italic gui=italic
+
+highlight jsImport guifg=#9edf1c cterm=italic gui=italic
+highlight jsFrom guifg=#9edf1c cterm=italic gui=italic
+highlight jsExport guifg=#9edf1c cterm=italic gui=italic
+
+" new
+highlight jsOperatorKeyword cterm=italic gui=italic guifg=#ff2c4b
+
+" const let
+highlight jsStorageClass cterm=italic gui=italic guifg=#ff2c4b
+
+" tsx colors
+"----------
+" dark red
+" hi tsxTagName guifg=#E06C75
+
+" " orange
+" hi tsxCloseString guifg=#F99575
+" hi tsxCloseTag guifg=#F99575
+" hi tsxAttributeBraces guifg=#F99575
+" hi tsxEqual guifg=#F99575
+
+" " yellow
+" hi tsxAttrib guifg=#F8BD7F cterm=italic
 
 " vimwiki colors
 "----------
@@ -344,7 +399,7 @@ set expandtab
 "--------------------
 " Exit insert mode
 inoremap jk <esc>
-inoremap kj <esc>
+" inoremap kj <esc>
 
 " Move cursor around
 nnoremap <S-h> ^
@@ -409,6 +464,44 @@ augroup END
 "   autocmd bufwinleave *.* wshada!
 " augroup end
 
+" outputs highlight group below cursor with leader hi
+nmap <leader>hi :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+" properly set filetype for tsx files
+" augroup SyntaxSettings
+"   autocmd!
+"   autocmd BufNewFile,BufRead *.tsx set filetype=typescript
+" augroup END
+
+function! CreateCenteredFloatingWindow()
+  let width = min([&columns - 4, max([80, &columns - 20])]) - 10
+  let height = min([&lines - 4, max([20, &lines - 10])])
+  let top = ((&lines - height) / 2) - 1
+  let left = (&columns - width) / 2
+  let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+  let top = "╭" . repeat("─", width - 2) . "╮"
+  let mid = "│" . repeat(" ", width - 2) . "│"
+  let bot = "╰" . repeat("─", width - 2) . "╯"
+  let lines = [top] + repeat([mid], height - 2) + [bot]
+  let s:buf = nvim_create_buf(v:false, v:true)
+  call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+  call nvim_open_win(s:buf, v:true, opts)
+  set winhl=Normal:Floating
+  let opts.row += 1
+  let opts.height -= 2
+  let opts.col += 2
+  let opts.width -= 4
+  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+  au BufWipeout <buffer> exe 'bw '.s:buf
+endfunction
+
 " Floating windows for fzf with previews
 " let g:height = float2nr(&lines * 0.9)
 " let g:width = float2nr(&columns * 0.95)
@@ -443,7 +536,6 @@ augroup END
 
 "   call nvim_open_win(buf, v:true, opts)
 " endfunction
-
 
 "--------------------
 " Abbreviations
