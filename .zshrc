@@ -21,7 +21,6 @@ export PATH=~/bin:$PATH
 #-- key bindings
 set -o ignoreeof # disable ctr-d from exiting shell
 
-
 #-------------------
 # history settings
 #-------------------
@@ -127,6 +126,9 @@ alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias ls="exa"
 
 alias serv="python3 -m http.server"
+
+#-- pi
+alias sshpi="ssh pi@192.168.1.22"
 
 #-- functions
 function cs () {
