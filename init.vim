@@ -3,6 +3,8 @@
 " Stop using these!
 " noremap h <NOP>
 " noremap l <NOP>
+" noremap j <NOP>
+" noremap k <NOP>
 
 "--------------------
 " Core
@@ -77,8 +79,17 @@ call plug#begin('~/.vim/plugged')
 
 " Files
 "----------
+  " Integrate with fzf
   Plug 'junegunn/fzf.vim'
+  " Use a centered floating window
+  " let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
+  " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
   let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+  " :GFiles respects .gitignore (over :FZF or :Files)
+  nnoremap <C-p> :GFiles<CR>
+  nnoremap <C-l> :Lines<CR>
+  nnoremap <C-g> :Rg<CR>
+  nnoremap <C-b> :Buffers<CR>
 
   Plug 'scrooloose/nerdtree'
   Plug 'tpope/vim-fugitive'
@@ -181,13 +192,6 @@ highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 highlight ALEErrorSign guifg=red
 highlight ALEWarningSign guifg=orange
-
-" fzf.vim
-"----------
-" :GFiles respects .gitignore (over :FZF or :Files)
-nnoremap <C-p> :GFiles<CR>
-nnoremap <C-l> :Lines<CR>
-nnoremap <C-g> :Rg<CR>
 
 " vimwiki
 "----------
@@ -312,8 +316,8 @@ highlight vimwikiheader3 guifg=red gui=italic
 " Gutter
 "----------
 set ruler
-set number
-set relativenumber " bad for performamnce?
+set number "nu
+set relativenumber " rnu
 
 " Status
 "----------
