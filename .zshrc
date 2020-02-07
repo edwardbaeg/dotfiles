@@ -86,7 +86,6 @@ alias gdt="git difftool"
 alias ghist="git hist"
 alias ghista="git hista"
 alias ghistb="git histb"
-alias go="git open"
 alias gpo="git push && git open"
 alias ogh="open https://github.com/edwardbaeg"
 alias gmm="git merge master"
@@ -100,6 +99,10 @@ alias glmm="git checkout master && git pull && git checkout - && git merge maste
 alias grpo="git remote prune origin"
 alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git branch -d"
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
+
+# alias `git` to use `hub`
+eval "$(hub alias -s)"
+alias go="hub browse"
 
 #-- commands
 alias py="python3"
