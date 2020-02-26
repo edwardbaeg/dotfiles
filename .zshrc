@@ -129,6 +129,7 @@ alias serv="python3 -m http.server"
 
 #-- pi
 alias sshpi="ssh pi@192.168.1.22"
+alias sshpiz="ssh pi@192.168.1.32"
 
 #-- functions
 function cs () {
