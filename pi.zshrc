@@ -101,6 +101,7 @@ alias sauu="sudo apt-get update && sudo apt-get upgrade"
 alias ssctl="sudo systemctl"
 alias pitemp="vcgencmd measure_temp"
 alias sudo="sudo "
+alias sagi="sudo api-get install"
 
 alias logqb="sudo journalctl -u qbittorrent.service"
 alias llogqb="sudo journalctl -f -u qbittorrent.service"
