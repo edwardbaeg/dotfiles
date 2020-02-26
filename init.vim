@@ -1,8 +1,7 @@
 " ~/.config/nvim/init.vim
 
-" Stop using these!
-" noremap h <NOP>
-" noremap l <NOP>
+" stop using j/k without nums
+" stop using h/l as much
 
 "--------------------
 " Core
@@ -15,12 +14,12 @@ syntax enable
 filetype plugin indent on
 set encoding=utf8
 set clipboard=unnamedplus " integrate with mac
+set clipboard=unnamed " integrate with windows
 set updatetime=500
 set undofile " set persistent undo
 set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
-
 
 "--------------------
 " Plugins
@@ -31,20 +30,61 @@ call plug#begin('~/.vim/plugged')
 "----------
   Plug 'sjl/badwolf'
 
-  Plug 'airblade/vim-gitgutter'
-  Plug 'ap/vim-css-color'
-  Plug 'junegunn/goyo.vim'
-  Plug 'junegunn/limelight.vim'
-  Plug 'junegunn/vim-peekaboo'
-  Plug 'kshenoy/vim-signature'
-  Plug 'machakann/vim-highlightedyank'
-  Plug 'markonm/traces.vim'
-  Plug 'rrethy/vim-illuminate'
-  " Plug 'itchyny/vim-cursorword'
-  Plug 'unblevable/quick-scope'
-  Plug 'vim-airline/vim-airline'
+  Plug 'airblade/vim-gitgutter' " git diff in the gutter
+  let g:gitgutter_sign_added = '•'
+  let g:gitgutter_sign_modified = '•'
+  let g:gitgutter_sign_removed = '•'
+  let g:gitgutter_sign_removed_first_line = '-'
+  let g:gitgutter_sign_modified_removed = '••'
+
+  highlight GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
+  highlight GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
+  highlight GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
+
+  Plug 'ap/vim-css-color' " preview of css colors
+
+  Plug 'junegunn/goyo.vim' " distraction free writing in vim
+  let g:goyo_width=100
+  " let g:goyo_height=50
+  let g:goyo_linenr=0
+  nnoremap <leader>g :Goyo<CR>
+
+  Plug 'junegunn/limelight.vim' " hyperfocus writing
+  nnoremap <leader>l :Limelight!!<CR>
+
+  Plug 'junegunn/vim-peekaboo' " see \" and @ registry contents
+
+  Plug 'kshenoy/vim-signature' " toggle, display, and navigate marks
+
+  Plug 'machakann/vim-highlightedyank' " show yanked region
+  let g:highlightedyank_highlight_duration = 500
+
+  Plug 'markonm/traces.vim' " range, pattern, and substitute preview for vim
+
+  Plug 'rrethy/vim-illuminate' "highlight other word under cursor
+  let g:Illuminate_delay = 250 " Default is 250
+  let g:Illuminate_highlightUnderCursor = 0 " don't highlight under cursor with 0
+  " hi illuminatedWord cterm=cursorline gui=cursorline
+  hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
+
+  " Plug 'itchyny/vim-cursorword' "highlight other word under cursor
+
+  Plug 'unblevable/quick-scope' " see f/t targets
+  let g:qs_max_chars=100
+
+  Plug 'vim-airline/vim-airline' " lightweight statusbar
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'psliwka/vim-smoothie'
+  let g:airline_powerline_fonts=1
+  let g:airline#extensions#tabline#enabled=1
+  let g:airline_section_y = ''
+  let g:airline_theme='minimalist'
+
+  Plug 'psliwka/vim-smoothie' " smooth scrolling
+  " default is 20
+  let g:smoothie_update_interval = 7
+  " default is 10
+  let g:smoothie_base_speed = 30
+
   " Plug 'yuttie/comfortable-motion.vim'
   " Plug 'dodie/vim-fibo-indent'
 
@@ -77,14 +117,23 @@ call plug#begin('~/.vim/plugged')
 
 " Files
 "----------
-  Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf.vim' " fuzzy finder integration
+  Plug '/usr/local/opt/fzf'
   let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+  " :GFiles respects .gitignore (over :FZF or :Files)
+  nnoremap <C-p> :GFiles<CR>
+  nnoremap <C-l> :Lines<CR>
+  nnoremap <C-g> :Rg<CR>
 
-  Plug 'scrooloose/nerdtree'
-  Plug 'tpope/vim-fugitive'
+  Plug 'scrooloose/nerdtree' " interactive file explorer
+  let g:NERDTreeWinSize=25
+  nnoremap <Leader>t :NERDTreeToggle<CR>
+  nnoremap <Leader>f :NERDTreeFind<CR>
+  let NERDTreeQuitOnOpen = 1
+
+  Plug 'tpope/vim-fugitive' " git wrapper
   Plug 'mhinz/vim-startify'
 
-  Plug '/usr/local/opt/fzf'
 
 " Shortcuts
 "----------
@@ -118,41 +167,18 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+" leave these here
+colorscheme badwolf
+let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
 "--------------------
 " Plugin Options
 "--------------------
-" airline
-"----------
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled=1
-let g:airline_section_y = ''
-let g:airline_theme='minimalist'
-let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
 " === coc.nvim === "
 nmap <silent> <leader>dd <Plug>(coc-definition)
 nmap <silent> <leader>dr <Plug>(coc-references)
 nmap <silent> <leader>dj <Plug>(coc-implementation)
-
-" NERDTree
-"----------
-let g:NERDTreeWinSize=25
-nnoremap <Leader>t :NERDTreeToggle<CR>
-nnoremap <Leader>f :NERDTreeFind<CR>
-let NERDTreeQuitOnOpen = 1
-
-" Git gutter
-"----------
-let g:gitgutter_sign_added = '•'
-let g:gitgutter_sign_modified = '•'
-let g:gitgutter_sign_removed = '•'
-let g:gitgutter_sign_removed_first_line = '-'
-let g:gitgutter_sign_modified_removed = '••'
-
-highlight GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
-highlight GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
-highlight GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
 
 " Codi
 "----------
@@ -182,27 +208,9 @@ highlight clear ALEWarningSign
 highlight ALEErrorSign guifg=red
 highlight ALEWarningSign guifg=orange
 
-" fzf.vim
-"----------
-" :GFiles respects .gitignore (over :FZF or :Files)
-nnoremap <C-p> :GFiles<CR>
-nnoremap <C-l> :Lines<CR>
-nnoremap <C-g> :Rg<CR>
-
 " vimwiki
 "----------
 let g:vimwiki_hl_cb_checked = 2
-
-" goyo
-"----------
-let g:goyo_width=100
-" let g:goyo_height=50
-let g:goyo_linenr=0
-nnoremap <leader>g :Goyo<CR>
-
-" limelight
-"----------
-nnoremap <leader>l :Limelight!!<CR>
 
 " vim-commentary
 "----------
@@ -215,40 +223,17 @@ augroup END
 "-----------
 nnoremap <leader>m :MundoToggle<CR>
 
-" Highlighted Yank
-"-----------
-let g:highlightedyank_highlight_duration = 500
-
 " emmet
 "-----------
 let g:user_emmet_leader_key='<C-E>'
-
-" quick-scope
-"-----------
-let g:qs_max_chars=100
-
-" vim-illuminate
-"-----------
-let g:Illuminate_delay = 250 " Default is 250
-let g:Illuminate_highlightUnderCursor = 0 " don't highlight under cursor with 0
-" hi illuminatedWord cterm=cursorline gui=cursorline
-hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
 
 " webdevicons
 "-----------
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
-" vim-smoothie
-"-----------
-" default is 20
-let g:smoothie_update_interval = 10
-" default is 10
-let g:smoothie_base_speed = 25
-
 "--------------------
 " Visual
 "--------------------
-colorscheme badwolf
 
 " JavaScript colors
 "----------
@@ -457,13 +442,6 @@ augroup showHyperlinksInHelp
   autocmd BufWinEnter *.txt setlocal cole=0
 augroup END
 
-" replaced with plugin
-" remove deleted marks from shada
-" augroup Force_Delete_Marks
-"   autocmd!
-"   autocmd bufwinleave *.* wshada!
-" augroup end
-
 " outputs highlight group below cursor with leader hi
 nmap <leader>hi :call <SID>SynStack()<CR>
 function! <SID>SynStack()
@@ -501,41 +479,6 @@ function! CreateCenteredFloatingWindow()
   call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
   au BufWipeout <buffer> exe 'bw '.s:buf
 endfunction
-
-" Floating windows for fzf with previews
-" let g:height = float2nr(&lines * 0.9)
-" let g:width = float2nr(&columns * 0.95)
-" let g:preview_width = float2nr(&columns * 0.7)
-" let g:fzf_buffers_jump = 1
-" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-" let $FZF_DEFAULT_OPTS=" --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4 --preview 'if file -i {}|grep -q binary; then file -b {}; else bat --style=changes --color always --line-range :40 {}; fi' --preview-window right:" . g:preview_width
-" let g:fzf_layout = { 'window': 'call FloatingFZF(' . g:width . ',' . g:height . ')' }
-
-" Floating windows for fzf
-" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
-" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
-" function! FloatingFZF()
-"   let buf = nvim_create_buf(v:false, v:true)
-"   call setbufvar(buf, '&signcolumn', 'no')
-
-"   let height = float2nr(10)
-"   let width = float2nr(80)
-"   let horizontal = float2nr((&columns - width) / 2)
-"   let vertical = 1
-
-"   let opts = {
-"         \ 'relative': 'editor',
-"         \ 'row': vertical,
-"         \ 'col': horizontal,
-"         \ 'width': width,
-"         \ 'height': height,
-"         \ 'style': 'minimal'
-"         \ }
-
-"   call nvim_open_win(buf, v:true, opts)
-" endfunction
 
 "--------------------
 " Abbreviations
