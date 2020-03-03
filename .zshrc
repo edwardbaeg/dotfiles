@@ -40,7 +40,7 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-# zplug "plugins/tmux", from:oh-my-zsh
+zplug "plugins/tmux", from:oh-my-zsh
 
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
@@ -101,8 +101,11 @@ alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git br
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 
 # alias `git` to use `hub`
+# this is currently broken
 eval "$(hub alias -s)"
-alias go="hub browse"
+# alias go="hub browse"
+
+alias go="git open"
 
 #-- commands
 alias py="python3"
