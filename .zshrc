@@ -152,7 +152,7 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # Grain
 # source asdf
-# source /usr/local/opt/asdf/asdf/sh
+source /usr/local/opt/asdf/asdf.sh
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
