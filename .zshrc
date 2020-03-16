@@ -128,7 +128,8 @@ alias ls="exa"
 alias serv="python3 -m http.server"
 
 #-- pi
-alias sshpi="ssh pi@192.168.1.22"
+alias sshpi="ssh pi@192.168.1.100"
+alias sshpiw="ssh pi@192.168.1.9"
 alias sshpiz="ssh pi@192.168.1.32"
 
 #-- functions
