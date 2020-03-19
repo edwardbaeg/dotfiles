@@ -134,7 +134,9 @@ alias ls="exa"
 alias serv="python3 -m http.server"
 
 #-- pi
-alias sshpi="ssh pi@192.168.1.22"
+alias sshpi="ssh pi@192.168.1.100"
+alias sshpiw="ssh pi@192.168.1.9"
+alias sshpiz="ssh pi@192.168.1.32"
 
 #-- functions
 function cs () {
@@ -157,7 +159,7 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # Grain
 # source asdf
-# source /usr/local/opt/asdf/asdf/sh
+source /usr/local/opt/asdf/asdf.sh
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"

@@ -1,5 +1,8 @@
 " ~/.config/nvim/init.vim
 
+" stop using j/k without nums
+" stop using h/l as much
+"
 " Stop using these!
 " noremap h <NOP>
 " noremap l <NOP>
@@ -17,12 +20,12 @@ syntax enable
 filetype plugin indent on
 set encoding=utf8
 set clipboard=unnamedplus " integrate with mac
+set clipboard=unnamed " integrate with windows
 set updatetime=500
 set undofile " set persistent undo
 set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
-
 
 "--------------------
 " Plugins
@@ -33,20 +36,61 @@ call plug#begin('~/.vim/plugged')
 "----------
   Plug 'sjl/badwolf'
 
-  Plug 'airblade/vim-gitgutter'
-  Plug 'ap/vim-css-color'
-  Plug 'junegunn/goyo.vim'
-  Plug 'junegunn/limelight.vim'
-  Plug 'junegunn/vim-peekaboo'
-  Plug 'kshenoy/vim-signature'
-  Plug 'machakann/vim-highlightedyank'
-  Plug 'markonm/traces.vim'
-  Plug 'rrethy/vim-illuminate'
-  " Plug 'itchyny/vim-cursorword'
-  Plug 'unblevable/quick-scope'
-  Plug 'vim-airline/vim-airline'
+  Plug 'airblade/vim-gitgutter' " git diff in the gutter
+  let g:gitgutter_sign_added = '•'
+  let g:gitgutter_sign_modified = '•'
+  let g:gitgutter_sign_removed = '•'
+  let g:gitgutter_sign_removed_first_line = '-'
+  let g:gitgutter_sign_modified_removed = '••'
+
+  highlight GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
+  highlight GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
+  highlight GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
+
+  Plug 'ap/vim-css-color' " preview of css colors
+
+  Plug 'junegunn/goyo.vim' " distraction free writing in vim
+  let g:goyo_width=100
+  " let g:goyo_height=50
+  let g:goyo_linenr=0
+  nnoremap <leader>g :Goyo<CR>
+
+  Plug 'junegunn/limelight.vim' " hyperfocus writing
+  nnoremap <leader>l :Limelight!!<CR>
+
+  Plug 'junegunn/vim-peekaboo' " see \" and @ registry contents
+
+  Plug 'kshenoy/vim-signature' " toggle, display, and navigate marks
+
+  Plug 'machakann/vim-highlightedyank' " show yanked region
+  let g:highlightedyank_highlight_duration = 500
+
+  Plug 'markonm/traces.vim' " range, pattern, and substitute preview for vim
+
+  Plug 'rrethy/vim-illuminate' "highlight other word under cursor
+  let g:Illuminate_delay = 250 " Default is 250
+  let g:Illuminate_highlightUnderCursor = 0 " don't highlight under cursor with 0
+  " hi illuminatedWord cterm=cursorline gui=cursorline
+  hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
+
+  " Plug 'itchyny/vim-cursorword' "highlight other word under cursor
+
+  Plug 'unblevable/quick-scope' " see f/t targets
+  let g:qs_max_chars=100
+
+  Plug 'vim-airline/vim-airline' " lightweight statusbar
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'psliwka/vim-smoothie'
+  let g:airline_powerline_fonts=1
+  let g:airline#extensions#tabline#enabled=1
+  let g:airline_section_y = ''
+  let g:airline_theme='minimalist'
+
+  Plug 'psliwka/vim-smoothie' " smooth scrolling
+  " default is 20
+  let g:smoothie_update_interval = 7
+  " default is 10
+  let g:smoothie_base_speed = 30
+
   " Plug 'yuttie/comfortable-motion.vim'
   " Plug 'dodie/vim-fibo-indent'
 
@@ -79,24 +123,29 @@ call plug#begin('~/.vim/plugged')
 
 " Files
 "----------
-  " Integrate with fzf
+
+" Integrate with fzf
   Plug 'junegunn/fzf.vim'
+  Plug '/usr/local/opt/fzf'
 
   " Use a centered floating window
   let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.95 } }
-  " let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-  "
+
   " :GFiles respects .gitignore (over :FZF or :Files)
   nnoremap <C-p> :GFiles<CR>
   nnoremap <C-l> :Lines<CR>
   nnoremap <C-g> :Rg<CR>
   nnoremap <C-b> :Buffers<CR>
 
-  Plug 'scrooloose/nerdtree'
-  Plug 'tpope/vim-fugitive'
-  Plug 'mhinz/vim-startify'
+  Plug 'scrooloose/nerdtree' " interactive file explorer
+  let g:NERDTreeWinSize=25
+  nnoremap <Leader>t :NERDTreeToggle<CR>
+  nnoremap <Leader>f :NERDTreeFind<CR>
+  let NERDTreeQuitOnOpen = 1
 
-  Plug '/usr/local/opt/fzf'
+  Plug 'tpope/vim-fugitive'
+
+  Plug 'mhinz/vim-startify'
 
 " Shortcuts
 "----------
@@ -132,41 +181,18 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+" leave these here
+colorscheme badwolf
+let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
 "--------------------
 " Plugin Options
 "--------------------
-" airline
-"----------
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled=1
-let g:airline_section_y = ''
-let g:airline_theme='minimalist'
-let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
 " === coc.nvim === "
 nmap <silent> <leader>dd <Plug>(coc-definition)
 nmap <silent> <leader>dr <Plug>(coc-references)
 nmap <silent> <leader>dj <Plug>(coc-implementation)
-
-" NERDTree
-"----------
-let g:NERDTreeWinSize=25
-nnoremap <Leader>t :NERDTreeToggle<CR>
-nnoremap <Leader>f :NERDTreeFind<CR>
-let NERDTreeQuitOnOpen = 1
-
-" Git gutter
-"----------
-let g:gitgutter_sign_added = '•'
-let g:gitgutter_sign_modified = '•'
-let g:gitgutter_sign_removed = '•'
-let g:gitgutter_sign_removed_first_line = '-'
-let g:gitgutter_sign_modified_removed = '••'
-
-highlight GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
-highlight GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
-highlight GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
 
 " Codi
 "----------
@@ -200,17 +226,6 @@ highlight ALEWarningSign guifg=orange
 "----------
 let g:vimwiki_hl_cb_checked = 2
 
-" goyo
-"----------
-let g:goyo_width=100
-" let g:goyo_height=50
-let g:goyo_linenr=0
-nnoremap <leader>g :Goyo<CR>
-
-" limelight
-"----------
-nnoremap <leader>l :Limelight!!<CR>
-
 " vim-commentary
 "----------
 augroup SyntaxForCoffee
@@ -222,40 +237,17 @@ augroup END
 "-----------
 nnoremap <leader>m :MundoToggle<CR>
 
-" Highlighted Yank
-"-----------
-let g:highlightedyank_highlight_duration = 500
-
 " emmet
 "-----------
 let g:user_emmet_leader_key='<C-E>'
-
-" quick-scope
-"-----------
-let g:qs_max_chars=100
-
-" vim-illuminate
-"-----------
-let g:Illuminate_delay = 250 " Default is 250
-let g:Illuminate_highlightUnderCursor = 0 " don't highlight under cursor with 0
-" hi illuminatedWord cterm=cursorline gui=cursorline
-hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
 
 " webdevicons
 "-----------
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
-" vim-smoothie
-"-----------
-" default is 20
-let g:smoothie_update_interval = 10
-" default is 10
-let g:smoothie_base_speed = 25
-
 "--------------------
 " Visual
 "--------------------
-colorscheme badwolf
 
 " JavaScript colors
 "----------
@@ -463,13 +455,6 @@ endfunction
 augroup showHyperlinksInHelp
   autocmd BufWinEnter *.txt setlocal cole=0
 augroup END
-
-" replaced with plugin
-" remove deleted marks from shada
-" augroup Force_Delete_Marks
-"   autocmd!
-"   autocmd bufwinleave *.* wshada!
-" augroup end
 
 " outputs highlight group below cursor with leader hi
 nmap <leader>hi :call <SID>SynStack()<CR>
