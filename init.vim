@@ -81,10 +81,11 @@ call plug#begin('~/.vim/plugged')
 "----------
   " Integrate with fzf
   Plug 'junegunn/fzf.vim'
+
   " Use a centered floating window
-  " let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
-  " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-  let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+  let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.95 } }
+  " let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+  "
   " :GFiles respects .gitignore (over :FZF or :Files)
   nnoremap <C-p> :GFiles<CR>
   nnoremap <C-l> :Lines<CR>
@@ -120,6 +121,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'w0rp/ale'
   Plug 'zhimsel/vim-stay'
   Plug 'suan/vim-instant-markdown'
+
+  Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 
   Plug 'semanser/vim-outdated-plugins'
   " do not show message if all plugins are up to date
@@ -482,64 +485,6 @@ endfunc
 "   autocmd!
 "   autocmd BufNewFile,BufRead *.tsx set filetype=typescript
 " augroup END
-
-function! CreateCenteredFloatingWindow()
-  let width = min([&columns - 4, max([80, &columns - 20])]) - 10
-  let height = min([&lines - 4, max([20, &lines - 10])])
-  let top = ((&lines - height) / 2) - 1
-  let left = (&columns - width) / 2
-  let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
-
-  let top = "╭" . repeat("─", width - 2) . "╮"
-  let mid = "│" . repeat(" ", width - 2) . "│"
-  let bot = "╰" . repeat("─", width - 2) . "╯"
-  let lines = [top] + repeat([mid], height - 2) + [bot]
-  let s:buf = nvim_create_buf(v:false, v:true)
-  call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
-  call nvim_open_win(s:buf, v:true, opts)
-  set winhl=Normal:Floating
-  let opts.row += 1
-  let opts.height -= 2
-  let opts.col += 2
-  let opts.width -= 4
-  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-  au BufWipeout <buffer> exe 'bw '.s:buf
-endfunction
-
-" Floating windows for fzf with previews
-" let g:height = float2nr(&lines * 0.9)
-" let g:width = float2nr(&columns * 0.95)
-" let g:preview_width = float2nr(&columns * 0.7)
-" let g:fzf_buffers_jump = 1
-" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-" let $FZF_DEFAULT_OPTS=" --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4 --preview 'if file -i {}|grep -q binary; then file -b {}; else bat --style=changes --color always --line-range :40 {}; fi' --preview-window right:" . g:preview_width
-" let g:fzf_layout = { 'window': 'call FloatingFZF(' . g:width . ',' . g:height . ')' }
-
-" Floating windows for fzf
-" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
-" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
-" function! FloatingFZF()
-"   let buf = nvim_create_buf(v:false, v:true)
-"   call setbufvar(buf, '&signcolumn', 'no')
-
-"   let height = float2nr(10)
-"   let width = float2nr(80)
-"   let horizontal = float2nr((&columns - width) / 2)
-"   let vertical = 1
-
-"   let opts = {
-"         \ 'relative': 'editor',
-"         \ 'row': vertical,
-"         \ 'col': horizontal,
-"         \ 'width': width,
-"         \ 'height': height,
-"         \ 'style': 'minimal'
-"         \ }
-
-"   call nvim_open_win(buf, v:true, opts)
-" endfunction
 
 "--------------------
 " Abbreviations
