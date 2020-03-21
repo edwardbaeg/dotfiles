@@ -123,13 +123,13 @@ call plug#begin('~/.vim/plugged')
 
 " Files
 "----------
+
 " Integrate with fzf
-  Plug 'junegunn/fzf.vim' " fuzzy finder integration
+  Plug 'junegunn/fzf.vim'
   Plug '/usr/local/opt/fzf'
 
   " Use a centered floating window
-  " let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
-  let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+  let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.95 } }
 
   " :GFiles respects .gitignore (over :FZF or :Files)
   nnoremap <C-p> :GFiles<CR>
@@ -170,6 +170,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'w0rp/ale'
   Plug 'zhimsel/vim-stay'
   Plug 'suan/vim-instant-markdown'
+
+  Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 
   Plug 'semanser/vim-outdated-plugins'
   " do not show message if all plugins are up to date
@@ -468,29 +470,6 @@ endfunc
 "   autocmd!
 "   autocmd BufNewFile,BufRead *.tsx set filetype=typescript
 " augroup END
-
-function! CreateCenteredFloatingWindow()
-  let width = min([&columns - 4, max([80, &columns - 20])]) - 10
-  let height = min([&lines - 4, max([20, &lines - 10])])
-  let top = ((&lines - height) / 2) - 1
-  let left = (&columns - width) / 2
-  let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
-
-  let top = "╭" . repeat("─", width - 2) . "╮"
-  let mid = "│" . repeat(" ", width - 2) . "│"
-  let bot = "╰" . repeat("─", width - 2) . "╯"
-  let lines = [top] + repeat([mid], height - 2) + [bot]
-  let s:buf = nvim_create_buf(v:false, v:true)
-  call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
-  call nvim_open_win(s:buf, v:true, opts)
-  set winhl=Normal:Floating
-  let opts.row += 1
-  let opts.height -= 2
-  let opts.col += 2
-  let opts.width -= 4
-  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-  au BufWipeout <buffer> exe 'bw '.s:buf
-endfunction
 
 "--------------------
 " Abbreviations

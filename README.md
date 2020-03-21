@@ -47,7 +47,6 @@ This is my terminal-based development set up! Always a work progress.
 
 **npm packages** `(npm -g ls --depth=0)`:
 - `eslint` javascript linter
-- `git-open` open github repo in browser
 - `instant-markdown` live preview markdown with (neo)vim
 - `tldr` community written short man pages
 - `vtop` visual terminal activity monitor
