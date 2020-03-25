@@ -1,6 +1,8 @@
 ## Overclocking
+### Info
 location: `/boot/config.txt`
 
+### Code
 ```
 # Overclocking
 over_voltage=5.5
@@ -9,6 +11,7 @@ arm_freq=2000
 ```
 
 ## Display Module
+### Info
 ref: https://github.com/goodtft/LCD-show
 ref: https://diy.2pmc.net/3-5-inch-lcd-tft-screen-raspberry-pi-display-touch-install-fix-inverted-colors/
 model: xpt2046
@@ -16,6 +19,7 @@ model: xpt2046
 
 location: `/boot/config.txt`
 
+### Code
 ```
 # copy pasted for LCD
 dtoverlay=waveshare35c,fps=50,speed=24000000,debug=32:rotate=90
