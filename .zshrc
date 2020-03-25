@@ -40,7 +40,7 @@ zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
 zplug "plugins/colored-man-pages", from:oh-my-zsh
-# zplug "plugins/tmux", from:oh-my-zsh
+zplug "plugins/tmux", from:oh-my-zsh
 
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
@@ -86,7 +86,6 @@ alias gdt="git difftool"
 alias ghist="git hist"
 alias ghista="git hista"
 alias ghistb="git histb"
-alias go="git open"
 alias gpo="git push && git open"
 alias ogh="open https://github.com/edwardbaeg"
 alias gmm="git merge master"
@@ -100,6 +99,13 @@ alias glmm="git checkout master && git pull && git checkout - && git merge maste
 alias grpo="git remote prune origin"
 alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git branch -d"
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
+
+# alias `git` to use `hub`
+# this is currently broken
+eval "$(hub alias -s)"
+# alias go="hub browse"
+
+alias go="git open"
 
 #-- commands
 alias py="python3"
@@ -128,8 +134,10 @@ alias ls="exa"
 alias serv="python3 -m http.server"
 
 #-- pi
-alias sshpi="ssh pi@192.168.1.22"
-alias sshpiz="ssh pi@192.168.1.32"
+alias sshpi="ssh pi@192.168.1.100"
+alias sshpiw="ssh pi@192.168.1.101"
+alias sshpiz="ssh pi@192.168.1.102"
+alias sshpizw="ssh pi@192.168.1.103" # not working yet
 
 #-- functions
 function cs () {
@@ -152,7 +160,7 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # Grain
 # source asdf
-# source /usr/local/opt/asdf/asdf/sh
+source /usr/local/opt/asdf/asdf.sh
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
