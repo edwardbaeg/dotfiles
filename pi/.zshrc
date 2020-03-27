@@ -72,12 +72,17 @@ export ZSH="/home/pi/.oh-my-zsh"
 
 source $ZSH/oh-my-zsh.sh
 
+# Use vim by default
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 # zplug stuffs
 source ~/.zplug/init.zsh
 
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/z", from:oh-my-zsh
 zplug "plugins/vi-mode", from:oh-my-zsh
+zplug "plugins/tmux", from:oh-my-zsh
 
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search"
@@ -95,13 +100,20 @@ alias vz="nvim ~/.zshrc"
 alias sz="source ~/.zshrc"
 alias nf="neofetch"
 alias nv="nvim ~/.config/nvim/init.vim"
+alias vt="nvim ~/.tmux.conf"
 
 #- rpi
 alias sauu="sudo apt-get update && sudo apt-get upgrade"
 alias ssctl="sudo systemctl"
 alias pitemp="vcgencmd measure_temp"
 alias sudo="sudo "
-alias sagi="sudo api-get install"
+alias sagi="sudo apt-get install"
 
 alias logqb="sudo journalctl -u qbittorrent.service"
 alias llogqb="sudo journalctl -f -u qbittorrent.service"
+
+# fzf
+# git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+# ~/.fzf/install
+# load fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
