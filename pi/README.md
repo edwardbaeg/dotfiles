@@ -66,6 +66,22 @@ display_rotate=0
 - enable camera using `sudo raspi-config`
 - `raspistill [-vf -hf] <location>.png`
 
+```camera.sh
+#!/bin/bash
+
+DATE=$(date +"%Y-%m-%d_%H%M")
+
+# use -vf or -hf to flip the image
+raspistill -o /home/pi/camera/$DATE.jpg
+```
+
+- timelapse
+  - `raspistill -t 60000 -tl 1000 -o /home/pi/timelapse/image%04d.jpg`
+
+- create video (ffmpeg)
+  - `ffmpeg -r 10 -i image%04d.jpg -s 1280x720 -vcodec libx264 video.mp4`
+  - where `10` is the fps
+
 ## Projects and links
 - qbitorrent-nox https://www.joelj.net/raspberrypi/setup-qbittorrent-server-in-raspberry-pi/
 `sudo chmod -R ugo+rw /path/to/share` 
