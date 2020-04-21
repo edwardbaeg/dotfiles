@@ -102,7 +102,7 @@ alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) 
 
 # alias `git` to use `hub`
 # this is currently broken
-eval "$(hub alias -s)"
+# eval "$(hub alias -s)"
 # alias go="hub browse"
 
 alias go="git open"
@@ -137,7 +137,7 @@ alias serv="python3 -m http.server"
 alias sshpi="ssh pi@192.168.1.100"
 alias sshpiw="ssh pi@192.168.1.101"
 alias sshpiz="ssh pi@192.168.1.102"
-alias sshpizw="ssh pi@192.168.1.103" # not working yet
+alias sshpizw="ssh pi@192.168.1.103"
 
 #-- functions
 function cs () {
@@ -148,6 +148,15 @@ function mkcd () {
   mkdir -p -- "$1" &&
     cd -P -- "$1"
 }
+
+# No args: `git status`; with args: `git `
+# function g () {
+#   if [[ $# > 0 ]]; then
+#     git "$@"
+#   else
+#     git status
+#   fi
+# }
 
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
