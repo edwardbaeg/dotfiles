@@ -135,9 +135,16 @@ alias serv="python3 -m http.server"
 
 #-- pi
 alias sshpi="ssh pi@192.168.1.100"
+alias sshpirate="ssh pi@raspberrypirate"
 alias sshpiw="ssh pi@192.168.1.101"
 alias sshpiz="ssh pi@192.168.1.102"
 alias sshpizw="ssh pi@192.168.1.103"
+
+# alias sshbb="ssh pi@192.168.1.4"
+
+function sshbb () {
+  ssh pi@192.168.1.4 "$@"
+}
 
 #-- functions
 function cs () {
