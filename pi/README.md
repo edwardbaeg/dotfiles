@@ -28,6 +28,14 @@ sudo apt-get update && sudo apt-get upgrade
   - `sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"`
 - neofetch
 
+## SSH login without password
+Create a pair of auth keys and add public key to host machine's `authorized_keys`.
+```
+ssh-keygen -t rsa
+ssh b@B mkdir -p .ssh
+cat .ssh/id_rsa.pub | ssh b@B 'cat >> .ssh/authorized_keys'
+```
+
 ## Overclocking pi4
 #### Info
 TODO: add corresponding voltage values
