@@ -102,7 +102,7 @@ alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) 
 
 # alias `git` to use `hub`
 # this is currently broken
-eval "$(hub alias -s)"
+# eval "$(hub alias -s)"
 # alias go="hub browse"
 
 alias go="git open"
@@ -135,9 +135,16 @@ alias serv="python3 -m http.server"
 
 #-- pi
 alias sshpi="ssh pi@192.168.1.100"
+alias sshpirate="ssh pi@raspberrypirate"
 alias sshpiw="ssh pi@192.168.1.101"
 alias sshpiz="ssh pi@192.168.1.102"
 alias sshpizw="ssh pi@192.168.1.103" # not working yet
+
+# alias sshbb="ssh pi@192.168.1.4"
+
+function sshbb () {
+  ssh pi@192.168.1.4 "$@"
+}
 
 #-- functions
 function cs () {
