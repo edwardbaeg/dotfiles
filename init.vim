@@ -27,6 +27,11 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
 
+" Spellcheck
+" use `zg` to add word to dictionary
+set spelllang=en
+set spell
+
 "--------------------
 " Plugins
 "--------------------
@@ -152,7 +157,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'jiangmiao/auto-pairs'
-  Plug 'machakann/vim-sandwich'
+  " Plug 'machakann/vim-sandwich'
   Plug 'tommcdo/vim-exchange'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
@@ -274,17 +279,21 @@ highlight repeat cterm=italic gui=italic
 highlight exception cterm=italic gui=italic
 " highlight operator cterm=italic gui=italic
 
+" https://github.com/pangloss/vim-javascript/blob/master/syntax/javascript.vim
 highlight jsNull guifg=#ff9eb8 cterm=italic gui=italic
 highlight jsThis guifg=#ff9eb8 cterm=italic gui=italic
 highlight jsUndefined guifg=#ff9eb8 cterm=italic gui=italic
+highlight jsFunction guifg=#ff9eb8 cterm=italic gui=italic
 
 highlight jsImport guifg=#9edf1c cterm=italic gui=italic
 highlight jsFrom guifg=#9edf1c cterm=italic gui=italic
 highlight jsExport guifg=#9edf1c cterm=italic gui=italic
+highlight jsModuleAs guifg=#9edf1c cterm=italic gui=italic
+
+highlight jsAsyncKeyword guifg=#ff2c4b cterm=italic gui=italic
 
 " new
 highlight jsOperatorKeyword cterm=italic gui=italic guifg=#ff2c4b
-
 " const let
 highlight jsStorageClass cterm=italic gui=italic guifg=#ff2c4b
 
@@ -332,21 +341,33 @@ highlight whitespace ctermbg=white
 
 " Window
 "----------
-set scrolloff=10 " buffer top and bottom
+set scrolloff=8 " buffer top and bottom
 
-" highlight past 80 chars
+" Highlight past 80 chars
 highlight OverLength guibg=black
 match OverLength /\%81v.\+/
-" execute "set colorcolumn=" . join(range(81,335), ',')
 " set colorcolumn=90
 
 set cursorline
 set cursorcolumn
-" set nocursorline
-set cc=
-" augroup ClearColorColumn
-"   autocmd BufRead *.* set cc=""
-" augroup END
+
+" highlight CursorLine guibg=none ctermbg=none
+" highlight CursorLine guifg=white guibg=darkblue ctermfg=white ctermbg=darkblue
+
+" Only show cursorlines on active window and in normal mode
+" NOTE: esc does not trigger InsertLeave by default
+inoremap <c-c> <esc>
+augroup ShowLines
+  autocmd!
+  autocmd InsertLeave * set cursorline
+  autocmd InsertLeave * set cursorcolumn
+augroup END
+
+augroup HideLines
+  autocmd!
+  autocmd InsertEnter * set nocursorcolumn
+  autocmd InsertEnter * set nocursorline
+augroup END
 
 " Spelling
 "----------
@@ -396,13 +417,16 @@ set expandtab
 "--------------------
 " Mappings
 "--------------------
-" Exit insert mode
+" Exit insert mode with jk
 inoremap jk <esc>
-" inoremap kj <esc>
 
-" Move cursor around
+" Remap move cursor to ends of lines H / L
 nnoremap <S-h> ^
 nnoremap <S-l> $
+onoremap <S-h> ^
+onoremap <S-l> $
+vnoremap <S-h> ^
+vnoremap <S-l> $
 
 " Line wrap navigation
 nnoremap j gj
@@ -434,9 +458,21 @@ nnoremap K i<CR><ESC>
 " console.log the current line
 nnoremap <m-c> _iconsole.log(<ESC>A);<ESC>
 
-" open most recents
+" Open most recents
 nnoremap <C-m> :MRU<CR>
 
+" Use smart command line history navigation with ctrl-p/n
+" this doesn't work!!
+cnoremap <c-p> <up>
+cnoremap <c-n> <down>
+
+" Don't lose selection when using > or < to shift text
+" NOTE: this conflicts with .
+" xnoremap < <gv
+" xnoremap > >gv
+
+" Delete without copying to register
+nnoremap s "_d
 
 "--------------------
 " Scripts
@@ -475,3 +511,7 @@ endfunc
 " Abbreviations
 "--------------------
 " use iab
+
+
+" VIM NOTES
+" Folding
