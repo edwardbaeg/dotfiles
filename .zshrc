@@ -182,6 +182,7 @@ alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-hea
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
 alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
+alias ys="yarn start"
 
 # for asdf
 . /usr/local/opt/asdf/asdf.sh
