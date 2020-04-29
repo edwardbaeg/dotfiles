@@ -70,7 +70,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'machakann/vim-highlightedyank' " show yanked region
   let g:highlightedyank_highlight_duration = 500
 
-  Plug 'markonm/traces.vim' " range, pattern, and substitute preview for vim
+  " Plug 'markonm/traces.vim' " range, pattern, and substitute preview for vim
 
   Plug 'rrethy/vim-illuminate' "highlight other word under cursor
   let g:Illuminate_delay = 250 " Default is 250
