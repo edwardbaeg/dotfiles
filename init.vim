@@ -9,7 +9,6 @@
 " noremap j <NOP>
 " noremap k <NOP>
 
-"--------------------
 " Core
 "--------------------
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum" " enable italcs
@@ -20,7 +19,7 @@ syntax enable
 filetype plugin indent on
 set encoding=utf8
 set clipboard=unnamedplus " integrate with mac
-set clipboard=unnamed " integrate with windows
+" set clipboard=unnamed " integrate with windows
 set updatetime=500
 set undofile " set persistent undo
 set undodir=$HOME/.vim/undo
