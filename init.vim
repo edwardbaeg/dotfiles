@@ -134,7 +134,14 @@ call plug#begin('~/.vim/plugged')
   Plug '/usr/local/opt/fzf'
 
   " Use a centered floating window
+  " if exists('$TMUX')
+  "   let g:fzf_layout = { 'tmux': '-p90%,60%' }
+  " else
+  "   let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.95 } }
+  " endif
+
   let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.95 } }
+  " let g:fzf_preview_window = 'right:60%' " Always show preview
 
   " :GFiles respects .gitignore (over :FZF or :Files)
   nnoremap <C-p> :GFiles<CR>
@@ -151,6 +158,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
 
   Plug 'mhinz/vim-startify'
+  let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
 
 " Shortcuts
 "----------
@@ -421,12 +429,8 @@ set expandtab
 inoremap jk <esc>
 
 " Remap move cursor to ends of lines H / L
-nnoremap <S-h> ^
-nnoremap <S-l> $
-onoremap <S-h> ^
-onoremap <S-l> $
-vnoremap <S-h> ^
-vnoremap <S-l> $
+noremap <S-h> ^
+noremap <S-l> $
 
 " Line wrap navigation
 nnoremap j gj
