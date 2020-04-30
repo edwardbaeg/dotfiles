@@ -66,14 +66,17 @@ zplug load
 #-------------------
 #-- vim
 alias vim="nvim"
+alias v="nvim"
+alias oldvim="/usr/bin/vim"
+alias ovim="oldvim"
+
 alias vz="vim ~/.zshrc"
 alias sz="source ~/.zshrc"
 alias vv="vim ~/.vimrc"
 alias nv="nvim ~/.config/nvim/init.vim"
-alias v="nvim"
-alias oldvim="/usr/bin/vim"
-alias ovim="oldvim"
 alias vt="nvim ~/.tmux.conf"
+alias vh="nvim ~/.hammerspoon/init.lua"
+
 alias vm="nvim -c \"Startify | MRU\""
 alias vp="nvim -c \"Startify | GFiles\""
 alias vg="nvim -c \"Startify | Rg\""
