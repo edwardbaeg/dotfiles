@@ -1,6 +1,6 @@
-# .dotfiles
+# dotfiles
 This is my terminal-based development set up! Always a work progress.
-![screenshot](media/main.png)
+![screenshot](assets/main.png)
 
 ## Terminal
 **App**: iterm2
@@ -61,7 +61,6 @@ This is my terminal-based development set up! Always a work progress.
 **Plugin Manager**: `vim-plug` minimal and super fast with parallel operations
 
 **Custom JS Syntax Highlighting Rules + Colors** for minimal visual noise. Based on badwolf
-![screenshot](media/javascript-syntax.png)
 
 **Top Plugins**:
 - Visual
@@ -94,6 +93,9 @@ This is my terminal-based development set up! Always a work progress.
 ## .gitconfig
 - `difftool` diff-so-fancy
 - `mergetool` meld
+
+## hammerspoon (init.lua)
+OSX automation
 
 # How To Set Up And Configure
 ### Initial setup from a clean Mac
