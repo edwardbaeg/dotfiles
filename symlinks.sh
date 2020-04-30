@@ -9,7 +9,7 @@ if test -f "$HAMMERSPOON_PATH"; then
 
   # create a backup
   echo "hammerspoon file exists, creating backup"
-  mv $HAMMERSPOON_PATH $HAMMERSPOON_FILE.backup
+  mv $HAMMERSPOON_PATH $HAMMERSPOON_PATH.backup
 fi
 
 ln -s $DIR/init.lua $HAMMERSPOON_PATH
