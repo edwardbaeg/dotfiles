@@ -94,6 +94,9 @@ This is my terminal-based development set up! Always a work progress.
 - `difftool` diff-so-fancy
 - `mergetool` meld
 
+## hammerspoon (init.lua)
+OSX automation
+
 # How To Set Up And Configure
 ### Initial setup from a clean Mac
 This includes installing brew, git, python, node, etc
