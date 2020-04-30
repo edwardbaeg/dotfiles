@@ -1,20 +1,21 @@
 " ~/.config/nvim/init.vim
 
-" stop using j/k without nums
-" stop using h/l as much
-"
-" Stop using these!
+" Stop using j/k/h/l so much
 " noremap h <NOP>
 " noremap l <NOP>
 " noremap j <NOP>
 " noremap k <NOP>
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Core
-"--------------------
+"-------------------------------------------------------------------------------
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum" " enable italcs
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum" " enable italics
-set termguicolors
+
+if has('termguicolors')
+  set termguicolors
+endif
+
 set mouse=a
 syntax enable
 filetype plugin indent on
@@ -26,19 +27,21 @@ set undofile " set persistent undo
 set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
+set matchpairs+=<:> " Add additional match pairs
 
 " Spellcheck
 " use `zg` to add word to dictionary
 set spelllang=en
 set spell
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Plugins
-"--------------------
+"-------------------------------------------------------------------------------
+
 call plug#begin('~/.vim/plugged')
 
-" Visual
-"----------
+  " Visual
+  "-----------------------------------------------------------------------------
   Plug 'sjl/badwolf'
 
   Plug 'airblade/vim-gitgutter' " git diff in the gutter
@@ -99,9 +102,9 @@ call plug#begin('~/.vim/plugged')
   " Plug 'yuttie/comfortable-motion.vim'
   " Plug 'dodie/vim-fibo-indent'
 
-" Language
-"----------
-  " Javascript/Typescript
+  " Language
+  "-----------------------------------------------------------------------------
+  " Javascript
   Plug 'elixir-editors/vim-elixir'
   " Plug 'kchmck/vim-coffee-script'
   Plug 'mattn/emmet-vim'
@@ -126,10 +129,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'elixir-editors/vim-elixir'
 
 
-" Files
-"----------
+  " Files
+  "-----------------------------------------------------------------------------
 
-" Integrate with fzf
+  " Integrate with fzf
   Plug 'junegunn/fzf.vim'
   Plug '/usr/local/opt/fzf'
 
@@ -160,8 +163,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'mhinz/vim-startify'
   let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
 
-" Shortcuts
-"----------
+  " Shortcuts
+  "-----------------------------------------------------------------------------
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'jiangmiao/auto-pairs'
@@ -173,8 +176,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'christoomey/vim-sort-motion'
 
-" Utility
-"----------
+  " Plug 'takac/vim-hardtime'
+  let g:hardtime_default_on = 1
+  let g:hardtime_timeout = 250
+
+  " Utility
+  "-----------------------------------------------------------------------------
   Plug 'Carpetsmoker/undofile_warn.vim'
   Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
   Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
@@ -198,9 +205,9 @@ call plug#end()
 colorscheme badwolf
 let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Plugin Options
-"--------------------
+"-------------------------------------------------------------------------------
 
 " === coc.nvim === "
 nmap <silent> <leader>dd <Plug>(coc-definition)
@@ -208,16 +215,16 @@ nmap <silent> <leader>dr <Plug>(coc-references)
 nmap <silent> <leader>dj <Plug>(coc-implementation)
 
 " Codi
-"----------
+"-------------------------------------------------------------------------------
 let g:codi#width=30
 
 " Deoplete
-"----------
+"-------------------------------------------------------------------------------
 let g:deoplete#enable_at_startup=1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " ultisnips
-"----------
+"-------------------------------------------------------------------------------
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -227,7 +234,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 " Ale
-"----------
+"-------------------------------------------------------------------------------
 let g:ale_sign_error = '►'
 let g:ale_sign_warning = '-'
 highlight clear ALEErrorSign
@@ -236,11 +243,11 @@ highlight ALEErrorSign guifg=red
 highlight ALEWarningSign guifg=orange
 
 " vimwiki
-"----------
+"-------------------------------------------------------------------------------
 let g:vimwiki_hl_cb_checked = 2
 
 " vim-commentary
-"----------
+"-------------------------------------------------------------------------------
 augroup SyntaxForCoffee
   autocmd BufRead *.coffee setlocal filetype=coffee
   autocmd FileType coffee setlocal commentstring=#\ %s
@@ -258,12 +265,12 @@ let g:user_emmet_leader_key='<C-E>'
 "-----------
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Visual
-"--------------------
+"-------------------------------------------------------------------------------
 
 " JavaScript colors
-"----------
+"-------------------------------------------------------------------------------
 " #ff2c4b
 " #ff9eb8
 " #f4cf86
@@ -306,7 +313,7 @@ highlight jsOperatorKeyword cterm=italic gui=italic guifg=#ff2c4b
 highlight jsStorageClass cterm=italic gui=italic guifg=#ff2c4b
 
 " tsx colors
-"----------
+"-------------------------------------------------------------------------------
 " dark red
 " hi tsxTagName guifg=#E06C75
 
@@ -320,25 +327,25 @@ highlight jsStorageClass cterm=italic gui=italic guifg=#ff2c4b
 " hi tsxAttrib guifg=#F8BD7F cterm=italic
 
 " vimwiki colors
-"----------
+"-------------------------------------------------------------------------------
 highlight vimwikiheader1 guifg=red gui=italic
 highlight vimwikiheader2 guifg=lightgreen gui=italic
 highlight vimwikiheader3 guifg=red gui=italic
 
 " Gutter
-"----------
+"-------------------------------------------------------------------------------
 set ruler
 set number "nu
 set relativenumber " rnu
 
 " Status
-"----------
+"-------------------------------------------------------------------------------
 set laststatus=2 " always show status line
 set cmdheight=2
 set showcmd
 
 " Text
-"----------
+"-------------------------------------------------------------------------------
 set showmatch
 set matchtime=3 " multiple of 100ms
 set list
@@ -348,7 +355,7 @@ set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
 highlight whitespace ctermbg=white
 
 " Window
-"----------
+"-------------------------------------------------------------------------------
 set scrolloff=8 " buffer top and bottom
 
 " Highlight past 80 chars
@@ -378,12 +385,12 @@ augroup HideLines
 augroup END
 
 " Spelling
-"----------
+"-------------------------------------------------------------------------------
 set spelllang=en
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Folding
-"--------------------
+"-------------------------------------------------------------------------------
 set foldcolumn=2
 
 " replaced with plugin
@@ -393,9 +400,9 @@ set foldcolumn=2
 "   autocmd bufwinenter *.* silent loadview
 " augroup end
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Searching and Highlighting
-"--------------------
+"-------------------------------------------------------------------------------
 set path+=** " recursive fuzzy search with :find
 set incsearch " search realtime
 set hlsearch
@@ -414,17 +421,17 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Tabbing
-"--------------------
+"-------------------------------------------------------------------------------
 set tabstop=2
 set shiftwidth=2
 set smarttab
 set expandtab
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Mappings
-"--------------------
+"-------------------------------------------------------------------------------
 " Exit insert mode with jk
 inoremap jk <esc>
 
@@ -478,9 +485,9 @@ cnoremap <c-n> <down>
 " Delete without copying to register
 nnoremap s "_d
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Scripts
-"--------------------
+"-------------------------------------------------------------------------------
 " view output from running in terminal
 noremap <A-b> :call Build() <cr>
 function! Build()
@@ -511,9 +518,9 @@ endfunc
 "   autocmd BufNewFile,BufRead *.tsx set filetype=typescript
 " augroup END
 
-"--------------------
+"-------------------------------------------------------------------------------
 " Abbreviations
-"--------------------
+"-------------------------------------------------------------------------------
 " use iab
 
 
