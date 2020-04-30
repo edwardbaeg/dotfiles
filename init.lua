@@ -32,12 +32,13 @@ hs.hotkey.bind({"cmd", "ctrl"}, "L", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screenMax = win:screen():frame()
+  local needsResize = not (f.w == screenMax.w / 2 and f.h == screenMax.h)
 
   f.x = screenMax.x + (screenMax.w / 2)
   f.y = screenMax.y
   f.w = screenMax.w / 2
   f.h = screenMax.h
-  win:setFrame(f, 0.1)
+  win:setFrame(f, needsResize and 0 or 0.1)
 end)
 
 -- Move window to left half
@@ -45,12 +46,13 @@ hs.hotkey.bind({"cmd", "ctrl"}, "H", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screenMax = win:screen():frame()
+  local needsResize = not (f.w == screenMax.w / 2 and f.h == screenMax.h)
 
   f.x = screenMax.x
   f.y = screenMax.y
   f.w = screenMax.w / 2
   f.h = screenMax.h
-  win:setFrame(f, 0.1)
+  win:setFrame(f, needsResize and 0 or 0.1)
 end)
 
 -- Move window to top half
@@ -58,12 +60,13 @@ hs.hotkey.bind({"cmd", "ctrl"}, "K", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screenMax = win:screen():frame()
+  local needsResize = not (f.w == screenMax.w and f.h == screenMax.h / 2)
 
   f.x = screenMax.x
   f.y = screenMax.y
   f.w = screenMax.w
   f.h = screenMax.h /2
-  win:setFrame(f, 0)
+  win:setFrame(f, needsResize and 0 or 0.1)
 end)
 
 -- Move window to bottom half
@@ -71,12 +74,13 @@ hs.hotkey.bind({"cmd", "ctrl"}, "J", function()
   local win = hs.window.focusedWindow()
   local f = win:frame()
   local screenMax = win:screen():frame()
+  local needsResize = not (f.w == screenMax.w and f.h == screenMax.h / 2)
 
   f.x = screenMax.x
   f.y = screenMax.y + (screenMax.h / 2)
   f.w = screenMax.w
   f.h = screenMax.h /2
-  win:setFrame(f, 0)
+  win:setFrame(f, needsResize and 0 or 0.1)
 end)
 
 --[[ NOTES
