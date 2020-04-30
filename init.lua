@@ -37,7 +37,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "L", function()
   f.y = screenMax.y
   f.w = screenMax.w / 2
   f.h = screenMax.h
-  win:setFrame(f)
+  win:setFrame(f, 0.1)
 end)
 
 -- Move window to left half
@@ -50,7 +50,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "H", function()
   f.y = screenMax.y
   f.w = screenMax.w / 2
   f.h = screenMax.h
-  win:setFrame(f)
+  win:setFrame(f, 0.1)
 end)
 
 -- Move window to top half
@@ -63,7 +63,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "K", function()
   f.y = screenMax.y
   f.w = screenMax.w
   f.h = screenMax.h /2
-  win:setFrame(f)
+  win:setFrame(f, 0)
 end)
 
 -- Move window to bottom half
@@ -76,7 +76,7 @@ hs.hotkey.bind({"cmd", "ctrl"}, "J", function()
   f.y = screenMax.y + (screenMax.h / 2)
   f.w = screenMax.w
   f.h = screenMax.h /2
-  win:setFrame(f)
+  win:setFrame(f, 0)
 end)
 
 --[[ NOTES
