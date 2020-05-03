@@ -44,6 +44,10 @@ This is my terminal-based development set up! Always a work progress.
   - `thefuck` quick fix failed commands
   - `shpotify` control spotify
 
+**brew casks** `(brew cask list)`:
+- `chromium` open source of chrome
+- `mpv` configurable media player
+
 **npm packages** `(npm -g ls --depth=0)`:
 - `eslint` javascript linter
 - `instant-markdown` live preview markdown with (neo)vim
