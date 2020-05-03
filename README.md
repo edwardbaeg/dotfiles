@@ -25,18 +25,17 @@ This is my terminal-based development set up! Always a work progress.
 - Utilities
   - `zplug` plugin manager for zsh
   - `fzf` fuzzy finder
-  - `howdoi` search stackexchange
-  - `hub` github wrapper
   - `neovim` better vim (async, community developed)
   - `ranger` visual file manager
+  - `highlight` adds syntax highlighting to ranger previews
   - `ripgrep` better grep (and faster than ag)
   - `tmux` terminal multiplexer
   - `zsh` better shell
+  - `ncdu` ncurses disk usage viewer
 - Visual
   - `bat` better cat (syntax highlighting and pager)
   - `diff-so-fancy` better diff
   - `exa` better ls, can draw directory trees
-  - `highlight` adds syntax highlighting to ranger previews
   - `tty-clock` terminal clock
   - `zsh-completions` command line autocompletions
 - Fun
