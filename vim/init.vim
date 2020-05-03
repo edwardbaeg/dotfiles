@@ -143,7 +143,7 @@ call plug#begin('~/.vim/plugged')
   "   let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.95 } }
   " endif
 
-  let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.95 } }
+  let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.90 } }
   " let g:fzf_preview_window = 'right:60%' " Always show preview
 
   " :GFiles respects .gitignore (over :FZF or :Files)
