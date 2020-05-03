@@ -154,8 +154,8 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'scrooloose/nerdtree' " interactive file explorer
   let g:NERDTreeWinSize=25
-  nnoremap <Leader>t :NERDTreeToggle<CR>
-  nnoremap <Leader>f :NERDTreeFind<CR>
+  nnoremap <Leader>n :NERDTreeToggle<CR>
+  " nnoremap <Leader>f :NERDTreeFind<CR>
   let NERDTreeQuitOnOpen = 1
 
   Plug 'tpope/vim-fugitive'
@@ -190,6 +190,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'w0rp/ale'
   Plug 'zhimsel/vim-stay'
   Plug 'suan/vim-instant-markdown'
+  Plug 'voldikss/vim-floaterm'
+    " let g:floaterm_wintype='floating'
+    let g:floaterm_wintitle=v:false " hide foaterm info 'floaterm: 1/1'
+    let g:floaterm_width=0.8 " as percentage of width
+    let g:floaterm_winblend=8 " alpha for window transparency
+    let g:floaterm_borderchars=['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+    let g:floaterm_autoclose=v:true
+    let g:floaterm_keymap_toggle='<Leader>t'
+    command! Ranger FloatermNew ranger
+    nnoremap <Leader>r :Ranger<CR>
 
   Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 
