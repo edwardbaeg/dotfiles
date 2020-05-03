@@ -134,6 +134,7 @@ alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias ls="exa"
 alias lg="lazygit"
+alias ..="cd .."
 
 alias serv="python3 -m http.server"
 
