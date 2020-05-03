@@ -173,8 +173,9 @@ function mkcd () {
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Use ag for fzf
-FZF_DEFAULT_COMMAND='rg -g ""'
+# Use rg for fzf
+# FZF_DEFAULT_COMMAND='rg -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --ignore'
 
 # for mysql
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
