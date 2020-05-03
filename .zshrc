@@ -1,5 +1,12 @@
 # ~/.zshrc
 
+# -- NOTES ---------------------------------------------------------------------
+
+# Run the following to benchmark shell boot times
+# for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
+
+# -- Core ----------------------------------------------------------------------
+
 # Improve colors
 export TERM="xterm-256color"
 
@@ -8,8 +15,8 @@ setopt inc_append_history
 setopt hist_ignore_dups
 setopt share_history
 
+# This is pretty slow?
 # Configure thefuck alias
-# this is pretty slow
 # eval $(thefuck --alias)
 # alias f="fuck"
 
@@ -19,27 +26,26 @@ export EDITOR=nvim
 # Add custom programs
 export PATH=~/bin:$PATH
 
-#-- key bindings
+# Key bindings
 set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
 
-#-------------------
-# history settings
-#-------------------
+# History settings
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEhist=100000
 setopt appendhistory
 
-# Plugins ----------------------------------------------------------------------
+# fix ctrlp issues with zinit + tmux?
+# bindkey -e
 
-# After adding plugins, run `zgen reset` and then source
+# -- Plugins -------------------------------------------------------------------
+
+# NOTE: After adding plugins, run `zgen reset` and then source
 # load zgen
 source "${HOME}/.zgen/zgen.zsh"
 
-# if the init script doesn't exist
+# If the init script doesn't exist
 if ! zgen saved; then
-
-  # specify plugins here
 
   # load oh-my-zsh first
   zgen oh-my-zsh
@@ -53,22 +59,22 @@ if ! zgen saved; then
   zgen load zdharma/fast-syntax-highlighting
   zgen load changyuheng/fz
   zgen load zsh-users/zsh-autosuggestions
+  zgen load paulirish/git-open
+    alias go="git open"
 
   # generate the init script from plugins above
   zgen save
 fi
 
-#-------------------
-# Aliases
-#-------------------
-#-- vim
+# -- Aliases -------------------------------------------------------------------
+
+# -- vim
 alias vim="nvim"
 alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 
 alias vz="vim ~/.zshrc"
-alias sz="source ~/.zshrc"
 alias vv="vim ~/.vimrc"
 alias nv="nvim ~/.config/nvim/init.vim"
 alias vt="nvim ~/.tmux.conf"
@@ -78,34 +84,28 @@ alias vm="nvim -c \"Startify | MRU\""
 alias vp="nvim -c \"Startify | GFiles\""
 alias vg="nvim -c \"Startify | Rg\""
 
-#-- tmux
+# -- Sourcing
 alias st="tmux source-file ~/.tmux.conf"
+alias sz="source ~/.zshrc"
 
-#-- git
+# -- git
 alias gdt="git difftool"
 alias ghist="git hist"
 alias ghista="git hista"
 alias ghistb="git histb"
 alias gpo="git push && git open"
-alias ogh="open https://github.com/edwardbaeg"
 alias gmm="git merge master"
 alias gfl="git fetch && git pull"
 alias gdm="git diff master"
 alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
+alias ogh="open https://github.com/edwardbaeg"
 
 alias glmm="git checkout master && git pull && git checkout - && git merge master"
 alias grpo="git remote prune origin"
 alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git branch -d"
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
-
-# alias `git` to use `hub`
-# this is currently broken
-# eval "$(hub alias -s)"
-# alias go="hub browse"
-
-alias go="git open"
 
 #-- commands
 alias py="python3"
@@ -177,15 +177,14 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore'
 # for mysql
 # export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
-# ------------------------------------------------------------------------------
-# Grain
-# ------------------------------------------------------------------------------
-# source asdf
+# -- Grain ---------------------------------------------------------------------
+
+# Source asdf
 source /usr/local/opt/asdf/asdf.sh
-# for asdf
 . /usr/local/opt/asdf/asdf.sh
 . /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
 
+# -- Aliases
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
@@ -193,12 +192,11 @@ alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 alias ys="yarn start"
 
-# for direnv
+# direnv
 eval "$(direnv hook zsh)"
+
+# ------------------------------------------------------------------------------
 
 # what is this??
 # export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-# fix ctrlp issues with zinit + tmux?
-# bindkey -e
 
