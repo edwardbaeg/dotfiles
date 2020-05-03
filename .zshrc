@@ -1,25 +1,26 @@
 # ~/.zshrc
 
-# improve colors
+# Improve colors
 export TERM="xterm-256color"
 
-# sharing history
+# Share history
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt share_history
 
-# configure thefuck alias
-eval $(thefuck --alias)
-alias f="fuck"
+# Configure thefuck alias
+# this is pretty slow
+# eval $(thefuck --alias)
+# alias f="fuck"
 
-# use nvim (for ranger)
+# Use nvim as default editor (eg, ranger)
 export EDITOR=nvim
 
-# add custom programs
+# Add custom programs
 export PATH=~/bin:$PATH
 
 #-- key bindings
-set -o ignoreeof # disable ctr-d from exiting shell
+set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
 
 #-------------------
 # history settings
@@ -29,37 +30,33 @@ HISTSIZE=100000
 SAVEhist=100000
 setopt appendhistory
 
-#-------------------
-# Plugins
-#-------------------
-# load zplug
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
+# Plugins ----------------------------------------------------------------------
 
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/z", from:oh-my-zsh
-zplug "plugins/vi-mode", from:oh-my-zsh
-zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/tmux", from:oh-my-zsh
+# After adding plugins, run `zgen reset` and then source
+# load zgen
+source "${HOME}/.zgen/zgen.zsh"
 
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "changyuheng/fz"
-zplug "zsh-users/zsh-syntax-highlighting"
+# if the init script doesn't exist
+if ! zgen saved; then
 
-zplug "themes/sorin", from:oh-my-zsh, as:theme
+  # specify plugins here
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  # load oh-my-zsh first
+  zgen oh-my-zsh
+  zgen oh-my-zsh themes/sorin
+  zgen oh-my-zsh plugins/git
+  zgen oh-my-zsh plugins/z
+  zgen oh-my-zsh plugins/vi-mode
+  zgen oh-my-zsh plugins/colored-man-pages
+  zgen oh-my-zsh plugins/tmux
+
+  zgen load zdharma/fast-syntax-highlighting
+  zgen load changyuheng/fz
+  zgen load zsh-users/zsh-autosuggestions
+
+  # generate the init script from plugins above
+  zgen save
 fi
-
-# Then, source plugins and add commands to $PATH
-# zplug load --verbose
-zplug load
 
 #-------------------
 # Aliases
@@ -147,11 +144,11 @@ alias sshpizw="ssh pi@192.168.1.103"
 
 # alias sshbb="ssh pi@192.168.1.4"
 
+#-- functions
 function sshbb () {
   ssh pi@192.168.1.4 "$@"
 }
 
-#-- functions
 function cs () {
   cd "$1" && exa;
 }
@@ -178,11 +175,17 @@ function mkcd () {
 export FZF_DEFAULT_COMMAND='rg --files --ignore'
 
 # for mysql
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+# export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
+# ------------------------------------------------------------------------------
 # Grain
+# ------------------------------------------------------------------------------
 # source asdf
 source /usr/local/opt/asdf/asdf.sh
+# for asdf
+. /usr/local/opt/asdf/asdf.sh
+. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
@@ -190,12 +193,12 @@ alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 alias ys="yarn start"
 
-# for asdf
-. /usr/local/opt/asdf/asdf.sh
-. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
-
 # for direnv
 eval "$(direnv hook zsh)"
 
 # what is this??
 # export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# fix ctrlp issues with zinit + tmux?
+# bindkey -e
+
