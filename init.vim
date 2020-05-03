@@ -194,10 +194,13 @@ call plug#begin('~/.vim/plugged')
     " let g:floaterm_wintype='floating'
     let g:floaterm_wintitle=v:false " hide foaterm info 'floaterm: 1/1'
     let g:floaterm_width=0.8 " as percentage of width
-    let g:floaterm_winblend=8 " alpha for window transparency
+    let g:floaterm_winblend=0 " alpha for window transparency
     let g:floaterm_borderchars=['─', '│', '─', '│', '╭', '╮', '╯', '╰']
     let g:floaterm_autoclose=v:true
     let g:floaterm_keymap_toggle='<Leader>t'
+    highlight Floaterm guibg=black
+
+    " use Ranger wrapper
     command! Ranger FloatermNew ranger
     nnoremap <Leader>r :Ranger<CR>
 
