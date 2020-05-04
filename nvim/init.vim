@@ -197,7 +197,7 @@ call plug#begin('~/.vim/plugged')
     let g:floaterm_winblend=0 " alpha for window transparency
     let g:floaterm_borderchars=['─', '│', '─', '│', '╭', '╮', '╯', '╰']
     let g:floaterm_autoclose=v:true
-    let g:floaterm_keymap_toggle='<Leader>t'
+    let g:floaterm_keymap_toggle='<C-T>'
     highlight Floaterm guibg=black
 
     " use Ranger wrapper
@@ -469,7 +469,7 @@ vnoremap <S-k> :move '<-2<CR>gv=gv
 " Copy line, comment out, and paste below
 nmap <A-d> yygccp
 
-" Operators for text in parantheses
+" Operators for text in parentheses
 onoremap p i(
 onoremap np :<c-u>normal! f(vi(<cr>
 
@@ -538,4 +538,8 @@ endfunc
 
 
 " VIM NOTES
+" Maps
+" - Check the keymapping with :map <key>
 " Folding
+" Spelling
+" - use `zg` to add to dictionary
