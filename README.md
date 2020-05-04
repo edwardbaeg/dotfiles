@@ -3,35 +3,37 @@ This is my terminal-based development set up! Always a work progress.
 ![screenshot](assets/main.png)
 
 ## Terminal
-**App**: iterm2
-- `font`: Operator Mono + Hack Nerd Font Complete
-- `margins` 30px
+**App**: iTerm2
+- `font`: Operator Mono (main) + MesloLGS NF (non-ASCII font)
+- `margins` 20px
 - `window style` no title bar
 
-**Shell**: zsh
-
-**Framework**: oh-my-zsh
+**Shell + Framework**: zsh + oh-my-zsh
 
 **zsh plugins**:
-- `z` autojump, extendible with fzf
-- `git` lots of git aliases
-- `vi-mode` vi mode for shell commands
-- `zsh-users/zsh-syntax-highlighting` syntax highlighting in terminal
-- `zsh-users/zsh-autosuggestions` autocomplete based on command history
-- `zsh-users/zsh-history-substring-search` cycle through previous commands
+
+Install with `zgen`. `z-plug` can result in very slow shell start times.
+- `oh-my-zsh/plugins/colored-man-pages` syntax highlighting in man
+- `oh-my-zsh/plugins/git` lots of git aliases
+- `oh-my-zsh/plugins/tmux` aliases, shortcuts
+- `oh-my-zsh/plugins/vi-mode` vi mode for shell commands
+- `oh-my-zsh/plugins/z` autojump, extendible with fzf
 - `changyuheng/fz` fzf tab completion with z
+- `paulirish/git-open` opens git dir in web
+- `zdharma/fast-syntax-highlighting` syntax highlighting in terminal
+- `zsh-users/zsh-autosuggestions` autocomplete based on command history
+- `zgen load romkatv/powerlevel10k powerlevel10k` configurable and fast prompt theme
 
 **Homebrew formulae** (`brew leaves`):
 - Utilities
-  - `zplug` plugin manager for zsh
   - `fzf` fuzzy finder
+  - `highlight` adds syntax highlighting to ranger previews
+  - `ncdu` ncurses disk usage viewer
   - `neovim` better vim (async, community developed)
   - `ranger` visual file manager
-  - `highlight` adds syntax highlighting to ranger previews
   - `ripgrep` better grep (and faster than ag)
   - `tmux` terminal multiplexer
   - `zsh` better shell
-  - `ncdu` ncurses disk usage viewer
 - Visual
   - `bat` better cat (syntax highlighting and pager)
   - `diff-so-fancy` better diff
@@ -88,7 +90,7 @@ This is my terminal-based development set up! Always a work progress.
   - `w0rp/ale` async linting engine
   - `Shougo/deoplete.nvim` async autocompletions
   - `vimwiki/vimwiki` personal wiki
-  - `suan/vim-instant-markdown` live prewview markdown
+  - `suan/vim-instant-markdown` live preview markdown
   - `zhimsel/vim-stay` save cursor/folds/bookmarks
   - `simnalamburt/vim-mundo` visual undo tree
   - `Carpetsmoker/undofile_warn.vim` persistent undo warnings
@@ -112,13 +114,13 @@ Install node, python
 ```
 brew install node python3
 ```
-Some brew packagres
+Some brew packages
 ```
 brew install ranger ripgrep bat exa highlight neofetch thefuck shpotify
 ```
 Some node packages
 ```
-npm i -g git-open instant-markdown vtop
+npm i -g instant-markdown vtop
 ```
 
 #### Install and configure zsh and oh-my-zsh
