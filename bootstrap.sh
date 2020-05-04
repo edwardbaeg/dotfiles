@@ -3,23 +3,42 @@
 # Get the dir of this file (NOT necessarily the current working dir)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-HAMMERSPOON_PATH="$HOME/.hammerspoon/init.lua"
-if test -f "$HAMMERSPOON_PATH"; then
-  # create a backup
-  echo "hammerspoon file exists, creating backup"
-  cp $HAMMERSPOON_PATH $HAMMERSPOON_PATH.backup
-fi
-if test -L "$HAMMERSPOON_PATH"; then
-  # remove link
-  unlink $HAMMERSPOON_PATH
-fi
+# Symlinks files
+#  $1 source path (eg `./vim/init.vim`)
+#  $2 destination path (eg `~/.config/nvim/init.vim`)
+#  $3 app name (eg vim)
+#  returns 0
+function symlink_file () {
+  SOURCE_PATH=$1
+  DESTINATION_PATH=$2
+  APP_NAME=$3
 
-# Use -f to avoid error
-rm -f $HAMMERSPOON_PATH
+  # Check if file "exists" and create a backup
+  if test -f "$DESTINATION_PATH"; then
+    echo "$3 already exists, creating backup"
+    cp $DESTINATION_PATH $DESTINATION_PATH.backup
+  fi
 
-mkdir -p $HOME/.hammerspoon
-ln -s $DIR/hammerspoon/init.lua $HAMMERSPOON_PATH
-echo "symlinked hammerspoon"
+  # Check if link exists and remove it
+  if test -L "$DESTINATION_PATH"; then
+    unlink $DESTINATION_PATH
+  fi
+
+  # Remove file if exists
+  rm -f $DESTINATION_PATH
+
+  DESTINATION_PARENT_PATH=$(dirname $DESTINATION_PATH)
+  mkdir -p $DESTINATION_PARENT_PATH
+  ln -s $SOURCE_PATH $DESTINATION_PATH
+  echo "Symlinked $APP_NAME"
+
+  return 0
+}
+
+symlink_file \
+  "$DIR/hammerspoon/init.lua" \
+  "$HOME/.hammerspoon/init.lua" \
+  Hammerspoon
 
 # INITVIM_PATH="$HOME/.config/nvim/init.vim"
 # # Checks if symbolic link (but file may not exist)
