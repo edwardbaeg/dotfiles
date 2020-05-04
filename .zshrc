@@ -56,14 +56,16 @@ if ! zgen saved; then
 
   # load oh-my-zsh first
   zgen oh-my-zsh
+
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/z
   zgen oh-my-zsh plugins/vi-mode
   zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/tmux
 
-  zgen load zdharma/fast-syntax-highlighting
+  # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
   zgen load changyuheng/fz
+  zgen load zdharma/fast-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
 
   # zgen oh-my-zsh themes/sorin
