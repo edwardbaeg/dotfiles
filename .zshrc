@@ -40,6 +40,13 @@ setopt appendhistory
 
 # -- Plugins -------------------------------------------------------------------
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # NOTE: After adding plugins, run `zgen reset` and then source
 # load zgen
 source "${HOME}/.zgen/zgen.zsh"
@@ -61,18 +68,7 @@ if ! zgen saved; then
 
   # zgen oh-my-zsh themes/sorin
   zgen load romkatv/powerlevel10k powerlevel10k
-    # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-    # Initialization code that may require console input (password prompts, [y/n]
-    # confirmations, etc.) must go above this block; everything else may go below.
-    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-      source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-    fi
-
-    # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
   zgen load paulirish/git-open
-    alias go="git open"
 
   # generate the init script from plugins above
   zgen save
@@ -113,6 +109,9 @@ alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
 alias ogh="open https://github.com/edwardbaeg"
+
+# from zsh git-open plugin
+alias go="git open"
 
 alias glmm="git checkout master && git pull && git checkout - && git merge master"
 alias grpo="git remote prune origin"
@@ -209,4 +208,9 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore'
 
 # for mysql
 # export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+
+# p10k
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
