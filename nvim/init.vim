@@ -32,6 +32,8 @@ set matchpairs+=<:> " Add additional match pairs
 set spelllang=en
 set spell
 
+set nostartofline
+
 " -- Plugins -------------------------------------------------------------------
 "
 call plug#begin('~/.vim/plugged')
@@ -83,23 +85,23 @@ call plug#begin('~/.vim/plugged')
   " Language
   "
   " Javascript
-  Plug 'elixir-editors/vim-elixir'
-  Plug 'mattn/emmet-vim'
+  Plug 'mattn/emmet-vim', { 'for': 'javascript' }
     let g:user_emmet_leader_key='<C-E>'
-  Plug 'pangloss/vim-javascript'
+  Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
   " Plug 'jelera/vim-javascript-syntax'
   " Plug 'isRuslan/vim-es6'
+  Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': 'javascript' }
 
   " Jsx/Tsx
-  Plug 'neoclide/vim-jsx-improve'
-  Plug 'MaxMEllon/vim-jsx-pretty'
+  Plug 'neoclide/vim-jsx-improve', { 'for': 'javascript' }
+  Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascript' }
   " Plug 'peitalin/vim-jsx-typescript'
   " Plug 'mxw/vim-jsx'
 
   " Misc
-  Plug 'elixir-editors/vim-elixir'
-  Plug 'jparise/vim-graphql'
-  Plug 'tbastos/vim-lua'
+  Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+  Plug 'jparise/vim-graphql', { 'for': 'graphql' }
+  Plug 'tbastos/vim-lua', { 'for': 'lua' }
 
 
   " Files
@@ -121,7 +123,7 @@ call plug#begin('~/.vim/plugged')
     nnoremap <C-l> :Lines<CR>
     nnoremap <C-g> :Rg<CR>
     nnoremap <C-b> :Buffers<CR>
-    Plug 'scrooloose/nerdtree' " interactive file explorer
+    Plug 'scrooloose/nerdtree' , { 'on': 'NERDTreeToggle' } " interactive file explorer
       let g:NERDTreeWinSize=25
       nnoremap <Leader>n :NERDTreeToggle<CR>
       " nnoremap <Leader>f :NERDTreeFind<CR>
@@ -157,15 +159,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
     let g:deoplete#enable_at_startup=1
     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  Plug 'simnalamburt/vim-mundo'
+  Plug 'simnalamburt/vim-mundo', { 'on': 'MundoToggle' }
     nnoremap <leader>m :MundoToggle<CR>
-
   Plug 'vimwiki/vimwiki'
     let g:vimwiki_hl_cb_checked = 2
     highlight vimwikiheader1 guifg=red gui=italic
     highlight vimwikiheader2 guifg=lightgreen gui=italic
     highlight vimwikiheader3 guifg=red gui=italic
-
   Plug 'w0rp/ale'
     let g:ale_sign_error = '►'
     let g:ale_sign_warning = '-'
@@ -173,9 +173,9 @@ call plug#begin('~/.vim/plugged')
     highlight clear ALEWarningSign
     highlight ALEErrorSign guifg=red
     highlight ALEWarningSign guifg=orange
-  Plug 'zhimsel/vim-stay'
-  Plug 'suan/vim-instant-markdown'
-  Plug 'voldikss/vim-floaterm'
+  Plug 'farmergreg/vim-lastplace'
+  Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
+  Plug 'voldikss/vim-floaterm', { 'on': 'FloatermToggle' }
     " let g:floaterm_wintype='floating'
     let g:floaterm_wintitle=v:false " hide foaterm info 'floaterm: 1/1'
     let g:floaterm_width=0.8 " as percentage of width
@@ -184,16 +184,20 @@ call plug#begin('~/.vim/plugged')
     let g:floaterm_autoclose=v:true
     let g:floaterm_keymap_toggle='<C-T>'
     highlight Floaterm guibg=black
+    nnoremap <C-T> :FloatermToggle<CR>
+    autocmd! User term.vim echom 'floaterm is now loaded'
+
     " use Ranger wrapper
     command! Ranger FloatermNew ranger
     nnoremap <Leader>r :Ranger<CR>
-  Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
   Plug 'semanser/vim-outdated-plugins'
     " do not show message if all plugins are up to date
     let g:outdated_plugins_silent_mode = 1
+  Plug 'dstein64/vim-startuptime'
 
   " Leave this last
-  Plug 'ryanoasis/vim-devicons'
+  Plug 'ryanoasis/vim-devicons', { 'on': 'NERDTreeToggle' }
+    autocmd! User floaterm.vim echom 'floaterm is now loaded'
     let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
 call plug#end()
@@ -421,3 +425,5 @@ endfunc
 " Folding
 " Spelling
 " - use `zg` to add to dictionary
+" Filetypes
+" - check current with `set filetype?`
