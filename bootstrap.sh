@@ -40,6 +40,11 @@ symlink_file \
   "$HOME/.hammerspoon/init.lua" \
   Hammerspoon
 
+symlink_file \
+  "$DIR/nvim/init.vim" \
+  "$HOME/.config/nvim/init.vim" \
+  nvim
+
 # INITVIM_PATH="$HOME/.config/nvim/init.vim"
 # # Checks if symbolic link (but file may not exist)
 # if test -L "$INITVIM_PATH"; then
