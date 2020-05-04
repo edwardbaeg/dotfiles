@@ -45,22 +45,10 @@ symlink_file \
   "$HOME/.config/nvim/init.vim" \
   nvim
 
-# INITVIM_PATH="$HOME/.config/nvim/init.vim"
-# # Checks if symbolic link (but file may not exist)
-# if test -L "$INITVIM_PATH"; then
-#   # Remove link first
-#   unlink $INITVIM_PATH
-# # Checks if file exists
-# fi
-# if test -f "$INITVIM_PATH"; then
-#   # delete and create a backup
-#   echo "init.vim file exists, creating backup"
-#   mv $INITVIM_PATH $INITVIM_PATH.backup
-# fi
-
-# mkdir -p $HOME/.config/nvim/
-# ln -s $DIR/vim/init.vim $INITVIM_PATH
-# echo "symlinked init.vim"
+symlink_file \
+  "$DIR/neofetch/config.conf" \
+  "$HOME/.config/neofetch/config.conf" \
+  neofetch
 
 # # DIRECTORIES
 
