@@ -5,14 +5,17 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 HAMMERSPOON_PATH="$HOME/.hammerspoon/init.lua"
 if test -f "$HAMMERSPOON_PATH"; then
-  # delete and create a backup
+  # create a backup
   echo "hammerspoon file exists, creating backup"
-  mv $HAMMERSPOON_PATH $HAMMERSPOON_PATH.backup
+  cp $HAMMERSPOON_PATH $HAMMERSPOON_PATH.backup
 fi
 if test -L "$HAMMERSPOON_PATH"; then
   # remove link
   unlink $HAMMERSPOON_PATH
 fi
+
+# Use -f to avoid error
+rm -f $HAMMERSPOON_PATH
 
 mkdir -p $HOME/.hammerspoon
 ln -s $DIR/hammerspoon/init.lua $HAMMERSPOON_PATH
