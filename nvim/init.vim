@@ -24,9 +24,13 @@ set clipboard=unnamedplus " integrate with mac
 set updatetime=500
 set undofile " set persistent undo
 set undodir=$HOME/.vim/undo
-set undolevels=1000
+set undolevels=500 " default is 1000
+set history=500 " default is 50
 set undoreload=10000
 set matchpairs+=<:> " Add additional match pairs
+set hidden " switch buffers without requiring a save
+set autoread " automatically read modified files in buffers
+set linebreak " don't break at the middle of word why is this slow sometimes lets try that again and again and again
 
 " Spellcheck
 set spelllang=en
@@ -70,7 +74,8 @@ call plug#begin('~/.vim/plugged')
     " hi illuminatedWord cterm=cursorline gui=cursorline
     hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
   Plug 'unblevable/quick-scope' " see f/t targets
-    let g:qs_max_chars=80
+    let g:qs_max_chars=120
+    let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
   Plug 'vim-airline/vim-airline' " lightweight statusbar
   Plug 'vim-airline/vim-airline-themes'
     let g:airline_powerline_fonts=1
@@ -386,6 +391,16 @@ cnoremap <c-n> <down>
 
 " Delete without copying to register
 nnoremap s "_d
+
+" Make Y consistent with C and D
+nnoremap Y y$
+
+" Add empty space with enter
+nnoremap <cr> o<esc>
+
+" Don't interfere with command-line enter
+autocmd CmdwinEnter * nnoremap <CR> <CR>
+autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " Scripts ----------------------------------------------------------------------
 "
