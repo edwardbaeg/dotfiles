@@ -73,3 +73,8 @@ symlink_file_folder \
   $DIR/.gitconfig \
   $HOME/.gitconfig \
   .gitconfig
+
+symlink_file_folder \
+  $DIR/.tmux.conf \
+  $HOME/.tmux.conf \
+  .tmux.conf
