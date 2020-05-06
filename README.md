@@ -22,7 +22,7 @@ Install with `zgen`. `z-plug` can result in very slow shell start times.
 - `paulirish/git-open` opens git dir in web
 - `zdharma/fast-syntax-highlighting` syntax highlighting in terminal
 - `zsh-users/zsh-autosuggestions` autocomplete based on command history
-- `zgen load romkatv/powerlevel10k powerlevel10k` configurable and fast prompt theme
+- `romkatv/powerlevel10k powerlevel10k` configurable and fast prompt theme
 
 **Homebrew formulae** (`brew leaves`):
 - Utilities
@@ -102,41 +102,27 @@ Install with `zgen`. `z-plug` can result in very slow shell start times.
 ## hammerspoon (init.lua)
 OSX automation
 
-# How To Set Up And Configure
-### Initial setup from a clean Mac
-This includes installing brew, git, python, node, etc
+# MacOSX Setup
 
 Install brew (this will also install x-code command line tools if you don't have them yet)
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-Install node, python
 ```
 brew install node python3
-```
-Some brew packages
-```
-brew install ranger ripgrep bat exa highlight neofetch thefuck shpotify
-```
-Some node packages
-```
-npm i -g instant-markdown vtop
+brew install ranger ripgrep bat exa highlight neofetch
 ```
 
-#### Install and configure zsh and oh-my-zsh
+#### zsh + oh-my-zsh
 Install zsh, zsh plugin manager, and fuzzy searching plugin
 ```
 brew install zsh zplug fzf
 ```
-Install oh-my-zsh, a zsh framework
+
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
-Copy over or symlink `.zshrc` from this repo. Example:
-```
-ln -s ~/dev/dotfiles/.zshrc ~/.zshrc
-```
-Install `fzf` shortcuts (ctr-r, ctr-t, etc)
+
 ```
 /usr/local/opt/fzf/install
 ```
@@ -181,30 +167,24 @@ Install neovim with python3
 brew install neovim
 pip3 install --user neovim
 ```
-Copy over or symlink `init.vim` file to `~/.config/nvim/init.vim`. Example:
-```
-ln -s ~/dev/dotfiles/init.vim ~/.config/nvim/init.vim
-```
+
 Install vim-plug, a (neo)vim plugin manager
+
 ```
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
-Install plugin (in neovim):
+
+Install plugins (in neovim):
+
 ```
 :PlugInstall
 ```
 
-#### Install and configure tmux
-```
-brew install tmux
-```
-Copy over or symlink `.tmux.conf`
-```
-ln -s ~/dev/dotfiles/.tmux.conf ~/.tmux.conf
-```
+#### iTerm2 Settings
 
-#### Setup and configure iTerm2
+These are captured in [iterm2](/iterm2)
+
 - Fonts (profile -> text)
   - Operator Mono
   - Hack Nerd Font Complete (use a different font for non-ascii text)
@@ -217,12 +197,6 @@ ln -s ~/dev/dotfiles/.tmux.conf ~/.tmux.conf
   - 20 (Height of top and bottom margins in terminal panes)
   - 20 (Height of left and right margins in terminal panes)
 
-#### Install and configure mpv
-```
-brew install mpv
-brew cask install mpv
-```
-Copy over or symlink `mpv/` to `~/.config/mpv/`
-```
-ln -s ~/<your_path>/dotfiles/mpv ~/.config/mpv
-```
+# RaspberryPi Setup
+See detailed instructions in the [raspberrypi directory](raspberrypi/README.md)
+- fish (shell) + fisher (plugin manager) + tmux (terminal multiplexer)
