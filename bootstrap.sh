@@ -68,3 +68,8 @@ symlink_file_folder \
   $DIR/.p10k.zsh \
   $HOME/.p10k.zsh \
   powerlevel10k.zsh
+
+symlink_file_folder \
+  $DIR/.gitconfig \
+  $HOME/.gitconfig \
+  .gitconfig
