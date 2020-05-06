@@ -13,21 +13,32 @@ hs.hotkey.bind(hyperkey, "W", function()
 end)
 
 -- Hotkey to reload configuration
--- NOTE: hs.reload() destroys current Lua interpreter so anything after it is
---  ignored
+-- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
 hs.hotkey.bind(hyperkey, "R", function()
   hs.reload()
 end)
+
+-- DOESNT WORK
+-- Control media
+-- hs.hotkey.bind(hyperkey, "/", function()
+--   hs.eventtap.event.newSystemKeyEvent("MUTE", true)
+-- end);
+
+-- Automatically reload config on changes
+-- NOTE: this does not work with symlinked files
+myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/", function(files)
+  doReload = false
+  for _,file in pairs(files) do
+    if file:sub(-4) == ".lua" then
+      doReload = true
+    end
+  end
+
+  if doReload then
+    hs.reload()
+  end
+end):start()
 hs.alert.show("Config loaded")
-
--- Move window over
--- hs.hotkey.bind(hyperkey, "B", function()
---   local win = hs.window.focusedWindow()
---   local f = win:frame()
-
---   f.x = f.x - 100
---   win:setFrame(f)
--- end)
 
 -- Move window to right half
 hs.hotkey.bind(hyperkey, "L", function()

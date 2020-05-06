@@ -1,77 +1,90 @@
 # ~/.zshrc
 
-# improve colors
+# -- NOTES ---------------------------------------------------------------------
+
+# Run the following to benchmark shell boot times
+# for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
+
+# -- Core ----------------------------------------------------------------------
+
+# Improve colors
 export TERM="xterm-256color"
 
-# sharing history
+# Share history
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt share_history
 
-# configure thefuck alias
-eval $(thefuck --alias)
-alias f="fuck"
+# This is pretty slow?
+# Configure thefuck alias
+# eval $(thefuck --alias)
+# alias f="fuck"
 
-# use nvim (for ranger)
+# Use nvim as default editor (eg, ranger)
 export EDITOR=nvim
 
-# add custom programs
+# Add custom programs
 export PATH=~/bin:$PATH
 
-#-- key bindings
-set -o ignoreeof # disable ctr-d from exiting shell
+# Key bindings
+set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
 
-#-------------------
-# history settings
-#-------------------
+# History settings
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEhist=100000
 setopt appendhistory
 
-#-------------------
-# Plugins
-#-------------------
-# load zplug
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
+# fix ctrlp issues with zinit + tmux?
+# bindkey -e
 
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/z", from:oh-my-zsh
-zplug "plugins/vi-mode", from:oh-my-zsh
-zplug "plugins/colored-man-pages", from:oh-my-zsh
-zplug "plugins/tmux", from:oh-my-zsh
+# -- Plugins -------------------------------------------------------------------
 
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "changyuheng/fz"
-zplug "zsh-users/zsh-syntax-highlighting"
-
-zplug "themes/sorin", from:oh-my-zsh, as:theme
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Then, source plugins and add commands to $PATH
-# zplug load --verbose
-zplug load
+# NOTE: After adding plugins, run `zgen reset` and then source
+# load zgen
+source "${HOME}/.zgen/zgen.zsh"
 
-#-------------------
-# Aliases
-#-------------------
-#-- vim
+# If the init script doesn't exist
+if ! zgen saved; then
+
+  # load oh-my-zsh first
+  zgen oh-my-zsh
+
+  zgen oh-my-zsh plugins/git
+  zgen oh-my-zsh plugins/z
+  zgen oh-my-zsh plugins/vi-mode
+  zgen oh-my-zsh plugins/colored-man-pages
+  zgen oh-my-zsh plugins/tmux
+
+  # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
+  zgen load changyuheng/fz
+  zgen load zdharma/fast-syntax-highlighting
+  zgen load zsh-users/zsh-autosuggestions
+
+  # zgen oh-my-zsh themes/sorin
+  zgen load romkatv/powerlevel10k powerlevel10k
+  zgen load paulirish/git-open
+
+  # generate the init script from plugins above
+  zgen save
+fi
+
+# -- Aliases -------------------------------------------------------------------
+
+# -- vim
 alias vim="nvim"
 alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 
 alias vz="vim ~/.zshrc"
-alias sz="source ~/.zshrc"
 alias vv="vim ~/.vimrc"
 alias nv="nvim ~/.config/nvim/init.vim"
 alias vt="nvim ~/.tmux.conf"
@@ -81,34 +94,31 @@ alias vm="nvim -c \"Startify | MRU\""
 alias vp="nvim -c \"Startify | GFiles\""
 alias vg="nvim -c \"Startify | Rg\""
 
-#-- tmux
+# -- Sourcing
 alias st="tmux source-file ~/.tmux.conf"
+alias sz="source ~/.zshrc"
 
-#-- git
+# -- git
 alias gdt="git difftool"
 alias ghist="git hist"
 alias ghista="git hista"
 alias ghistb="git histb"
 alias gpo="git push && git open"
-alias ogh="open https://github.com/edwardbaeg"
 alias gmm="git merge master"
 alias gfl="git fetch && git pull"
 alias gdm="git diff master"
 alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
+alias ogh="open https://github.com/edwardbaeg"
+
+# from zsh git-open plugin
+alias go="git open"
 
 alias glmm="git checkout master && git pull && git checkout - && git merge master"
 alias grpo="git remote prune origin"
 alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git branch -d"
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
-
-# alias `git` to use `hub`
-# this is currently broken
-# eval "$(hub alias -s)"
-# alias go="hub browse"
-
-alias go="git open"
 
 #-- commands
 alias py="python3"
@@ -133,6 +143,8 @@ alias tree="exa -T"
 alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias ls="exa"
+alias lg="lazygit"
+alias ..="cd .."
 
 alias serv="python3 -m http.server"
 
@@ -145,11 +157,12 @@ alias sshpizw="ssh pi@192.168.1.103"
 
 # alias sshbb="ssh pi@192.168.1.4"
 
+# -- Functions -----------------------------------------------------------------
+
 function sshbb () {
   ssh pi@192.168.1.4 "$@"
 }
 
-#-- functions
 function cs () {
   cd "$1" && exa;
 }
@@ -176,18 +189,14 @@ function gcof() {
 #   fi
 # }
 
-# Load fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# -- Grain ---------------------------------------------------------------------
 
-# Use ag for fzf
-FZF_DEFAULT_COMMAND='rg -g ""'
-
-# for mysql
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-
-# Grain
-# source asdf
+# Source asdf
 source /usr/local/opt/asdf/asdf.sh
+. /usr/local/opt/asdf/asdf.sh
+. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+
+# -- Aliases
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
@@ -195,12 +204,23 @@ alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 alias ys="yarn start"
 
-# for asdf
-. /usr/local/opt/asdf/asdf.sh
-. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
-
-# for direnv
+# direnv
 eval "$(direnv hook zsh)"
 
-# what is this??
-# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# -- Post install --------------------------------------------------------------
+
+# Load fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Use rg for fzf
+# FZF_DEFAULT_COMMAND='rg -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --ignore'
+
+# for mysql
+# export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+
+# p10k
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
