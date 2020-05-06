@@ -77,7 +77,7 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'rrethy/vim-illuminate' "highlight other word under cursor
   let g:Illuminate_delay = 250 " Default is 250
-  let g:Illuminate_highlightUnderCursor = 0 " don't highlight under cursor with 0
+  let g:Illuminate_highlightUnderCursor = 0 " don't highlight under cursor, use custom highlighting rules
   " hi illuminatedWord cterm=cursorline gui=cursorline
   hi illuminatedWord cterm=underline ctermfg=none ctermbg=none gui=underline guifg=none guibg=none
 
@@ -86,7 +86,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'unblevable/quick-scope' " see f/t targets
   let g:qs_max_chars=100
 
-  Plug 'vim-airline/vim-airline' " lightweight statusbar
+  Plug 'vim-airline/vim-airline' " lightweight status bar
   Plug 'vim-airline/vim-airline-themes'
   let g:airline_powerline_fonts=1
   let g:airline#extensions#tabline#enabled=1
@@ -105,13 +105,11 @@ call plug#begin('~/.vim/plugged')
   " Language
   "-----------------------------------------------------------------------------
   " Javascript
-  Plug 'elixir-editors/vim-elixir'
   " Plug 'kchmck/vim-coffee-script'
   Plug 'mattn/emmet-vim'
   " Plug 'jelera/vim-javascript-syntax'
   " Plug 'isRuslan/vim-es6'
   Plug 'pangloss/vim-javascript'
-
   " Jsx/Tsx
   Plug 'neoclide/vim-jsx-improve'
   " Plug 'leafgarland/typescript-vim'
@@ -175,6 +173,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-scripts/mru.vim'
   Plug 'tpope/vim-surround'
   Plug 'christoomey/vim-sort-motion'
+  Plug 'tpope/vim-endwise'
 
   " Plug 'takac/vim-hardtime'
   let g:hardtime_default_on = 1
@@ -186,7 +185,13 @@ call plug#begin('~/.vim/plugged')
   Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
   Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
   Plug 'simnalamburt/vim-mundo'
+
   Plug 'vimwiki/vimwiki'
+  let g:vimwiki_hl_cb_checked = 2
+  highlight vimwikiheader1 guifg=red gui=italic
+  highlight vimwikiheader2 guifg=lightgreen gui=italic
+  highlight vimwikiheader3 guifg=red gui=italic
+
   Plug 'w0rp/ale'
   Plug 'zhimsel/vim-stay'
   Plug 'suan/vim-instant-markdown'
@@ -241,10 +246,6 @@ highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 highlight ALEErrorSign guifg=red
 highlight ALEWarningSign guifg=orange
-
-" vimwiki
-"-------------------------------------------------------------------------------
-let g:vimwiki_hl_cb_checked = 2
 
 " vim-commentary
 "-------------------------------------------------------------------------------
@@ -325,12 +326,6 @@ highlight jsStorageClass cterm=italic gui=italic guifg=#ff2c4b
 
 " " yellow
 " hi tsxAttrib guifg=#F8BD7F cterm=italic
-
-" vimwiki colors
-"-------------------------------------------------------------------------------
-highlight vimwikiheader1 guifg=red gui=italic
-highlight vimwikiheader2 guifg=lightgreen gui=italic
-highlight vimwikiheader3 guifg=red gui=italic
 
 " Gutter
 "-------------------------------------------------------------------------------
@@ -484,6 +479,7 @@ cnoremap <c-n> <down>
 
 " Delete without copying to register
 nnoremap s "_d
+vnoremap s "_d
 
 "-------------------------------------------------------------------------------
 " Scripts
