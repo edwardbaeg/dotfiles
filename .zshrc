@@ -159,6 +159,14 @@ function mkcd () {
     cd -P -- "$1"
 }
 
+# fuzzy search git branches
+function gcof() {
+  local branches branch
+  branches=$(git --no-pager branch -vv) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
 # No args: `git status`; with args: `git `
 # function g () {
 #   if [[ $# > 0 ]]; then
