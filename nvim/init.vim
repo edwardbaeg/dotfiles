@@ -281,7 +281,9 @@ highlight whitespace ctermbg=white
 
 " Window
 "
-set scrolloff=8 " buffer top and bottom
+" let view_height = &lines / 4
+" echo view_height
+set scrolloff=24 " buffer top and bottom
 
 " Highlight past 80 chars
 highlight OverLength guibg=black
@@ -330,6 +332,10 @@ nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
+
+" Center after jumps
+nnoremap g; g;zz
+nnoremap gi gi<esc>zzi
 
 " --  Tabbing ------------------------------------------------------------------
 set tabstop=2
@@ -391,6 +397,7 @@ cnoremap <c-n> <down>
 
 " Delete without copying to register
 nnoremap s "_d
+nnoremap S "_d
 
 " Make Y consistent with C and D
 nnoremap Y y$
