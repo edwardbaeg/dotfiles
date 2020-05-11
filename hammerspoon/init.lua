@@ -2,15 +2,10 @@
 
 hyperkey = { "cmd", "ctrl" }
 
--- Hammerspoon notification
-hs.hotkey.bind(hyperkey, "W", function()
-  hs.alert.show("Hello World!")
-end)
-
--- Native notification
-hs.hotkey.bind(hyperkey, "W", function()
-  hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
-end)
+-- Native notification example
+-- hs.hotkey.bind(hyperkey, "W", function()
+--   hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
+-- end)
 
 -- Hotkey to reload configuration
 -- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
@@ -40,60 +35,65 @@ myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/", function(f
 end):start()
 hs.alert.show("Config loaded")
 
--- Move window to right half
+-- Helpers ---------------------------------------------------------------
+--------------------------------------------------------------------------
+function within(a, b, margin)
+  print (math.abs(a - b))
+  return math.abs(a - b) <= margin
+end
+
+-- Windows grids ---------------------------------------------------------
+--------------------------------------------------------------------------
+function moveAndResizeFocused(callback)
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screenMax = win:screen():frame()
+  local prevW = f.w
+  local prevH = f.h
+
+  callback(f, screenMax)
+  local needsResize = not (within(f.h, prevH, 1) and within(f.w, prevW, 1))
+  win:setFrame(f, needsResize and 0 or 0.1)
+end
+
+-- Right half
 hs.hotkey.bind(hyperkey, "L", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w / 2 and f.h == screenMax.h)
-
-  f.x = screenMax.x + (screenMax.w / 2)
-  f.y = screenMax.y
-  f.w = screenMax.w / 2
-  f.h = screenMax.h
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + (screen.w / 2)
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h
+  end)
 end)
 
--- Move window to left half
+-- Left half
 hs.hotkey.bind(hyperkey, "H", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w / 2 and f.h == screenMax.h)
-
-  f.x = screenMax.x
-  f.y = screenMax.y
-  f.w = screenMax.w / 2
-  f.h = screenMax.h
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h
+  end)
 end)
 
--- Move window to top half
+-- Top half
 hs.hotkey.bind(hyperkey, "K", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w and f.h == screenMax.h / 2)
-
-  f.x = screenMax.x
-  f.y = screenMax.y
-  f.w = screenMax.w
-  f.h = screenMax.h /2
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w
+    frame.h = screen.h / 2
+  end)
 end)
 
--- Move window to bottom half
+-- Bottom half
 hs.hotkey.bind(hyperkey, "J", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w and f.h == screenMax.h / 2)
-
-  f.x = screenMax.x
-  f.y = screenMax.y + (screenMax.h / 2)
-  f.w = screenMax.w
-  f.h = screenMax.h /2
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y + (screen.h / 2)
+    frame.w = screen.w
+    frame.h = screen.h / 2
+  end)
 end)
 
 -- Resize and center windows ---------------------------------------------
