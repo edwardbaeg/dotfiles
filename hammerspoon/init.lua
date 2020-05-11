@@ -2,30 +2,11 @@
 
 hyperkey = { "cmd", "ctrl" }
 
--- Hammerspoon notification
-hs.hotkey.bind(hyperkey, "W", function()
-  hs.alert.show("Hello World!")
-end)
-
--- Native notification
-hs.hotkey.bind(hyperkey, "W", function()
-  hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
-end)
-
--- Hotkey to reload configuration
--- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
-hs.hotkey.bind(hyperkey, "R", function()
-  hs.reload()
-end)
-
--- DOESNT WORK
--- Control media
--- hs.hotkey.bind(hyperkey, "/", function()
---   hs.eventtap.event.newSystemKeyEvent("MUTE", true)
--- end);
-
--- Automatically reload config on changes
--- NOTE: this does not work with symlinked files
+-- Auto reload config
+---------------------
+-- Automatically reload config on file changes
+-- NOTE: this does not work with symlinked files, point to source
+-- TODO: refactor to check for symlinks and to reload linked file
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/", function(files)
   doReload = false
   for _,file in pairs(files) do
@@ -40,62 +21,118 @@ myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/", function(f
 end):start()
 hs.alert.show("Config loaded")
 
--- Move window to right half
+-- Hotkey to reload configuration
+-- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
+hs.hotkey.bind(hyperkey, "R", function()
+  hs.reload()
+end)
+
+
+-- Helpers ---------------------------------------------------------------
+--------------------------------------------------------------------------
+function within(a, b, margin)
+  print (math.abs(a - b))
+  return math.abs(a - b) <= margin
+end
+
+-- Windows grids ---------------------------------------------------------
+--------------------------------------------------------------------------
+function moveAndResizeFocused(callback)
+  local win = hs.window.focusedWindow()
+  local f = win:frame()
+  local screenMax = win:screen():frame()
+  local prevW = f.w
+  local prevH = f.h
+
+  callback(f, screenMax)
+  local needsResize = not (within(f.h, prevH, 1) and within(f.w, prevW, 1))
+  win:setFrame(f, needsResize and 0 or 0.1)
+end
+
+-- Right half
 hs.hotkey.bind(hyperkey, "L", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w / 2 and f.h == screenMax.h)
-
-  f.x = screenMax.x + (screenMax.w / 2)
-  f.y = screenMax.y
-  f.w = screenMax.w / 2
-  f.h = screenMax.h
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + (screen.w / 2)
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h
+  end)
 end)
 
--- Move window to left half
+-- Left half
 hs.hotkey.bind(hyperkey, "H", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w / 2 and f.h == screenMax.h)
-
-  f.x = screenMax.x
-  f.y = screenMax.y
-  f.w = screenMax.w / 2
-  f.h = screenMax.h
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h
+  end)
 end)
 
--- Move window to top half
+-- Top half
 hs.hotkey.bind(hyperkey, "K", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w and f.h == screenMax.h / 2)
-
-  f.x = screenMax.x
-  f.y = screenMax.y
-  f.w = screenMax.w
-  f.h = screenMax.h /2
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w
+    frame.h = screen.h / 2
+  end)
 end)
 
--- Move window to bottom half
+-- Bottom half
 hs.hotkey.bind(hyperkey, "J", function()
-  local win = hs.window.focusedWindow()
-  local f = win:frame()
-  local screenMax = win:screen():frame()
-  local needsResize = not (f.w == screenMax.w and f.h == screenMax.h / 2)
-
-  f.x = screenMax.x
-  f.y = screenMax.y + (screenMax.h / 2)
-  f.w = screenMax.w
-  f.h = screenMax.h /2
-  win:setFrame(f, needsResize and 0 or 0.1)
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y + (screen.h / 2)
+    frame.w = screen.w
+    frame.h = screen.h / 2
+  end)
 end)
 
+quadKey = { "cmd", "ctrl", "shift" }
+
+-- Top left quadrant
+hs.hotkey.bind(quadKey, "J", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
+-- Top right quadrant
+hs.hotkey.bind(quadKey, "K", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + (screen.w / 2)
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
+-- Bottom left quadrant
+hs.hotkey.bind(quadKey, "N", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y + (screen.h / 2)
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
+-- Bottom right quadrant
+hs.hotkey.bind(quadKey, "M", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + (screen.w / 2)
+    frame.y = screen.y + (screen.h / 2)
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
+-- Resize and center windows ---------------------------------------------
+--------------------------------------------------------------------------
 function resizeAndCenter(frac)
   local win = hs.window.focusedWindow()
   local f = win:frame()
@@ -128,10 +165,43 @@ hs.hotkey.bind(hyperkey, "V", function()
   resizeAndCenter(0.49)
 end)
 
+-- Arrow key remaps ------------------------------------------------------
+--------------------------------------------------------------------------
+function pressAndHoldKey(key)
+  return function()
+    hs.eventtap.keyStroke({}, key, 1000)
+  end
+end
 
---[[ NOTES
+function simpleKeyRemap(modMap, keyMap, sendKey)
+  hs.hotkey.bind(modMap, keyMap, pressAndHoldKey(sendKey), nil, pressAndHoldKey(sendKey))
+end
+
+simpleKeyRemap({ "ctrl", "alt" }, "J", "DOWN")
+simpleKeyRemap({ "ctrl", "alt" }, "K", "UP")
+simpleKeyRemap({ "ctrl", "alt" }, "H", "LEFT")
+simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
+
+--  Media remaps ---------------------------------------------------------
+--------------------------------------------------------------------------
+
+-- DOESNT WORK
+-- Mute
+-- hs.hotkey.bind(hyperkey, "/", function()
+--   hs.eventtap.event.newSystemKeyEvent("MUTE", true)
+-- end);
+
+-- Notes -----------------------------------------------------------------
+--------------------------------------------------------------------------
+--[[
 
 To get the name of screens, use the following in the console
   hs.screen.allScreens()[1]:name()
 
 --]]
+
+-- Native notification example
+-- hs.hotkey.bind(hyperkey, "W", function()
+--   hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
+-- end)
+

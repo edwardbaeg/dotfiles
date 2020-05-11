@@ -206,6 +206,7 @@ alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
 alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 alias ys="yarn start"
+alias grain="/Applications/Grain.app/Contents/MacOS/Grain"
 
 # direnv
 eval "$(direnv hook zsh)"
