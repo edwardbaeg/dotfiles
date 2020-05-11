@@ -1,6 +1,18 @@
 -- ~/.hammerspoon/init.lua
 
+hs.alert.show("Config loaded")
 hyperkey = { "cmd", "ctrl" }
+
+-- Window highlighting ---------------------------------------------------
+--------------------------------------------------------------------------
+
+hs.window.highlight.ui.overlay = true
+hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
+hs.window.highlight.ui.frameWidth = 6 -- draw a frame around the focused window in overlay mode; 0 to disable
+hs.window.highlight.start()
+
+-- hs.window.highlight.ui.windowShownFlashColor = {0,1,0,0.8} -- flash color when a window is shown (created or unhidden)
+-- hs.window.highlight.ui.flashDuration = 0.3
 
 -- Auto reload config
 ---------------------
@@ -19,7 +31,6 @@ myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/", function(f
     hs.reload()
   end
 end):start()
-hs.alert.show("Config loaded")
 
 -- Hotkey to reload configuration
 -- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
@@ -27,13 +38,18 @@ hs.hotkey.bind(hyperkey, "R", function()
   hs.reload()
 end)
 
-
 -- Helpers ---------------------------------------------------------------
 --------------------------------------------------------------------------
 function within(a, b, margin)
-  print (math.abs(a - b))
   return math.abs(a - b) <= margin
 end
+
+-- Application hotkeys ---------------------------------------------------
+--------------------------------------------------------------------------
+hs.hotkey.bind(hyperkey, "0", function()
+  success = hs.application.launchOrFocus("iTerm")
+  print (success)
+end)
 
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
@@ -195,8 +211,12 @@ simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
 --------------------------------------------------------------------------
 --[[
 
-To get the name of screens, use the following in the console
+Get the name of screens
   hs.screen.allScreens()[1]:name()
+
+Get the name of apps
+  hs.fnutils.each(hs.application.runningApplications(), function(app) print(app:title()) end)
+
 
 --]]
 
