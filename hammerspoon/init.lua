@@ -96,6 +96,8 @@ hs.hotkey.bind(hyperkey, "J", function()
   win:setFrame(f, needsResize and 0 or 0.1)
 end)
 
+-- Resize and center windows ---------------------------------------------
+--------------------------------------------------------------------------
 function resizeAndCenter(frac)
   local win = hs.window.focusedWindow()
   local f = win:frame()
@@ -128,8 +130,27 @@ hs.hotkey.bind(hyperkey, "V", function()
   resizeAndCenter(0.49)
 end)
 
+-- Arrow key remaps ------------------------------------------------------
+--------------------------------------------------------------------------
+function pressAndHoldKey(key)
+  return function()
+    hs.eventtap.keyStroke({}, key, 1000)
+  end
+end
 
---[[ NOTES
+function simpleKeyRemap(modMap, keyMap, sendKey)
+  hs.hotkey.bind(modMap, keyMap, pressAndHoldKey(sendKey), nil, pressAndHoldKey(sendKey))
+end
+
+simpleKeyRemap({ "ctrl", "alt" }, "J", "DOWN")
+simpleKeyRemap({ "ctrl", "alt" }, "K", "UP")
+simpleKeyRemap({ "ctrl", "alt" }, "H", "LEFT")
+simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
+
+
+-- Notes -----------------------------------------------------------------
+--------------------------------------------------------------------------
+--[[
 
 To get the name of screens, use the following in the console
   hs.screen.allScreens()[1]:name()
