@@ -180,7 +180,7 @@ call plug#begin('~/.vim/plugged')
     highlight ALEWarningSign guifg=orange
   Plug 'farmergreg/vim-lastplace'
   Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
-  Plug 'voldikss/vim-floaterm', { 'on': 'FloatermToggle' }
+  Plug 'voldikss/vim-floaterm'
     " let g:floaterm_wintype='floating'
     let g:floaterm_wintitle=v:false " hide foaterm info 'floaterm: 1/1'
     let g:floaterm_width=0.8 " as percentage of width
@@ -358,9 +358,12 @@ noremap <S-l> $
 nnoremap j gj
 nnoremap k gk
 
-" Quick edit vimrc (init.vim)
+" Quick edit configs
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>et :edit ~/.tmux.conf<cr>
+nnoremap <leader>ez :edit ~/.zhsrc<cr>
+nnoremap <leader>eh :edit ~/.hammerspoon/init.lua<cr>
 
 " Move lines
 nnoremap <C-j> :move .+1<CR>==
