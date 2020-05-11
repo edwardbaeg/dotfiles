@@ -6,8 +6,8 @@
 " noremap j <NOP>
 " noremap k <NOP>
 
-" -- Core ----------------------------------------------------------------------
-"
+" Core ----------------------------------------------------------------------
+" ---------------------------------------------------------------------------
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum" " enable italcs
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum" " enable italics
 
@@ -38,12 +38,12 @@ set spell
 
 set nostartofline
 
-" -- Plugins -------------------------------------------------------------------
-"
+" Plugins -------------------------------------------------------------------
+" ---------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
 
   " Visual
-  "
+  " ------
   Plug 'sjl/badwolf'
   Plug 'airblade/vim-gitgutter' " git diff in the gutter
     let g:gitgutter_sign_added = '•'
@@ -88,7 +88,7 @@ call plug#begin('~/.vim/plugged')
   let g:smoothie_base_speed = 30 " default is 10
 
   " Language
-  "
+  " --------
   " Javascript
   Plug 'mattn/emmet-vim', { 'for': 'javascript' }
     let g:user_emmet_leader_key='<C-E>'
@@ -110,7 +110,7 @@ call plug#begin('~/.vim/plugged')
 
 
   " Files
-  "
+  " -----
   Plug 'junegunn/fzf.vim' " integrate with fzf
   Plug '/usr/local/opt/fzf'
     " Use a centered floating window, requires tmux >3.2
@@ -138,7 +138,7 @@ call plug#begin('~/.vim/plugged')
     let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
 
   " Shortcuts
-  "
+  " ---------
   Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
     let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -158,7 +158,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'christoomey/vim-sort-motion'
 
   " Utility
-  "
+  " -------
   Plug 'Carpetsmoker/undofile_warn.vim'
   Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
   Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
@@ -211,7 +211,8 @@ call plug#end()
   colorscheme badwolf
   let g:airline_section_z = airline#section#create_right(['%p%% %l/%L %c'])
 
-" -- Visual --------------------------------------------------------------------
+" Visual --------------------------------------------------------------------
+" ---------------------------------------------------------------------------
 "
 " Keys
 " #ff2c4b
@@ -220,7 +221,7 @@ call plug#end()
 " #9edf1c
 
 " JavaScript colors
-"
+" ---------- ------
 " 1, -2
 highlight javascriptvalue ctermfg=brown guifg=#f4cf86
 " Array, Date, Object
@@ -258,19 +259,19 @@ highlight jsAsyncKeyword guifg=#ff2c4b cterm=italic gui=italic
 
 
 " Gutter
-"
+" ------
 set ruler
 set number "nu
 set relativenumber " rnu
 
 " Status
-"
+" ------
 set laststatus=2 " always show status line
 set cmdheight=2
 set showcmd
 
 " Text
-"
+" ----
 set showmatch
 set matchtime=3 " multiple of 100ms
 set list
@@ -280,7 +281,7 @@ set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
 highlight whitespace ctermbg=white
 
 " Window
-"
+" ------
 set scrolloff=8 " buffer top and bottom
 
 " Highlight past 80 chars
@@ -309,12 +310,12 @@ augroup HideLines
   autocmd InsertEnter * set nocursorline
 augroup END
 
-" -- Folding -------------------------------------------------------------------
-"
+" Folding -------------------------------------------------------------------
+" ---------------------------------------------------------------------------
 set foldcolumn=2
 
 " -- Searching and Highlighting ------------------------------------------------
-"
+" ---------------------------------------------------------------------------
 set path+=** " recursive fuzzy search with :find
 set incsearch " search realtime
 set hlsearch
@@ -331,14 +332,15 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-" --  Tabbing ------------------------------------------------------------------
+" Tabbing ------------------------------------------------------------------
+" ---------------------------------------------------------------------------
 set tabstop=2
 set shiftwidth=2
 set smarttab
 set expandtab
 
-" -- Mappings ------------------------------------------------------------------
-"
+" Mappings ------------------------------------------------------------------
+" ---------------------------------------------------------------------------
 " Exit insert mode with jk
 inoremap jk <esc>
 
@@ -403,7 +405,7 @@ autocmd CmdwinEnter * nnoremap <CR> <CR>
 autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " Scripts ----------------------------------------------------------------------
-"
+" ---------------------------------------------------------------------------
 " View output from running in terminal
 noremap <A-b> :call Build() <cr>
 function! Build()
@@ -428,13 +430,13 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" -- Abbreviations -------------------------------------------------------------
-"
+" Abbreviations -------------------------------------------------------------
+" ---------------------------------------------------------------------------
 " use iab
 
 
-" -- VIM Notes -----------------------------------------------------------------
-"
+" VIM Notes -----------------------------------------------------------------
+" ---------------------------------------------------------------------------
 " Maps
 " - Check the keymapping with :map <key>
 " Folding
