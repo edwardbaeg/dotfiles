@@ -2,25 +2,11 @@
 
 hyperkey = { "cmd", "ctrl" }
 
--- Native notification example
--- hs.hotkey.bind(hyperkey, "W", function()
---   hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
--- end)
-
--- Hotkey to reload configuration
--- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
-hs.hotkey.bind(hyperkey, "R", function()
-  hs.reload()
-end)
-
--- DOESNT WORK
--- Control media
--- hs.hotkey.bind(hyperkey, "/", function()
---   hs.eventtap.event.newSystemKeyEvent("MUTE", true)
--- end);
-
--- Automatically reload config on changes
--- NOTE: this does not work with symlinked files
+-- Auto reload config
+---------------------
+-- Automatically reload config on file changes
+-- NOTE: this does not work with symlinked files, point to source
+-- TODO: refactor to check for symlinks and to reload linked file
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/", function(files)
   doReload = false
   for _,file in pairs(files) do
@@ -34,6 +20,13 @@ myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/", function(f
   end
 end):start()
 hs.alert.show("Config loaded")
+
+-- Hotkey to reload configuration
+-- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
+hs.hotkey.bind(hyperkey, "R", function()
+  hs.reload()
+end)
+
 
 -- Helpers ---------------------------------------------------------------
 --------------------------------------------------------------------------
@@ -96,6 +89,48 @@ hs.hotkey.bind(hyperkey, "J", function()
   end)
 end)
 
+quadKey = { "cmd", "ctrl", "shift" }
+
+-- Top left quadrant
+hs.hotkey.bind(quadKey, "J", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
+-- Top right quadrant
+hs.hotkey.bind(quadKey, "K", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + (screen.w / 2)
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
+-- Bottom left quadrant
+hs.hotkey.bind(quadKey, "N", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y + (screen.h / 2)
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
+-- Bottom right quadrant
+hs.hotkey.bind(quadKey, "M", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + (screen.w / 2)
+    frame.y = screen.y + (screen.h / 2)
+    frame.w = screen.w / 2
+    frame.h = screen.h / 2
+  end)
+end)
+
 -- Resize and center windows ---------------------------------------------
 --------------------------------------------------------------------------
 function resizeAndCenter(frac)
@@ -147,6 +182,14 @@ simpleKeyRemap({ "ctrl", "alt" }, "K", "UP")
 simpleKeyRemap({ "ctrl", "alt" }, "H", "LEFT")
 simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
 
+--  Media remaps ---------------------------------------------------------
+--------------------------------------------------------------------------
+
+-- DOESNT WORK
+-- Mute
+-- hs.hotkey.bind(hyperkey, "/", function()
+--   hs.eventtap.event.newSystemKeyEvent("MUTE", true)
+-- end);
 
 -- Notes -----------------------------------------------------------------
 --------------------------------------------------------------------------
@@ -156,3 +199,9 @@ To get the name of screens, use the following in the console
   hs.screen.allScreens()[1]:name()
 
 --]]
+
+-- Native notification example
+-- hs.hotkey.bind(hyperkey, "W", function()
+--   hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
+-- end)
+
