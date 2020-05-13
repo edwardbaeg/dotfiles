@@ -362,7 +362,8 @@ nnoremap k gk
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>et :edit ~/.tmux.conf<cr>
-nnoremap <leader>ez :edit ~/.zhsrc<cr>
+nnoremap <leader>ez :edit ~/.zshrc<cr>
+nnoremap <leader>ef :edit ~/.config/fish/fish.config<cr>
 nnoremap <leader>eh :edit ~/.hammerspoon/init.lua<cr>
 
 " Move lines
