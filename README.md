@@ -24,6 +24,12 @@ Install with `zgen`. `z-plug` can result in very slow shell start times.
 - `zsh-users/zsh-autosuggestions` autocomplete based on command history
 - `romkatv/powerlevel10k powerlevel10k` configurable and fast prompt theme
 
+** Shell + Plugin manager**: fish + fisher
+
+**fish plugins**:
+- `jethrokuan/z`
+- `jethrokuan/fzf`
+
 **Homebrew formulae** (`brew leaves`):
 - Utilities
   - `fzf` fuzzy finder
