@@ -181,6 +181,29 @@ hs.hotkey.bind(hyperkey, "V", function()
   resizeAndCenter(0.49)
 end)
 
+-- Change monitor --------------------------------------------------------
+--------------------------------------------------------------------------
+
+-- Move to the left screen
+hs.hotkey.bind({ "ctrl", "shift", "cmd", }, "L", function()
+  -- Get focused window
+  local win = hs.window.focusedWindow()
+  -- Get screen of focused window
+  local screen = win:screen()
+  -- move to window
+  win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
+end)
+
+-- Move to the right screen
+hs.hotkey.bind({ "ctrl", "shift", "cmd", }, "H", function()
+  -- Get focused window
+  local win = hs.window.focusedWindow()
+  -- Get screen of focused window
+  local screen = win:screen()
+  -- move to window
+  win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+end)
+
 -- Arrow key remaps ------------------------------------------------------
 --------------------------------------------------------------------------
 function pressAndHoldKey(key)
