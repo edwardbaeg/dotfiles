@@ -84,8 +84,8 @@ call plug#begin('~/.vim/plugged')
     let g:airline_theme='minimalist'
     let g:airline#extensions#tabline#formatter = 'jsformatter'
   Plug 'psliwka/vim-smoothie' " smooth scrolling
-  let g:smoothie_update_interval = 12 " default is 20
-  let g:smoothie_base_speed = 30 " default is 10
+    let g:smoothie_update_interval = 12 " default is 20
+    let g:smoothie_base_speed = 30 " default is 10
 
   " Language
   " --------
@@ -414,6 +414,9 @@ nnoremap <cr> o<esc>
 " Don't interfere with command-line enter
 autocmd CmdwinEnter * nnoremap <CR> <CR>
 autocmd BufReadPost quickfix nnoremap <CR> <CR>
+
+" Visual select previously pasted text
+nnoremap gp `[v`]
 
 " Scripts ----------------------------------------------------------------------
 " ---------------------------------------------------------------------------
