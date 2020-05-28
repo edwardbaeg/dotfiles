@@ -135,7 +135,8 @@ call plug#begin('~/.vim/plugged')
       let NERDTreeQuitOnOpen = 1
   Plug 'tpope/vim-fugitive'
   Plug 'mhinz/vim-startify'
-    let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
+    " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
+    let g:startify_custom_header = ''
 
   " Shortcuts
   " ---------
