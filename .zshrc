@@ -149,6 +149,7 @@ alias ls="exa"
 alias lg="lazygit"
 alias ..="cd .."
 alias ll="ls -al"
+# alias wcli="wally-cli"
 
 alias serv="python3 -m http.server"
 
@@ -158,8 +159,6 @@ alias sshpirate="ssh pi@raspberrypirate"
 alias sshpiw="ssh pi@192.168.1.101"
 alias sshpiz="ssh pi@192.168.1.102"
 alias sshpizw="ssh pi@192.168.1.103"
-
-# alias sshbb="ssh pi@192.168.1.4"
 
 # -- Functions -----------------------------------------------------------------
 
@@ -177,11 +176,17 @@ function mkcd () {
 }
 
 # fuzzy search git branches
-function gcof() {
+function gcof () {
   local branches branch
   branches=$(git --no-pager branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+# Install and then delete ergodox configuration
+function wcli () {
+  wally-cli "$1" &&
+    rm "$1"
 }
 
 # No args: `git status`; with args: `git `
