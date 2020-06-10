@@ -8,7 +8,7 @@ hyperkey = { "cmd", "ctrl" }
 
 hs.window.highlight.ui.overlay = true
 hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
-hs.window.highlight.ui.frameWidth = 6 -- draw a frame around the focused window in overlay mode; 0 to disable
+hs.window.highlight.ui.frameWidth = 4 -- draw a frame around the focused window in overlay mode; 0 to disable
 hs.window.highlight.start()
 
 -- hs.window.highlight.ui.windowShownFlashColor = {0,1,0,0.8} -- flash color when a window is shown (created or unhidden)
@@ -220,6 +220,32 @@ simpleKeyRemap({ "ctrl", "alt" }, "J", "DOWN")
 simpleKeyRemap({ "ctrl", "alt" }, "K", "UP")
 simpleKeyRemap({ "ctrl", "alt" }, "H", "LEFT")
 simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
+
+-- Modal mode ------------------------------------------------------------
+--------------------------------------------------------------------------
+appCuts = {
+  i = 'iterm',
+  c = 'Google chrome'
+}
+
+-- k = hs.hotkey.modal.new({ "cmd", "ctrl" }, "I");
+-- function k:entered()
+--   hs.alert.show("Entered mode")
+-- end
+-- function k:exited()
+--   hs.alert.show("Exited mode")
+-- end
+-- k:bind("", "escape", function()
+--   k:exit()
+-- end)
+-- k:bind("", "I", "Select app", function()
+--   for key, app in pairs(appCuts) do
+--     hs.hotkey.bind({}, key, function()
+--       k:exit()
+--       hs.application.launchOrFocus(app)
+--     end)
+--   end
+-- end)
 
 --  Media remaps ---------------------------------------------------------
 --------------------------------------------------------------------------
