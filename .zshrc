@@ -213,6 +213,8 @@ alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 alias ys="yarn start"
 alias grain="/Applications/Grain.app/Contents/MacOS/Grain"
+alias grain-dev="/Applications/Grain\ Dev.app/Contents/MacOS/Grain\ Dev"
+alias minios="minio server ~/dev/grain/next/clients/desktop/minio"
 
 # direnv
 eval "$(direnv hook zsh)"
