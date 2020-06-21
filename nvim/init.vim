@@ -84,8 +84,8 @@ call plug#begin('~/.vim/plugged')
     let g:airline_theme='minimalist'
     let g:airline#extensions#tabline#formatter = 'jsformatter'
   Plug 'psliwka/vim-smoothie' " smooth scrolling
-  let g:smoothie_update_interval = 12 " default is 20
-  let g:smoothie_base_speed = 30 " default is 10
+    let g:smoothie_update_interval = 12 " default is 20
+    let g:smoothie_base_speed = 30 " default is 10
 
   " Language
   " --------
@@ -135,7 +135,8 @@ call plug#begin('~/.vim/plugged')
       let NERDTreeQuitOnOpen = 1
   Plug 'tpope/vim-fugitive'
   Plug 'mhinz/vim-startify'
-    let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
+    " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
+    let g:startify_custom_header = ''
 
   " Shortcuts
   " ---------
@@ -362,7 +363,8 @@ nnoremap k gk
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>et :edit ~/.tmux.conf<cr>
-nnoremap <leader>ez :edit ~/.zhsrc<cr>
+nnoremap <leader>ez :edit ~/.zshrc<cr>
+nnoremap <leader>ef :edit ~/.config/fish/fish.config<cr>
 nnoremap <leader>eh :edit ~/.hammerspoon/init.lua<cr>
 
 " Move lines
@@ -413,6 +415,9 @@ nnoremap <cr> o<esc>
 " Don't interfere with command-line enter
 autocmd CmdwinEnter * nnoremap <CR> <CR>
 autocmd BufReadPost quickfix nnoremap <CR> <CR>
+
+" Visual select previously pasted text
+nnoremap gp `[v`]
 
 " Scripts ----------------------------------------------------------------------
 " ---------------------------------------------------------------------------

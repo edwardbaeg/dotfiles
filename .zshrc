@@ -126,7 +126,7 @@ alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) 
 alias py="python3"
 alias nf="neofetch"
 alias vtop="vtop --theme brew"
-alias clock="tty-clock -c -C 0 -t -d 10"
+# alias clock="tty-clock -c -C 0 -t -d 10"
 alias ra="ranger"
 alias hdi="howdoi -c -n 3"
 alias npml="npm -g ls --depth=0"
@@ -142,12 +142,14 @@ alias exa2="exa -T -L 2"
 alias end="cowsay 'Thats it! Thank you for listening!!' | nms -c -a"
 alias ns="npm start"
 alias tree="exa -T"
+alias oldcat="/bin/cat"
 alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias ls="exa"
 alias lg="lazygit"
 alias ..="cd .."
 alias ll="ls -al"
+# alias wcli="wally-cli"
 
 alias serv="python3 -m http.server"
 
@@ -157,8 +159,6 @@ alias sshpirate="ssh pi@raspberrypirate"
 alias sshpiw="ssh pi@192.168.1.101"
 alias sshpiz="ssh pi@192.168.1.102"
 alias sshpizw="ssh pi@192.168.1.103"
-
-# alias sshbb="ssh pi@192.168.1.4"
 
 # -- Functions -----------------------------------------------------------------
 
@@ -176,11 +176,17 @@ function mkcd () {
 }
 
 # fuzzy search git branches
-function gcof() {
+function gcof () {
   local branches branch
   branches=$(git --no-pager branch -vv) &&
   branch=$(echo "$branches" | fzf +m) &&
   git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+# Install and then delete ergodox configuration
+function wcli () {
+  wally-cli "$1" &&
+    rm "$1"
 }
 
 # No args: `git status`; with args: `git `
@@ -207,6 +213,8 @@ alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 alias ys="yarn start"
 alias grain="/Applications/Grain.app/Contents/MacOS/Grain"
+alias grain-dev="/Applications/Grain\ Dev.app/Contents/MacOS/Grain\ Dev"
+alias minios="minio server ~/dev/grain/next/clients/desktop/minio"
 
 # direnv
 eval "$(direnv hook zsh)"
