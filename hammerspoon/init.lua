@@ -51,6 +51,11 @@ hs.hotkey.bind(hyperkey, "0", function()
   print (success)
 end)
 
+hs.hotkey.bind(hyperkey, "9", function()
+  success = hs.application.launchOrFocus("Google Chrome")
+  print (success)
+end)
+
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
 function moveAndResizeFocused(callback)
