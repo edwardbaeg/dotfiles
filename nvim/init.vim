@@ -150,7 +150,10 @@ call plug#begin('~/.vim/plugged')
     " let g:UltiSnipsSnippetDirectories=["UltiSnips"]
   Plug 'honza/vim-snippets'
   Plug 'jiangmiao/auto-pairs'
-  " Plug 'machakann/vim-sandwich'
+
+  " TODO: just take b motion from here
+  Plug 'machakann/vim-sandwich'
+
   Plug 'tommcdo/vim-exchange'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
@@ -179,6 +182,7 @@ call plug#begin('~/.vim/plugged')
     highlight clear ALEWarningSign
     highlight ALEErrorSign guifg=red
     highlight ALEWarningSign guifg=orange
+    nnoremap ge :ALENextWrap<cr>
   Plug 'farmergreg/vim-lastplace'
   Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
   Plug 'voldikss/vim-floaterm'
@@ -200,6 +204,12 @@ call plug#begin('~/.vim/plugged')
     " do not show message if all plugins are up to date
     let g:outdated_plugins_silent_mode = 1
   Plug 'dstein64/vim-startuptime'
+  " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+
+  " Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] } " emacs style which key keybinding popups
+  Plug 'liuchengxu/vim-which-key' " emacs style which key keybinding popups
+    set timeoutlen=500
+    nnoremap <silent> <leader> :<c-u>WhichKey '\'<CR>
 
   " Leave this last
   Plug 'ryanoasis/vim-devicons', { 'on': 'NERDTreeToggle' }
