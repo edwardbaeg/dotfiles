@@ -208,7 +208,7 @@ call plug#begin('~/.vim/plugged')
 
   " Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] } " emacs style which key keybinding popups
   Plug 'liuchengxu/vim-which-key' " emacs style which key keybinding popups
-    set timeoutlen=500
+    " set timeoutlen=500
     nnoremap <silent> <leader> :<c-u>WhichKey '\'<CR>
 
   " Leave this last
@@ -438,6 +438,8 @@ function! Build()
     exec "! node %"
   elseif &filetype == "python"
     exec "! python3 %"
+  elseif &filetype == "sh"
+    exec "!bash %"
   endif
 endfunction
 
