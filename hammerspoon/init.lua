@@ -70,6 +70,16 @@ function moveAndResizeFocused(callback)
   win:setFrame(f, needsResize and 0 or 0.1)
 end
 
+-- Left half
+hs.hotkey.bind(hyperkey, "H", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w / 2
+    frame.h = screen.h
+  end)
+end)
+
 -- Right half
 hs.hotkey.bind(hyperkey, "L", function()
   moveAndResizeFocused(function (frame, screen)
@@ -80,12 +90,22 @@ hs.hotkey.bind(hyperkey, "L", function()
   end)
 end)
 
--- Left half
-hs.hotkey.bind(hyperkey, "H", function()
+-- Left 60
+hs.hotkey.bind(hyperkey, "Y", function()
   moveAndResizeFocused(function (frame, screen)
     frame.x = screen.x
     frame.y = screen.y
-    frame.w = screen.w / 2
+    frame.w = screen.w * 0.6
+    frame.h = screen.h
+  end)
+end)
+
+-- Right 40
+hs.hotkey.bind(hyperkey, "O", function()
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + (screen.w * 0.6)
+    frame.y = screen.y
+    frame.w = screen.w * 0.4
     frame.h = screen.h
   end)
 end)
