@@ -6,10 +6,10 @@ hyperkey = { "cmd", "ctrl" }
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
 
-hs.window.highlight.ui.overlay = true
-hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
-hs.window.highlight.ui.frameWidth = 4 -- draw a frame around the focused window in overlay mode; 0 to disable
-hs.window.highlight.start()
+-- hs.window.highlight.ui.overlay = true
+-- hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
+-- hs.window.highlight.ui.frameWidth = 4 -- draw a frame around the focused window in overlay mode; 0 to disable
+-- hs.window.highlight.start()
 
 -- hs.window.highlight.ui.windowShownFlashColor = {0,1,0,0.8} -- flash color when a window is shown (created or unhidden)
 -- hs.window.highlight.ui.flashDuration = 0.3
