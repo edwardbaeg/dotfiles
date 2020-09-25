@@ -109,6 +109,7 @@ alias gpo="git push && git open"
 alias gmm="git merge master"
 alias gfl="git fetch && git pull"
 alias gdm="git diff master"
+alias gdo="git diff origin"
 alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
@@ -153,6 +154,9 @@ alias ll="ls -al"
 # alias wcli="wally-cli"
 
 alias serv="python3 -m http.server"
+
+#-- macos
+alias mactemp="sudo powermetrics --samplers smc -i1 -n1 | grep 'CPU die temperature'"
 
 #-- pi
 alias sshpi="ssh pi@192.168.1.100"
