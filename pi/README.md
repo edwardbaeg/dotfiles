@@ -91,7 +91,9 @@ raspistill -o /home/pi/camera/$DATE.jpg
   - where `10` is the fps
 
 ## Projects and links
-- qbitorrent-nox https://www.joelj.net/raspberrypi/setup-qbittorrent-server-in-raspberry-pi/
+- qbitorrent-nox
+  - https://www.joelj.net/raspberrypi/setup-qbittorrent-server-in-raspberry-pi/
+  - https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only---systemd-service-setup,-Ubuntu-15.04-or-newer)
 `sudo chmod -R ugo+rw /path/to/share` 
 - mount hard drive https://www.raspberrypi.org/documentation/configuration/external-storage.md
 - auto mount hard drive https://www.raspberrypi.org/forums/viewtopic.php?t=205016
