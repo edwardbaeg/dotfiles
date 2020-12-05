@@ -38,6 +38,15 @@ setopt appendhistory
 # fix ctrlp issues with zinit + tmux?
 # bindkey -e
 
+# Configure brew completions for zsh
+# This must be called before compinit and oh-my-zsh.sh
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
 # -- Plugins -------------------------------------------------------------------
 
 # https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
@@ -157,6 +166,7 @@ alias serv="python3 -m http.server"
 
 #-- macos
 alias mactemp="sudo powermetrics --samplers smc -i1 -n1 | grep 'CPU die temperature'"
+alias macgtemp="sudo powermetrics --samplers smc -i1 -n1 | grep 'GPU die temperature'"
 
 #-- pi
 alias sshpi="ssh pi@192.168.1.100"
@@ -212,6 +222,8 @@ source /usr/local/opt/asdf/asdf.sh
 
 # -- Aliases
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
+alias mixi="iex -S mix phx.server"
+alias mixr="mix deps.get && mix ecto.reset"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
 alias yarnl="yarn lint-full && gd"
