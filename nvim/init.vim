@@ -38,6 +38,7 @@ set spell
 
 set nostartofline
 
+
 " Plugins -------------------------------------------------------------------
 " ---------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
@@ -437,7 +438,7 @@ function! Build()
   if &filetype == "javascript"
     exec "! node %"
   elseif &filetype == "python"
-    exec "! python3 %"
+  elseif &filetpe == "sh"
   elseif &filetype == "sh"
     exec "!bash %"
   endif

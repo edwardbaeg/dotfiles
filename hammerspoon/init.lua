@@ -188,7 +188,7 @@ end
 
 -- Maximize window
 hs.hotkey.bind(hyperkey, "M", function()
-  resizeAndCenter(0.98)
+  resizeAndCenter(0.99)
 end)
 
 -- Resize window
