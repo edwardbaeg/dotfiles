@@ -154,6 +154,7 @@ alias ll="ls -al"
 # alias wcli="wally-cli"
 
 alias serv="python3 -m http.server"
+alias pip="pip3"
 
 #-- macos
 alias mactemp="sudo powermetrics --samplers smc -i1 -n1 | grep 'CPU die temperature'"
@@ -192,6 +193,14 @@ function gcof () {
 function wcli () {
   wally-cli "$1" &&
     rm "$1"
+}
+
+function npm () {
+  if [[ $@ == "leaves" ]]; then
+    command npm -g ls --depth=0
+  else
+    command npm "$@"
+  fi
 }
 
 # No args: `git status`; with args: `git `
