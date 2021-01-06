@@ -52,7 +52,8 @@ hs.hotkey.bind(hyperkey, "0", function()
 end)
 
 hs.hotkey.bind(hyperkey, "9", function()
-  success = hs.application.launchOrFocus("Google Chrome")
+  -- success = hs.application.launchOrFocus("Google Chrome")
+  success = hs.application.launchOrFocus("Microsoft Edge")
   print (success)
 end)
 

@@ -160,6 +160,7 @@ alias oldls="/bin/ls"
 alias lg="lazygit"
 alias ..="cd .."
 alias ll="ls -al"
+alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 # alias wcli="wally-cli"
 
 alias serv="python3 -m http.server"
