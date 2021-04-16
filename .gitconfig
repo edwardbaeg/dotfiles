@@ -32,14 +32,15 @@
   tool = nvimdiff
 [difftool "nvimdiff"]
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
-[merge]
-  tool = meld
-  conflictstyle = diff3
 [mergetool]
   prompt = false
-[mergetool "meld"]
-  trustExitCode = true
-  cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
+[merge]
+#  tool = meld
+  tool = nvimdiff
+  conflictstyle = diff3
+#[mergetool "meld"]
+#  trustExitCode = true
+#  cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
 [mergetool "nvimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [difftool]
@@ -52,8 +53,10 @@
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
 [difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path = 
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
 [mergetool "sourcetree"]
-  cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[pull]
+	rebase = true

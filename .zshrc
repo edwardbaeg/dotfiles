@@ -47,6 +47,9 @@ if type brew &>/dev/null; then
   compinit
 fi
 
+# Improve less
+export LESS="$LESS -FRXK"
+
 # -- Plugins -------------------------------------------------------------------
 
 # https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
@@ -232,7 +235,8 @@ source /usr/local/opt/asdf/asdf.sh
 
 # -- Aliases
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
-alias mixi="iex -S mix phx.server"
+# alias mixi="iex -S mix deps.get && mix ecto.migrate && mix phx.server"
+alias mixi="mix deps.get && mix ecto.migrate && iex -S mix phx.server"
 alias mixr="mix deps.get && mix ecto.reset"
 alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
 alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
@@ -240,11 +244,15 @@ alias yarnl="yarn lint-full && gd"
 alias iexx="iex -S mix phx.server"
 alias ys="yarn start"
 alias grain="/Applications/Grain.app/Contents/MacOS/Grain"
+alias grain-staging="/Applications/Grain\ Staging.app/Contents/MacOS/Grain\ Staging"
 alias grain-dev="/Applications/Grain\ Dev.app/Contents/MacOS/Grain\ Dev"
 alias minios="minio server ~/dev/grain/next/clients/desktop/minio"
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# Enable iex/erl shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 # -- Post install --------------------------------------------------------------
 

@@ -19,8 +19,8 @@ set mouse=a
 syntax enable
 filetype plugin indent on
 set encoding=utf8
-set clipboard=unnamedplus " integrate with mac
-" set clipboard=unnamed " integrate with windows
+" set clipboard=unnamedplus " integrate with mac
+set clipboard=unnamed " integrate with windows
 set updatetime=500
 set undofile " set persistent undo
 set undodir=$HOME/.vim/undo
@@ -84,6 +84,8 @@ call plug#begin('~/.vim/plugged')
     let g:airline_section_y = ''
     let g:airline_theme='minimalist'
     let g:airline#extensions#tabline#formatter = 'jsformatter'
+    let g:airline#extensions#branch#displayed_head_limit = 10 " truncate branch name
+    let g:airline#extensions#branch#format = 1 " only show tail of branch name
   Plug 'psliwka/vim-smoothie' " smooth scrolling
     let g:smoothie_update_interval = 12 " default is 20
     let g:smoothie_base_speed = 30 " default is 10
@@ -152,15 +154,16 @@ call plug#begin('~/.vim/plugged')
   Plug 'honza/vim-snippets'
   Plug 'jiangmiao/auto-pairs'
 
-  " TODO: just take b motion from here
+  " TODO: just take b bracket motion from here
   Plug 'machakann/vim-sandwich'
 
-  Plug 'tommcdo/vim-exchange'
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-repeat'
-  Plug 'vim-scripts/mru.vim'
-  Plug 'tpope/vim-surround'
-  Plug 'christoomey/vim-sort-motion'
+  Plug 'tommcdo/vim-exchange' " adds switch motion
+  Plug 'tpope/vim-commentary' " comments
+  Plug 'tpope/vim-repeat' " extends power of repeat motion
+  Plug 'vim-scripts/mru.vim' " shows most recently used screen
+  Plug 'tpope/vim-surround' " adds surround motions
+  Plug 'christoomey/vim-sort-motion' " sort alphabetically
+  Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursor suppport
 
   " Utility
   " -------
@@ -361,6 +364,7 @@ set expandtab
 " ---------------------------------------------------------------------------
 " Exit insert mode with jk
 inoremap jk <esc>
+" inoremap kj <esc>
 
 " Remap move cursor to ends of lines H / L
 noremap <S-h> ^
