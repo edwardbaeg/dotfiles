@@ -4,6 +4,8 @@
 <dict>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>ABAD8FFC-1CEA-4623-8D2F-9C144B47CCD9</string>
 	<key>HapticFeedbackForEsc</key>
