@@ -52,7 +52,6 @@ call plug#begin('~/.vim/plugged')
     let g:gitgutter_sign_removed = '•'
     let g:gitgutter_sign_removed_first_line = '-'
     let g:gitgutter_sign_modified_removed = '••'
-
     highlight GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
     highlight GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
     highlight GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
@@ -86,9 +85,10 @@ call plug#begin('~/.vim/plugged')
     let g:airline#extensions#tabline#formatter = 'jsformatter'
     let g:airline#extensions#branch#displayed_head_limit = 10 " truncate branch name
     let g:airline#extensions#branch#format = 1 " only show tail of branch name
-  Plug 'psliwka/vim-smoothie' " smooth scrolling
-    let g:smoothie_update_interval = 12 " default is 20
-    let g:smoothie_base_speed = 30 " default is 10
+  " Plug 'psliwka/vim-smoothie' " smooth scrolling
+  "   let g:smoothie_base_speed = 30 " default is 10
+  "   let g:smoothie_update_interval = 12 " default is 20
+  " Plug 'yuttie/comfortable-motion.vim'
 
   " Language
   " --------
