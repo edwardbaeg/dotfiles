@@ -6,10 +6,11 @@ hyperkey = { "cmd", "ctrl" }
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
 
--- hs.window.highlight.ui.overlay = true
--- hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
--- hs.window.highlight.ui.frameWidth = 4 -- draw a frame around the focused window in overlay mode; 0 to disable
--- hs.window.highlight.start()
+hs.window.highlight.ui.overlay = true
+hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
+hs.window.highlight.ui.frameWidth = 4 -- draw a frame around the focused window in overlay mode; 0 to disable
+hs.window.highlight.ui.frameWidth = 8 -- draw a frame around the focused window in overlay mode; 0 to disable
+hs.window.highlight.start()
 
 -- hs.window.highlight.ui.windowShownFlashColor = {0,1,0,0.8} -- flash color when a window is shown (created or unhidden)
 -- hs.window.highlight.ui.flashDuration = 0.3
@@ -253,6 +254,53 @@ appCuts = {
   i = 'iterm',
   c = 'Google chrome'
 }
+
+-- Caffeine menubar app --------------------------------------------------
+--------------------------------------------------------------------------
+
+caffeine = hs.menubar.new()
+function setCaffeineDisplay(state)
+    if state then
+        caffeine:setTitle("AWAKE")
+    else
+        caffeine:setTitle("SLEEPY")
+    end
+end
+
+function caffeineClicked()
+    setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
+end
+
+if caffeine then
+    caffeine:setClickCallback(caffeineClicked)
+    setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+end
+
+-- Wifi switcher ---------------------------------------------------------
+--------------------------------------------------------------------------
+
+wifiWatcher = nil
+homeSSID = "ORBI66"
+lastSSID = hs.wifi.currentNetwork()
+
+function ssidChangedCallback()
+  newSSID = hs.wifi.currentNetwork()
+
+  if newSSID == homeSSID and lastSSID ~= homeSSID then
+    -- We just joined our home WiFi network
+    hs.audiodevice.defaultOutputDevice():setVOlume(25)
+    hs.alert.show("Home network: setting volume.")
+  elseif newSSID ~= homeSSID and lastSSID == homeSSID then
+    -- We just departed our home WiFi network
+    hs.alert.show("External network: muting volume.")
+    hs.audiodevice.defaultOutputDevice():setVolume(0)
+  end
+
+  lastSSID = newSSID
+end
+
+wifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
+wifiWatcher:start()
 
 -- k = hs.hotkey.modal.new({ "cmd", "ctrl" }, "I");
 -- function k:entered()
