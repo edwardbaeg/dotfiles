@@ -90,6 +90,26 @@ call plug#begin('~/.vim/plugged')
   "   let g:smoothie_update_interval = 12 " default is 20
   " Plug 'yuttie/comfortable-motion.vim'
 
+  " Lsp
+  " --------
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+  " Find files using Telescope command-line sugar.
+  Plug 'nvim-telescope/telescope.nvim'
+  nnoremap <leader>ff <cmd>Telescope find_files<cr>
+  nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+  nnoremap <leader>fb <cmd>Telescope buffers<cr>
+  nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+  nnoremap <c-p> <cmd>Telescope find_files<cr>
+  nnoremap <c-b> <cmd>Telescope buffers<cr>
+  nnoremap <c-l> <cmd>Telescope current_buffer_fuzzy_find<cr>
+  nnoremap <c-h> <cmd>Telescope jumplist<cr>
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'kyazdani42/nvim-tree.lua'
+  nnoremap <c-n> :NvimTreeToggle<cr>
+
   " Language
   " --------
   " Javascript
@@ -114,32 +134,32 @@ call plug#begin('~/.vim/plugged')
 
   " Files
   " -----
-  Plug 'junegunn/fzf.vim' " integrate with fzf
-  Plug '/usr/local/opt/fzf'
-    " Use a centered floating window, requires tmux >3.2
-    " if exists('$TMUX')
-    "   let g:fzf_layout = { 'tmux': '-p90%,60%' }
-    " else
-    "   let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.90 } }
-    " endif
+  " Plug 'junegunn/fzf.vim' " integrate with fzf
+  " Plug '/usr/local/opt/fzf'
+  "   " Use a centered floating window, requires tmux >3.2
+  "   " if exists('$TMUX')
+  "   "   let g:fzf_layout = { 'tmux': '-p90%,60%' }
+  "   " else
+  "   "   let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.90 } }
+  "   " endif
 
-    let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.90 } }
-    " let g:fzf_preview_window = 'right:60%' " Always show preview
+  "   let g:fzf_layout = { 'window': { 'width': 1, 'height': 0.5, 'yoffset': 0.90 } }
+  "   " let g:fzf_preview_window = 'right:60%' " Always show preview
 
-    " :GFiles respects .gitignore (over :FZF or :Files)
-    nnoremap <C-p> :GFiles<CR>
-    nnoremap <C-l> :Lines<CR>
-    nnoremap <C-g> :Rg<CR>
-    nnoremap <C-b> :Buffers<CR>
-    Plug 'scrooloose/nerdtree' , { 'on': 'NERDTreeToggle' } " interactive file explorer
-      let g:NERDTreeWinSize=25
-      nnoremap <Leader>n :NERDTreeToggle<CR>
-      " nnoremap <Leader>f :NERDTreeFind<CR>
-      let NERDTreeQuitOnOpen = 1
+  "   " :GFiles respects .gitignore (over :FZF or :Files)
+  "   nnoremap <C-p> :GFiles<CR>
+  "   nnoremap <C-l> :Lines<CR>
+  "   nnoremap <C-g> :Rg<CR>
+  "   nnoremap <C-b> :Buffers<CR>
+  " Plug 'scrooloose/nerdtree' , { 'on': 'NERDTreeToggle' } " interactive file explorer
+  "   let g:NERDTreeWinSize=25
+  "   nnoremap <Leader>n :NERDTreeToggle<CR>
+  "   " nnoremap <Leader>f :NERDTreeFind<CR>
+  "   let NERDTreeQuitOnOpen = 1
   Plug 'tpope/vim-fugitive'
-  Plug 'mhinz/vim-startify'
-    " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
-    let g:startify_custom_header = ''
+  " Plug 'mhinz/vim-startify'
+  "   " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
+  "   let g:startify_custom_header = ''
 
   " Shortcuts
   " ---------
@@ -163,15 +183,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-scripts/mru.vim' " shows most recently used screen
   Plug 'tpope/vim-surround' " adds surround motions
   Plug 'christoomey/vim-sort-motion' " sort alphabetically
-  Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursor suppport
+  " Plug 'mg979/vim-visual-multi', { 'branch': 'master' } " multi cursor suppport
 
   " Utility
   " -------
   Plug 'Carpetsmoker/undofile_warn.vim'
-  Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
-  Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
-    let g:deoplete#enable_at_startup=1
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  " Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugins' }
+  " Plug 'tbodt/deoplete-tabnine', { 'do' : './install.sh' }
+  "   let g:deoplete#enable_at_startup=1
+  "   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
   Plug 'simnalamburt/vim-mundo', { 'on': 'MundoToggle' }
     nnoremap <leader>m :MundoToggle<CR>
   Plug 'vimwiki/vimwiki'
@@ -188,8 +208,9 @@ call plug#begin('~/.vim/plugged')
     highlight ALEWarningSign guifg=orange
     nnoremap ge :ALENextWrap<cr>
   Plug 'farmergreg/vim-lastplace'
+  " Live markdown preview in browser
   Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
-  Plug 'voldikss/vim-floaterm'
+    let g:instant_markdown_autostart = 0
     " let g:floaterm_wintype='floating'
     let g:floaterm_wintitle=v:false " hide foaterm info 'floaterm: 1/1'
     let g:floaterm_width=0.8 " as percentage of width
@@ -216,9 +237,9 @@ call plug#begin('~/.vim/plugged')
     nnoremap <silent> <leader> :<c-u>WhichKey '\'<CR>
 
   " Leave this last
-  Plug 'ryanoasis/vim-devicons', { 'on': 'NERDTreeToggle' }
-    autocmd! User floaterm.vim echom 'floaterm is now loaded'
-    let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
+  " Plug 'ryanoasis/vim-devicons', { 'on': 'NERDTreeToggle' }
+  "   autocmd! User floaterm.vim echom 'floaterm is now loaded'
+  "   let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
 call plug#end()
 
@@ -476,3 +497,43 @@ endfunc
 " - use `zg` to add to dictionary
 " Filetypes
 " - check current with `set filetype?`
+
+lua << EOF
+  require("telescope").setup {
+    defaults = {
+      -- Your defaults config goes in here
+    },
+    pickers = {
+      -- Your special builtin config goes in here
+      buffers = {
+        sort_lastused = true,
+        theme = "dropdown",
+        previewer = false,
+        mappings = {
+          i = {
+            ["<c-d>"] = require("telescope.actions").delete_buffer,
+            -- or right hand side can also be a the name of the action as string
+            ["<c-d>"] = "delete_buffer",
+            },
+          n = {
+            ["<c-d>"] = require("telescope.actions").delete_buffer,
+            }
+          }
+        },
+      find_files = {
+        -- theme = "dropdown"
+        }
+      },
+    extensions = {
+      -- your extension config goes in here
+      }
+    }
+
+  require'nvim-treesitter.configs'.setup {
+    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    highlight = {
+      enable = false,              -- false will disable the whole extension
+      disable = { "c", "rust" },  -- list of language that will be disabled
+    },
+  }
+EOF

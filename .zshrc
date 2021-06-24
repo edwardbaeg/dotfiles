@@ -105,8 +105,10 @@ alias vt="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
 
 alias vm="nvim -c \"Startify | MRU\""
-alias vp="nvim -c \"Startify | GFiles\""
-alias vg="nvim -c \"Startify | Rg\""
+# alias vp="nvim -c \"Startify | GFiles\""
+alias vp="nvim -c \"Telescope find_files\""
+# alias vg="nvim -c \"Startify | Rg\""
+alias vg="nvim -c \"Telescope live_grep\""
 
 # -- Sourcing
 alias st="tmux source-file ~/.tmux.conf"
