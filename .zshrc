@@ -182,6 +182,8 @@ alias sshpiw="ssh pi@192.168.1.101"
 alias sshpiz="ssh pi@192.168.1.102"
 alias sshpizw="ssh pi@192.168.1.103"
 
+alias hsr="hs -c \"hs.reload()\""
+
 # -- Functions -----------------------------------------------------------------
 
 function sshbb () {
