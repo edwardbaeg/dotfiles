@@ -2,7 +2,7 @@
   autocrlf = input
   safecrlf = true
   editor = nvim --noplugin
-  pager = diff-so-fancy | less --tabs=4 -RFX
+  pager = diff-so-fancy | less --tabs=4 -RFX #TODO: check if `diff-so-fancy` is a valid command first
 [user]
   name = edwardbaeg
   email = edwardbaeg9@gmail.com
@@ -20,6 +20,7 @@
   type = cat-file -t
   dump = cat-file -p
   econfig = config --global -e
+  odiff = -c core.pager=less diff # use default diff syntax
 [color]
   branch = auto
   diff = auto

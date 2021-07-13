@@ -114,7 +114,7 @@ call plug#begin('~/.vim/plugged')
   " --------
   " Javascript
   Plug 'mattn/emmet-vim', { 'for': 'javascript' }
-    let g:user_emmet_leader_key='<C-E>'
+    let g:user_emmet_leader_key='<C-E>' " and then press `,`
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
   " Plug 'jelera/vim-javascript-syntax'
   " Plug 'isRuslan/vim-es6'
@@ -298,7 +298,8 @@ highlight jsAsyncKeyword guifg=#ff2c4b cterm=italic gui=italic
 " ------
 set ruler
 set number "nu
-set relativenumber " rnu
+" relativenumber potentially causes performance issues
+" set relativenumber " rnu
 
 " Status
 " ------
