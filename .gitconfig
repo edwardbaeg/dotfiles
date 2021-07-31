@@ -45,7 +45,7 @@
 [mergetool "nvimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [difftool]
-  prompt = false
+	prompt = true # allows exiting difftool for a queue of files
 [diff-so-fancy]
   markEmptyLines = false
 [filter "lfs"]
