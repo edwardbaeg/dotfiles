@@ -114,16 +114,8 @@ call plug#begin('~/.vim/plugged')
   " --------
   " Javascript
   Plug 'mattn/emmet-vim', { 'for': 'javascript' }
-<<<<<<< HEAD
     let g:user_emmet_leader_key='<C-E>' " and then press `,`
-  Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-||||||| parent of e9fe5c8 (Disable heavy plugins)
-    let g:user_emmet_leader_key='<C-E>'
-  Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-=======
-    let g:user_emmet_leader_key='<C-E>'
   " Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
->>>>>>> e9fe5c8 (Disable heavy plugins)
   " Plug 'jelera/vim-javascript-syntax'
   " Plug 'isRuslan/vim-es6'
   " Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': 'javascript' }
