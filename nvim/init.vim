@@ -114,15 +114,23 @@ call plug#begin('~/.vim/plugged')
   " --------
   " Javascript
   Plug 'mattn/emmet-vim', { 'for': 'javascript' }
+<<<<<<< HEAD
     let g:user_emmet_leader_key='<C-E>' " and then press `,`
   Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+||||||| parent of e9fe5c8 (Disable heavy plugins)
+    let g:user_emmet_leader_key='<C-E>'
+  Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+=======
+    let g:user_emmet_leader_key='<C-E>'
+  " Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+>>>>>>> e9fe5c8 (Disable heavy plugins)
   " Plug 'jelera/vim-javascript-syntax'
   " Plug 'isRuslan/vim-es6'
-  Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': 'javascript' }
+  " Plug 'yardnsm/vim-import-cost', { 'do': 'npm install', 'for': 'javascript' }
 
   " Jsx/Tsx
-  Plug 'neoclide/vim-jsx-improve', { 'for': 'javascript' }
-  Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascript' }
+  " Plug 'neoclide/vim-jsx-improve', { 'for': 'javascript' }
+  " Plug 'MaxMEllon/vim-jsx-pretty', { 'for': 'javascript' }
   " Plug 'peitalin/vim-jsx-typescript'
   " Plug 'mxw/vim-jsx'
 
@@ -156,7 +164,7 @@ call plug#begin('~/.vim/plugged')
   "   nnoremap <Leader>n :NERDTreeToggle<CR>
   "   " nnoremap <Leader>f :NERDTreeFind<CR>
   "   let NERDTreeQuitOnOpen = 1
-  Plug 'tpope/vim-fugitive'
+  " Plug 'tpope/vim-fugitive' " This is super slow
   " Plug 'mhinz/vim-startify'
   "   " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
   "   let g:startify_custom_header = ''
@@ -533,8 +541,10 @@ lua << EOF
   require'nvim-treesitter.configs'.setup {
     ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     highlight = {
-      enable = false,              -- false will disable the whole extension
-      disable = { "c", "rust" },  -- list of language that will be disabled
+      enable = false, -- false will disable the whole extension
+      disable = {  }, -- list of language that will be disabled
     },
   }
+
+  -- require'lspconfig'.javascript.setup {}
 EOF
