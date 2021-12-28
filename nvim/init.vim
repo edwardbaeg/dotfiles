@@ -19,8 +19,19 @@ set mouse=a
 syntax enable
 filetype plugin indent on
 set encoding=utf8
-" set clipboard=unnamedplus " integrate with mac
-set clipboard=unnamed " integrate with windows
+
+if has("win32")
+  echo "is this windows?"
+  set clipboard=unnamed " integrate with windows
+else
+  if has("unix")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+      set clipboard=unnamedplus " integrate with mac
+    endif
+  endif
+endif
+
 set updatetime=500
 set undofile " set persistent undo
 set undodir=$HOME/.vim/undo
@@ -37,7 +48,6 @@ set spelllang=en
 set spell
 
 set nostartofline
-
 
 " Plugins -------------------------------------------------------------------
 " ---------------------------------------------------------------------------
@@ -56,13 +66,13 @@ call plug#begin('~/.vim/plugged')
     highlight GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
     highlight GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
   Plug 'ap/vim-css-color' " preview of css colors
-  Plug 'junegunn/goyo.vim' " distraction free writing in vim
-    let g:goyo_width=100
-    " let g:goyo_height=50
-    let g:goyo_linenr=0
-    nnoremap <leader>g :Goyo<CR>
-  Plug 'junegunn/limelight.vim' " hyperfocus writing
-    nnoremap <leader>l :Limelight!!<CR>
+  " Plug 'junegunn/goyo.vim' " distraction free writing in vim
+  "   let g:goyo_width=100
+  "   " let g:goyo_height=50
+  "   let g:goyo_linenr=0
+  "   nnoremap <leader>g :Goyo<CR>
+  " Plug 'junegunn/limelight.vim' " hyperfocus writing
+  "   nnoremap <leader>l :Limelight!!<CR>
   Plug 'junegunn/vim-peekaboo' " see \" and @ registry contents
   Plug 'kshenoy/vim-signature' " toggle, display, and navigate marks
   Plug 'machakann/vim-highlightedyank' " show yanked region

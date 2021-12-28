@@ -31,8 +31,8 @@ end)
 
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
-hs.window.highlight.ui.overlay = false
 hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
+hs.window.highlight.ui.overlay = false
 hs.window.highlight.ui.frameWidth = 8 -- draw a frame around the focused window in overlay mode; 0 to disable
 hs.window.highlight.start()
 
@@ -125,6 +125,17 @@ end)
 
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
+
+hs.grid.MARGINX = 0
+hs.grid.MARGINY = 0
+hs.grid.GRIDWIDTH = 6
+hs.grid.GRIDHEIGHT = 3
+
+-- show interactive modal interface for a 3x3 grid
+hs.hotkey.bind(hyperkey, "G", function()
+  hs.grid.show()
+end)
+
 function moveAndResizeFocused(callback)
   local win = hs.window.focusedWindow()
   local f = win:frame()

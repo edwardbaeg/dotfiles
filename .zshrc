@@ -7,6 +7,8 @@
 
 # -- Core ----------------------------------------------------------------------
 
+GITSTATUS_LOG_LEVEL=DEBUG
+
 # Improve colors
 export TERM="xterm-256color"
 
