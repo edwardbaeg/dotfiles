@@ -49,19 +49,15 @@ if type brew &>/dev/null; then
   compinit
 fi
 
+# Add homebrew's sbin to path
+export PATH="/usr/local/sbin:$PATH"
+
 # Improve less
 export LESS="$LESS -FRXK"
 
 # -- Plugins -------------------------------------------------------------------
 
 # https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 # NOTE: After adding plugins, run `zgen reset` and then source
 # load zgen
@@ -81,7 +77,7 @@ if ! zgen saved; then
 
   # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
   zgen load changyuheng/fz
-  zgen load zdharma/fast-syntax-highlighting
+  zgen load zdharma-continuum/fast-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
 
   # zgen oh-my-zsh themes/sorin
@@ -90,6 +86,13 @@ if ! zgen saved; then
 
   # generate the init script from plugins above
   zgen save
+fi
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # -- Aliases -------------------------------------------------------------------
