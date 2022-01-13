@@ -17,11 +17,6 @@ setopt inc_append_history
 setopt hist_ignore_dups
 setopt share_history
 
-# This is pretty slow?
-# Configure thefuck alias
-# eval $(thefuck --alias)
-# alias f="fuck"
-
 # Use nvim as default editor (eg, ranger)
 export EDITOR=nvim
 
