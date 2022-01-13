@@ -33,7 +33,7 @@ end)
 --------------------------------------------------------------------------
 hs.window.highlight.ui.overlayColor = {0,0,0,0.01} -- overlay color
 hs.window.highlight.ui.overlay = false
-hs.window.highlight.ui.frameWidth = 8 -- draw a frame around the focused window in overlay mode; 0 to disable
+hs.window.highlight.ui.frameWidth = 4 -- draw a frame around the focused window in overlay mode; 0 to disable
 hs.window.highlight.start()
 
 -- Toggle on fullscreen toggle
