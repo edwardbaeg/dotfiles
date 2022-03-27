@@ -14,12 +14,18 @@ hs.expose.ui.fitWindowsInBackground = true -- [true] improve performance with fa
 hs.expose.ui.thumbnailAlpha = 0.5 -- [0] improve performance with false
 hs.expose.ui.textSize = 60 -- [40]
 
-expose = hs.expose.new(nil,  {  })
-hs.hotkey.bind(hyperkey, "E", function()
-  expose:toggleShow()
-end)
-hs.hotkey.bind({ "cmd" }, "E", function()
-  expose:toggleShow()
+-- expose = hs.expose.new(nil,  {  })
+-- hs.hotkey.bind(hyperkey, "E", function()
+--   expose:toggleShow()
+-- end)
+-- hs.hotkey.bind({ "cmd" }, "E", function()
+--   expose:toggleShow()
+-- end)
+
+-- Some shortcuts --------------------------------------------------------
+--------------------------------------------------------------------------
+hs.hotkey.bind({ "cmd" }, "M", function()
+  hs.alert('[ cmd + m ] disabled');
 end)
 
 -- Spoons ----------------------------------------------------------------
@@ -158,12 +164,54 @@ hs.hotkey.bind(hyperkey, "H", function()
   end)
 end)
 
+hs.hotkey.bind(hyperkey, "U", function()
+  local win = hs.window.focusedWindow()
+  local frame = win:frame()
+  local screen = win:screen():frame()
+  if (frame.x == screen.x and frame.y == screen.y and frame.w == screen.w * 2 / 3 and frame.h == screen.h) then
+    moveAndResizeFocused(function (frame, screen)
+      frame.x = screen.x
+      frame.y = screen.y
+      frame.w = screen.w * 1 / 3
+      frame.h = screen.h
+    end)
+    return
+  end
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x
+    frame.y = screen.y
+    frame.w = screen.w * 2 / 3
+    frame.h = screen.h
+  end)
+end)
+
 -- Right half
 hs.hotkey.bind(hyperkey, "L", function()
   moveAndResizeFocused(function (frame, screen)
     frame.x = screen.x + (screen.w / 2)
     frame.y = screen.y
     frame.w = screen.w / 2
+    frame.h = screen.h
+  end)
+end)
+
+hs.hotkey.bind(hyperkey, "I", function()
+  local win = hs.window.focusedWindow()
+  local frame = win:frame()
+  local screen = win:screen():frame()
+  if (frame.x == screen.x + screen.w / 3 and frame.y == screen.y and frame.w == screen.w * 2 / 3 and frame.h == screen.h) then
+    moveAndResizeFocused(function (frame, screen)
+      frame.x = screen.x + screen.w * 2 / 3
+      frame.y = screen.y
+      frame.w = screen.w * 1 / 3
+      frame.h = screen.h
+    end)
+    return
+  end
+  moveAndResizeFocused(function (frame, screen)
+    frame.x = screen.x + screen.w / 3
+    frame.y = screen.y
+    frame.w = screen.w * 2 / 3
     frame.h = screen.h
   end)
 end)
@@ -325,10 +373,10 @@ simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
 
 -- Modal mode ------------------------------------------------------------
 --------------------------------------------------------------------------
-appCuts = {
-  i = 'iterm',
-  c = 'Google chrome'
-}
+-- appCuts = {
+--   i = 'iterm',
+--   c = 'Google chrome'
+-- }
 
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------
