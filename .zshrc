@@ -20,6 +20,11 @@ setopt share_history
 # Use nvim as default editor (eg, ranger)
 export EDITOR=nvim
 
+# In normal mode, use `v` to open command in editor
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 # Add custom programs
 export PATH=~/bin:$PATH
 
@@ -45,7 +50,8 @@ if type brew &>/dev/null; then
 fi
 
 # Add homebrew's sbin to path
-export PATH="/usr/local/sbin:$PATH"
+# export PATH="/usr/local/sbin:$PATH"
+export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH
 
 # Improve less
 export LESS="$LESS -FRXK"
@@ -91,6 +97,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # -- Aliases -------------------------------------------------------------------
+
+alias ibrew='arch -x86_64 /usr/local/bin/brew'
+alias mbrew='arch -arm64 /opt/homebrew/bin/brew'
 
 # -- vim
 alias vim="nvim"
@@ -233,10 +242,13 @@ function npm () {
 # -- Grain ---------------------------------------------------------------------
 
 # Source asdf
-source /usr/local/opt/asdf/asdf.sh
-. /usr/local/opt/asdf/asdf.sh
-. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+# source /usr/local/opt/asdf/asdf.sh
+# . /usr/local/opt/asdf/asdf.sh
+# . /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
+# . /usr/local/opt/asdf/libexec/asdf.sh
 
+export KERL_CONFIGURE_OPTIONS="--with-ssl=`brew --prefix openssl` \
+                               --without-javac"
 # -- Aliases
 alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
 # alias mixi="iex -S mix deps.get && mix ecto.migrate && mix phx.server"
@@ -252,6 +264,9 @@ alias grain="/Applications/Grain.app/Contents/MacOS/Grain"
 alias grain-staging="/Applications/Grain\ Staging.app/Contents/MacOS/Grain\ Staging"
 alias grain-dev="/Applications/Grain\ Dev.app/Contents/MacOS/Grain\ Dev"
 alias minios="minio server ~/dev/grain/next/clients/desktop/minio"
+
+alias arm="env /usr/bin/arch -arm64 /bin/zsh --login"
+alias intel="env /usr/bin/arch -x86_64 /bin/zsh --login"
 
 # direnv
 eval "$(direnv hook zsh)"
