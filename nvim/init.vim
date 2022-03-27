@@ -1,14 +1,8 @@
 " ~/.config/nvim/init.vim
 
-" Stop using j/k/h/l so much
-" noremap h <NOP>
-" noremap l <NOP>
-" noremap j <NOP>
-" noremap k <NOP>
-
 " Core ----------------------------------------------------------------------
 " ---------------------------------------------------------------------------
-let &t_8f="\<Esc>[38;2;%lu;%lu;%lum" " enable italcs
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum" " enable italics
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum" " enable italics
 
 if has('termguicolors')
@@ -49,6 +43,8 @@ set spell
 
 set nostartofline
 
+set timeoutlen=500
+
 " Plugins -------------------------------------------------------------------
 " ---------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
@@ -73,7 +69,8 @@ call plug#begin('~/.vim/plugged')
   "   nnoremap <leader>g :Goyo<CR>
   " Plug 'junegunn/limelight.vim' " hyperfocus writing
   "   nnoremap <leader>l :Limelight!!<CR>
-  Plug 'junegunn/vim-peekaboo' " see \" and @ registry contents
+  " Plug 'junegunn/vim-peekaboo' " see \" and @ registry contents --this is
+  " replaced with whichkey
   Plug 'kshenoy/vim-signature' " toggle, display, and navigate marks
   Plug 'machakann/vim-highlightedyank' " show yanked region
     let g:highlightedyank_highlight_duration = 500
@@ -103,19 +100,26 @@ call plug#begin('~/.vim/plugged')
   " Lsp
   " --------
   Plug 'neovim/nvim-lspconfig'
+  " plenary and popup is necessary for telescope.nvim
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
   " Find files using Telescope command-line sugar.
   Plug 'nvim-telescope/telescope.nvim'
   nnoremap <leader>ff <cmd>Telescope find_files<cr>
   nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-  nnoremap <leader>fb <cmd>Telescope buffers<cr>
+  nnoremap <leader>fb <cmd>Telescope builtin<cr>
   nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+  nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
+  nnoremap <leader>ts <cmd>Telescope spell_suggest<cr>
   nnoremap <c-p> <cmd>Telescope find_files<cr>
   nnoremap <c-b> <cmd>Telescope buffers<cr>
   nnoremap <c-l> <cmd>Telescope current_buffer_fuzzy_find<cr>
-  nnoremap <c-h> <cmd>Telescope jumplist<cr>
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  nnoremap <c-h> <cmd>Telescope help_tags<cr>
+  " nnoremap <c-h> <cmd>Telescope jumplist<cr>
+  nnoremap <c-g> <cmd>Telescope live_grep<cr>
+  " Recommended by docs for performance
+  Plug 'nvim-telescope/telescope-fzf-native.nvim', {'do': 'make' }
+  " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'kyazdani42/nvim-web-devicons'
   Plug 'kyazdani42/nvim-tree.lua'
   nnoremap <c-n> :NvimTreeToggle<cr>
@@ -166,7 +170,7 @@ call plug#begin('~/.vim/plugged')
   "   nnoremap <Leader>n :NERDTreeToggle<CR>
   "   " nnoremap <Leader>f :NERDTreeFind<CR>
   "   let NERDTreeQuitOnOpen = 1
-  " Plug 'tpope/vim-fugitive' " This is super slow
+  Plug 'tpope/vim-fugitive' " This is super slow?
   " Plug 'mhinz/vim-startify'
   "   " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
   "   let g:startify_custom_header = ''
@@ -242,9 +246,10 @@ call plug#begin('~/.vim/plugged')
   " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
   " Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] } " emacs style which key keybinding popups
-  Plug 'liuchengxu/vim-which-key' " emacs style which key keybinding popups
+  " Plug 'liuchengxu/vim-which-key' " emacs style which key keybinding popups
     " set timeoutlen=500
-    nnoremap <silent> <leader> :<c-u>WhichKey '\'<CR>
+    " nnoremap <silent> <leader> :<c-u>WhichKey '\'<CR>
+  Plug 'folke/which-key.nvim'
 
   " Leave this last
   " Plug 'ryanoasis/vim-devicons', { 'on': 'NERDTreeToggle' }
@@ -510,16 +515,34 @@ endfunc
 " - check current with `set filetype?`
 
 lua << EOF
-  require("telescope").setup {
+  local telescope = require("telescope");
+  local actions = require "telescope.actions"
+  telescope.setup {
+    -- Default configuration for telescope goes here:
     defaults = {
-      -- Your defaults config goes in here
+      mappings = {
+        i = {
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<C-j>"] = actions.move_selection_next,
+          -- map actions.which_key to <C-h> (default: <C-/>)
+          ["<C-h>"] = "which_key"
+        }
+      },
+      -- path_display = 'absolute',
+      layout_strategy = "flex",
+      layout_config = {
+        prompt_position = 'bottom',
+        width = 0.9,
+        height = 0.9
+      },
+      dynamic_preview_title = true
     },
     pickers = {
       -- Your special builtin config goes in here
       buffers = {
         sort_lastused = true,
-        theme = "dropdown",
-        previewer = false,
+        -- theme = "dropdown",
+        -- previewer = false,
         mappings = {
           i = {
             ["<c-d>"] = require("telescope.actions").delete_buffer,
@@ -536,17 +559,26 @@ lua << EOF
         }
       },
     extensions = {
-      -- your extension config goes in here
+      fzf_native = {
+        override_generic_sorter = false,
+        ocerride_file_sorger = true,
+        }
       }
     }
 
-  require'nvim-treesitter.configs'.setup {
-    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    highlight = {
-      enable = false, -- false will disable the whole extension
-      disable = {  }, -- list of language that will be disabled
-    },
+  -- telescope.load_extension('fzf');
+
+  require("which-key").setup {
+    -- timeout depends on vim's timeoutlen
   }
+
+--  require'nvim-treesitter.configs'.setup {
+--    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+--    highlight = {
+--      enable = false, -- false will disable the whole extension
+--      disable = {  }, -- list of language that will be disabled
+--    },
+--  }
 
   -- require'lspconfig'.javascript.setup {}
 EOF
