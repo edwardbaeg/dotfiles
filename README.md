@@ -112,7 +112,7 @@ OSX automation
 
 Install brew (this will also install x-code command line tools if you don't have them yet)
 ```
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 ```
 brew install node python3
