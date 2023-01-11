@@ -10,6 +10,7 @@ update_config=1
 country=US
 
 network={
+
  ssid="<Name of your WiFi>"
  psk="<Password for your WiFi>"
 }
@@ -18,7 +19,7 @@ network={
 ## Installing packages
 Run the following before installing new packages
 ```
-sudo apt-get update && sudo apt-get upgrade
+sudo apt-get update -y && sudo apt-get upgrade -y
 ```
 
 - neovim + init.vim + zplug + gawk (for fzf)
