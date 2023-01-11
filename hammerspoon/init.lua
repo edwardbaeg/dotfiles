@@ -164,6 +164,7 @@ hs.hotkey.bind(hyperkey, "H", function()
   end)
 end)
 
+-- Left two thirds
 hs.hotkey.bind(hyperkey, "U", function()
   local win = hs.window.focusedWindow()
   local frame = win:frame()
@@ -195,6 +196,7 @@ hs.hotkey.bind(hyperkey, "L", function()
   end)
 end)
 
+-- Right two thirds
 hs.hotkey.bind(hyperkey, "I", function()
   local win = hs.window.focusedWindow()
   local frame = win:frame()
@@ -289,12 +291,22 @@ hs.hotkey.bind(quadKey, "N", function()
 end)
 
 -- Bottom right quadrant
+-- hs.hotkey.bind(quadKey, "M", function()
+--   moveAndResizeFocused(function (frame, screen)
+--     frame.x = screen.x + (screen.w / 2)
+--     frame.y = screen.y + (screen.h / 2)
+--     frame.w = screen.w / 2
+--     frame.h = screen.h / 2
+--   end)
+-- end)
+
+-- Middle 60%
 hs.hotkey.bind(quadKey, "M", function()
   moveAndResizeFocused(function (frame, screen)
-    frame.x = screen.x + (screen.w / 2)
-    frame.y = screen.y + (screen.h / 2)
-    frame.w = screen.w / 2
-    frame.h = screen.h / 2
+    frame.x = screen.x + (screen.w * 0.15)
+    frame.y = screen.y
+    frame.w = screen.w * 0.7
+    frame.h = screen.h * 0.99
   end)
 end)
 
