@@ -43,7 +43,8 @@ set spell
 
 set nostartofline
 
-set timeoutlen=500
+set timeoutlen=200
+" set and other set
 
 " Plugins -------------------------------------------------------------------
 " ---------------------------------------------------------------------------
@@ -110,7 +111,7 @@ call plug#begin('~/.vim/plugged')
   nnoremap <leader>fb <cmd>Telescope builtin<cr>
   nnoremap <leader>fh <cmd>Telescope help_tags<cr>
   nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
-  nnoremap <leader>ts <cmd>Telescope spell_suggest<cr>
+  nnoremap <leader>fs <cmd>Telescope spell_suggest<cr>
   nnoremap <c-p> <cmd>Telescope find_files<cr>
   nnoremap <c-b> <cmd>Telescope buffers<cr>
   nnoremap <c-l> <cmd>Telescope current_buffer_fuzzy_find<cr>
@@ -349,7 +350,8 @@ set cursorcolumn
 " highlight CursorLine guibg=none ctermbg=none
 " highlight CursorLine guifg=white guibg=darkblue ctermfg=white ctermbg=darkblue
 
-" Only show cursorlines on active window and in normal mode
+" Only show cursorlines in normal mode
+" TODO: only show when window is active
 " NOTE: esc does not trigger InsertLeave by default
 inoremap <c-c> <esc>
 augroup ShowLines
