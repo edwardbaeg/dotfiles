@@ -71,7 +71,7 @@ if ! zgen saved; then
   zgen oh-my-zsh
 
   zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/z
+  # zgen oh-my-zsh plugins/z
   zgen oh-my-zsh plugins/vi-mode
   zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/tmux
@@ -80,10 +80,11 @@ if ! zgen saved; then
   zgen load changyuheng/fz
   zgen load zdharma-continuum/fast-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
+  zgen load agkozak/zsh-z
 
   # zgen oh-my-zsh themes/sorin
   zgen load romkatv/powerlevel10k powerlevel10k
-  zgen load paulirish/git-open
+  # zgen load paulirish/git-open
 
   # generate the init script from plugins above
   zgen save
@@ -242,10 +243,7 @@ function npm () {
 # -- Grain ---------------------------------------------------------------------
 
 # Source asdf
-# source /usr/local/opt/asdf/asdf.sh
-# . /usr/local/opt/asdf/asdf.sh
-# . /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
-# . /usr/local/opt/asdf/libexec/asdf.sh
+source /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 export KERL_CONFIGURE_OPTIONS="--with-ssl=`brew --prefix openssl` \
                                --without-javac"

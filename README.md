@@ -115,14 +115,23 @@ Install brew (this will also install x-code command line tools if you don't have
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 ```
-brew install node python3
-brew install ranger ripgrep bat exa highlight neofetch
+brew install python3 ranger ripgrep bat exa highlight
 ```
 
-#### zsh + oh-my-zsh
-Install zsh, zsh plugin manager, and fuzzy searching plugin
+Disable mouse acceleration
 ```
-brew install zsh zplug fzf
+defaults write .GlobalPreferences com.apple.mouse.scaling -1
+```
+
+Enable key repeat
+```
+defaults write -g ApplePressAndHoldEnabled -bool false
+```
+
+#### oh-my-zsh
+Install zsh plugin manager and fuzzy searching plugin
+```
+brew install zplug fzf
 ```
 
 ```
