@@ -321,9 +321,10 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'javascript', 'help', 'vim', 'html', 'css' },
 
-  highlight = { enable = true },
+  -- regex highlighting helps with jsx indenting
+  highlight = { enable = true, additional_vim_regex_highlighting = true },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -622,6 +623,9 @@ endfunction
 set spelllang=en
 set spellsuggest=best,9
 " set spell
+
+set splitright
+set splitbelow
 ]])
 
 --mundo
