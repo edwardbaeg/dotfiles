@@ -110,7 +110,7 @@ alias ovim="oldvim"
 
 alias vz="vim ~/.zshrc"
 alias vv="vim ~/.vimrc"
-alias nv="nvim ~/.config/nvim/init.vim"
+alias nv="nvim ~/.config/nvim/init.lua"
 alias vt="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
 

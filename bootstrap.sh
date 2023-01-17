@@ -70,6 +70,11 @@ symlink_file_folder \
   powerlevel10k.zsh
 
 symlink_file_folder \
+  $DIR/.zshrc \
+  $HOME/.zshrc \
+  .zshrc
+
+symlink_file_folder \
   $DIR/.gitconfig \
   $HOME/.gitconfig \
   .gitconfig

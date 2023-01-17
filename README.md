@@ -180,7 +180,7 @@ Install neovim with python3
 
 ```
 brew install neovim
-pip3 install --user neovim
+python3 -m pip install --user --upgrade pynvim
 ```
 
 Install vim-plug, a (neo)vim plugin manager
