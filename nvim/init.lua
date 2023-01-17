@@ -147,7 +147,9 @@ require('packer').startup(function(use)
 
   use 'christoomey/vim-sort-motion' -- note: in vimscript
 
-  use 'gbprod/substitute.nvim' -- add motions for substituting text
+  use { -- add motions for substituting text
+    'gbprod/substitute.nvim',
+  }
 
   use 'arp242/undofile_warn.vim' -- warn when access undofile before current open
 
@@ -629,10 +631,17 @@ vim.g.mundo_preview_bottom=1
 -- vim.api.nvim_set_hl(0, '@function.call', { italic: true })
 
 -- substitute
+require("substitute").setup { }
+
+-- add substitute operator
 vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
 vim.keymap.set("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
 vim.keymap.set("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
-vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+-- add exchange operator
+vim.keymap.set("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
+vim.keymap.set("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
+vim.keymap.set("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
+vim.keymap.set("n", "sxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
