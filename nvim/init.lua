@@ -71,9 +71,103 @@ require('packer').startup(function(use)
   end
 
   -- PERSONAL
+  use "nvim-treesitter/playground"
 
-  
+  use {
+    "windwp/nvim-autopairs",
+    config = function () require("nvim-autopairs").setup {} end
+  }
+
+  use "simnalamburt/vim-mundo"
+
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
+
+  use { -- keep track of cursor location
+    'ethanholz/nvim-lastplace',
+    config = function()
+      require('nvim-lastplace').setup {}
+    end
+  }
+
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      require("which-key").setup {
+        plugins = {
+          spelling = {
+            enabled = true
+          }
+        },
+        operators = {
+          gc = "Comments",
+        },
+        window = {
+          border = 'single',
+          margin = { 0, 0, 0, 0 },
+          padding = { 1, 0, 1, 0 }
+        }
+      }
+    end
+  }
+
+  use {
+    'akinsho/bufferline.nvim',
+    tag="v3.*",
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function ()
+      require('bufferline').setup {}
+    end
+  }
+
+  use { -- highlight words under cursor
+    'yamatsum/nvim-cursorline',
+    config = function ()
+      require('nvim-cursorline').setup {
+        cursorline = {
+          enable = false
+        },
+        cursorword = {
+          enable = true,
+          min_length = 3,
+          hl = { underline = true }
+        }
+      }
+    end
+  }
+
+  use 'christoomey/vim-sort-motion' -- note: in vimscript
+
+  use 'gbprod/substitute.nvim' -- add motions for substituting text
+
+  use 'arp242/undofile_warn.vim' -- warn when access undofile before current open
+
+  use { -- lists of diagnostics, references, telescopes, quickfix, and location lists
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+
+  -- colorscheme
+  use { 'folke/tokyonight.nvim' }
 end)
+
+vim.cmd[[colorscheme tokyonight-night]]
 
 -- When we are bootstrapping a configuration, it doesn't
 -- make sense to execute the rest of the init.lua.
@@ -124,7 +218,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+-- vim.cmd [[colorscheme onedark]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -138,7 +232,7 @@ vim.g.maplocalleader = ' '
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+-- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -160,7 +254,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'tokyonight',
     component_separators = '|',
     section_separators = '',
   },
@@ -351,6 +445,9 @@ local servers = {
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+      diagnostics = {
+        globals = {"vim"}
+      }
     },
   },
 }
@@ -449,6 +546,11 @@ vim.keymap.set('n', '<c-p>', '<cmd>Telescope find_files<cr>')
 vim.keymap.set('n', '<c-b>', '<cmd>Telescope buffers<cr>')
 vim.keymap.set('n', '<c-l>', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
 vim.keymap.set('n', '<c-h>', '<cmd>Telescope help_tags<cr>')
+vim.keymap.set('n', '<c-g>', '<cmd>Telescope live_grep<cr>')
+
+vim.keymap.set('n', '<leader>so', ':so<cr>')
+vim.keymap.set('n', '<leader>ps', ':PackerSync<cr>')
+vim.keymap.set('n', '<leader>u', ':MundoToggle<cr>')
 
 vim.cmd([[
 set showmatch
@@ -456,6 +558,8 @@ set matchtime=2 " multiple of 100ms
 highlight whitespace ctermbg=white
 set scrolloff=24 " buffer top and bottom
 set cursorline
+
+" hi Visual guibg=#FFFFFF
 
 augroup ShowLines
   autocmd!
@@ -491,6 +595,10 @@ nnoremap k gk
 " Quick edit configs
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 
+" Split into two lines
+" nnoremap K i<CR><ESC>
+nnoremap <enter> i<CR><ESC>
+
 " Make Y consistent with C and D
 nnoremap Y y$
 
@@ -508,7 +616,23 @@ function! Build()
     exec "!bash %"
   endif
 endfunction
+
+set spelllang=en
+set spellsuggest=best,9
+" set spell
 ]])
+
+--mundo
+vim.g.mundo_width=40
+vim.g.mundo_preview_bottom=1
+
+-- vim.api.nvim_set_hl(0, '@function.call', { italic: true })
+
+-- substitute
+vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+vim.keymap.set("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
+vim.keymap.set("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
+vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
