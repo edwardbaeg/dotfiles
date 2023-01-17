@@ -172,6 +172,7 @@ call plug#begin('~/.vim/plugged')
   "   " nnoremap <Leader>f :NERDTreeFind<CR>
   "   let NERDTreeQuitOnOpen = 1
   Plug 'tpope/vim-fugitive' " This is super slow?
+  Plug 'tpope/vim-rhubarb' " Needed to open GBrowse with Futigive?
   " Plug 'mhinz/vim-startify'
   "   " let g:startify_custom_header = 'startify#pad(startify#fortune#quote())'
   "   let g:startify_custom_header = ''
