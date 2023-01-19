@@ -167,6 +167,14 @@ require('packer').startup(function(use)
 
   -- colorscheme
   use { 'folke/tokyonight.nvim' }
+
+  use {
+    "goolord/alpha-nvim",
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function ()
+      require'alpha'.setup(require'alpha.themes.startify'.config)
+    end
+  }
 end)
 
 vim.cmd[[colorscheme tokyonight-night]]
@@ -561,6 +569,7 @@ set matchtime=2 " multiple of 100ms
 highlight whitespace ctermbg=white
 set scrolloff=24 " buffer top and bottom
 set cursorline
+set linebreak " don't break in the middle of a word
 
 " hi Visual guibg=#FFFFFF
 
