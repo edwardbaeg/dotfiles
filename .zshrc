@@ -240,37 +240,38 @@ function npm () {
 #   fi
 # }
 
-# -- Grain ---------------------------------------------------------------------
-
-# Source asdf
-source /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-export KERL_CONFIGURE_OPTIONS="--with-ssl=`brew --prefix openssl` \
-                               --without-javac"
-# -- Aliases
-alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
-# alias mixi="iex -S mix deps.get && mix ecto.migrate && mix phx.server"
-alias mixi="mix deps.get && mix ecto.migrate && iex -S mix phx.server"
-alias mixr="mix deps.get && mix ecto.reset"
-alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
-# alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
-alias ngrokn="ngrok http https://localhost.grain-dev.co:7777 --subdomain grain-edward --bind-tls true"
-alias yarnl="yarn lint-full && gd"
-alias iexx="iex -S mix phx.server"
-alias ys="yarn start"
-alias grain="/Applications/Grain.app/Contents/MacOS/Grain"
-alias grain-staging="/Applications/Grain\ Staging.app/Contents/MacOS/Grain\ Staging"
-alias grain-dev="/Applications/Grain\ Dev.app/Contents/MacOS/Grain\ Dev"
-alias minios="minio server ~/dev/grain/next/clients/desktop/minio"
-
-alias arm="env /usr/bin/arch -arm64 /bin/zsh --login"
-alias intel="env /usr/bin/arch -x86_64 /bin/zsh --login"
-
-# direnv
-eval "$(direnv hook zsh)"
-
-# Enable iex/erl shell history
-export ERL_AFLAGS="-kernel shell_history enabled"
+# # -- Grain ---------------------------------------------------------------------
+# # Source asdf
+# source /opt/homebrew/opt/asdf/libexec/asdf.sh
+#
+# export KERL_CONFIGURE_OPTIONS="--with-ssl=`brew --prefix openssl` \
+#   --without-javac"
+#
+# # -- Aliases
+# alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
+# # alias mixi="iex -S mix deps.get && mix ecto.migrate && mix phx.server"
+# alias mixi="mix deps.get && mix ecto.migrate && iex -S mix phx.server"
+# alias mixr="mix deps.get && mix ecto.reset"
+# alias ngrokk="ngrok http 3000 --subdomain grain-edward --bind-tls true -host-header=\"localhost:3000\""
+# # alias ngrokn="ngrok http 7777 --subdomain grain-edward --bind-tls true"
+# alias ngrokn="ngrok http https://localhost.grain-dev.co:7777 --subdomain grain-edward --bind-tls true"
+# alias yarnl="yarn lint-full && gd"
+# alias iexx="iex -S mix phx.server"
+# alias ys="yarn start"
+# alias grain="/Applications/Grain.app/Contents/MacOS/Grain"
+# alias grain-staging="/Applications/Grain\ Staging.app/Contents/MacOS/Grain\ Staging"
+# alias grain-dev="/Applications/Grain\ Dev.app/Contents/MacOS/Grain\ Dev"
+# alias minios="minio server ~/dev/grain/next/clients/desktop/minio"
+#
+# alias arm="env /usr/bin/arch -arm64 /bin/zsh --login"
+# alias intel="env /usr/bin/arch -x86_64 /bin/zsh --login"
+#
+# # direnv
+# eval "$(direnv hook zsh)"
+#
+# # Enable iex/erl shell history
+# export ERL_AFLAGS="-kernel shell_history enabled"
+# # ------------------------------------------------------------------------------
 
 # -- Post install --------------------------------------------------------------
 
@@ -283,7 +284,6 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore'
 
 # for mysql
 # export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-
 
 # p10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
