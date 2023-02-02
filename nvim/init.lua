@@ -211,6 +211,7 @@ require('lazy').setup({
           component_separators = '|',
           section_separators = '',
         },
+        sections = { }
       }
     end
   },
@@ -276,6 +277,10 @@ require('lazy').setup({
       vim.keymap.set('n', '<c-h>', '<cmd>Telescope help_tags<cr>')
       -- vim.keymap.set('n', '<c-g>', '<cmd>Telescope live_grep<cr>') -- this is not fuzzy!
       vim.keymap.set('n', '<c-g>', '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
+      vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
+
+      vim.keymap.set('n', '<leader>th', '<cmd>Telescope help_tags<cr>')
+      vim.keymap.set('n', '<leader>tt', '<cmd>Telescope<cr>')
       vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
     end
   },
@@ -304,15 +309,6 @@ require('lazy').setup({
       vim.g.mundo_preview_bottom=1
     end,
     cmd = 'MundoToggle'
-  },
-
-  {
-    "kylechui/nvim-surround",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end
   },
 
   { -- keep track of cursor location
@@ -388,7 +384,7 @@ require('lazy').setup({
     cmd = 'Trouble'
   },
 
-  {
+  { -- start page for nvim
     "goolord/alpha-nvim",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function ()
@@ -396,15 +392,129 @@ require('lazy').setup({
     end
   },
 
-  {
+  { -- adds motions for surrounding
+    "kylechui/nvim-surround",
+    config = function()
+      require("nvim-surround").setup({
+        keymaps = {
+          insert = false,
+          insert_line = false,
+          normal = "sa",
+          normal_cur = false,
+          normal_line = false,
+          normal_cur_line = false,
+          visual = "sa",
+          visual_line = false,
+          delete = "sd",
+          change = 'sc',
+        },
+      })
+    end
+  },
+
+  { -- a collection of mini 'submodules'
     'echasnovski/mini.nvim',
     config = function ()
-      require("mini.move").setup { } -- adds ability to move text around with <m-h/j/k/l>
+      require("mini.move").setup { } -- adds ability to move text around with <m-h//k/l>
       require("mini.cursorword").setup { -- highlighs the word under the cursor
         delay = 500 -- in ms
       }
     end
   },
+
+  { -- show outline of symbols
+    'simrat39/symbols-outline.nvim',
+    config = true
+  },
+
+  { -- adds a bunch of ui elements. I only like the search overlay...
+    'folke/noice.nvim',
+    dependencies = {
+      "MunifTanim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    },
+    enabled = false,
+    config = function ()
+      require("noice").setup({
+        -- lsp = {
+        --   -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        --   override = {
+        --     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        --     ["vim.lsp.util.stylize_markdown"] = true,
+        --     ["cmp.entry.get_documentation"] = true,
+        --   },
+        -- },
+        -- -- you can enable a preset for easier configuration
+        -- presets = {
+        --   bottom_search = true, -- use a classic bottom cmdline for search
+        --   -- command_palette = true, -- position the cmdline and popupmenu together
+        --   -- long_message_to_split = true, -- long messages will be sent to a split
+        --   -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
+        --   -- lsp_doc_border = false, -- add a border to hover docs and signature help
+        -- },
+        cmdline = {
+          enabled = false,
+          view = 'cmdline'
+        }
+      })
+      require('notify').setup {
+        background_colour = '#000000'
+      }
+    end,
+  },
+
+  { -- jump targets
+    'ggandor/leap.nvim',
+    config = function ()
+      require('leap').setup {}
+
+      vim.keymap.set('n', '<leader>j', "<Plug>(leap-forward-to)")
+      vim.keymap.set('n', '<leader>J', "<Plug>(leap-backward-to)")
+      vim.keymap.set('n', '<leader>l', "<Plug>(leap-forward-to)")
+      vim.keymap.set('n', '<leader>L', "<Plug>(leap-backward-to)")
+    end
+  },
+
+  { -- show search information in virtual text
+    'kevinhwang91/nvim-hlslens',
+    config = function ()
+      require('hlslens').setup()
+
+      local kopts = {noremap = true, silent = true}
+
+      vim.api.nvim_set_keymap('n', 'n',
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        kopts)
+      vim.api.nvim_set_keymap('n', 'N',
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        kopts)
+      vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+    end
+  },
+
+  { -- smooth scrolling
+    'karb94/neoscroll.nvim',
+    config = function ()
+      require('neoscroll').setup({
+        easing_function = 'sine'
+      })
+
+      -- speds up the animation time.
+      -- https://github.com/karb94/neoscroll.nvim/pull/68
+      local t = {}
+      -- Syntax: t[keys] = {function, {function arguments}}
+      t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '100'}}
+      t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '100'}}
+
+      require('neoscroll.config').set_mappings(t)
+    end
+  }
 })
 
 -- Set highlight on search
@@ -421,6 +531,7 @@ vim.o.breakindent = true
 
 -- Save undo history
 vim.o.undofile = true
+-- vim.o.undodir = '~/.vim/undo' -- NOTE: this directory must exist first
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -454,7 +565,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Diagnostic keymaps
--- vim.keymap.set('n', '', vim.diagnostic.goto_prev)
+vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev)
 vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
