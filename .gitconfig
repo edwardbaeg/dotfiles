@@ -1,7 +1,7 @@
 [core]
   autocrlf = input
   safecrlf = true
-  editor = nvim --noplugin
+  #editor = nvim --noplugin
   pager = diff-so-fancy | less --tabs=4 -RFX #TODO: check if `diff-so-fancy` is a valid command first
 [user]
   name = edwardbaeg
