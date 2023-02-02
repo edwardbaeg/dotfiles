@@ -287,7 +287,10 @@ require('lazy').setup({
     cond = vim.fn.executable 'make' == 1
   },
 
-  "nvim-treesitter/playground",
+  {
+    'nvim-treesitter/playground',
+    cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' } -- don't load until this command is called
+  },
 
   { -- note: doesn't automatically pad brackets
     "windwp/nvim-autopairs",
@@ -299,7 +302,8 @@ require('lazy').setup({
     config = function ()
       vim.g.mundo_width=40
       vim.g.mundo_preview_bottom=1
-    end
+    end,
+    cmd = 'MundoToggle'
   },
 
   {
@@ -380,7 +384,8 @@ require('lazy').setup({
   { -- lists of diagnostics, references, telescopes, quickfix, and location lists
     "folke/trouble.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
-    config = true
+    config = true,
+    cmd = 'Trouble'
   },
 
   {
@@ -401,20 +406,6 @@ require('lazy').setup({
     end
   },
 })
-
-
-
-
-
-
--- OLD
-
-
-
-
-
-
-
 
 -- Set highlight on search
 vim.o.hlsearch = false
