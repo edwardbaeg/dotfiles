@@ -45,8 +45,8 @@ symlink_file_folder \
   Hammerspoon
 
 symlink_file_folder \
-  "$DIR/nvim/init.vim" \
-  "$HOME/.config/nvim/init.vim" \
+  "$DIR/nvim/init.lua" \
+  "$HOME/.config/nvim/init.lua" \
   nvim
 
 symlink_file_folder \
