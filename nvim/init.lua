@@ -30,6 +30,30 @@ require('lazy').setup({
     end
   },
 
+  {
+    'navarasu/onedark.nvim',
+    config = function ()
+      require('onedark').setup {
+        lazy = false, -- load main colorscheme during startup
+        priority = 1000, -- load before other start plugins
+        style = 'cool',
+        toggle_style_key = '<leader>ts',
+        transparent = true,
+        code_style = {
+          keywords = 'italic'
+        },
+        lualine = {
+          -- transparent = true
+        },
+        diagnostics = {
+          darker = true,
+          background = false,
+        },
+      }
+      vim.cmd[[colorscheme onedark]]
+    end
+  },
+
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -51,10 +75,17 @@ require('lazy').setup({
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' },
+    -- cmd = 'InsertEnter',
     config = function ()
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
 
       cmp.setup {
         snippet = {
@@ -65,16 +96,28 @@ require('lazy').setup({
         mapping = cmp.mapping.preset.insert {
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
+          -- ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-l>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           },
           ['<Tab>'] = cmp.mapping(function(fallback)
+            -- if cmp.visible() then
+            --   cmp.select_next_item()
+            -- elseif luasnip.expand_or_jumpable() then
+            --   luasnip.expand_or_jump()
+            -- else
+            --   fallback()
+            -- end
             if cmp.visible() then
               cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
+              -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable() 
+              -- they way you will only jump inside the snippet region
+            elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
+            elseif has_words_before() then
+              cmp.complete()
             else
               fallback()
             end
@@ -107,6 +150,11 @@ require('lazy').setup({
           luasnip.text_node("console.log("), luasnip.insert_node(1, "val"), luasnip.text_node(");")
         })
       })
+
+      -- also use javascript sipets in typescript
+      luasnip.filetype_extend("typescript", { "javascript" })
+
+      require('luasnip.loaders.from_vscode').lazy_load()
     end
   },
 
@@ -179,11 +227,11 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 
-      vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+      -- vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+      -- vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+      -- vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+      -- vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+      -- vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
     end
   },
 
@@ -202,16 +250,15 @@ require('lazy').setup({
   {
     'nvim-lualine/lualine.nvim', -- Fancier statusline
     config = function ()
-      local custom_tokyonight = require('lualine.themes.tokyonight')
-      custom_tokyonight.normal.c.bg = '#c1c1c' -- change background to match terminal emulator
+      -- local custom_tokyonight = require('lualine.themes.tokyonight')
+      -- custom_tokyonight.normal.c.bg = '#c1c1c' -- change background to match terminal emulator
       require('lualine').setup {
         options = {
           icons_enabled = false,
-          theme = custom_tokyonight,
+          theme = 'onedark',
           component_separators = '|',
           section_separators = '',
         },
-        sections = { }
       }
     end
   },
@@ -239,7 +286,7 @@ require('lazy').setup({
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' },
     config = function ()
       -- local actions = require "telescope.actions"
       require('telescope').setup {
@@ -268,8 +315,9 @@ require('lazy').setup({
         },
       }
 
-      -- Enable telescope fzf native, if installed
+      -- load telescope extensions
       require('telescope').load_extension('fzf')
+      require('telescope').load_extension('ui-select')
 
       vim.keymap.set('n', '<c-p>', '<cmd>Telescope find_files<cr>')
       vim.keymap.set('n', '<c-b>', '<cmd>Telescope buffers<cr>')
@@ -279,8 +327,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<c-g>', '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
       vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
 
-      vim.keymap.set('n', '<leader>th', '<cmd>Telescope help_tags<cr>')
-      vim.keymap.set('n', '<leader>tt', '<cmd>Telescope<cr>')
+      vim.keymap.set('n', '<leader>ft', '<cmd>Telescope<cr>')
       vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
     end
   },
@@ -294,7 +341,11 @@ require('lazy').setup({
 
   {
     'nvim-treesitter/playground',
-    cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' } -- don't load until this command is called
+    -- cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' }, -- don't load until this command is called
+    config = function ()
+      vim.keymap.set('n', '<leader>ph', ':TSHighlightCapturesUnderCursor<CR>', { desc= '[P]layground[H]ighlightCapturesunderCursor' })
+      vim.keymap.set('n', '<leader>pt', ':TSPlaygroundToggle<CR>', { desc= '[P]layground[T]oggle' })
+    end
   },
 
   { -- note: doesn't automatically pad brackets
@@ -343,11 +394,13 @@ require('lazy').setup({
 
   {
     'akinsho/bufferline.nvim',
-    version="v3.*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function ()
       require('bufferline').setup {
        options = {
+         numbers = function (opts)
+            return opts.raise(opts.id)
+          end,
          show_buffer_close_icons = false,
          show_close_icon = false,
        }
@@ -399,14 +452,14 @@ require('lazy').setup({
         keymaps = {
           insert = false,
           insert_line = false,
-          normal = "sa",
+          normal = 'sa',
           normal_cur = false,
           normal_line = false,
           normal_cur_line = false,
-          visual = "sa",
+          visual = 'sa',
           visual_line = false,
-          delete = "sd",
-          change = 'sc',
+          -- delete = "sd",
+          -- change = 'sc',
         },
       })
     end
@@ -502,19 +555,34 @@ require('lazy').setup({
     'karb94/neoscroll.nvim',
     config = function ()
       require('neoscroll').setup({
+        mappings = {}, -- do not set default mappings
         easing_function = 'sine'
       })
 
-      -- speds up the animation time.
+      -- sped up the animation time.
       -- https://github.com/karb94/neoscroll.nvim/pull/68
       local t = {}
       -- Syntax: t[keys] = {function, {function arguments}}
-      t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '100'}}
-      t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '100'}}
+      t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '80'}}
+      t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '80'}}
 
       require('neoscroll.config').set_mappings(t)
     end
-  }
+  },
+
+  {
+    'Shatur/neovim-session-manager',
+    config = function ()
+      require('session_manager').setup({
+        -- autoload_mode = require('session_manager.config').AutoloadMode.CurrentDir
+        autoload_mode = require('session_manager.config').AutoloadMode.Disabled
+      })
+
+      vim.api.nvim_set_keymap('n', '<leader>sc', ':SessionManager load_current_dir_session<CR>', { desc = '[S]essionManager load_[c]urrent_dir_session' })
+      vim.api.nvim_set_keymap('n', '<leader>sl', ':SessionManager load_session<CR>', { desc = '[S]essionManager [l]oad_session' })
+      vim.api.nvim_set_keymap('n', '<leader>sd', ':SessionManager delete_session<CR>', { desc = '[S]essionManager [d]elete_session' })
+    end
+  },
 })
 
 -- Set highlight on search
@@ -677,8 +745,7 @@ vim.cmd([[
   endif
 ]])
 
-vim.keymap.set('n', '<leader>so', ':so $MYVIMRC<cr>')
-vim.keymap.set('n', '<leader>ps', ':PackerSync<cr>')
+-- vim.keymap.set('n', '<leader>so', ':so $MYVIMRC<cr>')
 vim.keymap.set('n', '<leader>u', ':MundoToggle<cr>')
 
 vim.cmd([[
@@ -750,6 +817,8 @@ noremap <A-b> :call Build() <cr>
 function! Build()
   if &filetype == "javascript"
     exec "! node %"
+  elseif &filetype == 'typescript'
+    exec "!ts-node %"
   elseif &filetype == "python"
   elseif &filetpe == "sh"
   elseif &filetype == "sh"
@@ -766,4 +835,13 @@ set splitbelow
 ]])
 
 -- highlights
-vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
+-- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
+-- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
+-- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
+
+-- Usability Notes
+-- Buffers/Splits:
+--  - move window: `<c-w>HJKL`
+--  - move buffer to split (where # is the buffer id, :buffers): :vert sb#
+-- Find and replace
+--  - when in a visual bloc, omit the `%`:<'>'/s
