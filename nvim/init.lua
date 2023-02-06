@@ -24,7 +24,7 @@ require('lazy').setup({
     priority = 1000, -- load before other start plugins
     config = function ()
       require("tokyonight").setup({
-        transparent = true -- don't set a background color
+        -- transparent = true -- don't set a background color
       })
       vim.cmd[[colorscheme tokyonight-night]]
     end
@@ -251,7 +251,7 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim', -- Fancier statusline
     config = function ()
       -- local custom_tokyonight = require('lualine.themes.tokyonight')
-      -- custom_tokyonight.normal.c.bg = '#c1c1c' -- change background to match terminal emulator
+      -- custom_tokyonight.normal.c.bg = '#c1c1c1' -- change background to match terminal emulator
       require('lualine').setup {
         options = {
           icons_enabled = false,
@@ -314,6 +314,9 @@ require('lazy').setup({
           },
         },
       }
+
+      -- set background color of floating windows
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg='black' })
 
       -- load telescope extensions
       require('telescope').load_extension('fzf')
@@ -570,7 +573,7 @@ require('lazy').setup({
     end
   },
 
-  {
+  { -- wrapper for session commands
     'Shatur/neovim-session-manager',
     config = function ()
       require('session_manager').setup({
@@ -582,6 +585,13 @@ require('lazy').setup({
       vim.api.nvim_set_keymap('n', '<leader>sl', ':SessionManager load_session<CR>', { desc = '[S]essionManager [l]oad_session' })
       vim.api.nvim_set_keymap('n', '<leader>sd', ':SessionManager delete_session<CR>', { desc = '[S]essionManager [d]elete_session' })
     end
+  },
+
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function ()
+      require('colorizer').setup()
+    end,
   },
 })
 
@@ -731,6 +741,9 @@ mason_lspconfig.setup_handlers {
 -- PERSONAL
 vim.keymap.set('i', 'jk', '<Esc>')
 
+vim.keymap.set('n', '<leader>+', '<c-a>')
+vim.keymap.set('n', '<leader>-', '<c-x>')
+
 vim.cmd([[
   if has("win32")
     echo "is this windows?"
@@ -845,3 +858,6 @@ set splitbelow
 --  - move buffer to split (where # is the buffer id, :buffers): :vert sb#
 -- Find and replace
 --  - when in a visual bloc, omit the `%`:<'>'/s
+--  Motions
+--  - % - jump to matching bracket
+--  - {} - jump to empty lines(?)
