@@ -28,6 +28,8 @@ bindkey -M vicmd v edit-command-line
 # Add custom programs
 export PATH=~/bin:$PATH
 
+export PATH="$HOME/.emacs.d/bin:$PATH"
+
 # Key bindings
 set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
 
@@ -99,8 +101,9 @@ fi
 
 # -- Aliases -------------------------------------------------------------------
 
-alias ibrew='arch -x86_64 /usr/local/bin/brew'
-alias mbrew='arch -arm64 /opt/homebrew/bin/brew'
+# -- architecture stuffs
+# alias ibrew='arch -x86_64 /usr/local/bin/brew'
+# alias mbrew='arch -arm64 /opt/homebrew/bin/brew'
 
 # -- vim
 alias vim="nvim"
