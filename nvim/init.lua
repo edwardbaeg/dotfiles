@@ -12,38 +12,36 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Set <space> as the leader key
--- NOTE: set this before lazy so mappings are correct
-vim.g.mapleader = ' '
+-- NOTE: set leader before lazy so mappings are correct
+vim.g.mapleader = ' ' -- Set <space> as the leader key
 vim.g.maplocalleader = ' '
+vim.o.termguicolors = true -- needs to be set before colorizer plugin
 
 require('lazy').setup({
   { -- colorscheme
     'folke/tokyonight.nvim',
-    lazy = false, -- load main colorscheme during startup
-    priority = 1000, -- load before other start plugins
     config = function ()
       require("tokyonight").setup({
         -- transparent = true -- don't set a background color
       })
-      vim.cmd[[colorscheme tokyonight-night]]
+      -- vim.cmd[[colorscheme tokyonight-night]]
     end
   },
 
-  {
+  { -- colorscheme
     'navarasu/onedark.nvim',
     config = function ()
       require('onedark').setup {
         lazy = false, -- load main colorscheme during startup
         priority = 1000, -- load before other start plugins
-        style = 'cool',
-        toggle_style_key = '<leader>ts',
-        transparent = true,
+        style = 'cool', -- https://github.com/navarasu/onedark.nvim#themes
+        toggle_style_key = '<leader>ts', -- cycle through all styles
+        transparent = true, -- remove background
         code_style = {
           keywords = 'italic'
         },
         lualine = {
-          -- transparent = true
+          transparent = true
         },
         diagnostics = {
           darker = true,
@@ -243,12 +241,28 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-  {
-    'lewis6991/gitsigns.nvim'
+  { -- visual git indicators
+    'lewis6991/gitsigns.nvim',
+    config = function ()
+      require('gitsigns').setup {
+        signs = {
+          add = { text = '•'},
+          change = { text = '•'},
+          delete = { text = '•'},
+        }
+      }
+
+      -- these highlight groups need to be loaded async?
+      vim.defer_fn(function ()
+        vim.api.nvim_set_hl(0, 'GitSignsAdd', { fg = '#009900' })
+        vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = '#bbbb00' })
+        -- vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#ff2222' })
+      end, 0)
+    end
   },
 
-  {
-    'nvim-lualine/lualine.nvim', -- Fancier statusline
+  { -- Fancy statusline
+    'nvim-lualine/lualine.nvim',
     config = function ()
       -- local custom_tokyonight = require('lualine.themes.tokyonight')
       -- custom_tokyonight.normal.c.bg = '#c1c1c1' -- change background to match terminal emulator
@@ -277,6 +291,8 @@ require('lazy').setup({
     'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
     config = function ()
       require('Comment').setup()
+      -- comment line in insert mode
+      vim.keymap.set('i', '<c-g>c', '<esc><Plug>(comment_toggle_linewise_current)', { noremap = false, silent = true })
     end
   },
 
@@ -314,9 +330,6 @@ require('lazy').setup({
           },
         },
       }
-
-      -- set background color of floating windows
-      vim.api.nvim_set_hl(0, 'NormalFloat', { bg='black' })
 
       -- load telescope extensions
       require('telescope').load_extension('fzf')
@@ -356,13 +369,13 @@ require('lazy').setup({
     config = true
   },
 
-  {
-    "simnalamburt/vim-mundo", -- visual undotree
+  { -- visual undotree
+    "simnalamburt/vim-mundo",
     config = function ()
       vim.g.mundo_width=40
       vim.g.mundo_preview_bottom=1
+      vim.keymap.set('n', '<leader>u', ':MundoToggle<cr>')
     end,
-    cmd = 'MundoToggle'
   },
 
   { -- keep track of cursor location
@@ -372,7 +385,7 @@ require('lazy').setup({
     end
   },
 
-  {
+  { -- shows possible key bindings
     "folke/which-key.nvim",
     config = function()
       vim.o.timeout = true
@@ -399,14 +412,41 @@ require('lazy').setup({
     'akinsho/bufferline.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function ()
+      local background_color = '#151515'
+
       require('bufferline').setup {
-       options = {
-         numbers = function (opts)
+        options = {
+          numbers = function (opts)
             return opts.raise(opts.id)
           end,
-         show_buffer_close_icons = false,
-         show_close_icon = false,
-       }
+          show_buffer_close_icons = false,
+          show_close_icon = false,
+          -- separator_style = 'thin',
+          separator_style = { '', '' }, -- no separators
+          modified_icon = '+',
+        },
+        highlights = {
+          fill = { -- the backgruond of the whole bar
+            bg = background_color,
+          },
+          background = { -- for background "tabs"
+            bg = background_color,
+          },
+          buffer_selected = { -- active buffer
+            bold = true,
+            italic = false,
+            fg = 'white',
+          },
+          numbers = { -- background
+            bg = background_color,
+          },
+          modified_selected = { -- current
+            fg = 'yellow',
+          },
+          modified = { -- background
+            fg = 'yellow',
+          },
+        }
       }
     end
   },
@@ -419,7 +459,7 @@ require('lazy').setup({
       require("substitute").setup { }
 
       -- add substitute operator
-      -- vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+      vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
       -- vim.keymap.set("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
       -- vim.keymap.set("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
 
@@ -485,6 +525,7 @@ require('lazy').setup({
 
   { -- adds a bunch of ui elements. I only like the search overlay...
     'folke/noice.nvim',
+    enabled = false,
     dependencies = {
       "MunifTanim/nui.nvim",
       -- OPTIONAL:
@@ -492,7 +533,6 @@ require('lazy').setup({
       --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
     },
-    enabled = false,
     config = function ()
       require("noice").setup({
         -- lsp = {
@@ -526,11 +566,10 @@ require('lazy').setup({
     'ggandor/leap.nvim',
     config = function ()
       require('leap').setup {}
-
       vim.keymap.set('n', '<leader>j', "<Plug>(leap-forward-to)")
-      vim.keymap.set('n', '<leader>J', "<Plug>(leap-backward-to)")
-      vim.keymap.set('n', '<leader>l', "<Plug>(leap-forward-to)")
-      vim.keymap.set('n', '<leader>L', "<Plug>(leap-backward-to)")
+      vim.keymap.set('n', '<leader>k', "<Plug>(leap-backward-to)")
+      -- vim.keymap.set('n', '<leader>l', "<Plug>(leap-forward-to)")
+      -- vim.keymap.set('n', '<leader>L', "<Plug>(leap-backward-to)")
     end
   },
 
@@ -541,6 +580,7 @@ require('lazy').setup({
 
       local kopts = {noremap = true, silent = true}
 
+      -- NOTE this is the old keymap api
       vim.api.nvim_set_keymap('n', 'n',
         [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
         kopts)
@@ -556,6 +596,7 @@ require('lazy').setup({
 
   { -- smooth scrolling
     'karb94/neoscroll.nvim',
+    -- enabled = false,
     config = function ()
       require('neoscroll').setup({
         mappings = {}, -- do not set default mappings
@@ -587,13 +628,44 @@ require('lazy').setup({
     end
   },
 
-  {
+  { -- this is a little laggy??
     'norcalli/nvim-colorizer.lua',
+    -- enabled = false,
     config = function ()
       require('colorizer').setup()
     end,
   },
+
+  { -- show/hide persistent terminal
+    'akinsho/toggleterm.nvim',
+    config = function ()
+      require('toggleterm').setup {
+        open_mapping = [[<c-\>]],
+        direction = 'float',
+      }
+
+      local Terminal = require('toggleterm.terminal').Terminal
+      local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
+
+      function _lazygit_toggle()
+        lazygit:toggle()
+      end
+
+      vim.api.nvim_set_keymap('n', '<leader>lg', '<cmd>lua _lazygit_toggle()<cr>', { noremap = true, silent = true })
+    end
+  },
+
+  { -- ranger integration
+    'kevinhwang91/rnvimr',
+    config = function ()
+      vim.api.nvim_create_user_command('RangerToggle', ':RnvimrToggle', {})
+      vim.api.nvim_set_keymap('n', '<leader>ra', ':RnvimrToggle<cr>', {})
+    end
+  },
 })
+
+-- improve performance
+vim.o.lazyredrew = true
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -609,7 +681,8 @@ vim.o.breakindent = true
 
 -- Save undo history
 vim.o.undofile = true
--- vim.o.undodir = '~/.vim/undo' -- NOTE: this directory must exist first
+-- vim.o.undodir = '~/.vim/undo' -- NOTE: this directory must exist first... I think
+vim.o.undodir = vim.fn.expand('~/.vim/undo')
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -619,34 +692,53 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
--- Set colorscheme
-vim.o.termguicolors = true
-
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 -- [[ Basic Keymaps ]]
+vim.keymap.set('i', 'jk', '<Esc>') -- leave insert mode
 
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', '<leader>+', '<c-a>') -- increment and decrement
+vim.keymap.set('n', '<leader>-', '<c-x>')
+vim.keymap.set('n', '<leader>ex', ':ex .<cr>', { desc = 'open netrw in directory :ex .' }) -- open netrw
+vim.keymap.set('n', '_', '"_') -- empty register shortcut
+
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true }) -- Remaps for dealing with word wrap
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev) -- Diagnostic keymaps
+vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank({ timeout = 300 }) -- timeout default is 150
   end,
   group = highlight_group,
   pattern = '*',
 })
 
--- Diagnostic keymaps
-vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev)
-vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+-- Open github packages in browser
+-- maybe try to extend to replace `gx`? https://github.com/gabebw/vim-github-link-opener/blob/main/plugin/github_link_opener.vim
+local function maybeOpenGithub ()
+  local word = vim.fn.expand('<cWORD>')
+  local pattern = '[%w-]+/[%w-.]+' -- local path = string.match(word, pattern)
+  local path = word:match(pattern)
+
+  local valid = path and select(2, word:gsub('/','')) == 1
+
+  if valid then
+    vim.fn['netrw#BrowseX']('https://github.com/' .. path, 0)
+  else
+    print('not a valid github path')
+    -- vim.fn['netrw#BrowseX'](word, 0) -- doesn't seem to work
+  end
+end
+vim.keymap.set('n', 'gh', maybeOpenGithub)
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -739,11 +831,6 @@ mason_lspconfig.setup_handlers {
 }
 
 -- PERSONAL
-vim.keymap.set('i', 'jk', '<Esc>')
-
-vim.keymap.set('n', '<leader>+', '<c-a>')
-vim.keymap.set('n', '<leader>-', '<c-x>')
-
 vim.cmd([[
   if has("win32")
     echo "is this windows?"
@@ -758,8 +845,7 @@ vim.cmd([[
   endif
 ]])
 
--- vim.keymap.set('n', '<leader>so', ':so $MYVIMRC<cr>')
-vim.keymap.set('n', '<leader>u', ':MundoToggle<cr>')
+-- vim.keymap.set('n', '<leader>so', ':so $MYVIMRC<cr>') -- unsupported by lazy.nvim
 
 vim.cmd([[
 set showmatch
@@ -832,8 +918,10 @@ function! Build()
     exec "! node %"
   elseif &filetype == 'typescript'
     exec "!ts-node %"
+  elseif &filetype == 'lua'
+    exec "!lua %"
   elseif &filetype == "python"
-  elseif &filetpe == "sh"
+  elseif &filetype == "sh"
   elseif &filetype == "sh"
     exec "!bash %"
   endif
@@ -847,10 +935,19 @@ set splitright
 set splitbelow
 ]])
 
+-- set background color of floating windows
+-- plugins: telescope, which-key
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg='#1c1c1c' })
+vim.api.nvim_set_hl(0, 'FloatBorder', { fg='#546178', bg='#1c1c1c' })
+
 -- highlights
 -- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
+
+-- TODO
+-- - change some telescope to dropdown, like the one for lsp code actions
+-- - create plugin for opening links under the cursor, like gabebw/vim-github-link-opener
 
 -- Usability Notes
 -- Buffers/Splits:
