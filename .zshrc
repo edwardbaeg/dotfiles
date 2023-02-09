@@ -115,10 +115,8 @@ alias ev="nvim ~/.config/nvim/init.lua"
 alias vt="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
 
-alias vm="nvim -c \"Startify | MRU\""
-# alias vp="nvim -c \"Startify | GFiles\""
+# telescope
 alias vp="nvim -c \"Telescope find_files\""
-# alias vg="nvim -c \"Startify | Rg\""
 alias vg="nvim -c \"Telescope live_grep\""
 
 # -- Sourcing
@@ -167,17 +165,23 @@ alias exa1="exa -T -L 1"
 alias exa2="exa -T -L 2"
 alias end="cowsay 'Thats it! Thank you for listening!!' | nms -c -a"
 alias ns="npm start"
-alias tree="exa -T"
+# alias tree="exa -T"
 alias oldcat="/bin/cat"
 alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
-alias ls="exa"
+# alias ls="exa"
 alias oldls="/bin/ls"
 alias lg="lazygit"
 alias ..="cd .."
 alias ll="ls -al"
 alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 # alias wcli="wally-cli"
+
+# conditional command aliases
+if command -v exa &> /dev/null
+then
+  alias ls="exa"
+fi
 
 alias serv="python3 -m http.server"
 alias pip="pip3"
