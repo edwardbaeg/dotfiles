@@ -8,7 +8,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 #  $2 destination path (eg `~/.config/nvim/init.vim`)
 #  $3 app name (eg vim)
 #  returns 0
-function symlink_file_folder () {
+function symlink_file_or_folder () {
   SOURCE_PATH=$1
   DESTINATION_PATH=$2
   APP_NAME=$3
@@ -39,47 +39,53 @@ function symlink_file_folder () {
   return 0
 }
 
-symlink_file_folder \
+# TODO: 
+symlink_file_or_folder \
   "$DIR/hammerspoon/init.lua" \
   "$HOME/.hammerspoon/init.lua" \
   Hammerspoon
 
-symlink_file_folder \
+symlink_file_or_folder \
   "$DIR/nvim/init.lua" \
   "$HOME/.config/nvim/init.lua" \
   nvim
 
-symlink_file_folder \
+symlink_file_or_folder \
   "$DIR/neofetch/config.conf" \
   "$HOME/.config/neofetch/config.conf" \
   neofetch
 
-symlink_file_folder \
+symlink_file_or_folder \
   $DIR/mpv \
   $HOME/.config/mpv \
   mpv
 
-symlink_file_folder \
+symlink_file_or_folder \
   $DIR/ranger \
   $HOME/.config/ranger \
   ranger
 
-symlink_file_folder \
+symlink_file_or_folder \
   $DIR/.p10k.zsh \
   $HOME/.p10k.zsh \
   powerlevel10k.zsh
 
-symlink_file_folder \
+symlink_file_or_folder \
   $DIR/.zshrc \
   $HOME/.zshrc \
   .zshrc
 
-symlink_file_folder \
+symlink_file_or_folder \
   $DIR/.gitconfig \
   $HOME/.gitconfig \
   .gitconfig
 
-symlink_file_folder \
+symlink_file_or_folder \
   $DIR/.tmux.conf \
   $HOME/.tmux.conf \
   .tmux.conf
+
+symlink_file_or_folder \
+  $DIR/lazygit/config.yml \
+  $HOME/.config/lazygit/config.yml \
+  lazygit

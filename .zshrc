@@ -19,6 +19,7 @@ setopt share_history
 
 # Use nvim as default editor (eg, ranger)
 export EDITOR=nvim
+export VISUAL=nvim
 
 # In normal mode, use `v` to open command in editor
 autoload edit-command-line
@@ -57,6 +58,9 @@ export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH
 
 # Improve less
 export LESS="$LESS -FRXK"
+
+# change default config directory for MacOS
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # -- Plugins -------------------------------------------------------------------
 
