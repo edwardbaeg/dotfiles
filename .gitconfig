@@ -2,7 +2,8 @@
   autocrlf = input
   safecrlf = true
   #editor = nvim --noplugin
-  pager = diff-so-fancy | less --tabs=4 -RFX #TODO: check if `diff-so-fancy` is a valid command first
+  ; pager = diff-so-fancy | less --tabs=4 -RFX #TODO: check if `diff-so-fancy` is a valid command first
+  pager = delta --diff-so-fancy
 [user]
   name = edwardbaeg
   email = edwardbaeg9@gmail.com
@@ -11,15 +12,15 @@
   ci = commit
   st = status
   br = branch
+  econfig = config --global -e
   hist = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --date-order
   hist1 = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
   hist2 = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  histb = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --date-order
   hista = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all --date-order
+  histb = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --date-order
   log2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(bold cyan)%aD%C(reset) %C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
   type = cat-file -t
   dump = cat-file -p
-  econfig = config --global -e
   odiff = -c core.pager=less diff # use default diff syntax
 [color]
   branch = auto
@@ -29,12 +30,18 @@
   ui = true
 [commit]
   verbose = true
+[pull]
+  rebase = true
 [diff]
   tool = nvimdiff
+  colorMoved = default
 [difftool "nvimdiff"]
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
-[mergetool]
-  prompt = false
+[difftool]
+  prompt = true # allows exiting difftool for a queue of files
+[difftool "sourcetree"]
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [merge]
 #  tool = meld
   tool = nvimdiff
@@ -42,22 +49,25 @@
 #[mergetool "meld"]
 #  trustExitCode = true
 #  cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
+[mergetool]
+  prompt = false
 [mergetool "nvimdiff"]
   cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-[difftool]
-	prompt = true # allows exiting difftool for a queue of files
-[diff-so-fancy]
-  markEmptyLines = false
+[mergetool "sourcetree"]
+  cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [filter "lfs"]
   process = git-lfs filter-process
   required = true
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[pull]
-	rebase = true
+[delta]
+  navigate = true # use n and N to move between diff sections
+  light = false
+  line-numbers = true
+  hunk-header-decoration-style = 'none' # remove box
+  ; commit-decoration-style = 
+  file-decoration-style = 'ul'
+  ; side-by-side = true
+[diff-so-fancy]
+  markEmptyLines = false
