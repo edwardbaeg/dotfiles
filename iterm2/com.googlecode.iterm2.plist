@@ -831,15 +831,7 @@
 	<key>SmartPlacement</key>
 	<true/>
 	<key>Snippets</key>
-	<array>
-		<dict>
-			<key>title</key>
-			<string>test</string>
-			<key>value</key>
-			<string>test value
-</string>
-		</dict>
-	</array>
+	<array/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>TerminalMargin</key>
