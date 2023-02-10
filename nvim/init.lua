@@ -662,6 +662,13 @@ require('lazy').setup({
       vim.api.nvim_set_keymap('n', '<leader>ra', ':RnvimrToggle<cr>', {})
     end
   },
+
+  { -- preview markdown
+    'iamcco/markdown-preview.nvim',
+    build = "cd app && npm install",
+    init = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" }, -- lazy load on file type
+  },
 })
 
 -- improve performance

@@ -43,7 +43,7 @@ setopt appendhistory
 # fix ctrlp issues with zinit + tmux?
 # bindkey -e
 
-# Configure brew completions for zsh
+# Configure completions with zsh from `brew zsh-completions`
 # This must be called before compinit and oh-my-zsh.sh
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
