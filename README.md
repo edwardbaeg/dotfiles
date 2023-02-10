@@ -1,21 +1,32 @@
-# dotfiles
-This is my terminal-based development set up! Always a work progress.
+# .dotfiles
+This is my terminal-based development setup. Always a work progress...
 ![screenshot](assets/main.png)
 
-## Terminal
-**App**: iTerm2
-- `font`: Operator Mono (main, has cursive for italics) + MesloLGS NF (non-ASCII font)
-- `margins` 20px
-- `window style` no title bar
+## Neovim
 
-**Shell + Framework**: zsh + oh-my-zsh
-**Shell + Plugin manager**: fish + fisher
+Configuration: [init.vim](nvim/init.lua)
+
+**Plugin Manager**: lazy.nvim 
+
+**Colorscheme**: onedark
+
+**Smart stuff**: Treesitter, LSP, completion, snippets, fuzzy finder
+
+**Visuals**: statusline, tabline, scrollbar, whichkey, startpage
+
+**Motions/operators/jump**: textobjects, comments, surrounds, sorting
+
+**Terminal Integration**: lazygit, ranger
+
+## Terminal
+**Shell + Framework**: `zsh` + `oh-my-zsh`
+  - autocompletions, vi-mode, syntax highlighting, z jumper
 
 **Homebrew formulae** (`brew leaves`):
-- Utilities
   - `bat` better cat (syntax highlighting and pager)
   - `delta` better diff
   - `fzf` fuzzy finder
+  - `lazygit` tui for git
   - `ncdu` ncurses disk usage viewer
   - `neofetch` display system info
   - `neovim` better vim (async, community developed)
@@ -25,39 +36,22 @@ This is my terminal-based development set up! Always a work progress.
   - `tmux` terminal multiplexer
   - `zsh-completions` command line autocompletions
 
-## (neo)vim
-**Plugin Manager**: `vim-plug` minimal and super fast with parallel operations
+**Multiplexer**: `tmux`
+- Configuration: [tmux.conf](.tmux.conf)
+  - keymaps, session keybing toggle
 
-**Top Plugins**:
-- Visual
-  - `sjl/badwolf` colorscheme
-  - `tpope/vim-airline` lightweight statusbar
-  - `airblade/vim-gitgutter` view git diff in gutter
-  - `junegunn/goyo.vim` distraction free mode
-  - `ryanoasis/vim-devicons` adds file icons to nerdtree and vim-airline
-  - `unblevable/quick-scope` highlights `f`/`t` targets
-  - `machakann/vim-highlightedyank` highlights yanked text
-  - `rrethy/vim-illuminate` underlines matching text
-- File Management
-  - `/usr/local/opt/fzf`, `junegunn/fzf.vim` fuzzy finder
-  - `tpope/vim-fugitive` git wrapper
-- Shortcuts
-  - `tpope/vim-surround` adds surround motions
-  - `tpope/vim-commentary` adds comment motions
-  - `SirVer/ultisnips` snippet engine
-  - `honza/vim-snippets` default snippets
-  - `mattn/emmet-vim` fast html setup
-- Utility
-  - `w0rp/ale` async linting engine
-  - `Shougo/deoplete.nvim` async autocompletions
-  - `vimwiki/vimwiki` personal wiki
-  - `suan/vim-instant-markdown` live preview markdown
-  - `zhimsel/vim-stay` save cursor/folds/bookmarks
-  - `simnalamburt/vim-mundo` visual undo tree
-  - `Carpetsmoker/undofile_warn.vim` persistent undo warnings
-
-## hammerspoon (init.lua)
-OSX automation
+**App**: iTerm2
+- Load Preferences: `General -> Preferences -> [x] Load preferences from a custom folder or URL -> ./iterm2`
+  - Some changes made:
+    - `margins`: 8px
+    - `key bindings`: ignore `cmd k`
+- Load Profile: `Profiles -> Other Actions -> Import JSON profiles`
+  - Some changes made:
+    - `text`:
+      - Operator Mono (main, has cursive for italics)
+      - MesloLGS NF (non-ASCII font)
+    - `window style`: no title bar
+    - `keys`: Left / Right option key -> Esc+ (tmux compatibility)
 
 # MacOSX Setup
 
@@ -92,6 +86,22 @@ Set up fzf
 /usr/local/opt/fzf/install
 ```
 
+#### Neovim
+Install neovim with python3
+```
+brew install neovim
+python3 -m pip install --user --upgrade pynvim
+```
+
+Install plugins (in neovim):
+```
+:Lazy
+```
+
+#### Hammerspoon
+Configuration: [init.lua](hammerspoon/init.lua)
+- window management, sleep toggle, toggle apps
+
 #### Configure git for github
 - Create ssh key for git (press enter for default file location)
 ```
@@ -121,34 +131,6 @@ pbcopy < ~/.ssh/id_rsa.pub
 ```
 ln -s ~/dev/dotfiles/.gitconfig ~/.gitconfig
 ```
-
-#### Neovim
-Install neovim with python3
-```
-brew install neovim
-python3 -m pip install --user --upgrade pynvim
-```
-
-Install plugins (in neovim):
-```
-:Lazy
-```
-
-#### iTerm2 Settings
-
-These are captured in [iterm2](/iterm2)
-
-- Fonts (profile -> text)
-  - Operator Mono
-  - Hack Nerd Font Complete (use a different font for non-ascii text)
-- Colors (profile -> colors)
-  - Background: `#1C1C1C` (same as neovim background)
-  - Color presets: tango dark; red -> `#ff4949`
-- Profile -> window -> style -> no title bar
-- Profile -> keys -> Left/Right option key -> Esc+ (for tmux compatibility)
-- Margins (Advanced -> search margin)
-  - 20 (Height of top and bottom margins in terminal panes)
-  - 20 (Height of left and right margins in terminal panes)
 
 # RaspberryPi Setup
 See detailed instructions in the [raspberrypi directory](raspberrypi/README.md)
