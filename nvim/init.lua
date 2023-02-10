@@ -568,8 +568,6 @@ require('lazy').setup({
       require('leap').setup {}
       vim.keymap.set('n', '<leader>j', "<Plug>(leap-forward-to)")
       vim.keymap.set('n', '<leader>k', "<Plug>(leap-backward-to)")
-      -- vim.keymap.set('n', '<leader>l', "<Plug>(leap-forward-to)")
-      -- vim.keymap.set('n', '<leader>L', "<Plug>(leap-backward-to)")
     end
   },
 
@@ -577,6 +575,7 @@ require('lazy').setup({
     'kevinhwang91/nvim-hlslens',
     config = function ()
       require('hlslens').setup()
+      require('scrollbar.handlers.search').setup({}) -- integrate with scrollbar... this doesn't work!!!
 
       local kopts = {noremap = true, silent = true}
 
@@ -669,7 +668,14 @@ require('lazy').setup({
     init = function() vim.g.mkdp_filetypes = { "markdown" } end,
     ft = { "markdown" }, -- lazy load on file type
   },
-})
+
+  {
+    'petertriho/nvim-scrollbar',
+    config = function ()
+      require('scrollbar').setup({})
+    end
+  },
+}) -- ENDPLUGIn
 
 -- improve performance
 vim.o.lazyredrew = true
@@ -957,11 +963,13 @@ vim.api.nvim_set_hl(0, 'FloatBorder', { fg='#546178', bg='#1c1c1c' })
 -- - create plugin for opening links under the cursor, like gabebw/vim-github-link-opener
 
 -- Usability Notes
--- Buffers/Splits:
+-- Buffers/Splits/Windows
 --  - move window: `<c-w>HJKL`
 --  - move buffer to split (where # is the buffer id, :buffers): :vert sb#
 -- Find and replace
 --  - when in a visual bloc, omit the `%`:<'>'/s
---  Motions
+-- Motions
 --  - % - jump to matching bracket
 --  - {} - jump to empty lines(?)
+-- Files
+--  - do :e to reload a file from external changes
