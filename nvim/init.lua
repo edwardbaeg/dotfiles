@@ -19,16 +19,6 @@ vim.o.termguicolors = true -- needs to be set before colorizer plugin
 
 require('lazy').setup({
   { -- colorscheme
-    'folke/tokyonight.nvim',
-    config = function ()
-      require("tokyonight").setup({
-        -- transparent = true -- don't set a background color
-      })
-      -- vim.cmd[[colorscheme tokyonight-night]]
-    end
-  },
-
-  { -- colorscheme
     'navarasu/onedark.nvim',
     config = function ()
       require('onedark').setup {
@@ -49,6 +39,16 @@ require('lazy').setup({
         },
       }
       vim.cmd[[colorscheme onedark]]
+    end
+  },
+
+  { -- colorscheme
+    'folke/tokyonight.nvim',
+    config = function ()
+      require("tokyonight").setup({
+        -- transparent = true -- don't set a background color
+      })
+      -- vim.cmd[[colorscheme tokyonight-night]]
     end
   },
 
