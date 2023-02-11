@@ -2,7 +2,7 @@ gui:
   showIcons: true # enable nerd fonts
   theme:
     selectedLineBgColor:
-      - black
+      - '#000000' # use hex instead of 'black' for nvim terminal coloring
     selectedRangeBgColor:
       - reverse
 git:
