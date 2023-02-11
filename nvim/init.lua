@@ -58,10 +58,8 @@ require('lazy').setup({ -- lazystart
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-
       -- Useful status updates for LSP
       'j-hui/fidget.nvim',
-
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
     },
@@ -240,6 +238,7 @@ require('lazy').setup({ -- lazystart
 
   { -- Fancy statusline
     'nvim-lualine/lualine.nvim',
+    -- enabled = false,
     config = function ()
       -- local custom_tokyonight = require('lualine.themes.tokyonight')
       -- custom_tokyonight.normal.c.bg = '#c1c1c1' -- change background to match terminal emulator
@@ -323,7 +322,7 @@ require('lazy').setup({ -- lazystart
       vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
 
       vim.keymap.set('n', '<leader>ff', '<cmd>Telescope<cr>')
-      vim.keymap.set('n', '<leader>ft', '<cmd>Telescope<cr>')
+      -- vim.keymap.set('n', '<leader>ft', '<cmd>Telescope<cr>')
       vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
     end
@@ -471,8 +470,6 @@ require('lazy').setup({ -- lazystart
       vim.keymap.set("o", "ia", "i<")
       vim.keymap.set("o", "aa", "a<")
 
-      -- < TODO >
-
       require("nvim-surround").setup({
         keymaps = {
           insert = false,
@@ -556,6 +553,7 @@ require('lazy').setup({ -- lazystart
 
   { -- show search information in virtual text
     'kevinhwang91/nvim-hlslens',
+    -- enabled = false,
     config = function ()
       require('hlslens').setup()
       require('scrollbar.handlers.search').setup({}) -- integrate with scrollbar... this doesn't work!!!
@@ -578,17 +576,37 @@ require('lazy').setup({ -- lazystart
     config = function ()
       require('neoscroll').setup({
         mappings = {}, -- do not set default mappings
-        easing_function = 'sine'
+        easing_function = 'sine',
+        -- pre_hook = function()
+        --   vim.opt.eventignore:append({
+        --     'WinScrolled',
+        --     'CursorMoved',
+        --   })
+        -- end,
+        -- post_hook = function()
+        --   vim.opt.eventignore:remove({
+        --     'WinScrolled',
+        --     'CursorMoved',
+        --   })
+        -- end,
       })
 
       -- sped up the animation time.
       -- https://github.com/karb94/neoscroll.nvim/pull/68
       local t = {}
       -- Syntax: t[keys] = {function, {function arguments}}
-      t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '80'}}
-      t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '80'}}
+      t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '100'}}
+      t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '100'}}
 
       require('neoscroll.config').set_mappings(t)
+    end
+  },
+
+  { -- add visual scrollbar
+    'petertriho/nvim-scrollbar',
+    -- enabled = false,
+    config = function ()
+      require('scrollbar').setup({})
     end
   },
 
@@ -625,15 +643,11 @@ require('lazy').setup({ -- lazystart
         }
       }
 
+      -- lazygit terminal
       local Terminal = require('toggleterm.terminal').Terminal
       local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
-      function _lazygit_toggle() lazygit:toggle() end
+      function _G._lazygit_toggle() lazygit:toggle() end
       vim.api.nvim_set_keymap('n', '<leader>lg', '<cmd>lua _lazygit_toggle()<cr>', { noremap = true, silent = true })
-
-      local ranger = Terminal:new({ cmd = 'ranger', hidden = true })
-      function _ranger_toggle() ranger:toggle() end
-
-      vim.api.nvim_set_keymap('n', '<leader>lr', '<cmd>lua _ranger_toggle()<cr>', { noremap = true, silent = true })
     end
   },
 
@@ -642,6 +656,8 @@ require('lazy').setup({ -- lazystart
     config = function ()
       vim.api.nvim_create_user_command('RangerToggle', ':RnvimrToggle', {})
       vim.api.nvim_set_keymap('n', '<leader>ra', ':RnvimrToggle<cr>', {})
+      function _G.lazygit_toggle() lazygit:toggle() end
+      vim.api.nvim_set_keymap('n', '<leader>lg', '<cmd>lua lazygit_toggle()<cr>', { noremap = true, silent = true })
     end
   },
 
@@ -652,14 +668,28 @@ require('lazy').setup({ -- lazystart
     ft = { "markdown" }, -- lazy load on file type
   },
 
-  { -- add visual scrollbar
-    'petertriho/nvim-scrollbar',
-    config = function ()
-      require('scrollbar').setup({})
-    end
+  -- 'mg979/vim-visual-multi', -- multiple cursor support
+
+  { -- only show cursorline on active window
+    'Tummetott/reticle.nvim',
+    enabled = false, -- messes up toggleterm for lazy git
+    config = true,
+    opts = {
+      never = {
+        cursorline = { 'terminal' }
+      }
+    }
   },
 
-  'mg979/vim-visual-multi', -- multiple cursor support
+  {
+    'anuvyklack/pretty-fold.nvim',
+    -- enabled = false,
+    config = function ()
+      require('pretty-fold').setup({
+        fill_char = '-'
+      })
+    end
+  },
 }) -- lazyend
 
 -- [[ LSP Settings ]]
@@ -752,7 +782,7 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
--- [[Vim Settings]]
+-- [[Vim Options]]
 vim.o.lazyredrew = true -- improve performance
 vim.o.hlsearch = false -- Set highlight on search
 vim.o.number = true -- Make line numbers default
@@ -761,12 +791,18 @@ vim.o.updatetime = 250 -- Decrease update time
 vim.o.signcolumn = 'yes' -- always show sign column
 vim.o.completeopt = 'menuone,noselect' -- better completion experience
 vim.o.mouse = 'a' -- Enable mouse moedwardbaeg9@gmail.com@de
+vim.wo.cursorline = true -- highlight line with cursor, window scoped for use with reticle.nvim
+vim.o.foldcolumn = '2' -- show fold nesting
+vim.cmd([[set foldopen-=block]]) -- don't open folds with block {} motions
 
 vim.o.ignorecase = true -- case insensitive searching
 vim.o.smartcase = true -- ...uness /C or capital in search
 
 vim.o.undofile = true -- Save undo history
 vim.o.undodir = vim.fn.expand('~/.vim/undo') -- set save directory. This must exist first... I think
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 vim.cmd([[
   if has("win32")
@@ -780,6 +816,14 @@ vim.cmd([[
       endif
     endif
   endif
+]])
+
+vim.cmd([[
+augroup remember_folds
+  autocmd!
+  au BufWinLeave ?* mkview 1
+  au BufWinEnter ?* silent! loadview 1
+augroup END
 ]])
 
 -- [[ Keymaps ]]
@@ -798,6 +842,8 @@ vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev) -- Diagnostic keymaps
 vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+vim.keymap.set('n', '<c-f>', 'za')
 
 -- [[ Highlight on yank ]]
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -842,7 +888,6 @@ set showmatch
 set matchtime=2 " multiple of 100ms
 highlight whitespace ctermbg=white " make whitespace easier to see
 set scrolloff=24 " buffer top and bottom
-set cursorline
 set linebreak " don't break in the middle of a word
 
 set shiftwidth=2
@@ -948,3 +993,5 @@ set splitbelow
 --  - {} - jump to empty lines(?)
 -- Files
 --  - do :e to reload a file from external changes
+-- commands
+--  - set showmatch? <- add ? to check its setting
