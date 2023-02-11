@@ -19,6 +19,22 @@ vim.o.termguicolors = true -- needs to be set before colorizer plugin
 
 require('lazy').setup({ -- lazystart
   { -- colorscheme
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    config = function ()
+      require('catppuccin').setup({
+        flavour = 'frappe',
+        transparent_background = true,
+        styles = {
+          keywords = { 'italic' },
+          operators = { 'italic' },
+        },
+      })
+      vim.cmd.colorscheme 'catppuccin'
+    end
+  },
+
+  { -- colorscheme
     'navarasu/onedark.nvim',
     config = function ()
       require('onedark').setup {
@@ -38,7 +54,7 @@ require('lazy').setup({ -- lazystart
           background = false,
         },
       }
-      vim.cmd[[colorscheme onedark]]
+      -- vim.cmd[[colorscheme onedark]]
     end
   },
 
@@ -46,7 +62,7 @@ require('lazy').setup({ -- lazystart
     'folke/tokyonight.nvim',
     config = function ()
       require("tokyonight").setup({
-        -- transparent = true -- don't set a background color
+        transparent = true -- don't set a background color
       })
       -- vim.cmd[[colorscheme tokyonight-night]]
     end
@@ -71,11 +87,25 @@ require('lazy').setup({ -- lazystart
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' },
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'L3MON4D3/LuaSnip', -- snippet engine
+      'saadparwaiz1/cmp_luasnip',
+      'rafamadriz/friendly-snippets', -- vscode like snippets
+      'onsails/lspkind.nvim', -- pictograms for lsp
+    },
     -- cmd = 'InsertEnter',
     config = function ()
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local lspkind = require('lspkind')
+      local source_mapping = {
+        buffer = "[Buffer]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[Lua]",
+        cmp_tabnine = "[TN9]",
+        path = "[Path]",
+      }
 
       local has_words_before = function()
         unpack = unpack or table.unpack
@@ -89,6 +119,31 @@ require('lazy').setup({ -- lazystart
             luasnip.lsp_expand(args.body)
           end,
         },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.kind = lspkind.symbolic(vim_item.kind, {mode = "symbol"})
+            vim_item.menu = source_mapping[entry.source.name]
+            if entry.source.name == "cmp_tabnine" then
+              local detail = (entry.completion_item.data or {}).detail
+              -- vim_item.kind = "tabnine"
+              vim_item.kind = ""
+              if detail and detail:find('.*%%.*') then
+                vim_item.kind = vim_item.kind .. ' ' .. detail
+              end
+
+              if (entry.completion_item.data or {}).multiline then
+                vim_item.kind = vim_item.kind .. ' ' .. '[ML]'
+              end
+            end
+            local maxwidth = 80
+            vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+            return vim_item
+          end,
+        },
         mapping = cmp.mapping.preset.insert {
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -96,7 +151,8 @@ require('lazy').setup({ -- lazystart
           ['<C-l>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
+            -- select = true, -- selects the first item
+            select = false, -- only if explicitly selected
           },
           ['<Tab>'] = cmp.mapping(function(fallback)
             -- TODO: if currently in a luasnip, hitting tab jumps instead of selecting the next item...
@@ -123,6 +179,7 @@ require('lazy').setup({ -- lazystart
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
+          { name = 'cmp_tabnine' },
         },
       }
 
@@ -570,6 +627,7 @@ require('lazy').setup({ -- lazystart
 
   { -- jump targets
     'ggandor/leap.nvim',
+    enabled = false,
     config = function ()
       require('leap').setup {}
       vim.keymap.set('n', '<leader>j', "<Plug>(leap-forward-to)")
@@ -581,8 +639,11 @@ require('lazy').setup({ -- lazystart
     'kevinhwang91/nvim-hlslens',
     -- enabled = false,
     config = function ()
-      require('hlslens').setup()
-      require('scrollbar.handlers.search').setup({}) -- integrate with scrollbar... this doesn't work!!!
+      -- require('scrollbar.handlers.search').setup({}) -- integrate with scrollbar... this doesn't work!!!
+      require('hlslens').setup({
+        calm_down = true, -- this doesn't work? clear highlights wen cursor leaves
+        nearest_only = true,
+      })
 
       local kopts = {noremap = true, silent = true}
 
@@ -707,15 +768,39 @@ require('lazy').setup({ -- lazystart
     }
   },
 
-  {
+  { -- adds some visuals to folds
     'anuvyklack/pretty-fold.nvim',
-    -- enabled = false,
+    enabled = false,
     config = function ()
       require('pretty-fold').setup({
         fill_char = '-'
       })
     end
   },
+
+  { -- prettier folding
+    'kevinhwang91/nvim-ufo',
+    dependencies = { 'kevinhwang91/promise-async' },
+    enabled = false,
+    config = function ()
+      require('ufo').setup()
+      -- vim.o.foldcolumn = '2'
+      -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+      -- vim.o.fillchars = [[eob: ,fold: ,foldopen:▼,foldsep: ,foldclose:►]]
+    end
+  },
+
+  { -- ai powered autocompletion
+    'tzachar/cmp-tabnine',
+    build = './install.sh',
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function ()
+      local tabnine = require('cmp_tabnine.config')
+      tabnine:setup({
+        show_prediction_strength = true,
+      })
+    end
+  }
 }) -- lazyend
 
 -- [[ LSP Settings ]]
@@ -812,6 +897,7 @@ mason_lspconfig.setup_handlers {
 vim.o.lazyredrew = true -- improve performance
 vim.o.hlsearch = false -- Set highlight on search
 vim.o.number = true -- Make line numbers default
+vim.o.relativenumber = true -- show relative line numbers
 vim.o.breakindent = true -- wrapped lines will have consistent indents
 vim.o.updatetime = 250 -- Decrease update time
 vim.o.signcolumn = 'yes' -- always show sign column
@@ -903,6 +989,7 @@ vim.keymap.set('n', 'gh', maybeOpenGithub)
 vim.api.nvim_set_hl(0, 'NormalFloat', { bg='#1c1c1c' }) -- set background color of floating windows; plugins: telescope, which-key
 vim.api.nvim_set_hl(0, 'FloatBorder', { fg='#546178', bg='#1c1c1c' })
 vim.api.nvim_set_hl(0, 'CursorLine', { bg='#101010' }) -- darker cursorline
+vim.api.nvim_set_hl(0, 'MatchParen', { fg='#ffffff' }) -- make matching parens easier to see
 
 -- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
@@ -997,16 +1084,14 @@ set splitbelow
 ]])
 
 -- [[ TODO ]]
--- - change some telescope to dropdown, like the one for lsp code actions, buffers
--- - create plugin for opening links under the cursor, like gabebw/vim-github-link-opener
--- - change the matching paren highlight color easier to see... `MatchParen`
+-- - set up lsp saga
+-- - install ccc.nvim
 -- - set up tabnine
 -- - rewrite all vimscript stuff to lua?
 -- - setup tmux navigator plugins
 -- - learn about nvim treesitter textobjects
 -- - set up nvim treesitter context
 -- - customize the lualine
--- - make hlslens colors less ugly
 
 -- Usability Notes
 -- Buffers/Splits/Windows
