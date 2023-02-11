@@ -8,6 +8,10 @@
 	<true/>
 	<key>AlternateMouseScroll</key>
 	<true/>
+	<key>BadgeRightMargin</key>
+	<integer>8</integer>
+	<key>BadgeTopMargin</key>
+	<integer>8</integer>
 	<key>Default Bookmark Guid</key>
 	<string>ABAD8FFC-1CEA-4623-8D2F-9C144B47CCD9</string>
 	<key>GlobalKeyMap</key>
@@ -330,7 +334,9 @@
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
-			<false/>
+			<true/>
+			<key>Blur Radius</key>
+			<real>0.10000000000000001</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -725,6 +731,8 @@
 			<false/>
 			<key>Normal Font</key>
 			<string>OperatorMono-Book 16</string>
+			<key>Only The Default BG Color Uses Transparency</key>
+			<true/>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
