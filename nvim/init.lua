@@ -279,20 +279,17 @@ require('lazy').setup({ -- lazystart
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' },
     config = function ()
-      -- local actions = require "telescope.actions"
       require('telescope').setup {
         defaults = {
           mappings = {
             i = {
               ['<C-u>'] = false,
               ['<C-d>'] = false,
-              -- ["<C-k>"] = actions.move_selection_previous,
-              -- ["<C-j>"] = actions.move_selection_next,
             },
           },
           layout_strategy = "flex",
           layout_config = {
-            prompt_position = 'bottom',
+            -- prompt_position = 'bottom',
             width = 0.9,
             height = 0.9
           },
@@ -302,12 +299,38 @@ require('lazy').setup({ -- lazystart
           buffers = {
             theme = 'dropdown',
             sort_lastused = true,
+            -- previewer = true,
           },
           find_files = {
             hidden = true,
           },
         },
       }
+
+      -- custom picker that greps the word under the cursor
+      -- https://github.com/nvim-telescope/telescope.nvim/issues/1766#issuecomment-1150437074
+      _G.live_grep_cword = function()
+        local cword = vim.fn.expand("<cword>")
+        require("telescope.builtin").live_grep({
+          default_text = cword,
+          on_complete = cword ~= "" and {
+            function(picker)
+              local mode = vim.fn.mode()
+              local keys = mode ~= "n" and "<ESC>" or ""
+              vim.api.nvim_feedkeys(
+                vim.api.nvim_replace_termcodes(keys .. [[^v$<C-g>]], true, false, true),
+                "n",
+                true
+              )
+              table.remove(picker._completion_callbacks, 1)
+              vim.tbl_map(function(mapping)
+                vim.api.nvim_buf_set_keymap(0, "s", mapping.lhs, mapping.rhs, {})
+              end, vim.api.nvim_buf_get_keymap(0, "i"))
+            end,
+          } or nil,
+        })
+      end
+      vim.keymap.set('n', '<leader>*', '<cmd>lua live_grep_cword()<cr>')
 
       -- load telescope extensions
       require('telescope').load_extension('fzf')
@@ -317,14 +340,17 @@ require('lazy').setup({ -- lazystart
       vim.keymap.set('n', '<c-b>', '<cmd>Telescope buffers<cr>')
       vim.keymap.set('n', '<c-l>', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
       vim.keymap.set('n', '<c-h>', '<cmd>Telescope help_tags<cr>')
-      -- vim.keymap.set('n', '<c-g>', '<cmd>Telescope live_grep<cr>') -- this is not fuzzy!
       vim.keymap.set('n', '<c-g>', '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
       vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
 
-      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope<cr>')
-      -- vim.keymap.set('n', '<leader>ft', '<cmd>Telescope<cr>')
-      vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
+      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope<cr>', { desc = '[f]uzzy [f]ind'})
+      vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = '[f]uzzy [h]help'})
+      vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = '[f]uzzy [k]eymaps'})
+      vim.keymap.set('n', '<leader>fc', '<cmd>Telescope commands<cr>', { desc = '[f]uzzy [c]ommands'})
+      vim.keymap.set('n', '<leader>fi', '<cmd>Telescope highlights<cr>', { desc = '[f]uzzy h[i]ghlights'})
+      vim.keymap.set('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', { desc = '[f]uzzy [o]ldfiles'})
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+      vim.keymap.set('n', '<leader>fs', '<cmd>Telescope spell_suggest<cr>', { desc = '[f]uzzy [s]pell_suggest' })
     end
   },
 
@@ -792,8 +818,6 @@ vim.o.signcolumn = 'yes' -- always show sign column
 vim.o.completeopt = 'menuone,noselect' -- better completion experience
 vim.o.mouse = 'a' -- Enable mouse moedwardbaeg9@gmail.com@de
 vim.wo.cursorline = true -- highlight line with cursor, window scoped for use with reticle.nvim
-vim.o.foldcolumn = '2' -- show fold nesting
-vim.cmd([[set foldopen-=block]]) -- don't open folds with block {} motions
 
 vim.o.ignorecase = true -- case insensitive searching
 vim.o.smartcase = true -- ...uness /C or capital in search
@@ -801,8 +825,10 @@ vim.o.smartcase = true -- ...uness /C or capital in search
 vim.o.undofile = true -- Save undo history
 vim.o.undodir = vim.fn.expand('~/.vim/undo') -- set save directory. This must exist first... I think
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.o.foldcolumn = '2' -- show fold nesting
+-- vim.cmd([[set foldopen-=block]]) -- don't open folds with block {} motions
 
 vim.cmd([[
   if has("win32")
