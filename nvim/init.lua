@@ -12,12 +12,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: set leader before lazy so mappings are correct
+-- NOTE: set leader before lazy.nvim so mappings are correct
 vim.g.mapleader = ' ' -- Set <space> as the leader key
 vim.g.maplocalleader = ' '
 vim.o.termguicolors = true -- needs to be set before colorizer plugin
 
-require('lazy').setup({
+require('lazy').setup({ -- lazystart
   { -- colorscheme
     'navarasu/onedark.nvim',
     config = function ()
@@ -101,17 +101,9 @@ require('lazy').setup({
             select = true,
           },
           ['<Tab>'] = cmp.mapping(function(fallback)
-            -- if cmp.visible() then
-            --   cmp.select_next_item()
-            -- elseif luasnip.expand_or_jumpable() then
-            --   luasnip.expand_or_jump()
-            -- else
-            --   fallback()
-            -- end
+            -- TODO: if currently in a luasnip, hitting tab jumps instead of selecting the next item...
             if cmp.visible() then
               cmp.select_next_item()
-              -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable() 
-              -- they way you will only jump inside the snippet region
             elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
             elseif has_words_before() then
@@ -120,7 +112,7 @@ require('lazy').setup({
               fallback()
             end
           end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
+          ['<S-Tab>'] = cmp.mapping(function(fallback) -- shift tab for reverse of above
             if cmp.visible() then
               cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
@@ -142,17 +134,14 @@ require('lazy').setup({
           luasnip.insert_node(1, "cond"), luasnip.text_node(" ? "), luasnip.insert_node(2, "then"), luasnip.text_node(" : "), luasnip.insert_node(3, "else")
         })
       })
-
       luasnip.add_snippets("javascript", {
         luasnip.snippet('cl', {
           luasnip.text_node("console.log("), luasnip.insert_node(1, "val"), luasnip.text_node(");")
         })
       })
+      luasnip.filetype_extend("typescript", { "javascript" }) -- also use javascript snippets in typescript
 
-      -- also use javascript sipets in typescript
-      luasnip.filetype_extend("typescript", { "javascript" })
-
-      require('luasnip.loaders.from_vscode').lazy_load()
+      require('luasnip.loaders.from_vscode').lazy_load() -- add vscode like snippets, from friendly snippets?
     end
   },
 
@@ -163,10 +152,8 @@ require('lazy').setup({
     end,
     config = function ()
       require('nvim-treesitter.configs').setup {
-        -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'javascript', 'help', 'vim', 'html', 'css' },
-        -- regex highlighting helps with jsx indenting
-        highlight = { enable = true, additional_vim_regex_highlighting = true },
+        highlight = { enable = true, additional_vim_regex_highlighting = true }, -- regex highlighting helps with jsx indenting
         indent = { enable = true, disable = { 'python' } },
         incremental_selection = {
           enable = true,
@@ -181,10 +168,9 @@ require('lazy').setup({
           select = {
             enable = true,
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-            keymaps = {
-              -- You can use the capture groups defined in textobjects.scm
-              ['aa'] = '@parameter.outer',
-              ['ia'] = '@parameter.inner',
+            keymaps = { -- You can use the capture groups defined in textobjects.scm
+              -- ['aa'] = '@parameter.outer',
+              -- ['ia'] = '@parameter.inner',
               ['af'] = '@function.outer',
               ['if'] = '@function.inner',
               ['ac'] = '@class.outer',
@@ -222,14 +208,6 @@ require('lazy').setup({
           },
         },
       }
-
-      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-
-      -- vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-      -- vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-      -- vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-      -- vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-      -- vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
     end
   },
 
@@ -238,9 +216,8 @@ require('lazy').setup({
     dependencies = { 'nvim-treesitter' },
   },
 
-  -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
+  'tpope/vim-fugitive', -- add git commands
+  'tpope/vim-rhubarb', -- add GBrowse
   { -- visual git indicators
     'lewis6991/gitsigns.nvim',
     config = function ()
@@ -277,8 +254,8 @@ require('lazy').setup({
     end
   },
 
-  {
-    'lukas-reineke/indent-blankline.nvim', -- Add indentation guides even on blank lines
+  { -- Add indentation guides
+    'lukas-reineke/indent-blankline.nvim',
     config = function ()
       require('indent_blankline').setup {
         -- char = '┊',
@@ -287,8 +264,8 @@ require('lazy').setup({
     end
   },
 
-  {
-    'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
+  { -- comment
+    'numToStr/Comment.nvim',
     config = function ()
       require('Comment').setup()
       -- comment line in insert mode
@@ -298,8 +275,7 @@ require('lazy').setup({
 
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
-  -- Fuzzy Finder (files, lsp, etc)
-  {
+  { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' },
@@ -325,8 +301,11 @@ require('lazy').setup({
         },
         pickers = {
           buffers = {
-            -- theme = 'dropdown',
+            theme = 'dropdown',
             sort_lastused = true,
+          },
+          find_files = {
+            hidden = true,
           },
         },
       }
@@ -343,21 +322,21 @@ require('lazy').setup({
       vim.keymap.set('n', '<c-g>', '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
       vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
 
+      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope<cr>')
       vim.keymap.set('n', '<leader>ft', '<cmd>Telescope<cr>')
       vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
+      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
     end
   },
 
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  {
+  { -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
     cond = vim.fn.executable 'make' == 1
   },
 
-  {
+  { -- visually shows treesitter data
     'nvim-treesitter/playground',
-    -- cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' }, -- don't load until this command is called
     config = function ()
       vim.keymap.set('n', '<leader>ph', ':TSHighlightCapturesUnderCursor<CR>', { desc= '[P]layground[H]ighlightCapturesunderCursor' })
       vim.keymap.set('n', '<leader>pt', ':TSPlaygroundToggle<CR>', { desc= '[P]layground[T]oggle' })
@@ -369,6 +348,7 @@ require('lazy').setup({
     config = true
   },
 
+  'arp242/undofile_warn.vim', -- warn when access undofile before current open
   { -- visual undotree
     "simnalamburt/vim-mundo",
     config = function ()
@@ -378,7 +358,7 @@ require('lazy').setup({
     end,
   },
 
-  { -- keep track of cursor location
+  { -- persist cursor location
     'ethanholz/nvim-lastplace',
     config = function()
       require('nvim-lastplace').setup {}
@@ -389,7 +369,7 @@ require('lazy').setup({
     "folke/which-key.nvim",
     config = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 300
+      vim.o.timeoutlen = 200
       require("which-key").setup {
         plugins = {
           spelling = {
@@ -398,6 +378,7 @@ require('lazy').setup({
         },
         operators = {
           gc = "Comments",
+          sa = 'Surround',
         },
         window = {
           border = 'single',
@@ -408,12 +389,11 @@ require('lazy').setup({
     end
   },
 
-  {
+  { -- fancier tabline
     'akinsho/bufferline.nvim',
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function ()
       local background_color = '#151515'
-
       require('bufferline').setup {
         options = {
           numbers = function (opts)
@@ -421,7 +401,6 @@ require('lazy').setup({
           end,
           show_buffer_close_icons = false,
           show_close_icon = false,
-          -- separator_style = 'thin',
           separator_style = { '', '' }, -- no separators
           modified_icon = '+',
         },
@@ -451,33 +430,28 @@ require('lazy').setup({
     end
   },
 
-  'christoomey/vim-sort-motion', -- note: in vimscript
-
+  'christoomey/vim-sort-motion', -- add sort operator
   { -- add motions for substituting text
     'gbprod/substitute.nvim',
     config = function ()
       require("substitute").setup { }
 
-      -- add substitute operator
-      vim.keymap.set("n", "s", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-      -- vim.keymap.set("n", "ss", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-      -- vim.keymap.set("n", "S", "<cmd>lua require('substitute').eol()<cr>", { noremap = true })
+      -- add substitute operator, replaces with register
+      vim.keymap.set("n", "ss", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+      vim.keymap.set("n", "S", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
 
-      -- add exchange operator
+      -- add exchange operator, invoke twice, cancle with <esc>
       vim.keymap.set("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
       vim.keymap.set("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
       vim.keymap.set("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
-      -- vim.keymap.set("n", "sxc", "<cmd>lua require('substitute.exchange').cancel()<cr>", { noremap = true })
     end
   },
-
-  'arp242/undofile_warn.vim', -- warn when access undofile before current open
 
   { -- lists of diagnostics, references, telescopes, quickfix, and location lists
     "folke/trouble.nvim",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = true,
-    cmd = 'Trouble'
+    cmd = 'Trouble' -- lazy load
   },
 
   { -- start page for nvim
@@ -488,21 +462,30 @@ require('lazy').setup({
     end
   },
 
-  { -- adds motions for surrounding
-    "kylechui/nvim-surround",
+  { -- adds motions for surrounding 
+    "kylechui/nvim-surround", -- I would like to use mini.surround, because it has the find motion, but it does not have a preview highlight
     config = function()
+      -- add operator maps for [r]ight angle braces and [a]ngle brances
+      vim.keymap.set("o", "ir", "i[")
+      vim.keymap.set("o", "ar", "a[")
+      vim.keymap.set("o", "ia", "i<")
+      vim.keymap.set("o", "aa", "a<")
+
+      -- < TODO >
+
       require("nvim-surround").setup({
         keymaps = {
           insert = false,
           insert_line = false,
-          normal = 'sa',
+          normal = 'sa', -- default is ys
           normal_cur = false,
           normal_line = false,
           normal_cur_line = false,
-          visual = 'sa',
+          visual = 'sa', -- default is ys
           visual_line = false,
-          -- delete = "sd",
-          -- change = 'sc',
+        },
+        aliases = {
+          ['b'] = { ")", "}", "]" }, -- adds the other brackets
         },
       })
     end
@@ -580,12 +563,8 @@ require('lazy').setup({
       local kopts = {noremap = true, silent = true}
 
       -- NOTE this is the old keymap api
-      vim.api.nvim_set_keymap('n', 'n',
-        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-        kopts)
-      vim.api.nvim_set_keymap('n', 'N',
-        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-        kopts)
+      vim.api.nvim_set_keymap('n', 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+      vim.api.nvim_set_keymap('n', 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
@@ -641,16 +620,20 @@ require('lazy').setup({
       require('toggleterm').setup {
         open_mapping = [[<c-\>]],
         direction = 'float',
+        float_opts = {
+          border = 'curved'
+        }
       }
 
       local Terminal = require('toggleterm.terminal').Terminal
       local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
-
-      function _lazygit_toggle()
-        lazygit:toggle()
-      end
-
+      function _lazygit_toggle() lazygit:toggle() end
       vim.api.nvim_set_keymap('n', '<leader>lg', '<cmd>lua _lazygit_toggle()<cr>', { noremap = true, silent = true })
+
+      local ranger = Terminal:new({ cmd = 'ranger', hidden = true })
+      function _ranger_toggle() ranger:toggle() end
+
+      vim.api.nvim_set_keymap('n', '<leader>lr', '<cmd>lua _ranger_toggle()<cr>', { noremap = true, silent = true })
     end
   },
 
@@ -669,91 +652,17 @@ require('lazy').setup({
     ft = { "markdown" }, -- lazy load on file type
   },
 
-  {
+  { -- add visual scrollbar
     'petertriho/nvim-scrollbar',
     config = function ()
       require('scrollbar').setup({})
     end
   },
-}) -- ENDPLUGIn
 
--- improve performance
-vim.o.lazyredrew = true
+  'mg979/vim-visual-multi', -- multiple cursor support
+}) -- lazyend
 
--- Set highlight on search
-vim.o.hlsearch = false
-
--- Make line numbers default
-vim.o.number = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
--- vim.o.undodir = '~/.vim/undo' -- NOTE: this directory must exist first... I think
-vim.o.undodir = vim.fn.expand('~/.vim/undo')
-
--- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
--- [[ Basic Keymaps ]]
-vim.keymap.set('i', 'jk', '<Esc>') -- leave insert mode
-
-vim.keymap.set('n', '<leader>+', '<c-a>') -- increment and decrement
-vim.keymap.set('n', '<leader>-', '<c-x>')
-vim.keymap.set('n', '<leader>ex', ':ex .<cr>', { desc = 'open netrw in directory :ex .' }) -- open netrw
-vim.keymap.set('n', '_', '"_') -- empty register shortcut
-
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true }) -- Remaps for dealing with word wrap
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
-vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev) -- Diagnostic keymaps
-vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank({ timeout = 300 }) -- timeout default is 150
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
-
--- Open github packages in browser
--- maybe try to extend to replace `gx`? https://github.com/gabebw/vim-github-link-opener/blob/main/plugin/github_link_opener.vim
-local function maybeOpenGithub ()
-  local word = vim.fn.expand('<cWORD>')
-  local pattern = '[%w-]+/[%w-.]+' -- local path = string.match(word, pattern)
-  local path = word:match(pattern)
-
-  local valid = path and select(2, word:gsub('/','')) == 1
-
-  if valid then
-    vim.fn['netrw#BrowseX']('https://github.com/' .. path, 0)
-  else
-    print('not a valid github path')
-    -- vim.fn['netrw#BrowseX'](word, 0) -- doesn't seem to work
-  end
-end
-vim.keymap.set('n', 'gh', maybeOpenGithub)
-
--- LSP settings.
+-- [[ LSP Settings ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -843,7 +752,22 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
--- PERSONAL
+-- [[Vim Settings]]
+vim.o.lazyredrew = true -- improve performance
+vim.o.hlsearch = false -- Set highlight on search
+vim.o.number = true -- Make line numbers default
+vim.o.breakindent = true -- wrapped lines will have consistent indents
+vim.o.updatetime = 250 -- Decrease update time
+vim.o.signcolumn = 'yes' -- always show sign column
+vim.o.completeopt = 'menuone,noselect' -- better completion experience
+vim.o.mouse = 'a' -- Enable mouse moedwardbaeg9@gmail.com@de
+
+vim.o.ignorecase = true -- case insensitive searching
+vim.o.smartcase = true -- ...uness /C or capital in search
+
+vim.o.undofile = true -- Save undo history
+vim.o.undodir = vim.fn.expand('~/.vim/undo') -- set save directory. This must exist first... I think
+
 vim.cmd([[
   if has("win32")
     echo "is this windows?"
@@ -858,8 +782,61 @@ vim.cmd([[
   endif
 ]])
 
--- vim.keymap.set('n', '<leader>so', ':so $MYVIMRC<cr>') -- unsupported by lazy.nvim
+-- [[ Keymaps ]]
+vim.keymap.set('i', 'jk', '<Esc>') -- leave insert mode
 
+vim.keymap.set('n', '<leader>+', '<c-a>') -- increment and decrement
+vim.keymap.set('n', '<leader>-', '<c-x>')
+vim.keymap.set('n', '<leader>ex', ':ex .<cr>', { desc = 'open netrw in directory :ex .' }) -- open netrw
+vim.keymap.set('n', '_', '"_') -- empty register shortcut
+vim.keymap.set('n', '<leader>q', '') -- close whichkey / cancel leader without starting macro
+
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true }) -- Remaps for dealing with word wrap
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev) -- Diagnostic keymaps
+vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+-- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+
+-- [[ Highlight on yank ]]
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank({ timeout = 300 }) -- timeout default is 150
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
+
+-- [[ Open github shorthand ]]
+-- TODO: try to extend to replace `gx` https://github.com/gabebw/vim-github-link-opener/blob/main/plugin/github_link_opener.vim
+local function maybeOpenGithub ()
+  local word = vim.fn.expand('<cWORD>')
+  local pattern = '[%w-]+/[%w-.]+' -- local path = string.match(word, pattern)
+  local path = word:match(pattern)
+
+  local valid = path and select(2, word:gsub('/','')) == 1
+
+  if valid then
+    vim.fn['netrw#BrowseX']('https://github.com/' .. path, 0)
+  else
+    print('not a valid github path')
+    -- vim.fn['netrw#BrowseX'](word, 0) -- doesn't seem to work
+  end
+end
+vim.keymap.set('n', 'gh', maybeOpenGithub)
+
+-- [[ Highlights ]]
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg='#1c1c1c' }) -- set background color of floating windows; plugins: telescope, which-key
+vim.api.nvim_set_hl(0, 'FloatBorder', { fg='#546178', bg='#1c1c1c' })
+vim.api.nvim_set_hl(0, 'CursorLine', { bg='#101010' }) -- darker cursorline
+
+-- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
+-- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
+-- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
+
+-- [[ Legacy config syntax ]]
 vim.cmd([[
 set showmatch
 set matchtime=2 " multiple of 100ms
@@ -867,8 +844,6 @@ highlight whitespace ctermbg=white " make whitespace easier to see
 set scrolloff=24 " buffer top and bottom
 set cursorline
 set linebreak " don't break in the middle of a word
-
-" hi Visual guibg=#FFFFFF
 
 set shiftwidth=2
 
@@ -913,6 +888,9 @@ nnoremap k gk
 
 " Quick edit configs
 nnoremap <leader>ev :edit $MYVIMRC<cr>
+nnoremap <leader>et :edit ~/.tmux.conf<cr>
+nnoremap <leader>ez :edit ~/.zshrc<cr>
+nnoremap <leader>eh :edit ~/.hammerspoon/init.lua<cr>
 
 " Split into two lines
 " nnoremap K i<CR><ESC>
@@ -942,30 +920,27 @@ endfunction
 
 set spelllang=en
 set spellsuggest=best,9
-" set spell
 
 set splitright
 set splitbelow
 ]])
 
--- set background color of floating windows
--- plugins: telescope, which-key
-vim.api.nvim_set_hl(0, 'NormalFloat', { bg='#1c1c1c' })
-vim.api.nvim_set_hl(0, 'FloatBorder', { fg='#546178', bg='#1c1c1c' })
-
--- highlights
--- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
--- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
--- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
-
--- TODO
--- - change some telescope to dropdown, like the one for lsp code actions
+-- [[ TODO ]]
+-- - change some telescope to dropdown, like the one for lsp code actions, buffers
 -- - create plugin for opening links under the cursor, like gabebw/vim-github-link-opener
+-- - change the matching paren highlight color easier to see... `MatchParen`
+-- - set up tabnine
+-- - rewrite all vimscript stuff to lua?
+-- - setup tmux navigator plugins
+-- - learn about nvim treesitter textobjects
+-- - set up nvim treesitter context
+-- - customize the lualine
+-- - make hlslens colors less ugly
 
 -- Usability Notes
 -- Buffers/Splits/Windows
 --  - move window: `<c-w>HJKL`
---  - move buffer to split (where # is the buffer id, :buffers): :vert sb#
+--  - move buffer to split where # is the buffer id, :buffers: :vert sb#
 -- Find and replace
 --  - when in a visual bloc, omit the `%`:<'>'/s
 -- Motions
