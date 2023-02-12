@@ -71,17 +71,137 @@ require('lazy').setup({ -- lazystart
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason.nvim',
+      'williamboman/mason.nvim', -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason-lspconfig.nvim',
-      -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
-      -- Additional lua configuration, makes nvim stuff amazing
-      'folke/neodev.nvim',
+      'j-hui/fidget.nvim', -- Useful status updates for LSP
+      'folke/neodev.nvim', -- Additional lua configuration, makes nvim stuff amazing
+      'glepnir/lspsaga.nvim', -- pretty lsp stuff
+      'nvim-tree/nvim-web-devicons',
     },
     config = function ()
       require('neodev').setup()
       require('fidget').setup()
+      require('lspsaga').setup({
+        lightbulb = {
+          sign = false,
+        },
+        symbol_in_winbar = {
+          color_mode = false,
+          separator = "  ",
+        },
+        ui = {
+          -- expand = "",
+          -- collapse = "",
+          -- preview = " ",
+          -- code_action = "💡",
+          code_action = "⚡",
+          -- diagnostic = "🐞",
+          -- incoming = " ",
+          -- outgoing = " ",
+          -- hover = ' ',
+        }
+      })
+
+      -- TODO
+      -- - remove code action to switch parameters?
+      -- - move the lightbulb for code actions?
+      --
+      local keymap = vim.keymap.set
+      keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<cr>')
+      keymap('n', 'ch', '<cmd>Lspsaga lsp_finder<cr>')
+      keymap({ 'n', 'v' }, 'ca', '<cmd>Lspsaga code_action<cr>')
+      keymap('n', 'cr', '<cmd>Lspsaga rename<cr>')
+      keymap('n', 'gd', '<cmd>Lspsaga peek_definition<cr>')
+      keymap('n', 'gt', '<cmd>Lspsaga goto_definition<cr>')
+      keymap('n', 'sl', '<cmd>Lspsaga show_line_diagnostics<cr>')
+      keymap('n', 'sc', '<cmd>Lspsaga show_cursor_diagnostics<cr>')
+      keymap('n', 'sb', '<cmd>Lspsaga show_buf_diagnostics<cr>')
+      keymap('n', 'ge', '<cmd>Lspsaga diagnostic_jump_next<cr>')
+      keymap('n', 'gE', '<cmd>Lspsaga diagnostic_jump_prev<cr>')
+      -- keymap('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
+      keymap('n', 'K', '<cmd>Lspsaga hover_doc<cr>', { desc = ''})
+
+      -- [[ LSP Settings ]]
+      --  This function gets run when an LSP connects to a particular buffer.
+      local on_attach = function(_, bufnr)
+        local nmap = function(keys, func, desc)
+          if desc then
+            desc = 'LSP: ' .. desc
+          end
+
+          vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+        end
+
+        -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+        -- nmap('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
+        -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+        -- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+        -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+        nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+        nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+        nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+        nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+        -- See `:help K` for why this keymap
+        -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+        nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+        -- Lesser used LSP functionality
+        nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+        nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+        nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+        nmap('<leader>wl', function()
+          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, '[W]orkspace [L]ist Folders')
+
+        -- Create a command `:Format` local to the LSP buffer
+        vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+          vim.lsp.buf.format()
+        end, { desc = 'Format current buffer with LSP' })
+      end
+
+      -- Enable the following language servers
+      local servers = {
+        tsserver = {},
+        sumneko_lua = {
+          Lua = {
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+            diagnostics = {
+              globals = {"vim"}
+            }
+          },
+        },
+        -- clangd = {},
+        -- gopls = {},
+        -- pyright = {},
+        -- rust_analyzer = {},
+      }
+
+      -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+      -- Setup mason so it can manage external tooling
+      require('mason').setup()
+
+      -- Ensure the servers above are installed
+      local mason_lspconfig = require 'mason-lspconfig'
+
+      mason_lspconfig.setup {
+        ensure_installed = vim.tbl_keys(servers),
+      }
+
+      mason_lspconfig.setup_handlers {
+        function(server_name)
+          require('lspconfig')[server_name].setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = servers[server_name],
+          }
+        end,
+      }
     end
   },
 
@@ -208,7 +328,7 @@ require('lazy').setup({ -- lazystart
     end,
     config = function ()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'javascript', 'help', 'vim', 'html', 'css' },
+        ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'javascript', 'help', 'vim', 'html', 'css', 'markdown', 'markdown_inline' },
         highlight = { enable = true, additional_vim_regex_highlighting = true }, -- regex highlighting helps with jsx indenting
         indent = { enable = true, disable = { 'python' } },
         incremental_selection = {
@@ -225,6 +345,7 @@ require('lazy').setup({ -- lazystart
             enable = true,
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = { -- You can use the capture groups defined in textobjects.scm
+              
               -- ['aa'] = '@parameter.outer',
               -- ['ia'] = '@parameter.inner',
               -- ['af'] = '@function.outer',
@@ -606,6 +727,7 @@ require('lazy').setup({ -- lazystart
         ]]
     end
   },
+
   { -- a collection of mini 'submodules'
     'echasnovski/mini.nvim',
     config = function ()
@@ -617,8 +739,13 @@ require('lazy').setup({ -- lazystart
   },
 
   { -- show outline of symbols
-    'simrat39/symbols-outline.nvim',
-    config = true
+    'simrat39/symbols-outline.nvim', -- previews are broken??
+    config = function ()
+      require('symbols-outline').setup({
+        -- auto_preview = true,
+      })
+      vim.keymap.set('n', 'so', '<cmd>SymbolsOutline<cr>')
+    end
   },
 
   { -- adds a bunch of ui elements. I only like the search overlay...
@@ -836,96 +963,6 @@ require('lazy').setup({ -- lazystart
   }
 }) -- lazyend
 
--- [[ LSP Settings ]]
---  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
-
--- Enable the following language servers
---  Add any additional override configuration in the following tables. They will be passed to the `settings` field of the server config. You must look up that documentation yourself.
-local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  tsserver = {},
-
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-      diagnostics = {
-        globals = {"vim"}
-      }
-    },
-  },
-}
-
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
--- Setup mason so it can manage external tooling
-require('mason').setup()
-
--- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
-
 -- [[Vim Options]]
 vim.o.lazyredrew = true -- improve performance
 vim.o.hlsearch = false -- Set highlight on search
@@ -983,8 +1020,8 @@ vim.keymap.set('n', '<leader>q', '') -- close whichkey / cancel leader without s
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true }) -- Remaps for dealing with word wrap
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev) -- Diagnostic keymaps
-vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
+-- vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev) -- Diagnostic keymaps
+-- vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
@@ -1002,21 +1039,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Open github shorthand ]]
 -- TODO: try to extend to replace `gx` https://github.com/gabebw/vim-github-link-opener/blob/main/plugin/github_link_opener.vim
-local function maybeOpenGithub ()
-  local word = vim.fn.expand('<cWORD>')
-  local pattern = '[%w-]+/[%w-.]+' -- local path = string.match(word, pattern)
-  local path = word:match(pattern)
-
-  local valid = path and select(2, word:gsub('/','')) == 1
-
-  if valid then
-    vim.fn['netrw#BrowseX']('https://github.com/' .. path, 0)
-  else
-    print('not a valid github path')
-    -- vim.fn['netrw#BrowseX'](word, 0) -- doesn't seem to work
-  end
-end
-vim.keymap.set('n', 'gh', maybeOpenGithub)
+-- local function maybeOpenGithub ()
+--   local word = vim.fn.expand('<cWORD>')
+--   local pattern = '[%w-]+/[%w-.]+' -- local path = string.match(word, pattern)
+--   local path = word:match(pattern)
+--
+--   local valid = path and select(2, word:gsub('/','')) == 1
+--
+--   if valid then
+--     vim.fn['netrw#BrowseX']('https://github.com/' .. path, 0)
+--   else
+--     print('not a valid github path')
+--     -- vim.fn['netrw#BrowseX'](word, 0) -- doesn't seem to work
+--   end
+-- end
+-- vim.keymap.set('n', 'gh', maybeOpenGithub)
 
 -- [[ Highlights ]]
 vim.api.nvim_set_hl(0, 'NormalFloat', { bg='#1c1c1c' }) -- set background color of floating windows; plugins: telescope, which-key
@@ -1119,7 +1156,6 @@ set splitbelow
 -- [[ TODO ]]
 -- - set up lsp saga
 -- - install ccc.nvim
--- - set up tabnine
 -- - rewrite all vimscript stuff to lua?
 -- - setup tmux navigator plugins
 -- - learn about nvim treesitter textobjects
