@@ -227,30 +227,31 @@ require('lazy').setup({ -- lazystart
             keymaps = { -- You can use the capture groups defined in textobjects.scm
               -- ['aa'] = '@parameter.outer',
               -- ['ia'] = '@parameter.inner',
-              ['af'] = '@function.outer',
-              ['if'] = '@function.inner',
-              ['ac'] = '@class.outer',
-              ['ic'] = '@class.inner',
+              -- ['af'] = '@function.outer',
+              -- ['if'] = '@function.inner',
+              -- ['ac'] = '@class.outer',
+              -- ['ic'] = '@class.inner',
             },
           },
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-              [']m'] = '@function.outer',
-              [']]'] = '@class.outer',
+              -- [']m'] = '@function.outer',
+              -- [']]'] = '@class.outer',
             },
             goto_next_end = {
-              [']M'] = '@function.outer',
-              [']['] = '@class.outer',
+              -- [']M'] = '@function.outer',
+              -- [']['] = '@class.outer',
+              ['sfb'] = '@punctuation.bracket' -- doesn't work :(
             },
             goto_previous_start = {
-              ['[m'] = '@function.outer',
-              ['[['] = '@class.outer',
+              -- ['[m'] = '@function.outer',
+              -- ['[['] = '@class.outer',
             },
             goto_previous_end = {
-              ['[M'] = '@function.outer',
-              ['[]'] = '@class.outer',
+              -- ['[M'] = '@function.outer',
+              -- ['[]'] = '@class.outer',
             },
           },
           swap = {
@@ -587,6 +588,24 @@ require('lazy').setup({ -- lazystart
     end
   },
 
+  { -- adds surround motion, but I just want the operator ib / ab
+    'machakann/vim-sandwich',
+    -- enabled = false,
+    init = function ()
+      vim.cmd[[
+        let g:sandwich_no_default_key_mappings = 1 " disable vim-sandwich bindings, we just want the textobjects
+        omap ib <Plug>(textobj-sandwich-auto-i)
+        xmap ib <Plug>(textobj-sandwich-auto-i)
+        omap ab <Plug>(textobj-sandwich-auto-a)
+        xmap ab <Plug>(textobj-sandwich-auto-a)
+
+        omap is <Plug>(textobj-sandwich-query-i)
+        xmap is <Plug>(textobj-sandwich-query-i)
+        omap as <Plug>(textobj-sandwich-query-a)
+        xmap as <Plug>(textobj-sandwich-query-a)
+        ]]
+    end
+  },
   { -- a collection of mini 'submodules'
     'echasnovski/mini.nvim',
     config = function ()
