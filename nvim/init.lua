@@ -105,6 +105,7 @@ require('lazy').setup({ -- lazystart
         nvim_lua = "[Lua]",
         cmp_tabnine = "[TN9]",
         path = "[Path]",
+        luasnip = "[SNIP]",
       }
 
       local has_words_before = function()
@@ -151,8 +152,8 @@ require('lazy').setup({ -- lazystart
           ['<C-l>'] = cmp.mapping.abort(),
           ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
-            -- select = true, -- selects the first item
-            select = false, -- only if explicitly selected
+            select = true, -- selects the first item
+            -- select = false, -- only if explicitly selected
           },
           ['<Tab>'] = cmp.mapping(function(fallback)
             -- TODO: if currently in a luasnip, hitting tab jumps instead of selecting the next item...
@@ -334,7 +335,11 @@ require('lazy').setup({ -- lazystart
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- library of async functons
+      'nvim-telescope/telescope-ui-select.nvim', -- replace nvim's ui select with telescope
+      'debugloop/telescope-undo.nvim', -- visually shows undo history
+    },
     config = function ()
       require('telescope').setup {
         defaults = {
@@ -362,7 +367,21 @@ require('lazy').setup({ -- lazystart
             hidden = true,
           },
         },
+        extensions = {
+          ['ui-select'] = {
+            require("telescope.themes").get_dropdown({})
+          },
+          undo = {
+            use_delta = true,
+            diff_context_lines = 6, -- defaults to scroll
+          },
+        },
       }
+      require('telescope').load_extension('fzf')
+      require('telescope').load_extension('ui-select')
+      require('telescope').load_extension('undo')
+
+      vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<cr>')
 
       -- custom picker that greps the word under the cursor
       -- https://github.com/nvim-telescope/telescope.nvim/issues/1766#issuecomment-1150437074
@@ -388,10 +407,6 @@ require('lazy').setup({ -- lazystart
         })
       end
       vim.keymap.set('n', '<leader>*', '<cmd>lua live_grep_cword()<cr>')
-
-      -- load telescope extensions
-      require('telescope').load_extension('fzf')
-      require('telescope').load_extension('ui-select')
 
       vim.keymap.set('n', '<c-p>', '<cmd>Telescope find_files<cr>')
       vim.keymap.set('n', '<c-b>', '<cmd>Telescope buffers<cr>')
@@ -433,6 +448,7 @@ require('lazy').setup({ -- lazystart
   'arp242/undofile_warn.vim', -- warn when access undofile before current open
   { -- visual undotree
     "simnalamburt/vim-mundo",
+    -- enabled = false,
     config = function ()
       vim.g.mundo_width=40
       vim.g.mundo_preview_bottom=1
@@ -732,7 +748,7 @@ require('lazy').setup({ -- lazystart
 
       -- lazygit terminal
       local Terminal = require('toggleterm.terminal').Terminal
-      local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
+      local lazygit = Terminal:new({ cmd = 'lazygit', --[[ hidden = true ]] }) -- hidden terminals won't resize
       function _G._lazygit_toggle() lazygit:toggle() end
       vim.api.nvim_set_keymap('n', '<leader>lg', '<cmd>lua _lazygit_toggle()<cr>', { noremap = true, silent = true })
     end
@@ -743,8 +759,6 @@ require('lazy').setup({ -- lazystart
     config = function ()
       vim.api.nvim_create_user_command('RangerToggle', ':RnvimrToggle', {})
       vim.api.nvim_set_keymap('n', '<leader>ra', ':RnvimrToggle<cr>', {})
-      function _G.lazygit_toggle() lazygit:toggle() end
-      vim.api.nvim_set_keymap('n', '<leader>lg', '<cmd>lua lazygit_toggle()<cr>', { noremap = true, silent = true })
     end
   },
 
@@ -930,13 +944,13 @@ vim.cmd([[
   endif
 ]])
 
-vim.cmd([[
-augroup remember_folds
-  autocmd!
-  au BufWinLeave ?* mkview 1
-  au BufWinEnter ?* silent! loadview 1
-augroup END
-]])
+-- vim.cmd([[
+-- augroup remember_folds
+--   autocmd!
+--   au BufWinLeave ?* mkview 1
+--   au BufWinEnter ?* silent! loadview 1
+-- augroup END
+-- ]])
 
 -- [[ Keymaps ]]
 vim.keymap.set('i', 'jk', '<Esc>') -- leave insert mode
