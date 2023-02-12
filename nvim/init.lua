@@ -461,6 +461,7 @@ require('lazy').setup({ -- lazystart
       'nvim-lua/plenary.nvim', -- library of async functons
       'nvim-telescope/telescope-ui-select.nvim', -- replace nvim's ui select with telescope
       'debugloop/telescope-undo.nvim', -- visually shows undo history
+      'nvim-telescope/telescope-fzf-native.nvim', -- c port of fzf
     },
     config = function ()
       require('telescope').setup {
@@ -499,7 +500,6 @@ require('lazy').setup({ -- lazystart
           },
         },
       }
-      require('telescope').load_extension('fzf')
       require('telescope').load_extension('ui-select')
       require('telescope').load_extension('undo')
 
@@ -548,11 +548,14 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'make',
-    cond = vim.fn.executable 'make' == 1
-  },
+  -- { -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
+  --   'nvim-telescope/telescope-fzf-native.nvim',
+  --   build = 'make',
+  --   cond = vim.fn.executable 'make' == 1,
+  --   -- config = function ()
+  --   --   require('telescope').load_extension('fzf')
+  --   -- end
+  -- },
 
   { -- visually shows treesitter data
     'nvim-treesitter/playground',
