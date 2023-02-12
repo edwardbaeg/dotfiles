@@ -28,6 +28,7 @@ bindkey -M vicmd v edit-command-line
 
 # Add custom programs
 export PATH=~/bin:$PATH
+export PATH=~/.local/bin:$PATH
 
 export PATH="$HOME/.emacs.d/bin:$PATH"
 
@@ -174,7 +175,7 @@ alias end="cowsay 'Thats it! Thank you for listening!!' | nms -c -a"
 alias ns="npm start"
 # alias tree="exa -T"
 alias oldcat="/bin/cat"
-alias cat="bat"
+# alias cat="bat"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 # alias ls="exa"
 alias oldls="/bin/ls"
@@ -188,6 +189,10 @@ alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 if command -v exa &> /dev/null
 then
   alias ls="exa"
+fi
+if command -v bat &> /dev/null
+then
+  alias cat="bat"
 fi
 
 alias serv="python3 -m http.server"
