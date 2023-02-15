@@ -209,12 +209,12 @@ require('lazy').setup({ -- lazystart
     'hrsh7th/nvim-cmp',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-cmdline', -- for completing the cmdline
       'L3MON4D3/LuaSnip', -- snippet engine
       'saadparwaiz1/cmp_luasnip',
       'rafamadriz/friendly-snippets', -- vscode like snippets
       'onsails/lspkind.nvim', -- pictograms for lsp
     },
-    -- cmd = 'InsertEnter',
     config = function ()
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
@@ -247,7 +247,7 @@ require('lazy').setup({ -- lazystart
         formatting = {
           format = function(entry, vim_item)
             vim_item.kind = lspkind.symbolic(vim_item.kind, {mode = "symbol"})
-            vim_item.menu = source_mapping[entry.source.name]
+            vim_item.menu = (entry.source.name or "") .. " " .. (source_mapping[entry.source.name] or "")
             if entry.source.name == "cmp_tabnine" then
               local detail = (entry.completion_item.data or {}).detail
               -- vim_item.kind = "tabnine"
@@ -303,6 +303,18 @@ require('lazy').setup({ -- lazystart
           { name = 'cmp_tabnine' },
         },
       }
+
+      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = { { name = 'buffer' } },
+      })
+
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
+      })
 
       luasnip.add_snippets("all", {
         luasnip.snippet("ternary", {
@@ -537,6 +549,7 @@ require('lazy').setup({ -- lazystart
       vim.keymap.set('n', '<c-g>', '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
       vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
 
+      vim.keymap.set('n', '<leader>fd', '<cmd>Telescope<cr>', { desc = '[f]uzzy [f]ind'})
       vim.keymap.set('n', '<leader>ff', '<cmd>Telescope<cr>', { desc = '[f]uzzy [f]ind'})
       vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = '[f]uzzy [h]help'})
       vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = '[f]uzzy [k]eymaps'})
@@ -734,8 +747,8 @@ require('lazy').setup({ -- lazystart
   { -- a collection of mini 'submodules'
     'echasnovski/mini.nvim',
     config = function ()
-      require("mini.move").setup { } -- adds ability to move text around with <m-h//k/l>
-      require("mini.cursorword").setup { -- highlighs the word under the cursor
+      require('mini.move').setup { } -- adds ability to move text around with <m-h//k/l>
+      require('mini.cursorword').setup { -- highlighs the word under the cursor
         delay = 500 -- in ms
       }
     end
@@ -792,7 +805,7 @@ require('lazy').setup({ -- lazystart
 
   { -- jump targets
     'ggandor/leap.nvim',
-    enabled = false,
+    enabled = false, -- vim motions ftw
     config = function ()
       require('leap').setup {}
       vim.keymap.set('n', '<leader>j', "<Plug>(leap-forward-to)")
@@ -933,7 +946,7 @@ require('lazy').setup({ -- lazystart
 
   { -- adds some visuals to folds
     'anuvyklack/pretty-fold.nvim',
-    enabled = false,
+    enabled = false, -- idk folds
     config = function ()
       require('pretty-fold').setup({
         fill_char = '-'
@@ -944,7 +957,7 @@ require('lazy').setup({ -- lazystart
   { -- prettier folding
     'kevinhwang91/nvim-ufo',
     dependencies = { 'kevinhwang91/promise-async' },
-    enabled = false,
+    enabled = false, -- idk folds
     config = function ()
       require('ufo').setup()
       -- vim.o.foldcolumn = '2'
@@ -962,6 +975,34 @@ require('lazy').setup({ -- lazystart
       tabnine:setup({
         show_prediction_strength = true,
       })
+    end
+  },
+
+  -- { -- use multiple virtual lines to show diagnostics
+  --   'Maan2003/lsp_lines.nvim',
+  --   config = true
+  -- },
+
+  { -- adds icons to netrw
+    'prichrd/netrw.nvim',
+    config = true,
+  },
+
+  'tpope/vim-eunuch', -- adds unix shell commands to vim, eg :Move, :Mkdir
+
+  { -- color f/t targets
+    'unblevable/quick-scope',
+    init = function ()
+      vim.cmd([[ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] ]])
+    end
+  },
+
+  { -- interactive scratchpad
+    'metakirby5/codi.vim',
+    init = function ()
+      vim.cmd([[
+        g:codi#rightalign=1
+      ]])
     end
   }
 }) -- lazyend
@@ -1029,6 +1070,23 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 vim.keymap.set('n', '<c-f>', 'za')
+
+-- remap netrw keymaps
+vim.api.nvim_create_autocmd('filetype', {
+  pattern = 'netrw',
+  desc = 'Better mappings for netrw',
+  callback = function()
+    local bind = function(lhs, rhs)
+      vim.keymap.set('n', lhs, rhs, {remap = true, buffer = true})
+    end
+
+    bind('n', '%') -- edit new file
+    bind('r', 'R') -- rename file
+    bind('R', '<c-I>') -- refresh
+    -- bind('h', '-^') -- go up directory -- this breaks netrw
+    -- bind('l', '<cr>') -- enter -- this breaks netrw
+  end
+})
 
 -- [[ Highlight on yank ]]
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -1157,11 +1215,12 @@ set splitbelow
 ]])
 
 -- [[ TODO ]]
--- - set up lsp saga
+-- - set up formatting and linting, with null-ls.nvim?
+-- - set up chatgpt integration?
+-- - learn about nvim treesitter textobjects
+-- - setup tmux navigator plugins
 -- - install ccc.nvim
 -- - rewrite all vimscript stuff to lua?
--- - setup tmux navigator plugins
--- - learn about nvim treesitter textobjects
 -- - set up nvim treesitter context
 -- - customize the lualine
 
