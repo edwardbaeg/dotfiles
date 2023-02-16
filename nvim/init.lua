@@ -250,7 +250,6 @@ require('lazy').setup({ -- lazystart
             vim_item.menu = (entry.source.name or "") .. " " .. (source_mapping[entry.source.name] or "")
             if entry.source.name == "cmp_tabnine" then
               local detail = (entry.completion_item.data or {}).detail
-              -- vim_item.kind = "tabnine"
               vim_item.kind = ""
               if detail and detail:find('.*%%.*') then
                 vim_item.kind = vim_item.kind .. ' ' .. detail
@@ -262,6 +261,8 @@ require('lazy').setup({ -- lazystart
             end
             local maxwidth = 80
             vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+
+            vim_item.kind = "  " .. vim_item.kind -- add some padding after the word 
             return vim_item
           end,
         },
@@ -276,7 +277,7 @@ require('lazy').setup({ -- lazystart
             -- select = false, -- only if explicitly selected
           },
           ['<Tab>'] = cmp.mapping(function(fallback)
-            -- TODO: if currently in a luasnip, hitting tab jumps instead of selecting the next item...
+            -- TODO: if currently in a luasnip, make tab jump instead of selecting the next item
             if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_locally_jumpable() then
@@ -304,16 +305,19 @@ require('lazy').setup({ -- lazystart
         },
       }
 
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = { { name = 'buffer' } },
+      cmp.setup.cmdline(':', {
+        completion = { keyword_length = 2, },
+        mapping = cmp.mapping.preset.cmdline({ -- TODO: disable <c-n/p> when nothing is selected
+          ['<C-l>'] = cmp.mapping.abort(), -- this doesn't work...
+          ['<c-p>'] = cmp.mapping.close(), -- this doesn't work...
+          ['<c-n>'] = cmp.mapping.close(), -- this doesn't work...
+        }),
+        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline', max_item_count = 10 } })
       })
 
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline(':', {
+      cmp.setup.cmdline({ '/', '?' }, { -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline', max_item_count = 10 } })
+        sources = { { name = 'buffer' } },
       })
 
       luasnip.add_snippets("all", {
@@ -357,7 +361,6 @@ require('lazy').setup({ -- lazystart
             enable = true,
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = { -- You can use the capture groups defined in textobjects.scm
-              
               -- ['aa'] = '@parameter.outer',
               -- ['ia'] = '@parameter.inner',
               -- ['af'] = '@function.outer',
@@ -1005,6 +1008,20 @@ require('lazy').setup({ -- lazystart
       ]])
     end
   },
+
+  { -- use LSP for formatting and linting
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function ()
+      local null_ls = require('null-ls')
+
+      null_ls.setup({
+        sources = {
+          -- null_ls.builtins.formatting.eslint,
+          null_ls.builtins.formatting.prettier,
+        }
+      })
+    end
+  }
 
 }) -- lazyend
 
