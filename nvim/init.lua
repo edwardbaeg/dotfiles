@@ -68,49 +68,45 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- LSP Configuration & Plugins
+  { -- LSP, formatter, and linter config and plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      'williamboman/mason.nvim', -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason-lspconfig.nvim',
+      'williamboman/mason.nvim', -- package manager for external editor tools (LSP, DAP, linters, formatters)
+      'williamboman/mason-lspconfig.nvim', -- Automatically install LSPs
+      'glepnir/lspsaga.nvim', -- pretty lsp ui
       'j-hui/fidget.nvim', -- Useful status updates for LSP
       'folke/neodev.nvim', -- Additional lua configuration, makes nvim stuff amazing
-      'glepnir/lspsaga.nvim', -- pretty lsp stuff
+
+      'jose-elias-alvarez/null-ls.nvim', -- set up formatters and linters
+      'jay-babu/mason-null-ls.nvim', -- automatically install lintes and formatters
       'nvim-tree/nvim-web-devicons',
     },
     config = function ()
       require('neodev').setup()
       require('fidget').setup()
+
       require('lspsaga').setup({
         lightbulb = {
-          sign = false,
+          sign = false, -- don't show in sign column
         },
         symbol_in_winbar = {
+          enable = false,
           color_mode = false,
           separator = "  ",
         },
-        ui = {
-          -- expand = "",
-          -- collapse = "",
-          -- preview = " ",
-          -- code_action = "💡",
-          code_action = "⚡",
-          -- diagnostic = "🐞",
-          -- incoming = " ",
-          -- outgoing = " ",
-          -- hover = ' ',
+        ui = { -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",
+          preview = " ",
+          code_action = "⚡", -- "💡",
+          hover = ' ',
         }
       })
 
-      -- TODO
-      -- - remove code action to switch parameters?
-      -- - move the lightbulb for code actions?
-      --
       local keymap = vim.keymap.set
       keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<cr>')
       keymap('n', 'ch', '<cmd>Lspsaga lsp_finder<cr>')
       keymap({ 'n', 'v' }, '<leader>ca', '<cmd>Lspsaga code_action<cr>')
       keymap('n', 'cr', '<cmd>Lspsaga rename<cr>')
+      keymap('n', '<leader>cr', '<cmd>Lspsaga rename<cr>')
       keymap('n', 'gd', '<cmd>Lspsaga peek_definition<cr>')
       keymap('n', 'gt', '<cmd>Lspsaga goto_definition<cr>')
       keymap('n', 'sl', '<cmd>Lspsaga show_line_diagnostics<cr>')
@@ -123,6 +119,9 @@ require('lazy').setup({ -- lazystart
 
       -- [[ LSP Settings ]]
       --  This function gets run when an LSP connects to a particular buffer.
+      -- TODO
+      -- - remove code action to switch parameters?
+      -- - remove hunk code actions
       local on_attach = function(_, bufnr)
         local nmap = function(keys, func, desc)
           if desc then
@@ -138,10 +137,10 @@ require('lazy').setup({ -- lazystart
 
         -- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
         -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-        nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-        nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-        nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-        nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+        -- nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+        -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+        -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+        -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
         -- See `:help K` for why this keymap
         -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -161,10 +160,10 @@ require('lazy').setup({ -- lazystart
         end, { desc = 'Format current buffer with LSP' })
       end
 
-      -- Enable the following language servers
-      local servers = {
+      -- Automatically enable the following language servers
+      local language_servers = { -- clangd = {}, gopls = {}, pyright = {}, rust_analyzer = {},
         tsserver = {},
-        sumneko_lua = {
+        lua_ls = { -- used to be sumneko_lua?
           Lua = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
@@ -173,35 +172,50 @@ require('lazy').setup({ -- lazystart
             }
           },
         },
-        -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+      }
+
+      require('mason').setup()
+      local mason_lspconfig = require 'mason-lspconfig'
+      mason_lspconfig.setup {
+        ensure_installed = vim.tbl_keys(language_servers),
       }
 
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-      -- Setup mason so it can manage external tooling
-      require('mason').setup()
-
-      -- Ensure the servers above are installed
-      local mason_lspconfig = require 'mason-lspconfig'
-
-      mason_lspconfig.setup {
-        ensure_installed = vim.tbl_keys(servers),
-      }
-
       mason_lspconfig.setup_handlers {
         function(server_name)
           require('lspconfig')[server_name].setup {
             capabilities = capabilities,
             on_attach = on_attach,
-            settings = servers[server_name],
+            settings = language_servers[server_name],
           }
         end,
       }
+
+      local null_ls = require('null-ls')
+      require('mason-null-ls').setup({
+        ensure_installed = { 'prettier' }
+      })
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.prettier,
+        },
+        on_attach = function(client, bufnr) -- format on save
+          if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = augroup,
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format()
+              end,
+            })
+          end
+        end,
+      })
     end
   },
 
@@ -209,23 +223,24 @@ require('lazy').setup({ -- lazystart
     'hrsh7th/nvim-cmp',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-cmdline', -- for completing the cmdline
+      'hrsh7th/cmp-cmdline', -- cmdline menu fuzzy
       'L3MON4D3/LuaSnip', -- snippet engine
       'saadparwaiz1/cmp_luasnip',
       'rafamadriz/friendly-snippets', -- vscode like snippets
-      'onsails/lspkind.nvim', -- pictograms for lsp
+      'onsails/lspkind.nvim', -- pictograms for completion items
     },
     config = function ()
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       local lspkind = require('lspkind')
       local source_mapping = {
-        buffer = "[Buffer]",
-        nvim_lsp = "[LSP]",
-        nvim_lua = "[Lua]",
+        buffer      = "[Buffer]",
+        nvim_lsp    = "[LSP]",
+        nvim_lua    = "[Lua]",
         cmp_tabnine = "[TN9]",
-        path = "[Path]",
-        luasnip = "[SNIP]",
+        path        = "[Path]",
+        luasnip     = "[SNIP]",
+        cmdline     = "[Cmd]",
       }
 
       local has_words_before = function()
@@ -247,7 +262,8 @@ require('lazy').setup({ -- lazystart
         formatting = {
           format = function(entry, vim_item)
             vim_item.kind = lspkind.symbolic(vim_item.kind, {mode = "symbol"})
-            vim_item.menu = (entry.source.name or "") .. " " .. (source_mapping[entry.source.name] or "")
+            vim_item.menu = source_mapping[entry.source.name] or ""
+            -- vim_item.menu = (entry.source.name or "") .. " " .. (source_mapping[entry.source.name] or "")
             if entry.source.name == "cmp_tabnine" then
               local detail = (entry.completion_item.data or {}).detail
               vim_item.kind = ""
@@ -344,7 +360,7 @@ require('lazy').setup({ -- lazystart
     end,
     config = function ()
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'javascript', 'help', 'vim', 'html', 'css', 'markdown', 'markdown_inline' },
+        ensure_installed = { 'c', 'cpp', 'css', 'go', 'help', 'html', 'javascript', 'lua', 'markdown', 'markdown_inline', 'python', 'rust', 'typescript', 'vim' },
         highlight = { enable = true, additional_vim_regex_highlighting = true }, -- regex highlighting helps with jsx indenting
         indent = { enable = true, disable = { 'python' } },
         incremental_selection = {
@@ -416,9 +432,10 @@ require('lazy').setup({ -- lazystart
     config = function ()
       require('gitsigns').setup {
         signs = {
-          add = { text = '•'},
-          change = { text = '•'},
-          delete = { text = '•'},
+          add = { text = '•' },
+          change = { text = '•' },
+          delete = { text = '•' },
+          untracked = { text = '·' },
         }
       }
 
@@ -515,7 +532,7 @@ require('lazy').setup({ -- lazystart
           },
         },
       }
-      require('telescope').load_extension('ui-select')
+      -- require('telescope').load_extension('ui-select')
       require('telescope').load_extension('undo')
 
       vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<cr>')
@@ -892,12 +909,15 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- this is a little laggy??
-    'norcalli/nvim-colorizer.lua',
-    enabled = false,
+  { -- colorizer and color picker
+    'uga-rosa/ccc.nvim',
     config = function ()
-      require('colorizer').setup()
-    end,
+      require('ccc').setup({
+        highlighter = {
+          auto_enable = true,
+        }
+      })
+    end
   },
 
   { -- show/hide persistent terminal
@@ -911,7 +931,6 @@ require('lazy').setup({ -- lazystart
         }
       }
 
-      -- lazygit terminal
       local Terminal = require('toggleterm.terminal').Terminal
       local lazygit = Terminal:new({ cmd = 'lazygit', --[[ hidden = true ]] }) -- hidden terminals won't resize
       function _G._lazygit_toggle() lazygit:toggle() end
@@ -933,8 +952,6 @@ require('lazy').setup({ -- lazystart
     init = function() vim.g.mkdp_filetypes = { "markdown" } end,
     ft = { "markdown" }, -- lazy load on file type
   },
-
-  -- 'mg979/vim-visual-multi', -- multiple cursor support
 
   { -- only show cursorline on active window
     'Tummetott/reticle.nvim',
@@ -969,6 +986,7 @@ require('lazy').setup({ -- lazystart
     end
   },
 
+  -- TODO: move to cmp stuffs
   { -- ai powered autocompletion
     'tzachar/cmp-tabnine',
     build = './install.sh',
@@ -1004,25 +1022,18 @@ require('lazy').setup({ -- lazystart
     'metakirby5/codi.vim',
     init = function ()
       vim.cmd([[
-        g:codi#rightalign=1
+        " g:codi#rightalign=1
       ]])
     end
   },
 
-  { -- use LSP for formatting and linting
-    'jose-elias-alvarez/null-ls.nvim',
-    config = function ()
-      local null_ls = require('null-ls')
-
-      null_ls.setup({
-        sources = {
-          -- null_ls.builtins.formatting.eslint,
-          null_ls.builtins.formatting.prettier,
-        }
-      })
+  {
+    'junegunn/vim-easy-align',
+    init = function ()
+      vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)')
+      vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)')
     end
-  }
-
+  },
 }) -- lazyend
 
 -- [[Vim Options]]
@@ -1235,12 +1246,14 @@ set splitbelow
 ]])
 
 -- [[ TODO ]]
--- - set up formatting and linting, with null-ls.nvim?
--- - setup tmux navigator plugins
--- - install ccc.nvim
 -- - rewrite all vimscript stuff to lua?
 -- - set up nvim treesitter context
 -- - customize the lualine
+-- - indent line highlight for lsp current location
+-- - treesj
+-- - move to next git change, using gitsigns?
+-- - setup codeium.vim
+-- - setup automatic format on save using null-ls.nvim
 
 -- Usability Notes
 -- Buffers/Splits/Windows
