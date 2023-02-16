@@ -336,6 +336,24 @@ require('lazy').setup({ -- lazystart
         sources = { { name = 'buffer' } },
       })
 
+      local ls = luasnip
+      local i = ls.insert_node
+      local t = ls.text_node
+      local s = ls.snippet
+
+      -- TODO: create loaders for custom snippets
+      ls.add_snippets('lua', {
+        -- {
+        --   'github/path',
+        --   config = function ()
+        --     require('module_name').setup ({})
+        --   end
+        -- },
+        s('lazy', {
+          t({ "{", "\t'" }), i(1, "github/path"), t({ "',", "\tconfig = function ()", "\t\trequire('"}), i(2, "module_name"), t("').setup ({"), i(3), t({ "})", "\tend", "}," })
+        }),
+      })
+
       luasnip.add_snippets("all", {
         luasnip.snippet("ternary", {
           -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
@@ -450,16 +468,18 @@ require('lazy').setup({ -- lazystart
 
   { -- Fancy statusline
     'nvim-lualine/lualine.nvim',
-    -- enabled = false,
     config = function ()
-      -- local custom_tokyonight = require('lualine.themes.tokyonight')
-      -- custom_tokyonight.normal.c.bg = '#c1c1c1' -- change background to match terminal emulator
       require('lualine').setup {
         options = {
           icons_enabled = false,
           theme = 'onedark',
           component_separators = '|',
           section_separators = '',
+        },
+        extensions = {
+          'toggleterm', -- doesn't do anything?
+          'symbols-outline',
+          'mundo',
         },
       }
     end
@@ -786,7 +806,7 @@ require('lazy').setup({ -- lazystart
 
   { -- adds a bunch of ui elements. I only like the search overlay...
     'folke/noice.nvim',
-    enabled = false,
+    enabled = false, -- it's too noisy
     dependencies = {
       "MunifTanim/nui.nvim",
       -- OPTIONAL:
@@ -999,10 +1019,10 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  -- { -- use multiple virtual lines to show diagnostics
-  --   'Maan2003/lsp_lines.nvim',
-  --   config = true
-  -- },
+  { -- use multiple virtual lines to show diagnostics
+    'Maan2003/lsp_lines.nvim',
+    enabled = false, -- it's a bit noisy
+  },
 
   { -- adds icons to netrw
     'prichrd/netrw.nvim',
@@ -1027,11 +1047,25 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  {
+  { -- align text by delimiter
     'junegunn/vim-easy-align',
     init = function ()
       vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)')
       vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)')
+    end
+  },
+
+  { -- free AI code autocompletion
+    'Exafunction/codeium.vim',
+    init = function ()
+      vim.g.codeium_disable_bindings = 1 -- turn off tab and defualts
+      vim.keymap.set('n', '<leader>td', ':Codeium Disable<CR>')
+      vim.keymap.set('n', '<leader>te', ':Codeium Enable<CR>')
+
+      vim.keymap.set('i', '<C-l>', function () return vim.fn['codeium#Accept']() end, { expr = true }) -- there isn't a plug command for this yet
+      vim.keymap.set('i', '<C-j>', '<Plug>(codeium-next)')
+      vim.keymap.set('i', '<C-k>', '<Plug>(codeium-previous)')
+      vim.keymap.set({ 'i', 'n' }, '<c-x>', '<Plug>(codeium-dismiss)')
     end
   },
 }) -- lazyend
@@ -1246,14 +1280,12 @@ set splitbelow
 ]])
 
 -- [[ TODO ]]
--- - rewrite all vimscript stuff to lua?
 -- - set up nvim treesitter context
 -- - customize the lualine
 -- - indent line highlight for lsp current location
 -- - treesj
 -- - move to next git change, using gitsigns?
--- - setup codeium.vim
--- - setup automatic format on save using null-ls.nvim
+-- - rewrite all vimscript stuff to lua?
 
 -- Usability Notes
 -- Buffers/Splits/Windows
