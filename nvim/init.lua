@@ -109,7 +109,7 @@ require('lazy').setup({ -- lazystart
       local keymap = vim.keymap.set
       keymap('n', 'gh', '<cmd>Lspsaga lsp_finder<cr>')
       keymap('n', 'ch', '<cmd>Lspsaga lsp_finder<cr>')
-      keymap({ 'n', 'v' }, 'ca', '<cmd>Lspsaga code_action<cr>')
+      keymap({ 'n', 'v' }, '<leader>ca', '<cmd>Lspsaga code_action<cr>')
       keymap('n', 'cr', '<cmd>Lspsaga rename<cr>')
       keymap('n', 'gd', '<cmd>Lspsaga peek_definition<cr>')
       keymap('n', 'gt', '<cmd>Lspsaga goto_definition<cr>')
@@ -298,9 +298,9 @@ require('lazy').setup({ -- lazystart
           end, { 'i', 's' }),
         },
         sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'cmp_tabnine' },
+          { name = 'nvim_lsp', max_item_count = 5 },
+          { name = 'luasnip', max_item_count = 5 },
+          { name = 'cmp_tabnine', max_item_count = 5 },
         },
       }
 
@@ -313,7 +313,7 @@ require('lazy').setup({ -- lazystart
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(':', {
         mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
+        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline', max_item_count = 10 } })
       })
 
       luasnip.add_snippets("all", {
@@ -891,7 +891,7 @@ require('lazy').setup({ -- lazystart
 
   { -- this is a little laggy??
     'norcalli/nvim-colorizer.lua',
-    -- enabled = false,
+    enabled = false,
     config = function ()
       require('colorizer').setup()
     end,
@@ -1004,7 +1004,8 @@ require('lazy').setup({ -- lazystart
         g:codi#rightalign=1
       ]])
     end
-  }
+  },
+
 }) -- lazyend
 
 -- [[Vim Options]]
@@ -1122,6 +1123,8 @@ vim.api.nvim_set_hl(0, 'FloatBorder', { fg='#546178', bg='#1c1c1c' })
 vim.api.nvim_set_hl(0, 'CursorLine', { bg='#101010' }) -- darker cursorline
 vim.api.nvim_set_hl(0, 'MatchParen', { fg='#ffffff' }) -- make matching parens easier to see
 
+vim.api.nvim_set_hl(0, '@operator', { italic = false, fg='#99d1db' }) -- eg +, =, || only do for js? only do for js?
+vim.api.nvim_set_hl(0, '@variable.builtin', { italic = true, fg='#e78284' }) -- eg +, =, || only do for js? only do for js?
 -- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
@@ -1157,7 +1160,7 @@ set inccommand=nosplit " live substitutions
 
 " Center after jumps
 nnoremap g; g;zz
-nnoremap gi gi<esc>zzi
+" nnoremap gi gi<esc>zzi
 
 " center after search
 nnoremap n nzz
@@ -1183,7 +1186,7 @@ nnoremap <leader>eh :edit ~/.hammerspoon/init.lua<cr>
 
 " Split into two lines
 " nnoremap K i<CR><ESC>
-nnoremap <enter> i<CR><ESC>
+nnoremap <leader><cr> i<CR><ESC>
 
 " Make Y consistent with C and D
 nnoremap Y y$
@@ -1216,8 +1219,6 @@ set splitbelow
 
 -- [[ TODO ]]
 -- - set up formatting and linting, with null-ls.nvim?
--- - set up chatgpt integration?
--- - learn about nvim treesitter textobjects
 -- - setup tmux navigator plugins
 -- - install ccc.nvim
 -- - rewrite all vimscript stuff to lua?
