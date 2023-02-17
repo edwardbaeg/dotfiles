@@ -90,6 +90,7 @@ require('lazy').setup({ -- lazystart
       require('lspsaga').setup({
         lightbulb = {
           sign = false, -- don't show in sign column
+          enable_in_insert = false, -- don't show to fix ocnflict with codeium
         },
         symbol_in_winbar = {
           enable = false,
@@ -218,7 +219,7 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- Autocompletion
+  { -- Autocomplete menu, snippets, and AI completion
     'hrsh7th/nvim-cmp',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
@@ -227,6 +228,10 @@ require('lazy').setup({ -- lazystart
       'saadparwaiz1/cmp_luasnip',
       'rafamadriz/friendly-snippets', -- vscode like snippets
       'onsails/lspkind.nvim', -- pictograms for completion items
+      {
+        'tzachar/cmp-tabnine', -- AI powered completion
+        build = './install.sh',
+      },
     },
     config = function ()
       local cmp = require 'cmp'
@@ -243,7 +248,6 @@ require('lazy').setup({ -- lazystart
       }
 
       local has_words_before = function()
-        unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
@@ -313,9 +317,9 @@ require('lazy').setup({ -- lazystart
             end
           end, { 'i', 's' }),
         },
-        sources = {
-          { name = 'nvim_lsp', max_item_count = 5 },
+        sources = { -- this also sets priority
           { name = 'luasnip', max_item_count = 5 },
+          { name = 'nvim_lsp', max_item_count = 5 },
           { name = 'cmp_tabnine', max_item_count = 5 },
         },
       }
@@ -324,13 +328,13 @@ require('lazy').setup({ -- lazystart
         completion = { keyword_length = 2, },
         mapping = cmp.mapping.preset.cmdline({ -- TODO: disable <c-n/p> when nothing is selected
           ['<C-l>'] = cmp.mapping.abort(), -- this doesn't work...
-          ['<c-p>'] = cmp.mapping.close(), -- this doesn't work...
-          ['<c-n>'] = cmp.mapping.close(), -- this doesn't work...
+          ['<c-p>'] = cmp.mapping.close(),
+          ['<c-n>'] = cmp.mapping.close(),
         }),
         sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline', max_item_count = 10 } })
       })
 
-      cmp.setup.cmdline({ '/', '?' }, { -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline({ '/', '?' }, { -- idk what this does
         mapping = cmp.mapping.preset.cmdline(),
         sources = { { name = 'buffer' } },
       })
@@ -367,6 +371,11 @@ require('lazy').setup({ -- lazystart
       luasnip.filetype_extend("typescript", { "javascript" }) -- also use javascript snippets in typescript
 
       require('luasnip.loaders.from_vscode').lazy_load() -- add vscode like snippets, from friendly snippets?
+
+      local tabnine = require('cmp_tabnine.config')
+      tabnine:setup({
+        show_prediction_strength = true,
+      })
     end
   },
 
@@ -509,12 +518,34 @@ require('lazy').setup({ -- lazystart
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
+    cmd = 'Telescope',
     dependencies = {
       'nvim-lua/plenary.nvim', -- library of async functons
       'nvim-telescope/telescope-ui-select.nvim', -- replace nvim's ui select with telescope
       'debugloop/telescope-undo.nvim', -- visually shows undo history
       'nvim-telescope/telescope-fzf-native.nvim', -- c port of fzf
+      'tsakirist/telescope-lazy.nvim', -- for navigating plugins installed by lazy.nvim
     },
+    init = function ()
+      vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<cr>')
+
+      vim.keymap.set('n', '<c-p>', '<cmd>Telescope find_files<cr>')
+      vim.keymap.set('n', '<c-b>', '<cmd>Telescope buffers<cr>')
+      vim.keymap.set('n', '<c-l>', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
+      vim.keymap.set('n', '<c-h>', '<cmd>Telescope help_tags<cr>')
+      vim.keymap.set('n', '<c-g>', '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
+      vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
+
+      vim.keymap.set('n', '<leader>fd', '<cmd>Telescope<cr>', { desc = '[f]uzzy [f]ind'})
+      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope<cr>', { desc = '[f]uzzy [f]ind'})
+      vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = '[f]uzzy [h]help'})
+      vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = '[f]uzzy [k]eymaps'})
+      vim.keymap.set('n', '<leader>fc', '<cmd>Telescope commands<cr>', { desc = '[f]uzzy [c]ommands'})
+      vim.keymap.set('n', '<leader>fi', '<cmd>Telescope highlights<cr>', { desc = '[f]uzzy h[i]ghlights'})
+      vim.keymap.set('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', { desc = '[f]uzzy [o]ldfiles'})
+      vim.keymap.set('n', '<leader>fs', '<cmd>Telescope spell_suggest<cr>', { desc = '[f]uzzy [s]pell_suggest' })
+      vim.keymap.set('n', '<leader>ss', '<cmd>Telescope spell_suggest<cr>', { desc = 'fuzzy [s]pell_[s]uggest' })
+    end,
     config = function ()
       require('telescope').setup {
         defaults = {
@@ -552,13 +583,13 @@ require('lazy').setup({ -- lazystart
           },
         },
       }
-      -- require('telescope').load_extension('ui-select')
+      require('telescope').load_extension('ui-select')
       require('telescope').load_extension('undo')
+      require('telescope').load_extension('lazy')
 
-      vim.keymap.set('n', '<leader>fu', '<cmd>Telescope undo<cr>')
-
-      -- custom picker that greps the word under the cursor
+      -- custom picker that greps the word under the cursor (cword)
       -- https://github.com/nvim-telescope/telescope.nvim/issues/1766#issuecomment-1150437074
+      vim.keymap.set('n', '<leader>*', '<cmd>lua live_grep_cword()<cr>')
       _G.live_grep_cword = function()
         local cword = vim.fn.expand("<cword>")
         require("telescope.builtin").live_grep({
@@ -580,25 +611,6 @@ require('lazy').setup({ -- lazystart
           } or nil,
         })
       end
-      vim.keymap.set('n', '<leader>*', '<cmd>lua live_grep_cword()<cr>')
-
-      vim.keymap.set('n', '<c-p>', '<cmd>Telescope find_files<cr>')
-      vim.keymap.set('n', '<c-b>', '<cmd>Telescope buffers<cr>')
-      vim.keymap.set('n', '<c-l>', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
-      vim.keymap.set('n', '<c-h>', '<cmd>Telescope help_tags<cr>')
-      vim.keymap.set('n', '<c-g>', '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
-      vim.keymap.set('n', '<c-t>', '<cmd>Telescope<cr>')
-
-      vim.keymap.set('n', '<leader>fd', '<cmd>Telescope<cr>', { desc = '[f]uzzy [f]ind'})
-      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope<cr>', { desc = '[f]uzzy [f]ind'})
-      vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = '[f]uzzy [h]help'})
-      vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = '[f]uzzy [k]eymaps'})
-      vim.keymap.set('n', '<leader>fc', '<cmd>Telescope commands<cr>', { desc = '[f]uzzy [c]ommands'})
-      vim.keymap.set('n', '<leader>fi', '<cmd>Telescope highlights<cr>', { desc = '[f]uzzy h[i]ghlights'})
-      vim.keymap.set('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', { desc = '[f]uzzy [o]ldfiles'})
-      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-      vim.keymap.set('n', '<leader>fs', '<cmd>Telescope spell_suggest<cr>', { desc = '[f]uzzy [s]pell_suggest' })
-      vim.keymap.set('n', '<leader>ss', '<cmd>Telescope spell_suggest<cr>', { desc = 'fuzzy [s]pell_[s]uggest' })
     end
   },
 
@@ -613,7 +625,11 @@ require('lazy').setup({ -- lazystart
 
   { -- visually shows treesitter data
     'nvim-treesitter/playground',
+    cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
     config = function ()
+      require('nvim-treesitter.configs').setup ({})
+    end,
+    init = function ()
       vim.keymap.set('n', '<leader>ph', ':TSHighlightCapturesUnderCursor<CR>', { desc= '[P]layground[H]ighlightCapturesunderCursor' })
       vim.keymap.set('n', '<leader>pt', ':TSPlaygroundToggle<CR>', { desc= '[P]layground[T]oggle' })
     end
@@ -944,19 +960,6 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  -- TODO: move to cmp stuffs
-  { -- ai powered autocompletion
-    'tzachar/cmp-tabnine',
-    build = './install.sh',
-    dependencies = { 'hrsh7th/nvim-cmp' },
-    config = function ()
-      local tabnine = require('cmp_tabnine.config')
-      tabnine:setup({
-        show_prediction_strength = true,
-      })
-    end
-  },
-
   { -- use multiple virtual lines to show diagnostics
     'Maan2003/lsp_lines.nvim',
     enabled = false, -- it's a bit noisy
@@ -1005,6 +1008,19 @@ require('lazy').setup({ -- lazystart
   },
 
   'gabebw/vim-github-link-opener', -- opens 'foo/bar' in github
+
+  { -- split or join blocks of code using treesitter
+    'Wansmer/treesj',
+    cmd = 'TSJToggle',
+    config = function ()
+      require('treesj').setup ({
+        use_default_keymaps = false,
+      })
+    end,
+    init = function ()
+      vim.keymap.set('n', '<leader>sj', ':TSJToggle<CR>', { desc = '[S]plit/[J]oin' })
+    end
+  },
 }) -- lazyend
 
 -- [[Vim Options]]
