@@ -15,12 +15,14 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: set leader before lazy.nvim so mappings are correct
 vim.g.mapleader = ' ' -- Set <space> as the leader key
 vim.g.maplocalleader = ' '
-vim.o.termguicolors = true -- needs to be set before colorizer plugin
+vim.o.termguicolors = true -- needs to be set before colorizer plugins
 
 require('lazy').setup({ -- lazystart
   { -- colorscheme
     'catppuccin/nvim',
     name = 'catppuccin',
+    lazy = false, -- load main colorscheme during startup
+    priority = 1000, -- load before other start plugins
     config = function ()
       require('catppuccin').setup({
         flavour = 'frappe',
@@ -36,10 +38,9 @@ require('lazy').setup({ -- lazystart
 
   { -- colorscheme
     'navarasu/onedark.nvim',
+    enabled = false,
     config = function ()
       require('onedark').setup {
-        lazy = false, -- load main colorscheme during startup
-        priority = 1000, -- load before other start plugins
         style = 'cool', -- https://github.com/navarasu/onedark.nvim#themes
         toggle_style_key = '<leader>ts', -- cycle through all styles
         transparent = true, -- remove background
@@ -60,6 +61,7 @@ require('lazy').setup({ -- lazystart
 
   { -- colorscheme
     'folke/tokyonight.nvim',
+    enabled = false,
     config = function ()
       require("tokyonight").setup({
         transparent = true -- don't set a background color
@@ -74,16 +76,16 @@ require('lazy').setup({ -- lazystart
       'williamboman/mason.nvim', -- package manager for external editor tools (LSP, DAP, linters, formatters)
       'williamboman/mason-lspconfig.nvim', -- Automatically install LSPs
       'glepnir/lspsaga.nvim', -- pretty lsp ui
-      'j-hui/fidget.nvim', -- Useful status updates for LSP
-      'folke/neodev.nvim', -- Additional lua configuration, makes nvim stuff amazing
+      'j-hui/fidget.nvim', -- small nvim-lsp progress ui
+      'folke/neodev.nvim', -- automatically configures lua-language-server for vim/neovim
 
       'jose-elias-alvarez/null-ls.nvim', -- set up formatters and linters
-      'jay-babu/mason-null-ls.nvim', -- automatically install lintes and formatters
+      'jay-babu/mason-null-ls.nvim', -- automatically install linters and formatters
       'nvim-tree/nvim-web-devicons',
     },
     config = function ()
-      require('neodev').setup()
       require('fidget').setup()
+      require('neodev').setup() -- IMPORTANT: setup BEFORE lspconfig -- doesn't work? should show hover for stuff like vim.api.nvim_create_augroup
 
       require('lspsaga').setup({
         lightbulb = {
@@ -121,7 +123,7 @@ require('lazy').setup({ -- lazystart
       --  This function gets run when an LSP connects to a particular buffer.
       -- TODO
       -- - remove code action to switch parameters?
-      -- - remove hunk code actions
+      -- - remove hunk / blame code actions, from gitsigns?
       local on_attach = function(_, bufnr)
         local nmap = function(keys, func, desc)
           if desc then
@@ -169,7 +171,7 @@ require('lazy').setup({ -- lazystart
             telemetry = { enable = false },
             diagnostics = {
               globals = {"vim"}
-            }
+            },
           },
         },
       }
@@ -438,6 +440,7 @@ require('lazy').setup({ -- lazystart
     end
   },
 
+  -- TODO: move to above?
   { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     dependencies = { 'nvim-treesitter' },
@@ -445,7 +448,7 @@ require('lazy').setup({ -- lazystart
 
   'tpope/vim-fugitive', -- add git commands
   'tpope/vim-rhubarb', -- add GBrowse
-  { -- visual git indicators
+  { -- git actions and visual git signs
     'lewis6991/gitsigns.nvim',
     config = function ()
       require('gitsigns').setup {
@@ -458,11 +461,11 @@ require('lazy').setup({ -- lazystart
       }
 
       -- these highlight groups need to be loaded async?
-      vim.defer_fn(function ()
+      -- vim.defer_fn(function ()
         vim.api.nvim_set_hl(0, 'GitSignsAdd', { fg = '#009900' })
         vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = '#bbbb00' })
         -- vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#ff2222' })
-      end, 0)
+      -- end, 0)
     end
   },
 
@@ -598,6 +601,7 @@ require('lazy').setup({ -- lazystart
       vim.keymap.set('n', '<leader>fo', '<cmd>Telescope oldfiles<cr>', { desc = '[f]uzzy [o]ldfiles'})
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
       vim.keymap.set('n', '<leader>fs', '<cmd>Telescope spell_suggest<cr>', { desc = '[f]uzzy [s]pell_suggest' })
+      vim.keymap.set('n', '<leader>ss', '<cmd>Telescope spell_suggest<cr>', { desc = 'fuzzy [s]pell_[s]uggest' })
     end
   },
 
@@ -618,7 +622,7 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- note: doesn't automatically pad brackets
+  { -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening
     "windwp/nvim-autopairs",
     config = true
   },
@@ -707,6 +711,7 @@ require('lazy').setup({ -- lazystart
   },
 
   'christoomey/vim-sort-motion', -- add sort operator
+
   { -- add motions for substituting text
     'gbprod/substitute.nvim',
     config = function ()
@@ -765,9 +770,8 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- adds surround motion, but I just want the operator ib / ab
+  { -- this adds surround motions, but disable those and just use the ib / ab operators
     'machakann/vim-sandwich',
-    -- enabled = false,
     init = function ()
       vim.cmd[[
         let g:sandwich_no_default_key_mappings = 1 " disable vim-sandwich bindings, we just want the textobjects
@@ -804,58 +808,8 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- adds a bunch of ui elements. I only like the search overlay...
-    'folke/noice.nvim',
-    enabled = false, -- it's too noisy
-    dependencies = {
-      "MunifTanim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-    },
-    config = function ()
-      require("noice").setup({
-        -- lsp = {
-        --   -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-        --   override = {
-        --     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        --     ["vim.lsp.util.stylize_markdown"] = true,
-        --     ["cmp.entry.get_documentation"] = true,
-        --   },
-        -- },
-        -- -- you can enable a preset for easier configuration
-        -- presets = {
-        --   bottom_search = true, -- use a classic bottom cmdline for search
-        --   -- command_palette = true, -- position the cmdline and popupmenu together
-        --   -- long_message_to_split = true, -- long messages will be sent to a split
-        --   -- inc_rename = false, -- enables an input dialog for inc-rename.nvim
-        --   -- lsp_doc_border = false, -- add a border to hover docs and signature help
-        -- },
-        cmdline = {
-          enabled = false,
-          view = 'cmdline'
-        }
-      })
-      require('notify').setup {
-        background_colour = '#000000'
-      }
-    end,
-  },
-
-  { -- jump targets
-    'ggandor/leap.nvim',
-    enabled = false, -- vim motions ftw
-    config = function ()
-      require('leap').setup {}
-      vim.keymap.set('n', '<leader>j', "<Plug>(leap-forward-to)")
-      vim.keymap.set('n', '<leader>k', "<Plug>(leap-backward-to)")
-    end
-  },
-
   { -- show search information in virtual text
     'kevinhwang91/nvim-hlslens',
-    -- enabled = false,
     config = function ()
       -- require('scrollbar.handlers.search').setup({}) -- integrate with scrollbar... this doesn't work!!!
       require('hlslens').setup({
@@ -880,24 +834,11 @@ require('lazy').setup({ -- lazystart
     -- enabled = false,
     config = function ()
       require('neoscroll').setup({
-        mappings = {}, -- do not set default mappings
+        mappings = {}, -- do not set default mappings... only use for <c-d/u>
         easing_function = 'sine',
-        -- pre_hook = function()
-        --   vim.opt.eventignore:append({
-        --     'WinScrolled',
-        --     'CursorMoved',
-        --   })
-        -- end,
-        -- post_hook = function()
-        --   vim.opt.eventignore:remove({
-        --     'WinScrolled',
-        --     'CursorMoved',
-        --   })
-        -- end,
       })
 
-      -- sped up the animation time.
-      -- https://github.com/karb94/neoscroll.nvim/pull/68
+      -- speed up the animation time https://github.com/karb94/neoscroll.nvim/pull/68
       local t = {}
       -- Syntax: t[keys] = {function, {function arguments}}
       t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '100'}}
@@ -940,7 +881,7 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- show/hide persistent terminal
+  { -- toggle persistent terminal
     'akinsho/toggleterm.nvim',
     config = function ()
       require('toggleterm').setup {
@@ -1024,30 +965,27 @@ require('lazy').setup({ -- lazystart
     enabled = false, -- it's a bit noisy
   },
 
+  'tpope/vim-eunuch', -- adds unix shell commands to vim, eg :Move, :Mkdir
   { -- adds icons to netrw
     'prichrd/netrw.nvim',
     config = true,
   },
 
-  'tpope/vim-eunuch', -- adds unix shell commands to vim, eg :Move, :Mkdir
-
   { -- color f/t targets
     'unblevable/quick-scope',
     init = function ()
-      vim.cmd([[ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] ]])
+      vim.cmd([[ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] ]]) -- only show after f/t
     end
   },
 
-  { -- interactive scratchpad
+  { -- live scratchpad
     'metakirby5/codi.vim',
     init = function ()
-      vim.cmd([[
-        " g:codi#rightalign=1
-      ]])
+      vim.cmd([[ let g:codi#rightalign=1 ]])
     end
   },
 
-  { -- align text by delimiter
+  { -- align text by delimiters
     'junegunn/vim-easy-align',
     init = function ()
       vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)')
@@ -1055,7 +993,7 @@ require('lazy').setup({ -- lazystart
     end
   },
 
-  { -- free AI code autocompletion
+  { -- AI code autocompletion
     'Exafunction/codeium.vim',
     init = function ()
       vim.g.codeium_disable_bindings = 1 -- turn off tab and defualts
@@ -1065,9 +1003,11 @@ require('lazy').setup({ -- lazystart
       vim.keymap.set('i', '<C-l>', function () return vim.fn['codeium#Accept']() end, { expr = true }) -- there isn't a plug command for this yet
       vim.keymap.set('i', '<C-j>', '<Plug>(codeium-next)')
       vim.keymap.set('i', '<C-k>', '<Plug>(codeium-previous)')
-      vim.keymap.set({ 'i', 'n' }, '<c-x>', '<Plug>(codeium-dismiss)')
+      vim.keymap.set({ 'i', 'n' }, '<c-h>', '<Plug>(codeium-dismiss)')
     end
   },
+
+  'gabebw/vim-github-link-opener', -- opens 'foo/bar' in github
 }) -- lazyend
 
 -- [[Vim Options]]
@@ -1093,6 +1033,7 @@ vim.o.undodir = vim.fn.expand('~/.vim/undo') -- set save directory. This must ex
 -- vim.o.foldcolumn = '2' -- show fold nesting
 -- vim.cmd([[set foldopen-=block]]) -- don't open folds with block {} motions
 
+-- [[ Smart clipboard ]]
 vim.cmd([[
   if has("win32")
     echo "is this windows?"
@@ -1132,7 +1073,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
-vim.keymap.set('n', '<c-f>', 'za')
+vim.keymap.set('n', '<c-f>', 'za') -- toggle folds
 
 -- remap netrw keymaps
 vim.api.nvim_create_autocmd('filetype', {
@@ -1160,24 +1101,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
--- [[ Open github shorthand ]]
--- TODO: try to extend to replace `gx` https://github.com/gabebw/vim-github-link-opener/blob/main/plugin/github_link_opener.vim
--- local function maybeOpenGithub ()
---   local word = vim.fn.expand('<cWORD>')
---   local pattern = '[%w-]+/[%w-.]+' -- local path = string.match(word, pattern)
---   local path = word:match(pattern)
---
---   local valid = path and select(2, word:gsub('/','')) == 1
---
---   if valid then
---     vim.fn['netrw#BrowseX']('https://github.com/' .. path, 0)
---   else
---     print('not a valid github path')
---     -- vim.fn['netrw#BrowseX'](word, 0) -- doesn't seem to work
---   end
--- end
--- vim.keymap.set('n', 'gh', maybeOpenGithub)
 
 -- [[ Highlights ]]
 vim.api.nvim_set_hl(0, 'NormalFloat', { bg='#1c1c1c' }) -- set background color of floating windows; plugins: telescope, which-key
@@ -1236,10 +1159,6 @@ nnoremap g# g#zz
 noremap <S-h> ^
 noremap <S-l> $
 
-" Line wrap navigation
-nnoremap j gj
-nnoremap k gk
-
 " Quick edit configs
 nnoremap <leader>ev :edit $MYVIMRC<cr>
 nnoremap <leader>et :edit ~/.tmux.conf<cr>
@@ -1250,7 +1169,7 @@ nnoremap <leader>eh :edit ~/.hammerspoon/init.lua<cr>
 " nnoremap K i<CR><ESC>
 nnoremap <leader><cr> i<CR><ESC>
 
-" Make Y consistent with C and D
+" Make Y consistent with C and D, until EOL
 nnoremap Y y$
 
 " Visual select previously pasted text
@@ -1275,8 +1194,8 @@ endfunction
 set spelllang=en
 set spellsuggest=best,9
 
-set splitright
-set splitbelow
+set splitright " open splits on the right
+set splitbelow " open splits on the bottom
 ]])
 
 -- [[ TODO ]]
@@ -1286,16 +1205,17 @@ set splitbelow
 -- - treesj
 -- - move to next git change, using gitsigns?
 -- - rewrite all vimscript stuff to lua?
+-- - fix showing git stuff (lua line and vim fugitive) for lua line (but it works for gitsigns?)
 
 -- Usability Notes
 -- Buffers/Splits/Windows
 --  - move window: `<c-w>HJKL`
 --  - move buffer to split where # is the buffer id, :buffers: :vert sb#
 -- Find and replace
---  - when in a visual bloc, omit the `%`:<'>'/s
+--  - when in a visual block, omit the `%`:<'>'/s
 -- Motions
 --  - % - jump to matching bracket
---  - {} - jump to empty lines(?)
+--  - {} - jump to empty lines
 -- Files
 --  - do :e to reload a file from external changes
 -- commands
