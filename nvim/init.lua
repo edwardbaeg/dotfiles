@@ -85,7 +85,7 @@ require('lazy').setup({ -- lazystart
     },
     config = function ()
       require('fidget').setup()
-      require('neodev').setup() -- IMPORTANT: setup BEFORE lspconfig -- doesn't work? should show hover for stuff like vim.api.nvim_create_augroup
+      require('neodev').setup() -- IMPORTANT: setup BEFORE lspconfig; NOTE: this does not work if it's a symlink!
 
       require('lspsaga').setup({
         lightbulb = {
@@ -169,9 +169,6 @@ require('lazy').setup({ -- lazystart
           Lua = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
-            diagnostics = {
-              globals = {"vim"}
-            },
           },
         },
       }

@@ -4,9 +4,9 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Symlinks files or folders
-#  $1 source path (eg `./vim/init.vim`)
-#  $2 destination path (eg `~/.config/nvim/init.vim`)
-#  $3 app name (eg vim)
+#  $1 source path (eg `./vim/init.lua`)
+#  $2 destination path (eg `~/.config/nvim/init.lua`)
+#  $3 app name (eg vim) - optional
 #  returns 0
 function symlink_file_or_folder () {
   SOURCE_PATH=$1
@@ -39,16 +39,12 @@ function symlink_file_or_folder () {
   return 0
 }
 
-# TODO: 
+ln "$DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua" 
+
 symlink_file_or_folder \
   "$DIR/hammerspoon/init.lua" \
   "$HOME/.hammerspoon/init.lua" \
   Hammerspoon
-
-symlink_file_or_folder \
-  "$DIR/nvim/init.lua" \
-  "$HOME/.config/nvim/init.lua" \
-  nvim
 
 symlink_file_or_folder \
   "$DIR/neofetch/config.conf" \
