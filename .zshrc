@@ -47,10 +47,10 @@ setopt appendhistory
 # Configure completions with zsh from `brew zsh-completions`
 # This must be called before compinit and oh-my-zsh.sh
 if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
-  autoload -Uz compinit
-  compinit
+    autoload -Uz compinit
+    compinit
 fi
 
 # Add homebrew's sbin to path
@@ -77,34 +77,33 @@ source "${HOME}/.zgen/zgen.zsh"
 # If the init script doesn't exist
 if ! zgen saved; then
 
-  # load oh-my-zsh first
-  zgen oh-my-zsh
+    # load oh-my-zsh first
+    zgen oh-my-zsh
 
-  zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/vi-mode
-  zgen oh-my-zsh plugins/colored-man-pages
-  zgen oh-my-zsh plugins/tmux
+    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/vi-mode
+    zgen oh-my-zsh plugins/colored-man-pages
+    zgen oh-my-zsh plugins/tmux
 
-  # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
-  zgen load zdharma-continuum/fast-syntax-highlighting
-  zgen load zsh-users/zsh-autosuggestions
-  # zgen load agkozak/zsh-z # directory jumper
-  # zgen load changyuheng/fz # add fuzzy search for z
-  # zgen load marlonrichert/zsh-autocomplete
+    # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
+    zgen load zdharma-continuum/fast-syntax-highlighting
+    zgen load zsh-users/zsh-autosuggestions
+    # zgen load agkozak/zsh-z # directory jumper
+    # zgen load changyuheng/fz # add fuzzy search for z
 
-  # zgen oh-my-zsh themes/sorin
-  zgen load romkatv/powerlevel10k powerlevel10k
-  # zgen load paulirish/git-open
+    # zgen oh-my-zsh themes/sorin
+    zgen load romkatv/powerlevel10k powerlevel10k
+    # zgen load paulirish/git-open
 
-  # generate the init script from plugins above
-  zgen save
+    # generate the init script from plugins above
+    zgen save
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # -- Aliases -------------------------------------------------------------------
@@ -191,11 +190,11 @@ alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 # conditional command aliases
 if command -v exa &> /dev/null
 then
-  alias ls="exa"
+    alias ls="exa"
 fi
 if command -v bat &> /dev/null
 then
-  alias cat="bat"
+    alias cat="bat"
 fi
 
 alias serv="python3 -m http.server"
@@ -217,38 +216,57 @@ alias hsr="hs -c \"hs.reload()\""
 # -- Functions -----------------------------------------------------------------
 
 function sshbb () {
-  ssh pi@192.168.1.4 "$@"
+    ssh pi@192.168.1.4 "$@"
 }
 
 function cs () {
-  cd "$1" && exa;
+    cd "$1" && exa;
 }
 
 function mkcd () {
-  mkdir -p -- "$1" &&
+    mkdir -p -- "$1" &&
     cd -P -- "$1"
 }
 
 # fuzzy search git branches
 function gcof () {
-  local branches branch
-  branches=$(git --no-pager branch -vv) &&
-  branch=$(echo "$branches" | fzf +m) &&
-  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+    local branches branch
+    branches=$(git --no-pager branch -vv) &&
+    branch=$(echo "$branches" | fzf +m) &&
+    git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
 # Install and then delete ergodox configuration
 function wcli () {
-  wally-cli "$1" &&
+    wally-cli "$1" &&
     rm "$1"
 }
 
+# alias for npm leaves to list globally installed packages
 function npm () {
-  if [[ $@ == "leaves" ]]; then
-    command npm -g ls --depth=0
-  else
-    command npm "$@"
-  fi
+    if [[ $@ == "leaves" ]]; then
+        command npm -g ls --depth=0
+    else
+        command npm "$@"
+    fi
+}
+
+# to create cht.sh curl commands
+function ch() {
+    local query
+
+    if [[ $# -eq 1 ]]; then
+        query=$1
+
+        echo "cht.sh/${query}"
+        curl "cht.sh/${query}"
+    else
+        local token=$(echo "$1" | cut -d' ' -f1)
+        query=$(echo "$*" | cut -d' ' -f2- | sed 's/ /+/g')
+
+        echo "cht.sh/$token/$query"
+        curl "cht.sh/$token/$query"
+    fi
 }
 
 # No args: `git status`; with args: `git `
@@ -265,7 +283,7 @@ function npm () {
 # source /opt/homebrew/opt/asdf/libexec/asdf.sh
 #
 # export KERL_CONFIGURE_OPTIONS="--with-ssl=`brew --prefix openssl` \
-#   --without-javac"
+    #   --without-javac"
 #
 # # -- Aliases
 # alias mixx="mix deps.get && mix ecto.migrate && mix phx.server"
@@ -308,4 +326,3 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore'
 # p10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
