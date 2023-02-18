@@ -97,7 +97,7 @@ require("lazy").setup({ -- lazystart
 					color_mode = false,
 					separator = "  ",
 				},
-				ui = { -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",
+				ui = {
 					preview = " ",
 					code_action = "⚡", -- "💡",
 					hover = " ",
@@ -105,7 +105,8 @@ require("lazy").setup({ -- lazystart
 			})
 
 			local keymap = vim.keymap.set
-			keymap("n", "gh", "<cmd>Lspsaga lsp_finder<cr>")
+			-- keymap("n", "gh", "<cmd>Lspsaga lsp_finder<cr>")
+			keymap("n", "gl", "<cmd>Lspsaga lsp_finder<cr>")
 			keymap("n", "ch", "<cmd>Lspsaga lsp_finder<cr>")
 			keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>")
 			keymap("n", "cr", "<cmd>Lspsaga rename<cr>")
@@ -153,9 +154,9 @@ require("lazy").setup({ -- lazystart
 				nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 				nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
 				nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-				nmap("<leader>wl", function()
-					print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-				end, "[W]orkspace [L]ist Folders")
+				-- nmap("<leader>wl", function()
+				-- 	print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+				-- end, "[W]orkspace [L]ist Folders")
 
 				-- Create a command `:Format` local to the LSP buffer
 				vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
@@ -196,7 +197,7 @@ require("lazy").setup({ -- lazystart
 
 			-- Set up formatting
 			require("mason-null-ls").setup({
-				ensure_installed = { "prettier", "stylua" },
+				ensure_installed = { "prettier", "stylua", "beautysh" },
 			})
 
 			local null_ls = require("null-ls")
@@ -205,6 +206,7 @@ require("lazy").setup({ -- lazystart
 				sources = {
 					null_ls.builtins.formatting.prettier,
 					null_ls.builtins.formatting.stylua,
+					null_ls.builtins.formatting.beautysh,
 				},
 				on_attach = function(client, bufnr) -- format on save
 					if client.supports_method("textDocument/formatting") then
@@ -495,6 +497,9 @@ require("lazy").setup({ -- lazystart
 				},
 			})
 
+			vim.keymap.set("n", "gh", ":Gitsigns next_hunk<cr>")
+			vim.keymap.set("n", "gH", ":Gitsigns prev_hunk<cr>")
+
 			-- these highlight groups need to be loaded async?
 			-- vim.defer_fn(function ()
 			vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#009900" })
@@ -566,6 +571,7 @@ require("lazy").setup({ -- lazystart
 
 			vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>")
 			vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>")
+			vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
 			vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
 			vim.keymap.set("n", "<c-h>", "<cmd>Telescope help_tags<cr>")
 			vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
@@ -588,6 +594,9 @@ require("lazy").setup({ -- lazystart
 						i = {
 							["<C-u>"] = false,
 							["<C-d>"] = false,
+						},
+						n = {
+							["<c-c>"] = require("telescope.actions").close,
 						},
 					},
 					layout_strategy = "flex",
@@ -1178,6 +1187,17 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 vim.keymap.set("n", "<c-f>", "za") -- toggle folds
+
+-- emacs style
+vim.keymap.set("n", "<leader>bn", ":bn<cr>")
+vim.keymap.set("n", "<leader>bp", ":bp<cr>")
+vim.keymap.set("n", "<leader>bd", ":bd<cr>")
+vim.api.nvim_set_keymap("n", "<leader>wk", "<c-w>k", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>wh", "<c-w>h", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>wl", "<c-w>l", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>wj", "<c-w>j", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>ww", "<c-w>w", { silent = true })
+vim.api.nvim_set_keymap("n", "<leader>wc", "<c-w>c", { silent = true })
 
 -- remap netrw keymaps
 vim.api.nvim_create_autocmd("filetype", {
