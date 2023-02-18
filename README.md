@@ -37,6 +37,7 @@ Configuration: [init.vim](nvim/init.lua)
 - `ranger` visual file manager
 - `ripgrep` better grep (and faster than ag)
 - `tmux` terminal multiplexer
+- `zoxide` directory jumper
 - `zsh-completions` command line autocompletions
 
 **Multiplexer**: `tmux`

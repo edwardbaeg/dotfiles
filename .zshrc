@@ -63,6 +63,9 @@ export LESS="$LESS -FRXK"
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# setup zoxide completions. must be called after compinit
+eval "$(zoxide init zsh)"
+
 # -- Plugins -------------------------------------------------------------------
 
 # https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
@@ -78,16 +81,16 @@ if ! zgen saved; then
   zgen oh-my-zsh
 
   zgen oh-my-zsh plugins/git
-  # zgen oh-my-zsh plugins/z
   zgen oh-my-zsh plugins/vi-mode
   zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/tmux
 
   # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
-  zgen load changyuheng/fz
   zgen load zdharma-continuum/fast-syntax-highlighting
   zgen load zsh-users/zsh-autosuggestions
-  zgen load agkozak/zsh-z
+  # zgen load agkozak/zsh-z # directory jumper
+  # zgen load changyuheng/fz # add fuzzy search for z
+  # zgen load marlonrichert/zsh-autocomplete
 
   # zgen oh-my-zsh themes/sorin
   zgen load romkatv/powerlevel10k powerlevel10k
@@ -116,6 +119,7 @@ alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 
+# open files in vim
 alias vz="vim ~/.zshrc"
 alias vv="vim ~/.vimrc"
 alias nv="nvim ~/.config/nvim/init.lua"
@@ -123,9 +127,10 @@ alias ev="nvim ~/.config/nvim/init.lua"
 alias vt="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
 
-# telescope
+# open vim with functions
 alias vp="nvim -c \"Telescope find_files\""
 alias vg="nvim -c \"Telescope live_grep\""
+alias vsc="nvim -c \"SessionManager load_current_dir_session\""
 
 # -- Sourcing
 alias st="tmux source-file ~/.tmux.conf"
@@ -136,7 +141,6 @@ alias gdt="git difftool"
 alias ghist="git hist"
 alias ghista="git hista"
 alias ghistb="git histb"
-alias gpo="git push && git open"
 alias gmm="git merge master"
 alias gfl="git fetch && git pull"
 alias gdm="git diff master"
@@ -144,7 +148,6 @@ alias gdo="git diff origin"
 alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
-alias ogh="open https://github.com/edwardbaeg"
 
 # from zsh git-open plugin
 alias go="git open"
@@ -176,7 +179,7 @@ alias ns="npm start"
 # alias tree="exa -T"
 alias oldcat="/bin/cat"
 # alias cat="bat"
-alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+# alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 # alias ls="exa"
 alias oldls="/bin/ls"
 alias lg="lazygit"
