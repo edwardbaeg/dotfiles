@@ -1,4 +1,4 @@
--- Boostrap lazy.nvim
+-- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -90,7 +90,7 @@ require("lazy").setup({ -- lazystart
 			require("lspsaga").setup({
 				lightbulb = {
 					sign = false, -- don't show in sign column
-					enable_in_insert = false, -- don't show to fix ocnflict with codeium
+					enable_in_insert = false, -- don't show to fix conflict with codeium
 				},
 				symbol_in_winbar = {
 					enable = false,
@@ -166,7 +166,6 @@ require("lazy").setup({ -- lazystart
 
 			-- Set up LSP servers
 			require("mason").setup()
-			local mason_lspconfig = require("mason-lspconfig")
 			local language_servers = {
 				tsserver = {},
 				lua_ls = {
@@ -177,11 +176,12 @@ require("lazy").setup({ -- lazystart
 				},
 			}
 
+			local mason_lspconfig = require("mason-lspconfig")
 			mason_lspconfig.setup({
 				ensure_installed = vim.tbl_keys(language_servers),
 			})
 
-			-- broadcast nvim-cmp copletion capabilities to servers
+			-- broadcast nvim-cmp completion capabilities to servers
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
@@ -443,9 +443,9 @@ require("lazy").setup({ -- lazystart
 							-- ['aa'] = '@parameter.outer',
 							-- ['ia'] = '@parameter.inner',
 							["af"] = "@function.outer",
-							-- ['if'] = '@function.inner',
-							-- ['ac'] = '@class.outer',
-							-- ['ic'] = '@class.inner',
+							["if"] = "@function.inner",
+							["ac"] = "@class.outer",
+							["ic"] = "@class.inner",
 						},
 					},
 					move = {
@@ -560,7 +560,7 @@ require("lazy").setup({ -- lazystart
 		branch = "0.1.x",
 		cmd = "Telescope",
 		dependencies = {
-			"nvim-lua/plenary.nvim", -- library of async functons
+			"nvim-lua/plenary.nvim", -- library of async functions
 			"nvim-telescope/telescope-ui-select.nvim", -- replace nvim's ui select with telescope
 			"debugloop/telescope-undo.nvim", -- visually shows undo history
 			"nvim-telescope/telescope-fzf-native.nvim", -- c port of fzf
@@ -615,6 +615,9 @@ require("lazy").setup({ -- lazystart
 					},
 					find_files = {
 						hidden = true,
+					},
+					spell_suggest = {
+						theme = "dropdown",
 					},
 				},
 				extensions = {
@@ -747,7 +750,7 @@ require("lazy").setup({ -- lazystart
 					modified_icon = "+",
 				},
 				highlights = {
-					fill = { -- the backgruond of the whole bar
+					fill = { -- the background of the whole bar
 						bg = background_color,
 					},
 					background = { -- for background "tabs"
@@ -784,7 +787,7 @@ require("lazy").setup({ -- lazystart
 			vim.keymap.set("n", "S", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
 			vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
-			-- add exchange operator, invoke twice, cancle with <esc>
+			-- add exchange operator, invoke twice, cancel with <esc>
 			vim.keymap.set("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
 			vim.keymap.set("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
 			vim.keymap.set("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
@@ -809,7 +812,7 @@ require("lazy").setup({ -- lazystart
 	{ -- adds motions for surrounding
 		"kylechui/nvim-surround", -- I would like to use mini.surround, because it has the find motion, but it does not have a preview highlight
 		config = function()
-			-- add operator maps for [r]ight angle braces and [a]ngle brances
+			-- add operator maps for [r]ight angle braces and [a]ngle braces
 			vim.keymap.set("o", "ir", "i[")
 			vim.keymap.set("o", "ar", "a[")
 			vim.keymap.set("o", "ia", "i<")
@@ -855,7 +858,7 @@ require("lazy").setup({ -- lazystart
 		"echasnovski/mini.nvim",
 		config = function()
 			require("mini.move").setup({}) -- adds ability to move text around with <m-h//k/l>
-			require("mini.cursorword").setup({ -- highlighs the word under the cursor
+			require("mini.cursorword").setup({ -- highlights the word under the cursor
 				delay = 500, -- in ms
 			})
 		end,
@@ -1083,7 +1086,7 @@ require("lazy").setup({ -- lazystart
 	{ -- AI code autocompletion
 		"Exafunction/codeium.vim",
 		init = function()
-			vim.g.codeium_disable_bindings = 1 -- turn off tab and defualts
+			vim.g.codeium_disable_bindings = 1 -- turn off tab and defaults
 			vim.keymap.set("i", "<C-l>", function()
 				return vim.fn["codeium#Accept"]()
 			end, { expr = true }) -- there isn't a plug command for this yet
@@ -1132,11 +1135,11 @@ vim.o.breakindent = true -- wrapped lines will have consistent indents
 vim.o.updatetime = 250 -- Decrease update time
 vim.o.signcolumn = "yes" -- always show sign column
 vim.o.completeopt = "menuone,noselect" -- better completion experience
-vim.o.mouse = "a" -- Enable mouse moedwardbaeg9@gmail.com@de
+vim.o.mouse = "a" -- Enable mouse mode edwardbaeg9@gmail.com
 vim.wo.cursorline = true -- highlight line with cursor, window scoped for use with reticle.nvim
 
 vim.o.ignorecase = true -- case insensitive searching
-vim.o.smartcase = true -- ...uness /C or capital in search
+vim.o.smartcase = true -- ...unless /C or capital in search
 
 vim.o.undofile = true -- Save undo history
 vim.o.undodir = vim.fn.expand("~/.vim/undo") -- set save directory. This must exist first... I think
@@ -1230,7 +1233,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
-vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
+vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parentheses easier to see
 
 vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db" }) -- eg +, =, || only do for js?
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -- eg +, =, || only do for js?
