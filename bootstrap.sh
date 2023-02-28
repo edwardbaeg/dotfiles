@@ -9,79 +9,80 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 #  $3 app name (eg vim) - optional
 #  returns 0
 function symlink_file_or_folder () {
-  SOURCE_PATH=$1
-  DESTINATION_PATH=$2
-  APP_NAME=$3
+    SOURCE_PATH=$1
+    DESTINATION_PATH=$2
+    APP_NAME=$3
 
-  # Check if file/folder "exists" and create a backup
-  if test -f "$DESTINATION_PATH"; then
-    echo "$3 already exists, creating backup"
-    cp $DESTINATION_PATH $DESTINATION_PATH.backup
-  fi
-  if test -d "$DESTINATION_PATH"; then
-    echo "$3 already exists, creating backup"
-    cp -r $DESTINATION_PATH "$DESTINATION_PATH"_backup
-  fi
+    # Check if file/folder "exists" and create a backup
+    if test -f "$DESTINATION_PATH"; then
+        echo "$3 already exists, creating backup"
+        cp $DESTINATION_PATH $DESTINATION_PATH.backup
+    fi
+    if test -d "$DESTINATION_PATH"; then
+        echo "$3 already exists, creating backup"
+        cp -r $DESTINATION_PATH "$DESTINATION_PATH"_backup
+    fi
 
-  # Check if link exists and remove it
-  if test -L "$DESTINATION_PATH"; then
-    unlink $DESTINATION_PATH
-  fi
+    # Check if link exists and remove it
+    if test -L "$DESTINATION_PATH"; then
+        unlink $DESTINATION_PATH
+    fi
 
-  # Remove file/folder if exists
-  rm -rf $DESTINATION_PATH
+    # Remove file/folder if exists
+    rm -rf $DESTINATION_PATH
 
-  DESTINATION_PARENT_PATH=$(dirname $DESTINATION_PATH)
-  mkdir -p $DESTINATION_PARENT_PATH
-  ln -s $SOURCE_PATH $DESTINATION_PATH
+    DESTINATION_PARENT_PATH=$(dirname $DESTINATION_PATH)
+    mkdir -p $DESTINATION_PARENT_PATH
+    ln -s $SOURCE_PATH $DESTINATION_PATH
 
-  echo "Symlinked $APP_NAME"
-  return 0
+    echo "Symlinked $APP_NAME"
+    return 0
 }
 
-ln "$DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua" 
+# TODO: look into copying the file, removing the one here in the repo, and then create a hardlink from the config one to the repo one?
+ln "$DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
 symlink_file_or_folder \
-  "$DIR/hammerspoon/init.lua" \
-  "$HOME/.hammerspoon/init.lua" \
-  Hammerspoon
+    "$DIR/hammerspoon/init.lua" \
+    "$HOME/.hammerspoon/init.lua" \
+    Hammerspoon
 
 symlink_file_or_folder \
-  "$DIR/neofetch/config.conf" \
-  "$HOME/.config/neofetch/config.conf" \
-  neofetch
+    "$DIR/neofetch/config.conf" \
+    "$HOME/.config/neofetch/config.conf" \
+    neofetch
 
 symlink_file_or_folder \
-  $DIR/mpv \
-  $HOME/.config/mpv \
-  mpv
+    $DIR/mpv \
+    $HOME/.config/mpv \
+    mpv
 
 symlink_file_or_folder \
-  $DIR/ranger \
-  $HOME/.config/ranger \
-  ranger
+    $DIR/ranger \
+    $HOME/.config/ranger \
+    ranger
 
 symlink_file_or_folder \
-  $DIR/.p10k.zsh \
-  $HOME/.p10k.zsh \
-  powerlevel10k.zsh
+    $DIR/.p10k.zsh \
+    $HOME/.p10k.zsh \
+    powerlevel10k.zsh
 
 symlink_file_or_folder \
-  $DIR/.zshrc \
-  $HOME/.zshrc \
-  .zshrc
+    $DIR/.zshrc \
+    $HOME/.zshrc \
+    .zshrc
 
 symlink_file_or_folder \
-  $DIR/.gitconfig \
-  $HOME/.gitconfig \
-  .gitconfig
+    $DIR/.gitconfig \
+    $HOME/.gitconfig \
+    .gitconfig
 
 symlink_file_or_folder \
-  $DIR/.tmux.conf \
-  $HOME/.tmux.conf \
-  .tmux.conf
+    $DIR/.tmux.conf \
+    $HOME/.tmux.conf \
+    .tmux.conf
 
 symlink_file_or_folder \
-  $DIR/lazygit/config.yml \
-  $HOME/.config/lazygit/config.yml \
-  lazygit
+    $DIR/lazygit/config.yml \
+    $HOME/.config/lazygit/config.yml \
+    lazygit
