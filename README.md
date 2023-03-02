@@ -5,11 +5,11 @@ This is my neovim-based development setup. Always a work progress...
 
 # Neovim
 
-Configuration: [init.vim](nvim/init.lua)
+Configuration: [init.lua](nvim/init.lua)
 
 **Plugin Manager**: lazy.nvim
 
-**Colorscheme**: onedark
+**Colorscheme**: onedark/catppuccin
 
 **Smart stuff**: Treesitter, LSP, completion, snippets, fuzzy finder
 
@@ -17,7 +17,7 @@ Configuration: [init.vim](nvim/init.lua)
 
 **Motions/operators/jump**: textobjects, comments, surrounds, sorting
 
-**Terminal Integration**: lazygit, ranger
+**Terminal Integrations**: lazygit, ranger
 
 # Terminal
 
