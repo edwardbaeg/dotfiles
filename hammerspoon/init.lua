@@ -170,26 +170,26 @@ hs.hotkey.bind(hyperkey, "H", function()
 end)
 
 -- Left two thirds
-hs.hotkey.bind(hyperkey, "U", function()
-   local win = hs.window.focusedWindow()
-   local frame = win:frame()
-   local screen = win:screen():frame()
-   if frame.x == screen.x and frame.y == screen.y and frame.w == screen.w * 2 / 3 and frame.h == screen.h then
-      moveAndResizeFocused(function(frame, screen)
-         frame.x = screen.x
-         frame.y = screen.y
-         frame.w = screen.w * 1 / 3
-         frame.h = screen.h
-      end)
-      return
-   end
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y
-      frame.w = screen.w * 2 / 3
-      frame.h = screen.h
-   end)
-end)
+-- hs.hotkey.bind(hyperkey, "U", function()
+-- 	local win = hs.window.focusedWindow()
+-- 	local frame = win:frame()
+-- 	local screen = win:screen():frame()
+-- 	if frame.x == screen.x and frame.y == screen.y and frame.w == screen.w * 2 / 3 and frame.h == screen.h then
+-- 		moveAndResizeFocused(function(frame, screen)
+-- 			frame.x = screen.x
+-- 			frame.y = screen.y
+-- 			frame.w = screen.w * 1 / 3
+-- 			frame.h = screen.h
+-- 		end)
+-- 		return
+-- 	end
+-- 	moveAndResizeFocused(function(frame, screen)
+-- 		frame.x = screen.x
+-- 		frame.y = screen.y
+-- 		frame.w = screen.w * 2 / 3
+-- 		frame.h = screen.h
+-- 	end)
+-- end)
 
 -- Right half
 hs.hotkey.bind(hyperkey, "L", function()
@@ -202,51 +202,51 @@ hs.hotkey.bind(hyperkey, "L", function()
 end)
 
 -- Right two thirds
-hs.hotkey.bind(hyperkey, "I", function()
-   local win = hs.window.focusedWindow()
-   local frame = win:frame()
-   local screen = win:screen():frame()
-   if
-      frame.x == screen.x + screen.w / 3
-      and frame.y == screen.y
-      and frame.w == screen.w * 2 / 3
-      and frame.h == screen.h
-   then
-      moveAndResizeFocused(function(frame, screen)
-         frame.x = screen.x + screen.w * 2 / 3
-         frame.y = screen.y
-         frame.w = screen.w * 1 / 3
-         frame.h = screen.h
-      end)
-      return
-   end
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x + screen.w / 3
-      frame.y = screen.y
-      frame.w = screen.w * 2 / 3
-      frame.h = screen.h
-   end)
-end)
+-- hs.hotkey.bind(hyperkey, "I", function()
+-- 	local win = hs.window.focusedWindow()
+-- 	local frame = win:frame()
+-- 	local screen = win:screen():frame()
+-- 	if
+-- 		frame.x == screen.x + screen.w / 3
+-- 		and frame.y == screen.y
+-- 		and frame.w == screen.w * 2 / 3
+-- 		and frame.h == screen.h
+-- 	then
+-- 		moveAndResizeFocused(function(frame, screen)
+-- 			frame.x = screen.x + screen.w * 2 / 3
+-- 			frame.y = screen.y
+-- 			frame.w = screen.w * 1 / 3
+-- 			frame.h = screen.h
+-- 		end)
+-- 		return
+-- 	end
+-- 	moveAndResizeFocused(function(frame, screen)
+-- 		frame.x = screen.x + screen.w / 3
+-- 		frame.y = screen.y
+-- 		frame.w = screen.w * 2 / 3
+-- 		frame.h = screen.h
+-- 	end)
+-- end)
 
 -- Left 60
-hs.hotkey.bind(hyperkey, "Y", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y
-      frame.w = screen.w * 0.6
-      frame.h = screen.h
-   end)
-end)
+-- hs.hotkey.bind(hyperkey, "Y", function()
+-- 	moveAndResizeFocused(function(frame, screen)
+-- 		frame.x = screen.x
+-- 		frame.y = screen.y
+-- 		frame.w = screen.w * 0.6
+-- 		frame.h = screen.h
+-- 	end)
+-- end)
 
 -- Right 40
-hs.hotkey.bind(hyperkey, "O", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x + (screen.w * 0.6)
-      frame.y = screen.y
-      frame.w = screen.w * 0.4
-      frame.h = screen.h
-   end)
-end)
+-- hs.hotkey.bind(hyperkey, "O", function()
+-- 	moveAndResizeFocused(function(frame, screen)
+-- 		frame.x = screen.x + (screen.w * 0.6)
+-- 		frame.y = screen.y
+-- 		frame.w = screen.w * 0.4
+-- 		frame.h = screen.h
+-- 	end)
+-- end)
 
 -- Top half
 hs.hotkey.bind(hyperkey, "K", function()
