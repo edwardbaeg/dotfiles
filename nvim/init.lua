@@ -564,6 +564,10 @@ require("lazy").setup({ -- lazystart
          "debugloop/telescope-undo.nvim", -- visually shows undo history
          "nvim-telescope/telescope-fzf-native.nvim", -- c port of fzf
          "tsakirist/telescope-lazy.nvim", -- for navigating plugins installed by lazy.nvim
+         {
+            "aaronhallaert/ts-advanced-git-search.nvim", -- look through git history
+            dependencies = "tpope/vim-fugitive",
+         },
       },
       init = function()
          vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")
@@ -587,12 +591,14 @@ require("lazy").setup({ -- lazystart
          vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
       end,
       config = function()
+         -- local actions = require("telescope.actions")
          require("telescope").setup({
             defaults = {
                mappings = {
                   i = {
                      ["<C-u>"] = false,
                      ["<C-d>"] = false,
+                     -- ["<C-cr>"] = actions.select_tab, -- cannot map to <c-cr>
                   },
                },
                layout_strategy = "flex",
@@ -626,6 +632,7 @@ require("lazy").setup({ -- lazystart
          require("telescope").load_extension("ui-select")
          require("telescope").load_extension("undo")
          require("telescope").load_extension("lazy")
+         require("telescope").load_extension("advanced_git_search")
 
          -- custom picker that greps the word under the cursor (cword)
          -- https://github.com/nvim-telescope/telescope.nvim/issues/1766#issuecomment-1150437074
@@ -733,7 +740,7 @@ require("lazy").setup({ -- lazystart
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
-         local background_color = "#151515"
+         local background_color = "#0a0a0a"
          require("bufferline").setup({
             options = {
                numbers = function(opts)
@@ -1077,6 +1084,7 @@ require("lazy").setup({ -- lazystart
       "Exafunction/codeium.vim",
       init = function()
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defualts
+         vim.g.codedium_enabled = false -- disable by default
          vim.keymap.set("i", "<C-l>", function()
             return vim.fn["codeium#Accept"]()
          end, { expr = true }) -- there isn't a plug command for this yet
@@ -1331,9 +1339,6 @@ set splitbelow " open splits on the bottom
 -- [[ TODO ]]
 -- - set up nvim treesitter context
 -- - customize the lualine
--- - indent line highlight for lsp current location
--- - treesj
--- - move to next git change, using gitsigns?
 -- - rewrite all vimscript stuff to lua?
 -- - fix showing git stuff (lua line and vim fugitive) for lua line (but it works for gitsigns?)
 
@@ -1350,3 +1355,5 @@ set splitbelow " open splits on the bottom
 --  - do :e to reload a file from external changes
 -- commands
 --  - set showmatch? <- add ? to check its setting
+--  Telescope
+--  - open [help] in new tab -> <c-t>
