@@ -40,6 +40,10 @@ export PATH=~/.local/bin:$PATH
 
 export PATH="$HOME/.emacs.d/bin:$PATH"
 
+# Don't automatically load ranger rc to prevent loading it twice
+# TODO: make conditional for if the rc already exists
+export RANGER_LOAD_DEFAULT_RC=FALSE
+
 # Key bindings
 set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
 
@@ -70,8 +74,6 @@ export LESS="$LESS -FRXK"
 
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
-
-# setup zoxide completions. must be called after compinit
 
 # -- Plugins -------------------------------------------------------------------
 
@@ -342,4 +344,6 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore'
 # p10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# setup zoxide completions. must be called after compinit
 eval "$(zoxide init zsh)"
