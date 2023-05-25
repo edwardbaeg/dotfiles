@@ -72,7 +72,6 @@ export LESS="$LESS -FRXK"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 # setup zoxide completions. must be called after compinit
-eval "$(zoxide init zsh)"
 
 # -- Plugins -------------------------------------------------------------------
 
@@ -343,3 +342,4 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore'
 # p10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+eval "$(zoxide init zsh)"
