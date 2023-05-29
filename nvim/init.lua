@@ -89,7 +89,7 @@ require("lazy").setup({ -- lazystart
       },
       config = function()
          require("fidget").setup()
-         require("neodev").setup() -- IMPORTANT: setup BEFORE lspconfig; NOTE: this does not work if it's a symlink!
+         require("neodev").setup() -- IMPORTANT: setup BEFORE lspconfig. NOTE: this does not work if it's a symlink!
 
          require("lspsaga").setup({
             lightbulb = {
@@ -116,7 +116,7 @@ require("lazy").setup({ -- lazystart
          keymap("n", "cr", "<cmd>Lspsaga rename<cr>")
          keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>")
-         keymap("n", "gt", "<cmd>Lspsaga goto_definition<cr>")
+         keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
          keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
          keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
          keymap("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
@@ -155,7 +155,7 @@ require("lazy").setup({ -- lazystart
             nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
             -- Lesser used LSP functionality
-            nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+            -- nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
             nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
             nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
             nmap("<leader>wl", function()
@@ -273,6 +273,7 @@ require("lazy").setup({ -- lazystart
                documentation = cmp.config.window.bordered(),
             },
             formatting = {
+               -- format the display of the completion menu items
                format = function(entry, vim_item)
                   vim_item.kind = lspkind.symbolic(vim_item.kind, { mode = "symbol" })
                   vim_item.menu = source_mapping[entry.source.name] or ""
@@ -302,8 +303,8 @@ require("lazy").setup({ -- lazystart
                ["<C-l>"] = cmp.mapping.abort(),
                ["<CR>"] = cmp.mapping.confirm({
                   behavior = cmp.ConfirmBehavior.Replace,
-                  select = true, -- selects the first item
-                  -- select = false, -- only if explicitly selected
+                  -- select = true, -- selects the first item automatically
+                  select = false, -- only if explicitly selected
                }),
                ["<Tab>"] = cmp.mapping(function(fallback)
                   -- TODO: if currently in a luasnip, make tab jump instead of selecting the next item
@@ -393,6 +394,7 @@ require("lazy").setup({ -- lazystart
             }),
          })
          luasnip.filetype_extend("typescript", { "javascript" }) -- also use javascript snippets in typescript
+         luasnip.filetype_extend("typescriptreact", { "javascript" })
 
          require("luasnip.loaders.from_vscode").lazy_load() -- add vscode like snippets, from friendly snippets?
 
@@ -406,12 +408,19 @@ require("lazy").setup({ -- lazystart
    {
       -- Highlight, edit, and navigate code
       "nvim-treesitter/nvim-treesitter",
-      dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" }, -- adds more text objects for treesitter
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
+         "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
+      },
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
       end,
       config = function()
+         require("nvim-ts-autotag").setup({}) -- don't forget to run :TSInstall tsx
          require("nvim-treesitter.configs").setup({
+            autotag = {
+               enable = true,
+            },
             ensure_installed = {
                "c",
                "cpp",
@@ -445,7 +454,6 @@ require("lazy").setup({ -- lazystart
                select = {
                   enable = true,
                   lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-                  keymaps = { -- You can use the capture groups defined in textobjects.scm
                   keymaps = {
                      -- You can use the capture groups defined in textobjects.scm
                      -- ['aa'] = '@parameter.outer',
