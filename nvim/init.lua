@@ -501,7 +501,8 @@ require("lazy").setup({ -- lazystart
 
    "tpope/vim-fugitive", -- add git commands
    "tpope/vim-rhubarb", -- add GBrowse
-   { -- git actions and visual git signs
+   {
+      -- git actions and visual git signs
       "lewis6991/gitsigns.nvim",
       config = function()
          require("gitsigns").setup({
@@ -527,7 +528,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- Fancy statusline
+   {
+      -- Fancy statusline
       "nvim-lualine/lualine.nvim",
       config = function()
          require("lualine").setup({
@@ -546,17 +548,19 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- Add indentation guides
+   {
+      -- Add indentation guides
       "lukas-reineke/indent-blankline.nvim",
       config = function()
          require("indent_blankline").setup({
-            -- char = '┊',
+            char = "┊",
             show_trailing_blankline_indent = false,
          })
       end,
    },
 
-   { -- comment
+   {
+      -- comment
       "numToStr/Comment.nvim",
       config = function()
          require("Comment").setup()
@@ -572,7 +576,8 @@ require("lazy").setup({ -- lazystart
 
    "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
-   { -- Fuzzy Finder (files, lsp, etc)
+   {
+      -- Fuzzy Finder (files, lsp, etc)
       "nvim-telescope/telescope.nvim",
       branch = "0.1.x",
       cmd = "Telescope",
@@ -690,7 +695,8 @@ require("lazy").setup({ -- lazystart
    --   -- end
    -- },
 
-   { -- visually shows treesitter data
+   {
+      -- visually shows treesitter data
       "nvim-treesitter/playground",
       cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
       config = function()
@@ -711,7 +717,11 @@ require("lazy").setup({ -- lazystart
       -- automatically adds closing brackts
       -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening
       "windwp/nvim-autopairs",
-      config = true,
+      config = function()
+         require("nvim-autopairs").setup({
+            map_cr = true,
+         })
+      end,
    },
 
    "arp242/undofile_warn.vim", -- warn when access undofile before current open
@@ -1024,6 +1034,8 @@ require("lazy").setup({ -- lazystart
          })
 
          local Terminal = require("toggleterm.terminal").Terminal
+
+         -- Set up lazygit
          local lazygit = Terminal:new({
             cmd = "lazygit", --[[ hidden = true ]]
          }) -- hidden terminals won't resize
@@ -1032,12 +1044,26 @@ require("lazy").setup({ -- lazystart
          end
 
          vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
+
+         -- set up ranger
+         -- TODO: fix opening files
+         -- local ranger = Terminal:new({
+         --    cmd = "ranger", --[[ hidden = true ]]
+         -- }) -- hidden terminals won't resize
+         -- function _G._ranger_toggle()
+         --    ranger:toggle()
+         -- end
+         --
+         -- vim.api.nvim_set_keymap("n", "<leader>ra", "<cmd>lua _ranger_toggle()<cr>", { noremap = true, silent = true })
+         -- vim.api.nvim_create_user_command("RangerToggle", "lua _G._ranger_toggle()<cr>", {})
       end,
    },
 
    {
       -- ranger integration, opens files in current nvim instance
+      -- NOTE: have to install ranger with pip (not brew)
       "kevinhwang91/rnvimr",
+      -- enabled = false, -- have to install ranger with python
       config = function()
          vim.api.nvim_create_user_command("RangerToggle", ":RnvimrToggle", {})
          vim.api.nvim_set_keymap("n", "<leader>ra", ":RnvimrToggle<cr>", {})
@@ -1133,13 +1159,14 @@ require("lazy").setup({ -- lazystart
       "Exafunction/codeium.vim",
       init = function()
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defualts
-         vim.g.codedium_enabled = false -- disable by default
+         vim.g.codeium_enabled = false -- disable by default
          vim.keymap.set("i", "<C-l>", function()
             return vim.fn["codeium#Accept"]()
          end, { expr = true }) -- there isn't a plug command for this yet
          vim.keymap.set("i", "<C-j>", "<Plug>(codeium-next)")
          vim.keymap.set("i", "<C-k>", "<Plug>(codeium-previous)")
-         vim.keymap.set({ "i", "n" }, "<c-h>", "<Plug>(codeium-dismiss)")
+         -- vim.keymap.set({ "i", "n" }, "<c-h>", "<Plug>(codeium-dismiss)")
+         vim.keymap.set("i", "<c-h>", "<Plug>(codeium-dismiss)")
       end,
    },
 
@@ -1160,6 +1187,7 @@ require("lazy").setup({ -- lazystart
    },
 
    {
+      -- color the line separating windows
       "nvim-zh/colorful-winsep.nvim",
       config = function()
          require("colorful-winsep").setup({
@@ -1169,6 +1197,22 @@ require("lazy").setup({ -- lazystart
             },
             interval = 1000,
          })
+      end,
+   },
+
+   { -- shows relative line numbers for active window in normal mode
+      "sitiom/nvim-numbertoggle",
+   },
+
+   { -- better support for react
+      "peitalin/vim-jsx-typescript",
+   },
+
+   {
+      -- file explorer as nvim buffer
+      "stevearc/oil.nvim",
+      config = function()
+         require("oil").setup({})
       end,
    },
 }) -- lazyend
@@ -1253,6 +1297,8 @@ vim.keymap.set("n", "<leader>q", "") -- close whichkey / cancel leader without s
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true }) -- Remaps for dealing with word wrap
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file
+
 -- vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev) -- Diagnostic keymaps
 -- vim.keymap.set('n', 'ge', vim.diagnostic.goto_next)
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
@@ -1311,18 +1357,6 @@ set matchtime=2 " multiple of 100ms
 highlight Whitespace ctermbg=white " make whitespace easier to see
 set scrolloff=24 " buffer top and bottom
 set linebreak " don't break in the middle of a word
-
-augroup ShowLines
-  autocmd!
-  autocmd InsertLeave * set cursorline
-  " autocmd InsertLeave * set cursorcolumn
-augroup END
-
-augroup HideLines
-  autocmd!
-  autocmd InsertEnter * set nocursorcolumn
-  " autocmd InsertEnter * set nocursorline
-augroup END
 
 set incsearch " search realtime
 set hlsearch
@@ -1397,7 +1431,7 @@ set splitbelow " open splits on the bottom
 --  - move window: `<c-w>HJKL`
 --  - move buffer to split where # is the buffer id, :buffers: :vert sb#
 -- Find and replace
---  - when in a visual block, omit the `%`:<'>'/s
+--  - when in a visual block, omit the `%`: <'>'/s
 -- Motions
 --  - % - jump to matching bracket
 --  - {} - jump to empty lines
