@@ -18,7 +18,8 @@ vim.g.maplocalleader = " "
 vim.o.termguicolors = true -- needs to be set before colorizer plugins
 
 require("lazy").setup({ -- lazystart
-   { -- colorscheme
+   {
+      -- colorscheme
       "catppuccin/nvim",
       name = "catppuccin",
       lazy = false, -- load main colorscheme during startup
@@ -36,7 +37,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- colorscheme
+   {
+      -- colorscheme
       "navarasu/onedark.nvim",
       lazy = true,
       config = function()
@@ -59,7 +61,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- colorscheme
+   {
+      -- colorscheme
       "folke/tokyonight.nvim",
       lazy = true,
       config = function()
@@ -70,7 +73,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- LSP, formatter, and linter config and plugins
+   {
+      -- LSP, formatter, and linter config and plugins
       "neovim/nvim-lspconfig",
       dependencies = {
          "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
@@ -97,7 +101,8 @@ require("lazy").setup({ -- lazystart
                color_mode = false,
                separator = "  ",
             },
-            ui = { -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",
+            ui = {
+               -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",
                preview = " ",
                code_action = "⚡", -- "💡",
                hover = " ",
@@ -223,7 +228,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- Autocomplete menu, snippets, and AI completion
+   {
+      -- Autocomplete menu, snippets, and AI completion
       "hrsh7th/nvim-cmp",
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
@@ -330,7 +336,8 @@ require("lazy").setup({ -- lazystart
 
          cmp.setup.cmdline(":", {
             completion = { keyword_length = 2 },
-            mapping = cmp.mapping.preset.cmdline({ -- TODO: disable <c-n/p> when nothing is selected
+            mapping = cmp.mapping.preset.cmdline({
+               -- TODO: disable <c-n/p> when nothing is selected
                ["<C-l>"] = cmp.mapping.abort(), -- this doesn't work...
                ["<c-p>"] = cmp.mapping.close(),
                ["<c-n>"] = cmp.mapping.close(),
@@ -396,7 +403,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- Highlight, edit, and navigate code
+   {
+      -- Highlight, edit, and navigate code
       "nvim-treesitter/nvim-treesitter",
       dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" }, -- adds more text objects for treesitter
       build = function()
@@ -438,6 +446,8 @@ require("lazy").setup({ -- lazystart
                   enable = true,
                   lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
                   keymaps = { -- You can use the capture groups defined in textobjects.scm
+                  keymaps = {
+                     -- You can use the capture groups defined in textobjects.scm
                      -- ['aa'] = '@parameter.outer',
                      -- ['ia'] = '@parameter.inner',
                      ["af"] = "@function.outer",
@@ -689,13 +699,16 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening
+   {
+      -- automatically adds closing brackts
+      -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening
       "windwp/nvim-autopairs",
       config = true,
    },
 
    "arp242/undofile_warn.vim", -- warn when access undofile before current open
-   { -- visual undotree
+   {
+      -- visual undotree
       "simnalamburt/vim-mundo",
       -- enabled = false,
       config = function()
@@ -705,14 +718,16 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- persist cursor location
+   {
+      -- persist cursor location
       "ethanholz/nvim-lastplace",
       config = function()
          require("nvim-lastplace").setup({})
       end,
    },
 
-   { -- shows possible key bindings
+   {
+      -- shows possible key bindings
       "folke/which-key.nvim",
       config = function()
          vim.o.timeout = true
@@ -736,7 +751,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- fancier tabline
+   {
+      -- fancier tabline
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
@@ -758,7 +774,8 @@ require("lazy").setup({ -- lazystart
                background = { -- for background "tabs"
                   bg = background_color,
                },
-               buffer_selected = { -- active buffer
+               buffer_selected = {
+                  -- active buffer
                   bold = true,
                   italic = false,
                   fg = "white",
@@ -779,7 +796,8 @@ require("lazy").setup({ -- lazystart
 
    "christoomey/vim-sort-motion", -- add sort operator
 
-   { -- add motions for substituting text
+   {
+      -- add motions for substituting text
       "gbprod/substitute.nvim",
       config = function()
          require("substitute").setup({})
@@ -796,14 +814,16 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- lists of diagnostics, references, telescopes, quickfix, and location lists
+   {
+      -- lists of diagnostics, references, telescopes, quickfix, and location lists
       "folke/trouble.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
       config = true,
       cmd = "Trouble", -- lazy load
    },
 
-   { -- start page for nvim
+   {
+      -- start page for nvim
       "goolord/alpha-nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
@@ -811,7 +831,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- adds motions for surrounding
+   {
+      -- adds motions for surrounding
       "kylechui/nvim-surround", -- I would like to use mini.surround, because it has the find motion, but it does not have a preview highlight
       config = function()
          -- add operator maps for [r]ight angle braces and [a]ngle brances
@@ -838,7 +859,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- this adds surround motions, but disable those and just use the ib / ab operators
+   {
+      -- this adds surround motions, but disable those and just use the ib / ab operators
       "machakann/vim-sandwich",
       init = function()
          vim.cmd([[
@@ -856,7 +878,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- a collection of mini 'submodules'
+   {
+      -- a collection of mini 'submodules'
       "echasnovski/mini.nvim",
       config = function()
          require("mini.move").setup({}) -- adds ability to move text around with <m-h//k/l>
@@ -866,7 +889,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- show outline of symbols
+   {
+      -- show outline of symbols
       "simrat39/symbols-outline.nvim", -- previews are broken??
       config = function()
          require("symbols-outline").setup({
@@ -876,7 +900,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- show search information in virtual text
+   {
+      -- show search information in virtual text
       "kevinhwang91/nvim-hlslens",
       config = function()
          -- require('scrollbar.handlers.search').setup({}) -- integrate with scrollbar... this doesn't work!!!
@@ -907,7 +932,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- smooth scrolling
+   {
+      -- smooth scrolling
       "karb94/neoscroll.nvim",
       -- enabled = false,
       config = function()
@@ -926,7 +952,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- add visual scrollbar
+   {
+      -- add visual scrollbar
       "petertriho/nvim-scrollbar",
       -- enabled = false,
       config = function()
@@ -934,7 +961,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- wrapper for session commands
+   {
+      -- wrapper for session commands
       "Shatur/neovim-session-manager",
       config = function()
          require("session_manager").setup({
@@ -963,7 +991,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- colorizer and color picker
+   {
+      -- colorizer and color picker
       "uga-rosa/ccc.nvim",
       config = function()
          require("ccc").setup({
@@ -974,7 +1003,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- toggle persistent terminal
+   {
+      -- toggle persistent terminal
       "akinsho/toggleterm.nvim",
       config = function()
          require("toggleterm").setup({
@@ -997,7 +1027,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- ranger integration
+   {
+      -- ranger integration, opens files in current nvim instance
       "kevinhwang91/rnvimr",
       config = function()
          vim.api.nvim_create_user_command("RangerToggle", ":RnvimrToggle", {})
@@ -1005,7 +1036,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- preview markdown
+   {
+      -- preview markdown
       "iamcco/markdown-preview.nvim",
       build = "cd app && npm install",
       init = function()
@@ -1014,7 +1046,8 @@ require("lazy").setup({ -- lazystart
       ft = { "markdown" }, -- lazy load on file type
    },
 
-   { -- only show cursorline on active window
+   {
+      -- only show cursorline on active window
       "Tummetott/reticle.nvim",
       enabled = false, -- messes up toggleterm for lazy git
       config = true,
@@ -1025,7 +1058,8 @@ require("lazy").setup({ -- lazystart
       },
    },
 
-   { -- adds some visuals to folds
+   {
+      -- adds some visuals to folds
       "anuvyklack/pretty-fold.nvim",
       enabled = false, -- idk folds
       config = function()
@@ -1035,7 +1069,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- prettier folding
+   {
+      -- better folding visuals
       "kevinhwang91/nvim-ufo",
       dependencies = { "kevinhwang91/promise-async" },
       enabled = false, -- idk folds
@@ -1047,32 +1082,37 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- use multiple virtual lines to show diagnostics
+   {
+      -- use multiple virtual lines to show diagnostics
       "Maan2003/lsp_lines.nvim",
       enabled = false, -- it's a bit noisy
    },
 
    "tpope/vim-eunuch", -- adds unix shell commands to vim, eg :Move, :Mkdir
-   { -- adds icons to netrw
+   {
+      -- adds icons to netrw
       "prichrd/netrw.nvim",
       config = true,
    },
 
-   { -- color f/t targets
+   {
+      -- color f/t targets
       "unblevable/quick-scope",
       init = function()
          vim.cmd([[ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] ]]) -- only show after f/t
       end,
    },
 
-   { -- live scratchpad
+   {
+      -- live scratchpad
       "metakirby5/codi.vim",
       init = function()
          vim.cmd([[ let g:codi#rightalign=1 ]])
       end,
    },
 
-   { -- align text by delimiters
+   {
+      -- align text by delimiters
       "junegunn/vim-easy-align",
       init = function()
          vim.keymap.set("n", "ga", "<Plug>(EasyAlign)")
@@ -1080,7 +1120,8 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- AI code autocompletion
+   {
+      -- AI code autocompletion
       "Exafunction/codeium.vim",
       init = function()
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defualts
@@ -1096,7 +1137,8 @@ require("lazy").setup({ -- lazystart
 
    "gabebw/vim-github-link-opener", -- opens 'foo/bar' in github
 
-   { -- split or join blocks of code using treesitter
+   {
+      -- split or join blocks of code using treesitter
       "Wansmer/treesj",
       cmd = "TSJToggle",
       config = function()
