@@ -40,6 +40,10 @@ export PATH=~/.local/bin:$PATH
 
 export PATH="$HOME/.emacs.d/bin:$PATH"
 
+# Add go packages to path
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 # Don't automatically load ranger rc to prevent loading it twice
 # TODO: make conditional for if the rc already exists
 export RANGER_LOAD_DEFAULT_RC=FALSE
@@ -158,7 +162,7 @@ alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
 
 # from zsh git-open plugin
-alias go="git open"
+alias gop="git open"
 
 alias glmm="git checkout master && git pull && git checkout - && git merge master"
 alias grpo="git remote prune origin"
