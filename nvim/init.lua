@@ -17,6 +17,8 @@ vim.g.mapleader = " " -- Set <space> as the leader key
 vim.g.maplocalleader = " "
 vim.o.termguicolors = true -- needs to be set before colorizer plugins
 
+vim.keymap.set("n", "<leader>la", ":Lazy<CR>")
+
 require("lazy").setup({ -- lazystart
    {
       -- colorscheme
@@ -80,7 +82,8 @@ require("lazy").setup({ -- lazystart
          "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
          "glepnir/lspsaga.nvim", -- pretty lsp ui
-         "j-hui/fidget.nvim", -- small nvim-lsp progress ui
+         -- small nvim-lsp progress ui
+         { "j-hui/fidget.nvim", tag = "legacy" },
          "folke/neodev.nvim", -- automatically configures lua-language-server for vim/neovim
 
          "jose-elias-alvarez/null-ls.nvim", -- set up formatters and linters
@@ -171,7 +174,10 @@ require("lazy").setup({ -- lazystart
          -- Set up LSP servers
          require("mason").setup()
          local mason_lspconfig = require("mason-lspconfig")
+         -- these will be automatically installed
          local language_servers = {
+            -- vls = {}, -- vue v2
+            volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
             tsserver = {},
             lua_ls = {
                Lua = {
@@ -231,6 +237,7 @@ require("lazy").setup({ -- lazystart
    {
       -- Autocomplete menu, snippets, and AI completion
       "hrsh7th/nvim-cmp",
+      enabled = not vim.g.started_by_firenvim,
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
@@ -263,6 +270,11 @@ require("lazy").setup({ -- lazystart
          end
 
          cmp.setup({
+            sources = { -- this also sets priority
+               { name = "nvim_lsp", max_item_count = 8 },
+               { name = "luasnip", max_item_count = 2 },
+               { name = "cmp_tabnine", max_item_count = 5 },
+            },
             snippet = {
                expand = function(args)
                   luasnip.lsp_expand(args.body)
@@ -328,11 +340,6 @@ require("lazy").setup({ -- lazystart
                   end
                end, { "i", "s" }),
             }),
-            sources = { -- this also sets priority
-               { name = "luasnip", max_item_count = 5 },
-               { name = "nvim_lsp", max_item_count = 5 },
-               { name = "cmp_tabnine", max_item_count = 5 },
-            },
          })
 
          cmp.setup.cmdline(":", {
@@ -436,6 +443,7 @@ require("lazy").setup({ -- lazystart
                "rust",
                "typescript",
                "vim",
+               "vue",
             },
             highlight = {
                enable = true, --[[ additional_vim_regex_highlighting = true ]]
@@ -715,7 +723,7 @@ require("lazy").setup({ -- lazystart
 
    {
       -- automatically adds closing brackts
-      -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening
+      -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening {} {}
       "windwp/nvim-autopairs",
       config = function()
          require("nvim-autopairs").setup({
@@ -725,6 +733,7 @@ require("lazy").setup({ -- lazystart
    },
 
    "arp242/undofile_warn.vim", -- warn when access undofile before current open
+
    {
       -- visual undotree
       "simnalamburt/vim-mundo",
@@ -773,6 +782,7 @@ require("lazy").setup({ -- lazystart
       -- fancier tabline
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
+      enabled = not vim.g.started_by_firenvim,
       config = function()
          local background_color = "#0a0a0a"
          require("bufferline").setup({
@@ -1200,19 +1210,67 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   { -- shows relative line numbers for active window in normal mode
-      "sitiom/nvim-numbertoggle",
-   },
+   -- shows relative line numbers for active window in normal mode
+   -- "sitiom/nvim-numbertoggle", -- doesn't return to relative numbering
 
-   { -- better support for react
-      "peitalin/vim-jsx-typescript",
-   },
+   -- better support for react
+   "peitalin/vim-jsx-typescript",
 
    {
       -- file explorer as nvim buffer
       "stevearc/oil.nvim",
       config = function()
          require("oil").setup({})
+      end,
+   },
+
+   {
+      -- Use chrome/firefox as neovim clients
+      "glacambre/firenvim",
+
+      -- Lazy load firenvim
+      -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
+      cond = not not vim.g.started_by_firenvim,
+      build = function()
+         -- https://github.com/glacambre/firenvim#building-a-firenvim-specific-config
+         require("lazy").load({ plugins = "firenvim", wait = true })
+         vim.fn["firenvim#install"](0)
+      end,
+      init = function()
+         vim.cmd([[set wrap]])
+         vim.g.firenvim_config = {
+            globalSettings = { alt = "all" },
+            localSettings = {
+               [".*"] = {
+                  cmdline = "neovim",
+                  content = "text",
+                  priority = 0,
+                  selector = "textarea",
+                  -- takeover = "always"
+               },
+            },
+         }
+      end,
+   },
+
+   {
+      -- html snippet expander
+      "mattn/emmet-vim",
+      init = function()
+         vim.cmd([[
+            let g:user_emmet_leader_key='<C-E>'
+         ]])
+      end,
+   },
+
+   -- syntax highlighting for vue
+   -- "posva/vim-vue",
+
+   {
+      -- visually highlight undo and redo changes
+      "tzachar/highlight-undo.nvim",
+      config = function()
+         require("highlight-undo").setup()
       end,
    },
 }) -- lazyend
@@ -1238,6 +1296,8 @@ vim.o.undodir = vim.fn.expand("~/.vim/undo") -- set save directory. This must ex
 
 vim.o.list = true -- show types of whitespace
 vim.o.listchars = "tab:‣ ,trail:•,precedes:«,extends:»"
+
+vim.o.hidden = true -- allow switching buffers without saving
 
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
@@ -1269,6 +1329,14 @@ vim.api.nvim_create_autocmd("FileType", {
 --   au BufWinEnter ?* silent! loadview 1
 -- augroup END
 -- ]])
+
+-- [[ Firenvim overrides ]]
+if vim.g.started_by_firenvim then
+   vim.o.wrap = true
+   vim.o.number = false
+   vim.o.relativenumber = false
+   vim.o.spell = true
+end
 
 -- [[ Smart clipboard ]]
 vim.cmd([[
