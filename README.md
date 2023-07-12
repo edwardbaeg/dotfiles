@@ -27,9 +27,8 @@ Configuration: [init.lua](nvim/init.lua)
 
 **Apps used by config**:
 
-- `ag` faster `ack`
 - `bat` better cat (syntax highlighting and pager)
-- `delta` better diff
+- `git-delta` better diff
 - `fzf` fuzzy finder
 - `lazygit` tui for git
 - `neofetch` display system info
@@ -54,7 +53,7 @@ Configuration: [init.lua](nvim/init.lua)
 - Load Profile: `Profiles -> Other Actions -> Import JSON profiles`
   - Some changes made:
     - `text`:
-      - Operator Mono (main, has cursive for italics)
+      - Operator Mono Book (main font, has cursive for italics)
       - MesloLGS NF (non-ASCII font)
     - `window style`: no title bar
     - `keys`: Left / Right option key -> Esc+ (tmux compatibility)
@@ -74,10 +73,7 @@ defaults write .GlobalPreferences com.apple.mouse.scaling -1
 ```
 
 Enable key repeat
-
-```
-defaults write -g ApplePressAndHoldEnabled -bool false
-```
+- Settings -> Keyboard -> Key repeat rate & Delay until repeat
 
 #### oh-my-zsh
 
