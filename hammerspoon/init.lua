@@ -1,6 +1,7 @@
 -- ~/.hammerspoon/init.lua
 
 local hyperkey = { "cmd", "ctrl" }
+local hs = hs
 
 -- Install command line interface as `hs`
 hs.ipc.cliInstall()
