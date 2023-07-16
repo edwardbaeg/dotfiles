@@ -40,7 +40,7 @@ function symlink_file_or_folder () {
 }
 
 # TODO: look into copying the file, removing the one here in the repo, and then create a hardlink from the config one to the repo one?
-ln "$DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+ln -s "$DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
 symlink_file_or_folder \
     "$DIR/hammerspoon/init.lua" \
