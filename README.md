@@ -1,23 +1,18 @@
 # dotfiles
 
-This is my neovim-based development setup. Always a work progress...
+This is my neovim based terminal development setup. Always a work progress!
 ![screenshot](assets/main.png)
 
 # Neovim
 
 Configuration: [init.lua](nvim/init.lua)
 
-**Plugin Manager**: lazy.nvim
-
-**Colorscheme**: onedark/catppuccin
-
-**Smart stuff**: Treesitter, LSP, completion, snippets, fuzzy finder
-
-**Visuals**: statusline, tabline, scrollbar, whichkey, startpage
-
-**Motions/operators/jump**: textobjects, comments, surrounds, sorting
-
-**Terminal Integrations**: lazygit, ranger
+- **Plugin Manager**: lazy.nvim
+- **Colorscheme**: onedark/catppuccin
+- **Smart stuff**: Treesitter, LSP, completion, snippets, fuzzy finder
+- **Visuals**: statusline, tabline, scrollbar, whichkey, startpage
+- **Motions/operators/jump**: textobjects, comments, surrounds, sorting
+- **Terminal Integrations**: lazygit, ranger
 
 # Terminal
 
