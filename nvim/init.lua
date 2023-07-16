@@ -1,7 +1,9 @@
 -- TODOS
 -- fix super slow and sometimes crashing <c-g> grepping; maybe use fzf-lua?
 -- split into multiple files
--- upgrade from ts-sever to https://github.com/pmizio/typescript-tools.nvim
+-- upgrade from ts-server to https://github.com/pmizio/typescript-tools.nvim
+
+local vim = vim
 
 -- Boostrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
