@@ -70,17 +70,22 @@ symlink_file_or_folder \
 symlink_file_or_folder \
     $DIR/.zshrc \
     $HOME/.zshrc \
-    .zshrc
+    zsh
 
 symlink_file_or_folder \
     $DIR/.gitconfig \
     $HOME/.gitconfig \
-    .gitconfig
+    git
 
 symlink_file_or_folder \
     $DIR/.tmux.conf \
     $HOME/.tmux.conf \
-    .tmux.conf
+    tmux
+
+symlink_file_or_folder \
+    $DIR/stylua.toml \
+    $HOME/stylua.toml \
+    stylua
 
 symlink_file_or_folder \
     $DIR/lazygit/config.yml \
