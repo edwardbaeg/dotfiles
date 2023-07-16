@@ -1,3 +1,8 @@
+-- TODOS
+-- fix super slow and sometimes crashing <c-g> grepping; maybe use fzf-lua?
+-- split into multiple files
+-- upgrade from ts-sever to https://github.com/pmizio/typescript-tools.nvim
+
 -- Boostrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -433,7 +438,7 @@ require("lazy").setup({ -- lazystart
                "cpp",
                "css",
                "go",
-               "help",
+               -- "help",
                "html",
                "javascript",
                "lua",
@@ -608,7 +613,7 @@ require("lazy").setup({ -- lazystart
          vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
          vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
          vim.keymap.set("n", "<c-h>", "<cmd>Telescope help_tags<cr>")
-         vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
+         -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
          vim.keymap.set("n", "<c-t>", "<cmd>Telescope<cr>")
 
          vim.keymap.set("n", "<leader>fd", "<cmd>Telescope<cr>", { desc = "[f]uzzy [f]ind" })
@@ -695,12 +700,12 @@ require("lazy").setup({ -- lazystart
    },
 
    -- { -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-   --   'nvim-telescope/telescope-fzf-native.nvim',
-   --   build = 'make',
-   --   cond = vim.fn.executable 'make' == 1,
-   --   -- config = function ()
-   --   --   require('telescope').load_extension('fzf')
-   --   -- end
+   --    "nvim-telescope/telescope-fzf-native.nvim",
+   --    build = "make",
+   --    cond = vim.fn.executable("make") == 1,
+   --    config = function()
+   --       require("telescope").load_extension("fzf")
+   --    end,
    -- },
 
    {
@@ -1225,53 +1230,20 @@ require("lazy").setup({ -- lazystart
    },
 
    {
-      -- Use chrome/firefox as neovim clients
-      "glacambre/firenvim",
-
-      -- Lazy load firenvim
-      -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
-      cond = not not vim.g.started_by_firenvim,
-      build = function()
-         -- https://github.com/glacambre/firenvim#building-a-firenvim-specific-config
-         require("lazy").load({ plugins = "firenvim", wait = true })
-         vim.fn["firenvim#install"](0)
-      end,
-      init = function()
-         vim.cmd([[set wrap]])
-         vim.g.firenvim_config = {
-            globalSettings = { alt = "all" },
-            localSettings = {
-               [".*"] = {
-                  cmdline = "neovim",
-                  content = "text",
-                  priority = 0,
-                  selector = "textarea",
-                  -- takeover = "always"
-               },
-            },
-         }
-      end,
-   },
-
-   {
-      -- html snippet expander
-      "mattn/emmet-vim",
-      init = function()
-         vim.cmd([[
-            let g:user_emmet_leader_key='<C-E>'
-         ]])
-      end,
-   },
-
-   -- syntax highlighting for vue
-   -- "posva/vim-vue",
-
-   {
-      -- visually highlight undo and redo changes
-      "tzachar/highlight-undo.nvim",
+      "ibhagwan/fzf-lua",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
-         require("highlight-undo").setup()
+         require("fzf-lua").setup({})
       end,
+      init = function()
+         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').live_grep()<cr>", { silent = true })
+      end,
+   },
+
+   {
+      "m4xshen/hardtime.nvim",
+      enabled = false,
+      opts = {},
    },
 }) -- lazyend
 
@@ -1302,6 +1274,7 @@ vim.o.hidden = true -- allow switching buffers without saving
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.expandtab = true
+
 vim.api.nvim_create_autocmd("FileType", {
    pattern = "sh",
    callback = function()
@@ -1309,13 +1282,14 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.api.nvim_buf_set_option(0, "tabstop", 4)
    end,
 })
-vim.api.nvim_create_autocmd("FileType", {
-   pattern = "lua",
-   callback = function()
-      vim.api.nvim_buf_set_option(0, "tabstop", 3)
-      vim.api.nvim_buf_set_option(0, "tabstop", 3)
-   end,
-})
+
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "lua",
+-- 	callback = function()
+-- 		vim.api.nvim_buf_set_option(0, "tabstop", 3)
+-- 		vim.api.nvim_buf_set_option(0, "tabstop", 3)
+-- 	end,
+-- })
 
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
