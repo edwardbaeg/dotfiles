@@ -33,7 +33,7 @@ Configuration: [init.lua](nvim/init.lua)
 - `lazygit` tui for git
 - `neofetch` display system info
 - `neovim` better vim (async, community developed)
-- `ranger` visual file manager
+- `ranger` visual file manager (install with `pip install ranger-fm`)
 - `ripgrep` better grep (and faster than ag)
 - `tmux` terminal multiplexer
 - `zoxide` directory jumper
@@ -73,6 +73,11 @@ defaults write .GlobalPreferences com.apple.mouse.scaling -1
 ```
 
 Enable key repeat
+
+```
+defaults write -g ApplePressAndHoldEnabled -bool false
+```
+
 - Settings -> Keyboard -> Key repeat rate & Delay until repeat
 
 #### oh-my-zsh
@@ -92,16 +97,16 @@ https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zge
 Set up fzf
 
 ```
-/usr/local/opt/fzf/install
+$(brew --prefix)/opt/fzf/install
 ```
 
 #### Neovim
 
-Install neovim with python3
+Install neovim and pynvim (to support python plugins in nvim)
 
 ```
 brew install neovim
-python3 -m pip install --user --upgrade pynvim
+pip3 install --upgrade pynvim
 ```
 
 **Homebrew formulae** (`brew leaves`):
