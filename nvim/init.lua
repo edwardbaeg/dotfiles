@@ -1,7 +1,10 @@
--- TODOS
--- fix super slow and sometimes crashing <c-g> grepping; maybe use fzf-lua?
+-- [[ TODO ]]
 -- split into multiple files
--- upgrade from ts-server to https://github.com/pmizio/typescript-tools.nvim
+-- rewrite all vimscript stuff to lua
+-- fix showing git stuff (lua line and vim fugitive) for lua line (but it works for gitsigns?)
+-- fix super slow and sometimes crashing <c-g> grepping; maybe use fzf-lua?
+-- upgrade from ts-server to https://github.com/pmizio/typescript-tools.nvim ; this is supposed to be much faster
+-- determine a way to open *.stories for the given file
 
 local vim = vim
 
@@ -538,13 +541,13 @@ require("lazy").setup({ -- lazystart
          vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#009900" })
          vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#bbbb00" })
          vim.api.nvim_set_hl(0, "GitSignsUntracked", { fg = "#626880" })
-         -- vim.api.nvim_set_hl(0, 'GitSignsDelete', { fg = '#ff2222' })
+         vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff2222" })
          -- end, 0)
       end,
    },
 
    {
-      -- Fancy statusline
+      -- statusline
       "nvim-lualine/lualine.nvim",
       config = function()
          require("lualine").setup({
@@ -555,9 +558,17 @@ require("lazy").setup({ -- lazystart
                section_separators = "",
             },
             extensions = {
-               "toggleterm", -- doesn't do anything?
-               "symbols-outline",
+               "lazy", -- doesn't seem to do anything?
                "mundo",
+               "trouble",
+            },
+            sections = {
+               lualine_a = { "mode" },
+               lualine_b = { "branch", "diff", "diagnostics" },
+               lualine_c = { { "filename", path = 4 }, "searchcount" },
+               lualine_x = { "encoding", "fileformat", "filetype" },
+               lualine_y = { "progress" },
+               lualine_z = { "location" },
             },
          })
       end,
@@ -1372,6 +1383,8 @@ vim.api.nvim_create_autocmd("filetype", {
    end,
 })
 
+vim.api.nvim_create_user_command("PrintFile", "echo @%", { desc = "Show the path for the current file" })
+
 -- [[ Highlight on yank ]]
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -1463,12 +1476,6 @@ set spellsuggest=best,9
 set splitright " open splits on the right
 set splitbelow " open splits on the bottom
 ]])
-
--- [[ TODO ]]
--- - set up nvim treesitter context
--- - customize the lualine
--- - rewrite all vimscript stuff to lua?
--- - fix showing git stuff (lua line and vim fugitive) for lua line (but it works for gitsigns?)
 
 -- Usability Notes
 -- Buffers/Splits/Windows
