@@ -565,7 +565,7 @@ require("lazy").setup({ -- lazystart
             sections = {
                lualine_a = { "mode" },
                lualine_b = { "branch", "diff", "diagnostics" },
-               lualine_c = { { "filename", path = 4 }, "searchcount" },
+               lualine_c = { { "filename", path = 1 }, "searchcount" },
                lualine_x = { "encoding", "fileformat", "filetype" },
                lualine_y = { "progress" },
                lualine_z = { "location" },
@@ -806,7 +806,8 @@ require("lazy").setup({ -- lazystart
          require("bufferline").setup({
             options = {
                numbers = function(opts)
-                  return opts.raise(opts.id)
+                  -- return string.format("%s·%s", opts.raise(opts.ordinal), opts.lower(opts.id))
+                  return opts.raise(opts.ordinal)
                end,
                show_buffer_close_icons = false,
                show_close_icon = false,
