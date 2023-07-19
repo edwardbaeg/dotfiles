@@ -1247,10 +1247,16 @@ require("lazy").setup({ -- lazystart
       "ibhagwan/fzf-lua",
       dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
-         require("fzf-lua").setup({})
+         require("fzf-lua").setup({
+            winopts = {
+               preview = {
+                  layout = "vertical",
+               },
+            },
+         })
       end,
       init = function()
-         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').live_grep()<cr>", { silent = true })
+         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
       end,
    },
 
