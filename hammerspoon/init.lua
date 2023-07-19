@@ -407,9 +407,9 @@ simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
 local caffeine = hs.menubar.new()
 function _G.setCaffeineDisplay(state)
    if state then
-      caffeine:setTitle("AWAKE")
+      caffeine:setTitle("A")
    else
-      caffeine:setTitle("SLEEPY")
+      caffeine:setTitle("S")
    end
 end
 
