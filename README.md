@@ -23,8 +23,9 @@ Configuration: [init.lua](nvim/init.lua)
 **Apps used by config**:
 
 - `bat` better cat (syntax highlighting and pager)
-- `git-delta` better diff
+- `fd` better find
 - `fzf` fuzzy finder
+- `git-delta` better diff
 - `lazygit` tui for git
 - `neofetch` display system info
 - `neovim` better vim (async, community developed)
