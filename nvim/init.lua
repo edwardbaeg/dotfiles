@@ -1112,11 +1112,10 @@ require("lazy").setup({ -- lazystart
    {
       -- only show cursorline on active window
       "Tummetott/reticle.nvim",
-      enabled = false, -- messes up toggleterm for lazy git
       config = true,
       opts = {
          never = {
-            cursorline = { "terminal" },
+            cursorline = { "toggleterm" }, -- has issues with lazygit
          },
       },
    },
