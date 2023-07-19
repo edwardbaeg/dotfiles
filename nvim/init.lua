@@ -1373,6 +1373,11 @@ vim.keymap.set("n", "<leader>bn", ":bn<cr>")
 vim.keymap.set("n", "<leader>bp", ":bp<cr>")
 vim.keymap.set("n", "<leader>bd", ":bd<cr>")
 
+vim.keymap.set("n", "<leader>wj", "<cmd>wincmd j<cr>")
+vim.keymap.set("n", "<leader>wk", "<cmd>wincmd k<cr>")
+vim.keymap.set("n", "<leader>wh", "<cmd>wincmd h<cr>")
+vim.keymap.set("n", "<leader>wl", "<cmd>wincmd l<cr>")
+
 -- remap netrw keymaps
 vim.api.nvim_create_autocmd("filetype", {
    pattern = "netrw",
