@@ -1187,8 +1187,8 @@ require("lazy").setup({ -- lazystart
       -- AI code autocompletion
       "Exafunction/codeium.vim",
       init = function()
-         vim.g.codeium_disable_bindings = 1 -- turn off tab and defualts
-         vim.g.codeium_enabled = false -- disable by default
+         vim.g.codeium_disable_bindings = 1 -- turn off tab and defaults
+         -- vim.g.codeium_enabled = false -- disable by default
          vim.keymap.set("i", "<C-l>", function()
             return vim.fn["codeium#Accept"]()
          end, { expr = true }) -- there isn't a plug command for this yet
