@@ -30,6 +30,8 @@
   ui = true
 [commit]
   verbose = true
+[push]
+  followTags = true
 [pull]
   rebase = true
 [diff]
