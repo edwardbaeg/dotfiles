@@ -26,6 +26,7 @@ Configuration: [init.lua](nvim/init.lua)
 - `fd` better find
 - `fzf` fuzzy finder
 - `git-delta` better diff
+- `gnu-sed` for vim-spectre
 - `lazygit` tui for git
 - `neofetch` display system info
 - `neovim` better vim (async, community developed)
@@ -35,7 +36,7 @@ Configuration: [init.lua](nvim/init.lua)
 - `zoxide` directory jumper
 - `zsh-completions` command line autocompletions
 
-**Multiplexer**: `tmux`
+**Terminal Multiplexer**: `tmux`
 
 - Configuration: [tmux.conf](.tmux.conf)
   - keymaps, session keybing toggle
