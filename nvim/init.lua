@@ -107,7 +107,7 @@ require("lazy").setup({ -- lazystart
          require("lspsaga").setup({
             lightbulb = {
                sign = false, -- don't show in sign column
-               enable_in_insert = false, -- don't show to fix ocnflict with codeium
+               enable_in_insert = false, -- don't show to fix conflict with codeium
             },
             symbol_in_winbar = {
                enable = false,
@@ -130,6 +130,7 @@ require("lazy").setup({ -- lazystart
          keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>")
          keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
+         keymap("n", "gr", "<cmd>Lspsaga finder<cr>")
          keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
          keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
          keymap("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
@@ -403,7 +404,7 @@ require("lazy").setup({ -- lazystart
                luasnip.insert_node(3, "else"),
             }),
          })
-         luasnip.add_snippets("javascript", {
+         luasnip.add_snippets("all", {
             luasnip.snippet("cl", {
                luasnip.text_node("console.log("),
                luasnip.insert_node(1, "val"),
@@ -428,6 +429,7 @@ require("lazy").setup({ -- lazystart
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
          "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
+         "JoosepAlviste/nvim-ts-context-commentstring",
       },
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
@@ -451,9 +453,14 @@ require("lazy").setup({ -- lazystart
                "markdown_inline",
                "python",
                "rust",
+               "tsx",
                "typescript",
                "vim",
                "vue",
+            },
+            context_commentstring = {
+               enable = true,
+               enable_autocmd = false,
             },
             highlight = {
                enable = true, --[[ additional_vim_regex_highlighting = true ]]
@@ -590,7 +597,9 @@ require("lazy").setup({ -- lazystart
       -- comment
       "numToStr/Comment.nvim",
       config = function()
-         require("Comment").setup()
+         require("Comment").setup({
+            pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+         })
          -- comment line in insert mode
          vim.keymap.set(
             "i",
