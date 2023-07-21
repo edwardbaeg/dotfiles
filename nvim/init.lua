@@ -6,7 +6,7 @@
 -- upgrade from ts-server to https://github.com/pmizio/typescript-tools.nvim ; this is supposed to be much faster
 -- determine a way to open *.stories for the given file
 
-local vim = vim
+vim = vim
 
 -- Boostrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -165,7 +165,7 @@ require("lazy").setup({ -- lazystart
 
             -- See `:help K` for why this keymap
             -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-            nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+            -- nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
             -- Lesser used LSP functionality
             -- nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
@@ -581,6 +581,7 @@ require("lazy").setup({ -- lazystart
          require("indent_blankline").setup({
             char = "┊",
             show_trailing_blankline_indent = false,
+            show_current_context = true,
          })
       end,
    },
@@ -782,11 +783,6 @@ require("lazy").setup({ -- lazystart
          vim.o.timeout = true
          vim.o.timeoutlen = 200
          require("which-key").setup({
-            plugins = {
-               spelling = {
-                  enabled = true,
-               },
-            },
             operators = {
                gc = "Comments",
                sa = "Surround",
@@ -853,15 +849,15 @@ require("lazy").setup({ -- lazystart
       config = function()
          require("substitute").setup({})
 
-         -- add substitute operator, replaces with register
-         vim.keymap.set("n", "ss", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-         -- vim.keymap.set("n", "S", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-         vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
-
          -- add exchange operator, invoke twice, cancle with <esc>
          vim.keymap.set("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
          vim.keymap.set("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
          vim.keymap.set("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })
+
+         -- add substitute operator, replaces with register
+         vim.keymap.set("n", "ss", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
+         -- vim.keymap.set("n", "S", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
+         vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
       end,
    },
 
@@ -937,6 +933,7 @@ require("lazy").setup({ -- lazystart
          require("mini.cursorword").setup({ -- highlighs the word under the cursor
             delay = 500, -- in ms
          })
+         require("mini.files").setup({}) -- TODO: create a user command for this :lua MiniFiles.open()
       end,
    },
 
@@ -1317,6 +1314,39 @@ require("lazy").setup({ -- lazystart
          },
       },
    },
+
+   {
+      "nvim-pack/nvim-spectre",
+      config = function()
+         require("spectre").setup({})
+      end,
+   },
+
+   {
+      "gbprod/yanky.nvim",
+      config = function()
+         require("yanky").setup({})
+      end,
+      init = function()
+         vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+         vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+         vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+         vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+
+         -- yank ring
+         vim.keymap.set("n", "<c-k>", "<Plug>(YankyCycleForward)")
+         vim.keymap.set("n", "<c-j>", "<Plug>(YankyCycleBackward)")
+      end,
+   },
+
+   {
+      "tomiis4/hypersonic.nvim",
+      event = "CmdlineEnter",
+      cmd = "Hypersonic",
+      config = function()
+         require("hypersonic").setup({})
+      end,
+   },
 }) -- lazyend
 
 -- [[Vim Options]]
@@ -1450,14 +1480,14 @@ vim.api.nvim_create_autocmd("filetype", {
 vim.api.nvim_create_user_command("PrintFile", "echo @%", { desc = "Show the path for the current file" })
 
 -- [[ Highlight on yank ]]
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-   callback = function()
-      vim.highlight.on_yank({ timeout = 500 }) -- timeout default is 150
-   end,
-   group = highlight_group,
-   pattern = "*",
-})
+-- local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+-- vim.api.nvim_create_autocmd("TextYankPost", {
+--    callback = function()
+--       vim.highlight.on_yank({ timeout = 500 }) -- timeout default is 150
+--    end,
+--    group = highlight_group,
+--    pattern = "*",
+-- })
 
 -- [[ Highlights ]]
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
