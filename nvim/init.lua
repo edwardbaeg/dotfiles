@@ -171,9 +171,9 @@ require("lazy").setup({ -- lazystart
             -- nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
             nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
             nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-            nmap("<leader>wl", function()
-               print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end, "[W]orkspace [L]ist Folders")
+            -- nmap("<leader>wl", function()
+            --    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            -- end, "[W]orkspace [L]ist Folders")
 
             -- Create a command `:Format` local to the LSP buffer
             vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
@@ -667,6 +667,9 @@ require("lazy").setup({ -- lazystart
                find_files = {
                   hidden = true,
                },
+               spell_suggest = {
+                  theme = "dropdown",
+               },
             },
             extensions = {
                ["ui-select"] = {
@@ -740,8 +743,9 @@ require("lazy").setup({ -- lazystart
    },
 
    {
-      -- automatically adds closing brackts
+      -- automatically adds closing brackets
       -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening {} {}
+      -- {}
       "windwp/nvim-autopairs",
       config = function()
          require("nvim-autopairs").setup({
@@ -851,7 +855,7 @@ require("lazy").setup({ -- lazystart
 
          -- add substitute operator, replaces with register
          vim.keymap.set("n", "ss", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
-         vim.keymap.set("n", "S", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
+         -- vim.keymap.set("n", "S", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
          vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
 
          -- add exchange operator, invoke twice, cancle with <esc>
@@ -1160,6 +1164,7 @@ require("lazy").setup({ -- lazystart
    {
       -- color f/t targets
       "unblevable/quick-scope",
+      enabled = false,
       init = function()
          vim.cmd([[ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] ]]) -- only show after f/t
       end,
@@ -1264,6 +1269,54 @@ require("lazy").setup({ -- lazystart
       enabled = false,
       opts = {},
    },
+
+   {
+      -- quick navigation, super powered search, extends char motions, remote operations
+      "folke/flash.nvim",
+      event = "VeryLazy",
+      opts = {
+         labels = "asdfqwertgjklh",
+         search = {
+            mode = function(str)
+               return "\\<" .. str
+            end,
+         },
+         modes = {
+            char = {
+               keys = { "f", "t", "T", ";", "," },
+            },
+            treesitter = {
+               labels = "asdfqwertg",
+            },
+         },
+      },
+      keys = {
+         {
+            "F", -- default is s
+            mode = { "n", "x", "o" },
+            function()
+               require("flash").jump()
+            end,
+            desc = "Flash",
+         },
+         {
+            "S",
+            mode = { "n", "o", "x" },
+            function()
+               require("flash").treesitter()
+            end,
+            desc = "Flash Treesitter",
+         },
+         {
+            "r",
+            mode = "o",
+            function()
+               require("flash").remote()
+            end,
+            desc = "Remote Flash",
+         },
+      },
+   },
 }) -- lazyend
 
 -- [[Vim Options]]
@@ -1280,7 +1333,7 @@ vim.o.mouse = "a" -- Enable mouse moedwardbaeg9@gmail.com@de
 vim.wo.cursorline = true -- highlight line with cursor, window scoped for use with reticle.nvim
 
 vim.o.ignorecase = true -- case insensitive searching
-vim.o.smartcase = true -- ...uness /C or capital in search
+vim.o.smartcase = true -- ...unless /C or capital in search
 
 vim.o.undofile = true -- Save undo history
 vim.o.undodir = vim.fn.expand("~/.vim/undo") -- set save directory. This must exist first... I think
