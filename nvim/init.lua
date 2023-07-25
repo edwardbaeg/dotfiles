@@ -7,7 +7,11 @@
 vim = vim
 
 require("lazysetup")
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+   change_detection = {
+      enabled = false,
+   },
+})
 require("keymaps")
 require("settings")
 

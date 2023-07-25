@@ -1,4 +1,4 @@
-return { -- lazystart
+return {
    {
       -- LSP, formatter, and linter config and plugins
       "neovim/nvim-lspconfig",
@@ -487,6 +487,24 @@ return { -- lazystart
    "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
    {
+      "ibhagwan/fzf-lua",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+      config = function()
+         require("fzf-lua").setup({
+            winopts = {
+               preview = {
+                  layout = "vertical",
+               },
+            },
+         })
+      end,
+      init = function()
+         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
+         vim.keymap.set("n", "<c-b>", "<cmd>lua require('fzf-lua').buffers()<cr>", { silent = true })
+      end,
+   },
+
+   {
       -- Fuzzy Finder (files, lsp, etc)
       "nvim-telescope/telescope.nvim",
       branch = "0.1.x",
@@ -506,7 +524,7 @@ return { -- lazystart
          vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")
 
          vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>")
-         vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>")
+         -- vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>")
          vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
          vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
          vim.keymap.set("n", "<c-h>", "<cmd>Telescope help_tags<cr>")
@@ -565,6 +583,8 @@ return { -- lazystart
                },
             },
          })
+
+         require("telescope").load_extension("harpoon")
          require("telescope").load_extension("ui-select")
          require("telescope").load_extension("undo")
          require("telescope").load_extension("lazy")
@@ -1055,29 +1075,6 @@ return { -- lazystart
    },
 
    {
-      "ibhagwan/fzf-lua",
-      dependencies = { "nvim-tree/nvim-web-devicons" },
-      config = function()
-         require("fzf-lua").setup({
-            winopts = {
-               preview = {
-                  layout = "vertical",
-               },
-            },
-         })
-      end,
-      init = function()
-         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
-      end,
-   },
-
-   {
-      "m4xshen/hardtime.nvim",
-      enabled = false,
-      opts = {},
-   },
-
-   {
       -- quick navigation, super powered search, extends char motions, remote operations
       "folke/flash.nvim",
       event = "VeryLazy",
@@ -1153,20 +1150,45 @@ return { -- lazystart
    },
 
    {
-      "tomiis4/hypersonic.nvim",
-      enabled = false, -- adds some search ui??
-      event = "CmdlineEnter",
-      cmd = "Hypersonic",
-      config = function()
-         require("hypersonic").setup({})
-      end,
-   },
-
-   {
       -- Highlight TODO, HACK, BUG, etc
       -- TODO: foo
       -- FIXME: bar
       "folke/todo-comments.nvim",
       opts = {},
+   },
+
+   { -- adds kakoune/helix style select first editing
+      "00sapo/visual.nvim",
+      enabled = false,
+      config = function()
+         require("visual").setup({})
+      end,
+      event = "VeryLazy", -- this is for making sure our keymaps are applied after the others: we call the previous mapppings, but other plugins/configs usually not!
+   },
+
+   {
+      -- connect with ghosttext brwoser extension
+      "subnut/nvim-ghost.nvim",
+   },
+
+   {
+      -- show code context at the top of the buffer
+      "nvim-treesitter/nvim-treesitter-context",
+      config = function()
+         require("treesitter-context").setup({})
+      end,
+   },
+
+   {
+      "theprimeagen/harpoon",
+      config = function()
+         require("harpoon").setup({})
+
+         vim.api.nvim_create_user_command("HarpoonAddFile", "lua require('harpoon.mark').add_file()", {})
+         vim.api.nvim_create_user_command("HarpoonUI", "lua require('harpoon.ui').toggle_quick_menu()", {})
+
+         vim.keymap.set("n", "<leader>ha", "<cmd>HarpoonAddFile<cr>", {})
+         vim.keymap.set("n", "<leader>hu", "<cmd>HarpoonUI<cr>", {})
+      end,
    },
 } -- lazyend
