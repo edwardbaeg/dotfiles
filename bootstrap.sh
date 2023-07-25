@@ -40,8 +40,8 @@ function symlink_file_or_folder () {
 }
 
 symlink_file_or_folder \
-    "$DIR/nvim/init.lua" \
-    "$HOME/.config/nvim/init.lua" \
+    $DIR/nvim \
+    $HOME/.config/nvim \
     nvim
 
 symlink_file_or_folder \
