@@ -1,80 +1,4 @@
--- Boostrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-   vim.fn.system({
-      "git",
-      "clone",
-      "--filter=blob:none",
-      "https://github.com/folke/lazy.nvim.git",
-      "--branch=stable",
-      lazypath,
-   })
-end
-vim.opt.rtp:prepend(lazypath)
-
--- NOTE: set leader before lazy.nvim so mappings are correct
-vim.g.mapleader = " " -- Set <space> as the leader key
-vim.g.maplocalleader = " "
-vim.o.termguicolors = true -- needs to be set before colorizer plugins
-
-vim.keymap.set("n", "<leader>la", ":Lazy<CR>")
-
-require("lazy").setup({ -- lazystart
-   {
-      -- colorscheme
-      "catppuccin/nvim",
-      name = "catppuccin",
-      lazy = false, -- load main colorscheme during startup
-      priority = 1000, -- load before other plugins change highlights
-      config = function()
-         require("catppuccin").setup({
-            flavour = "frappe",
-            transparent_background = true,
-            styles = {
-               keywords = { "italic" },
-               operators = { "italic" },
-            },
-         })
-         vim.cmd.colorscheme("catppuccin")
-      end,
-   },
-
-   {
-      -- colorscheme
-      "navarasu/onedark.nvim",
-      lazy = true,
-      config = function()
-         require("onedark").setup({
-            style = "cool", -- https://github.com/navarasu/onedark.nvim#themes
-            toggle_style_key = "<leader>ts", -- cycle through all styles
-            transparent = true, -- remove background
-            code_style = {
-               keywords = "italic",
-            },
-            lualine = {
-               transparent = true,
-            },
-            diagnostics = {
-               darker = true,
-               background = false,
-            },
-         })
-         -- vim.cmd[[colorscheme onedark]]
-      end,
-   },
-
-   {
-      -- colorscheme
-      "folke/tokyonight.nvim",
-      lazy = true,
-      config = function()
-         require("tokyonight").setup({
-            transparent = true, -- don't set a background color
-         })
-         -- vim.cmd[[colorscheme tokyonight-night]]
-      end,
-   },
-
+return { -- lazystart
    {
       -- LSP, formatter, and linter config and plugins
       "neovim/nvim-lspconfig",
@@ -544,46 +468,6 @@ require("lazy").setup({ -- lazystart
    },
 
    {
-      -- statusline
-      "nvim-lualine/lualine.nvim",
-      config = function()
-         require("lualine").setup({
-            options = {
-               icons_enabled = false,
-               theme = "onedark",
-               component_separators = "|",
-               section_separators = "",
-            },
-            extensions = {
-               "lazy", -- doesn't seem to do anything?
-               "mundo",
-               "trouble",
-            },
-            sections = {
-               lualine_a = { "mode" },
-               lualine_b = { "branch", "diff", "diagnostics" },
-               lualine_c = { { "filename", path = 1 }, "searchcount" },
-               lualine_x = { "encoding", "fileformat", "filetype" },
-               lualine_y = { "progress" },
-               lualine_z = { "location" },
-            },
-         })
-      end,
-   },
-
-   {
-      -- Add indentation guides
-      "lukas-reineke/indent-blankline.nvim",
-      config = function()
-         require("indent_blankline").setup({
-            char = "┊",
-            show_trailing_blankline_indent = false,
-            show_current_context = true,
-         })
-      end,
-   },
-
-   {
       -- comment
       "numToStr/Comment.nvim",
       config = function()
@@ -795,51 +679,6 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   {
-      -- fancier tabline
-      "akinsho/bufferline.nvim",
-      dependencies = "nvim-tree/nvim-web-devicons",
-      enabled = not vim.g.started_by_firenvim,
-      config = function()
-         local background_color = "#0a0a0a"
-         require("bufferline").setup({
-            options = {
-               numbers = function(opts)
-                  -- return string.format("%s·%s", opts.raise(opts.ordinal), opts.lower(opts.id))
-                  return opts.raise(opts.ordinal)
-               end,
-               show_buffer_close_icons = false,
-               show_close_icon = false,
-               separator_style = { "", "" }, -- no separators
-               modified_icon = "+",
-            },
-            highlights = {
-               fill = { -- the backgruond of the whole bar
-                  bg = background_color,
-               },
-               background = { -- for background "tabs"
-                  bg = background_color,
-               },
-               buffer_selected = {
-                  -- active buffer
-                  bold = true,
-                  italic = false,
-                  fg = "white",
-               },
-               numbers = { -- background
-                  bg = background_color,
-               },
-               modified_selected = { -- current
-                  fg = "yellow",
-               },
-               modified = { -- background
-                  fg = "yellow",
-               },
-            },
-         })
-      end,
-   },
-
    "christoomey/vim-sort-motion", -- add sort operator
 
    {
@@ -986,39 +825,6 @@ require("lazy").setup({ -- lazystart
    },
 
    {
-      -- smooth scrolling
-      "karb94/neoscroll.nvim",
-      -- enabled = false,
-      config = function()
-         require("neoscroll").setup({
-            mappings = {}, -- do not set default mappings... only use for <c-d/u>
-            easing_function = "sine",
-         })
-
-         -- speed up the animation time https://github.com/karb94/neoscroll.nvim/pull/68
-         local t = {}
-         -- Syntax: t[keys] = {function, {function arguments}}
-         t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "100" } }
-         t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "100" } }
-
-         require("neoscroll.config").set_mappings(t)
-      end,
-   },
-
-   {
-      -- add visual scrollbar
-      "petertriho/nvim-scrollbar",
-      -- enabled = false,
-      config = function()
-         require("scrollbar").setup({
-            handle = {
-               color = "black",
-            },
-         })
-      end,
-   },
-
-   {
       -- wrapper for session commands
       "Shatur/neovim-session-manager",
       config = function()
@@ -1154,12 +960,6 @@ require("lazy").setup({ -- lazystart
       end,
    },
 
-   {
-      -- use multiple virtual lines to show diagnostics
-      "Maan2003/lsp_lines.nvim",
-      enabled = false, -- it's a bit noisy
-   },
-
    "tpope/vim-eunuch", -- adds unix shell commands to vim, eg :Move, :Mkdir
    {
       -- adds icons to netrw
@@ -1179,6 +979,7 @@ require("lazy").setup({ -- lazystart
    {
       -- live scratchpad
       "metakirby5/codi.vim",
+      enabled = false,
       init = function()
          vim.cmd([[ let g:codi#rightalign=1 ]])
       end,
@@ -1362,9 +1163,10 @@ require("lazy").setup({ -- lazystart
    },
 
    {
+      -- Highlight TODO, HACK, BUG, etc
       -- TODO: foo
       -- FIXME: bar
       "folke/todo-comments.nvim",
       opts = {},
    },
-}) -- lazyend
+} -- lazyend

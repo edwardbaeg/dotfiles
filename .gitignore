@@ -1,3 +1,4 @@
 mpv/watch_later
 .DS_Store
 __pycache__
+nvim/lazy-lock.json
