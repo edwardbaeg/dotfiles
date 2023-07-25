@@ -1014,7 +1014,11 @@ require("lazy").setup({ -- lazystart
       "petertriho/nvim-scrollbar",
       -- enabled = false,
       config = function()
-         require("scrollbar").setup({})
+         require("scrollbar").setup({
+            handle = {
+               color = "black",
+            },
+         })
       end,
    },
 
@@ -1288,6 +1292,9 @@ require("lazy").setup({ -- lazystart
             end,
          },
          modes = {
+            search = {
+               enabled = false,
+            },
             char = {
                keys = { "f", "t", "T", ";", "," },
             },
@@ -1343,18 +1350,26 @@ require("lazy").setup({ -- lazystart
          vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
 
          -- yank ring
-         vim.keymap.set("n", "<c-k>", "<Plug>(YankyCycleForward)")
-         vim.keymap.set("n", "<c-j>", "<Plug>(YankyCycleBackward)")
+         vim.keymap.set("n", "<c-j>", "<Plug>(YankyCycleForward)")
+         vim.keymap.set("n", "<c-k>", "<Plug>(YankyCycleBackward)")
       end,
    },
 
    {
       "tomiis4/hypersonic.nvim",
+      enabled = false, -- adds some search ui??
       event = "CmdlineEnter",
       cmd = "Hypersonic",
       config = function()
          require("hypersonic").setup({})
       end,
+   },
+
+   {
+      -- TODO: foo
+      -- FIXME: bar
+      "folke/todo-comments.nvim",
+      opts = {},
    },
 }) -- lazyend
 
@@ -1362,7 +1377,7 @@ require("lazy").setup({ -- lazystart
 vim.o.lazyredrew = true -- improve performance
 vim.o.hlsearch = false -- Set highlight on search
 vim.o.number = true -- Make line numbers default
-vim.o.relativenumber = true -- show relative line numbers
+-- vim.o.relativenumber = true -- show relative line numbers
 vim.o.wrap = false -- Don't wrap lines
 vim.o.breakindent = true -- wrapped lines will have consistent indents
 vim.o.updatetime = 250 -- Decrease update time
