@@ -1,6 +1,6 @@
 -- [[Vim Options]]
-vim.o.lazyredrew = true -- improve performance
-vim.o.hlsearch = false -- Set highlight on search
+-- vim.o.lazyredrew = true -- improve performance?
+vim.o.hlsearch = true -- Set highlight on search
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
 vim.o.wrap = false -- Don't wrap lines
@@ -34,14 +34,6 @@ vim.api.nvim_create_autocmd("FileType", {
    end,
 })
 
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = "lua",
--- 	callback = function()
--- 		vim.api.nvim_buf_set_option(0, "tabstop", 3)
--- 		vim.api.nvim_buf_set_option(0, "tabstop", 3)
--- 	end,
--- })
-
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- vim.o.foldcolumn = '2' -- show fold nesting
@@ -54,14 +46,6 @@ vim.api.nvim_create_autocmd("FileType", {
 --   au BufWinEnter ?* silent! loadview 1
 -- augroup END
 -- ]])
-
--- [[ Firenvim overrides ]]
-if vim.g.started_by_firenvim then
-   vim.o.wrap = true
-   vim.o.number = false
-   vim.o.relativenumber = false
-   vim.o.spell = true
-end
 
 -- [[ Smart clipboard ]]
 vim.cmd([[
@@ -112,6 +96,7 @@ vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background colo
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" })
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
+-- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" }) -- TODO: only highlight trailing whitespace
 
 vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db" }) -- eg +, =, || only do for js?
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -- eg +, =, || only do for js?
@@ -121,9 +106,9 @@ vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -
 
 -- [[ Legacy config syntax ]]
 vim.cmd([[
-set showmatch
-set matchtime=2 " multiple of 100ms
-highlight Whitespace ctermbg=white " make whitespace easier to see
+" set showmatch " show matching bracket
+" set matchtime=2 " multiple of 100ms
+
 set scrolloff=24 " buffer top and bottom
 set linebreak " don't break in the middle of a word
 
@@ -138,13 +123,13 @@ set inccommand=nosplit " live substitutions
 nnoremap g; g;zz
 " nnoremap gi gi<esc>zzi
 
-" center after search
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
+" center after search "don't really need this with scrolloffset
+" nnoremap n nzz
+" nnoremap N Nzz
+" nnoremap * *zz
+" nnoremap # #zz
+" nnoremap g* g*zz
+" nnoremap g# g#zz
 
 " Remap move cursor to ends of lines H / L
 noremap <S-h> ^

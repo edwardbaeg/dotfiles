@@ -1,4 +1,44 @@
+-- plugins that add visual elements to the vim ui
 return {
+   {
+      -- show outline of symbols
+      "simrat39/symbols-outline.nvim", -- previews are broken??
+      config = function()
+         require("symbols-outline").setup({
+            -- auto_preview = true,
+         })
+         vim.keymap.set("n", "so", "<cmd>SymbolsOutline<cr>")
+      end,
+   },
+
+   {
+      -- lists of diagnostics, references, telescopes, quickfix, and location lists
+      "folke/trouble.nvim",
+      dependencies = "nvim-tree/nvim-web-devicons",
+      config = true,
+      cmd = "Trouble", -- lazy load
+   },
+
+   {
+      -- shows possible key bindings
+      "folke/which-key.nvim",
+      config = function()
+         vim.o.timeout = true
+         vim.o.timeoutlen = 200
+         require("which-key").setup({
+            operators = {
+               gc = "Comments",
+               sa = "Surround",
+            },
+            window = {
+               border = "single",
+               margin = { 0, 0, 0, 0 },
+               padding = { 1, 0, 1, 0 },
+            },
+         })
+      end,
+   },
+
    {
       -- statusline
       "nvim-lualine/lualine.nvim",
@@ -27,6 +67,7 @@ return {
          })
       end,
    },
+
    {
       -- Add indentation guides
       "lukas-reineke/indent-blankline.nvim",
@@ -38,6 +79,7 @@ return {
          })
       end,
    },
+
    {
       -- fancier tabline
       "akinsho/bufferline.nvim",
@@ -82,6 +124,7 @@ return {
          })
       end,
    },
+
    {
       -- smooth scrolling
       "karb94/neoscroll.nvim",
@@ -101,6 +144,7 @@ return {
          require("neoscroll.config").set_mappings(t)
       end,
    },
+
    {
       -- add visual scrollbar
       "petertriho/nvim-scrollbar",
@@ -112,5 +156,34 @@ return {
             },
          })
       end,
+   },
+
+   {
+      -- start page for nvim
+      "goolord/alpha-nvim",
+      dependencies = "nvim-tree/nvim-web-devicons",
+      config = function()
+         require("alpha").setup(require("alpha.themes.startify").config)
+      end,
+   },
+
+   {
+      -- color the line separating windows
+      "nvim-zh/colorful-winsep.nvim",
+      config = function()
+         require("colorful-winsep").setup({
+            highlight = {
+               bg = "none",
+               fg = "#00667c",
+            },
+            interval = 1000,
+         })
+      end,
+   },
+
+   {
+      -- adds icons to netrw
+      "prichrd/netrw.nvim",
+      config = true,
    },
 }
