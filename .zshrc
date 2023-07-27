@@ -79,6 +79,10 @@ export LESS="$LESS -FRXK"
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
+
+# -- OneAdvisory -------------------------------------------------------------------
+# export AWS_PROFILE=oa-dev
+
 # -- Plugins -------------------------------------------------------------------
 
 # https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
@@ -351,3 +355,7 @@ export FZF_DEFAULT_COMMAND='rg --files --ignore'
 
 # setup zoxide completions. must be called after compinit
 eval "$(zoxide init zsh)"
+
+
+
+eval "$(direnv hook zsh)"
