@@ -1,3 +1,4 @@
+-- collection of colorschemes
 return {
    {
       -- colorscheme
@@ -52,5 +53,10 @@ return {
          })
          -- vim.cmd[[colorscheme tokyonight-night]]
       end,
+   },
+
+   {
+      -- bold and contrasty dark theme with pinks, blues, and purples
+      "nyoom-engineering/oxocarbon.nvim",
    },
 }

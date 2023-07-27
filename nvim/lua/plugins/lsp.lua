@@ -1,3 +1,4 @@
+-- LSP and completion plugins
 return {
    {
       -- LSP, formatter, and linter config and plugins

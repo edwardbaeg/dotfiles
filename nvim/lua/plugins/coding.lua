@@ -1,3 +1,4 @@
+-- plugins that focus on improving coding and typing experience
 return {
    "christoomey/vim-sort-motion", -- add sort operator
    "peitalin/vim-jsx-typescript", -- better support for react?

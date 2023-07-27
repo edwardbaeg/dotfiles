@@ -1,3 +1,4 @@
+-- misc plugins
 return {
    {
       -- persist cursor location
@@ -52,4 +53,4 @@ return {
          vim.keymap.set("n", "<leader>hu", "<cmd>HarpoonUI<cr>", {})
       end,
    },
-} -- lazyend
+}

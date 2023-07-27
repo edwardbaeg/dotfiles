@@ -1,3 +1,4 @@
+-- fuzzy finders
 return {
    {
       "ibhagwan/fzf-lua",
