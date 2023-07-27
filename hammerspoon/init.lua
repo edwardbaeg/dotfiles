@@ -81,7 +81,7 @@ applicationWatcher = hs.application.watcher
    :start()
 
 -- Not good
--- hs.window.highlight.ui.windowShownFlashColor = {0,1,0,0.8} -- flash color when a window is shown (created or unhidden)
+-- hs.window.highlight.ui.windowShownFlashColor = { 0, 1, 0, 0.8 } -- flash color when a window is shown (created or unhidden)
 -- hs.window.highlight.ui.flashDuration = 0.3
 
 -- Reload Config ---------------------------------------------------------
