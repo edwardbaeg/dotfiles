@@ -102,7 +102,7 @@ return {
          -- these will be automatically installed
          local language_servers = {
             -- vls = {}, -- vue v2
-            volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
+            -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
             tsserver = {},
             lua_ls = {
                Lua = {
