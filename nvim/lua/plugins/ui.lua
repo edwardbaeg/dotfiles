@@ -34,6 +34,7 @@ return {
                border = "single",
                margin = { 0, 0, 0, 0 },
                padding = { 1, 0, 1, 0 },
+               winblend = 10,
             },
          })
       end,

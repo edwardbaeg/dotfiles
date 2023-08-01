@@ -81,15 +81,26 @@ vim.api.nvim_create_autocmd("filetype", {
 
 vim.api.nvim_create_user_command("PrintFile", "echo @%", { desc = "Show the path for the current file" })
 
--- [[ Highlight on yank ]]
--- local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
--- vim.api.nvim_create_autocmd("TextYankPost", {
---    callback = function()
---       vim.highlight.on_yank({ timeout = 500 }) -- timeout default is 150
---    end,
---    group = highlight_group,
---    pattern = "*",
--- })
+-- show cursor line only in active window
+-- https://github.com/folke/dot/blob/master/nvim/lua/config/autocmds.lua
+vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+   callback = function()
+      local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
+      if ok and cl then
+         vim.wo.cursorline = true
+         vim.api.nvim_win_del_var(0, "auto-cursorline")
+      end
+   end,
+})
+vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+   callback = function()
+      local cl = vim.wo.cursorline
+      if cl then
+         vim.api.nvim_win_set_var(0, "auto-cursorline", cl)
+         vim.wo.cursorline = false
+      end
+   end,
+})
 
 -- [[ Highlights ]]
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key

@@ -19,12 +19,19 @@ vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file
 
 vim.keymap.set("n", "<c-f>", "za") -- toggle folds
 
--- emacs style
+-- emacs style buffer movement
 vim.keymap.set("n", "<leader>bn", ":bn<cr>")
 vim.keymap.set("n", "<leader>bp", ":bp<cr>")
 vim.keymap.set("n", "<leader>bd", ":bd<cr>")
 
+-- emacs style window movement
 vim.keymap.set("n", "<leader>wj", "<cmd>wincmd j<cr>")
 vim.keymap.set("n", "<leader>wk", "<cmd>wincmd k<cr>")
 vim.keymap.set("n", "<leader>wh", "<cmd>wincmd h<cr>")
 vim.keymap.set("n", "<leader>wl", "<cmd>wincmd l<cr>")
+
+-- Move to window using the arrow keys
+vim.keymap.set("n", "<left>", "<C-w>h")
+vim.keymap.set("n", "<down>", "<C-w>j")
+vim.keymap.set("n", "<up>", "<C-w>k")
+vim.keymap.set("n", "<right>", "<C-w>l")
