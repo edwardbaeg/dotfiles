@@ -1,6 +1,6 @@
 # dotfiles
 
-This is my neovim based terminal development setup. Always a work progress!
+This is my neovim and terminal based development setup. Always a work progress!
 ![screenshot](assets/main.png)
 
 # Neovim

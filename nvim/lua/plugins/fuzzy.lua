@@ -81,7 +81,7 @@ return {
                   -- previewer = true,
                },
                find_files = {
-                  hidden = true,
+                  -- hidden = true,
                },
                spell_suggest = {
                   theme = "dropdown",

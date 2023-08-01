@@ -1,4 +1,4 @@
--- local vim = vim
+-- [[ NVIM CONFIG ROOT ]]
 
 require("lazysetup")
 require("lazy").setup("plugins", { change_detection = { enabled = false } })
@@ -15,6 +15,7 @@ require("settings")
 -- Buffers/Splits/Windows
 --  - move window: `<c-w>HJKL`
 --  - move buffer to split where # is the buffer id, :buffers: :vert sb#
+--  - open in split with <c-v/x>
 -- Find and replace
 --  - when in a visual block, omit the `%`: <'>'/s
 -- Files

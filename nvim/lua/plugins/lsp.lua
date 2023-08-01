@@ -1,4 +1,4 @@
--- LSP and completion plugins
+-- LSP, completion, snippets
 return {
    {
       -- LSP, formatter, and linter config and plugins
@@ -162,7 +162,6 @@ return {
    {
       -- Autocomplete menu, snippets, and AI completion
       "hrsh7th/nvim-cmp",
-      enabled = not vim.g.started_by_firenvim,
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
@@ -319,7 +318,7 @@ return {
             }),
          })
          luasnip.add_snippets("all", {
-            luasnip.snippet("cl", {
+            luasnip.snippet("cll", {
                luasnip.text_node("console.log("),
                luasnip.insert_node(1, "val"),
                luasnip.text_node(");"),

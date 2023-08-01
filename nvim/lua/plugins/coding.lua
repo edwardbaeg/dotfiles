@@ -70,7 +70,7 @@ return {
                normal_cur = false,
                normal_line = false,
                normal_cur_line = false,
-               visual = "sa", -- default is ys
+               visual = "A", -- default is S
                visual_line = false,
             },
             aliases = {

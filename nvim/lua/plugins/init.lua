@@ -36,6 +36,7 @@ return {
          highlight = {
             keyword = "fg",
             after = "",
+            pattern = [[.*<(KEYWORDS)\s*]], -- removed the `:` from the default pattern
          },
       },
    },

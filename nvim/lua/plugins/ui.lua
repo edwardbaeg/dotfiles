@@ -83,7 +83,6 @@ return {
       -- fancier tabline
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
-      enabled = not vim.g.started_by_firenvim,
       config = function()
          local background_color = "#0a0a0a"
          require("bufferline").setup({
@@ -183,6 +182,11 @@ return {
    {
       -- adds icons to netrw
       "prichrd/netrw.nvim",
+      config = true,
+   },
+
+   {
+      "nvim-tree/nvim-tree.lua",
       config = true,
    },
 }

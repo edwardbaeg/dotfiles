@@ -20,13 +20,13 @@ return {
    },
 
    {
-      -- colorscheme
+      -- green, blues, purples. Reminds me of the ocean
       "navarasu/onedark.nvim",
-      lazy = true,
+      -- lazy = true,
       config = function()
          require("onedark").setup({
             style = "cool", -- https://github.com/navarasu/onedark.nvim#themes
-            toggle_style_key = "<leader>ts", -- cycle through all styles
+            -- toggle_style_key = "<leader>ts", -- cycle through all styles
             transparent = true, -- remove background
             code_style = {
                keywords = "italic",
@@ -39,19 +39,19 @@ return {
                background = false,
             },
          })
-         -- vim.cmd[[colorscheme onedark]]
+         -- vim.cmd([[colorscheme onedark]])
       end,
    },
 
    {
       -- colorscheme
       "folke/tokyonight.nvim",
-      lazy = true,
+      -- lazy = true,
       config = function()
          require("tokyonight").setup({
             transparent = true, -- don't set a background color
          })
-         -- vim.cmd[[colorscheme tokyonight-night]]
+         -- vim.cmd([[colorscheme tokyonight-night]])
       end,
    },
 
