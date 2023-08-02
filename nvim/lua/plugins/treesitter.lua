@@ -34,6 +34,9 @@ return {
       config = function()
          require("nvim-ts-autotag").setup({}) -- don't forget to run :TSInstall tsx
          require("nvim-treesitter.configs").setup({
+            matchup = {
+               enable = true,
+            },
             autotag = {
                enable = true,
             },

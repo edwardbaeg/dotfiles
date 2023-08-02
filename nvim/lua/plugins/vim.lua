@@ -199,4 +199,9 @@ return {
          vim.keymap.set("n", "<c-k>", "<Plug>(YankyCycleBackward)")
       end,
    },
+
+   { -- extend % matching
+      "andymass/vim-matchup",
+      config = true,
+   },
 }
