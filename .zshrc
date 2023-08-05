@@ -66,7 +66,7 @@ if type brew &>/dev/null; then
     FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
     autoload -Uz compinit
-    compinit
+    # compinit
 fi
 
 # Add homebrew's sbin to path
@@ -168,10 +168,13 @@ alias gd3="git diff HEAD~3"
 # from zsh git-open plugin
 alias gop="git open"
 
-alias glmm="git checkout master && git pull && git checkout - && git merge master"
+# alias glmm="git checkout master && git pull && git checkout - && git merge master"
 alias grpo="git remote prune origin"
-alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git branch -d"
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
+# alias gbdm="git branch --merged master | grep -v '\* master' | xargs -n 1 git branch -d"
+
+# https://stackoverflow.com/questions/43489303/how-can-i-delete-all-git-branches-which-have-been-squash-and-merge-via-github
+# alias gbdm="git checkout -q master && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=\$(git merge-base master $branch) && [[ \$(git cherry master \$(git commit-tree \$(git rev-parse \"$branch^\{tree\}\") -p $mergeBase -m _)) == \"-\"* ]] && echo \"$branch is merged into master and can be deleted\"; done"
 
 #-- commands
 alias py="python3"
