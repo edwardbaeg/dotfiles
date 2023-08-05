@@ -191,8 +191,6 @@ return {
       init = function()
          vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
          vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-         vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-         vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
 
          -- yank ring
          vim.keymap.set("n", "<c-j>", "<Plug>(YankyCycleForward)")
@@ -200,7 +198,7 @@ return {
       end,
    },
 
-   { -- extend % matching
+   { -- extend % matching -- this is a vimscript plugin with treesitter integration
       "andymass/vim-matchup",
       config = true,
    },
