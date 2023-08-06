@@ -32,13 +32,14 @@ return {
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
       end,
       config = function()
-         require("nvim-ts-autotag").setup({}) -- don't forget to run :TSInstall tsx
+         -- don't forget to run :TSInstall tsx
          require("nvim-treesitter.configs").setup({
             matchup = {
                enable = true,
             },
             autotag = {
                enable = true,
+               enable_close_on_slash = false,
             },
             ensure_installed = {
                "c",
