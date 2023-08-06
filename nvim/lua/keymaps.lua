@@ -49,3 +49,7 @@ vim.keymap.set("n", "<left>", "<C-w>h")
 vim.keymap.set("n", "<down>", "<C-w>j")
 vim.keymap.set("n", "<up>", "<C-w>k")
 vim.keymap.set("n", "<right>", "<C-w>l")
+
+-- Abbreviations
+-- TODO: in a future release, this can be refactored to: vim.keymap.set('ca', 'foo', 'bar')
+vim.cmd([[ab functino function]])
