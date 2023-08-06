@@ -144,6 +144,8 @@ vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -
 -- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
 
+vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#bbbbbb" }) -- highlight codeium suggestions
+
 -- [[ Legacy config syntax ]]
 vim.cmd([[
 

@@ -58,7 +58,7 @@ return {
             sections = {
                lualine_a = { "mode" },
                lualine_b = { "branch", "diff", "diagnostics" },
-               lualine_c = { { "filename", path = 1 }, "searchcount" },
+               lualine_c = { { "filename", path = 1 }, "searchcount", "codeium#GetStatusString" },
                -- lualine_x = { "encoding", "fileformat", "filetype" },
                lualine_x = { "filetype" },
                lualine_y = { "progress" },

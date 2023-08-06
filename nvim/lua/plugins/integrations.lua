@@ -79,7 +79,6 @@ return {
          vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
 
          -- set up ranger
-         -- TODO: fix opening files
          -- local ranger = Terminal:new({
          --    cmd = "ranger", --[[ hidden = true ]]
          -- }) -- hidden terminals won't resize
