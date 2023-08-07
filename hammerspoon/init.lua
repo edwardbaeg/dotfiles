@@ -124,14 +124,15 @@ end)
 
 hs.hotkey.bind(hyperkey, "9", function()
    -- success = hs.application.launchOrFocus("Google Chrome")
-   local success = hs.application.launchOrFocus("Microsoft Edge")
+   local success = hs.application.launchOrFocus("Google Chrome")
 
    print(success)
 end)
 
 hs.hotkey.bind({ "cmd", "shift", "ctrl" }, "9", function()
    -- success = hs.application.launchOrFocus("Google Chrome")
-   local success = hs.application.launchOrFocus("Google Chrome")
+   local success = hs.application.launchOrFocus("Microsoft Edge")
+
    print(success)
 end)
 
@@ -474,11 +475,20 @@ wifiWatcher:start()
 --  Media remaps ---------------------------------------------------------
 --------------------------------------------------------------------------
 
--- DOESNT WORK
--- Mute
--- hs.hotkey.bind(hyperkey, "/", function()
---   hs.eventtap.event.newSystemKeyEvent("MUTE", true)
--- end);
+hs.hotkey.bind(hyperkey, ".", function()
+   hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
+   hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
+end)
+
+hs.hotkey.bind(hyperkey, ",", function()
+   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
+   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
+end)
+
+hs.hotkey.bind(hyperkey, "/", function()
+   hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
+   hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
+end)
 
 -- Notes -----------------------------------------------------------------
 --------------------------------------------------------------------------
