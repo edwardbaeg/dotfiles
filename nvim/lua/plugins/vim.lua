@@ -20,7 +20,7 @@ return {
       "kevinhwang91/nvim-hlslens",
       enabled = true,
       config = function()
-         -- require('scrollbar.handlers.search').setup({}) -- integrate with scrollbar... this doesn't work!!!
+         require("scrollbar.handlers.search").setup({}) -- integrate with nvim-scrollbar
          require("hlslens").setup({
             calm_down = true, -- this doesn't work? clear highlights wen cursor leaves
             nearest_only = true,
@@ -115,19 +115,19 @@ return {
    },
 
    {
-      -- color f/t targets
-      "unblevable/quick-scope",
-      enabled = false,
-      init = function()
-         vim.cmd([[ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] ]]) -- only show after f/t
-      end,
-   },
-
-   {
       -- file explorer as nvim buffer
       "stevearc/oil.nvim",
       config = function()
          require("oil").setup({})
+      end,
+   },
+
+   {
+      -- color f/t targets
+      "unblevable/quick-scope",
+      enabled = true,
+      init = function()
+         vim.cmd([[ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T'] ]]) -- only show after f/t
       end,
    },
 
@@ -147,6 +147,7 @@ return {
                enabled = false,
             },
             char = {
+               enabled = false,
                keys = { "f", "t", "T", ";", "," },
             },
             treesitter = {

@@ -103,6 +103,7 @@ return {
          local language_servers = {
             -- vls = {}, -- vue v2
             -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
+            eslint = {},
             tsserver = {},
             lua_ls = {
                Lua = {
@@ -132,7 +133,12 @@ return {
 
          -- Set up formatting
          require("mason-null-ls").setup({
-            ensure_installed = { "prettier", "stylua", "beautysh" },
+            ensure_installed = {
+               -- "prettier",
+               "stylua",
+               "beautysh",
+               "eslint",
+            },
          })
 
          local null_ls = require("null-ls")

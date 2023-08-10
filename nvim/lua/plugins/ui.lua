@@ -154,6 +154,11 @@ return {
             handle = {
                color = "black",
             },
+            handlers = {
+               cursor = false,
+               gitsigns = true,
+               search = true,
+            },
          })
       end,
    },
