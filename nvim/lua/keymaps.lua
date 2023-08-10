@@ -1,5 +1,7 @@
 -- [[ Keymaps ]]
 vim.keymap.set("i", "jk", "<Esc>") -- leave insert mode
+vim.keymap.set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
+
 vim.keymap.set("n", "_", '"_') -- empty register shortcut
 vim.keymap.set("n", "H", "^") -- go to start of line
 vim.keymap.set("n", "L", "$") -- go to start of line
