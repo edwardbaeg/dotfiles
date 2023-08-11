@@ -10,6 +10,10 @@ vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky
 vim.keymap.set("n", "<c-f>", "za") -- toggle folds
 
+-- macros
+vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
+vim.keymap.set("n", "q", "<nop>") -- disable q for macros as it interferes with completions
+
 -- leader keymaps
 vim.keymap.set("n", "<leader>+", "<c-a>") -- increment and decrement
 vim.keymap.set("n", "<leader>-", "<c-x>")
