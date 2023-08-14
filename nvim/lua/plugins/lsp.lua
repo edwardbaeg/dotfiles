@@ -34,6 +34,11 @@ return {
                code_action = "⚡", -- "💡",
                hover = " ",
             },
+            finder = {
+               keys = {
+                  vsplit = "v", -- open in vertical split
+               },
+            },
          })
 
          local keymap = vim.keymap.set
