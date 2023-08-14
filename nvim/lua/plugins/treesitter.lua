@@ -1,26 +1,6 @@
 -- plugins that use nvim treesitter
 return {
    {
-      -- comment
-      "numToStr/Comment.nvim",
-      dependencies = {
-         "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
-      },
-      config = function()
-         require("Comment").setup({
-            pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-         })
-         -- comment line in insert mode
-         vim.keymap.set(
-            "i",
-            "<c-g>c",
-            "<esc><Plug>(comment_toggle_linewise_current)",
-            { noremap = false, silent = true }
-         )
-      end,
-   },
-
-   {
       -- Highlight, edit, and navigate code
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
@@ -122,6 +102,33 @@ return {
                },
             },
          })
+      end,
+   },
+
+   { -- consistently color function arguments. Works without LSP
+      "m-demare/hlargs.nvim",
+      config = function()
+         require("hlargs").setup({})
+      end,
+   },
+
+   {
+      -- comment
+      "numToStr/Comment.nvim",
+      dependencies = {
+         "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
+      },
+      config = function()
+         require("Comment").setup({
+            pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+         })
+         -- comment line in insert mode
+         vim.keymap.set(
+            "i",
+            "<c-g>c",
+            "<esc><Plug>(comment_toggle_linewise_current)",
+            { noremap = false, silent = true }
+         )
       end,
    },
 
