@@ -183,4 +183,13 @@ return {
          require("treesitter-context").setup({})
       end,
    },
+
+   { -- quickly select wrapping text objects with <cr>
+      "sustech-data/wildfire.nvim",
+      event = "VeryLazy",
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+      config = function()
+         require("wildfire").setup()
+      end,
+   },
 }
