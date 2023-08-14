@@ -43,6 +43,12 @@ return {
    {
       -- connect with ghosttext brwoser extension
       "subnut/nvim-ghost.nvim",
+      config = function()
+         vim.cmd([[
+            let g:nvim_ghost_use_script = 1
+            let g:nvim_ghost_python_executable = '/usr/bin/python3'
+         ]])
+      end,
    },
 
    {
