@@ -142,7 +142,7 @@ end)
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
 hs.grid.GRIDWIDTH = 6
-hs.grid.GRIDHEIGHT = 3
+hs.grid.GRIDHEIGHT = 4
 
 -- show interactive modal interface for a 3x3 grid
 hs.hotkey.bind(hyperkey, "G", function()
