@@ -93,3 +93,8 @@ symlink_file_or_folder \
     $DIR/lazygit/config.yml \
     $HOME/.config/lazygit/config.yml \
     lazygit
+
+symlink_file_or_folder \
+    $DIR/.wezterm.lua \
+    $HOME/.wezterm.lua \
+    wezterm
