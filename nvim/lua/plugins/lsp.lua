@@ -6,12 +6,14 @@ return {
       dependencies = {
          "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
+         "jose-elias-alvarez/null-ls.nvim", -- set up formatters and linters
+         "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
+
+         "pmizio/typescript-tools.nvim", -- native lua typescript support
+
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
          { "j-hui/fidget.nvim", tag = "legacy" }, -- small nvim-lsp progress ui
          "folke/neodev.nvim", -- automatically configures lua-language-server for vim/neovim
-
-         "jose-elias-alvarez/null-ls.nvim", -- set up formatters and linters
-         "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
          "nvim-tree/nvim-web-devicons", -- adds icons
       },
       config = function()
@@ -60,17 +62,22 @@ return {
 
          -- [[ LSP Settings ]]
          --  This function gets run when an LSP connects to a particular buffer.
-         -- TODO
-         -- - remove code action to switch parameters?
-         -- - remove hunk / blame code actions, from gitsigns?
+         -- TODO: remove code action to switch parameters?
+         -- TODO: remove hunk / blame code actions, from gitsigns?
          local on_attach = function(_, bufnr)
-            local nmap = function(keys, func, desc)
-               if desc then
-                  desc = "LSP: " .. desc
-               end
+            -- Create a command `:Format` local to the LSP buffer
+            vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
+               vim.lsp.buf.format()
+            end, { desc = "Format current buffer with LSP" })
 
-               vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-            end
+            -- These are built in LSP commands. They have been replaced with lsp-saga
+            -- local nmap = function(keys, func, desc)
+            --    if desc then
+            --       desc = "LSP: " .. desc
+            --    end
+            --
+            --    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+            -- end
 
             -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
             -- nmap('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
@@ -94,14 +101,13 @@ return {
             -- nmap("<leader>wl", function()
             --    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
             -- end, "[W]orkspace [L]ist Folders")
-
-            -- Create a command `:Format` local to the LSP buffer
-            vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-               vim.lsp.buf.format()
-            end, { desc = "Format current buffer with LSP" })
          end
 
          -- Set up LSP servers
+         require("typescript-tools").setup({
+            on_attach = on_attach,
+         })
+
          require("mason").setup()
          local mason_lspconfig = require("mason-lspconfig")
          -- these will be automatically installed
@@ -109,7 +115,7 @@ return {
             -- vls = {}, -- vue v2
             -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
             eslint = {},
-            tsserver = {},
+            -- tsserver = {}, -- replaced with typescript-tools
             lua_ls = {
                Lua = {
                   workspace = { checkThirdParty = false },
@@ -139,10 +145,10 @@ return {
          -- Set up formatting
          require("mason-null-ls").setup({
             ensure_installed = {
-               -- "prettier",
                "stylua",
                "beautysh",
                "eslint",
+               -- "prettier",
             },
          })
 
