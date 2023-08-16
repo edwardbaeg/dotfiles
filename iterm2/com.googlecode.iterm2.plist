@@ -132,6 +132,8 @@
 	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>IRMemory</key>
+	<integer>4</integer>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -336,7 +338,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>0.10000000000000001</real>
+			<real>19.934208776595742</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -776,7 +778,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<real>0.04981715425531915</real>
 			<key>Unlimited Scrollback</key>
 			<false/>
 			<key>Use Bold Font</key>
@@ -843,9 +845,9 @@
 	<key>SoundForEsc</key>
 	<false/>
 	<key>TerminalMargin</key>
-	<integer>15</integer>
+	<integer>32</integer>
 	<key>TerminalVMargin</key>
-	<integer>15</integer>
+	<integer>32</integer>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WordCharacters</key>

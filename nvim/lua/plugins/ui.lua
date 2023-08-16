@@ -86,7 +86,7 @@ return {
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
-         local background_color = "#0a0a0a"
+         -- local background_color = "#0a0a0a" -- dark gray
          require("bufferline").setup({
             options = {
                numbers = function(opts)
@@ -100,10 +100,10 @@ return {
             },
             highlights = {
                fill = { -- the backgruond of the whole bar
-                  bg = background_color,
+                  -- bg = background_color,
                },
                background = { -- for background "tabs"
-                  bg = background_color,
+                  -- bg = background_color,
                },
                buffer_selected = {
                   -- active buffer
@@ -112,7 +112,7 @@ return {
                   fg = "white",
                },
                numbers = { -- background
-                  bg = background_color,
+                  -- bg = background_color,
                },
                modified_selected = { -- current
                   fg = "yellow",

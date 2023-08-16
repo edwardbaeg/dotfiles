@@ -132,8 +132,8 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
 })
 
 -- [[ Highlights ]]
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
+-- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" }) -- TODO: only highlight trailing whitespace

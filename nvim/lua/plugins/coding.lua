@@ -133,6 +133,7 @@ return {
          vim.keymap.set("x", "ga", "<Plug>(EasyAlign)")
       end,
    },
+
    { -- adds kakoune/helix style select first editing
       "00sapo/visual.nvim",
       enabled = false,

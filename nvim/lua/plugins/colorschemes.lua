@@ -59,4 +59,11 @@ return {
       -- bold and contrasty dark theme with pinks, blues, and purples
       "nyoom-engineering/oxocarbon.nvim",
    },
+
+   {
+      "xiyaowong/transparent.nvim",
+      config = function()
+         require("transparent").setup({})
+      end,
+   },
 }
