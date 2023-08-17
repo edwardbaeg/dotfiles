@@ -33,7 +33,8 @@ return {
             ui = {
                -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",
                preview = " ",
-               code_action = "⚡", -- "💡",
+               code_action = "",
+               -- code_action = "⚡", -- "💡",
                hover = " ",
             },
             finder = {
