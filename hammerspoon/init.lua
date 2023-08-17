@@ -1,6 +1,8 @@
 -- ~/.hammerspoon/init.lua
 
 local hyperkey = { "cmd", "ctrl" }
+
+---@diagnostic disable-next-line: undefined-global
 local hs = hs
 
 -- Install command line interface as `hs`
@@ -118,7 +120,8 @@ end
 -- Application hotkeys ---------------------------------------------------
 --------------------------------------------------------------------------
 hs.hotkey.bind(hyperkey, "0", function()
-   local success = hs.application.launchOrFocus("iTerm")
+   -- local success = hs.application.launchOrFocus("iTerm")
+   local success = hs.application.launchOrFocus("Wezterm")
    print(success)
 end)
 
@@ -514,7 +517,7 @@ end)
 Get the name of screens
   hs.screen.allScreens()[1]:name()
 
-Get the name of apps
+Get the name of running apps
   hs.fnutils.each(hs.application.runningApplications(), function(app) print(app:title()) end)
 
 
