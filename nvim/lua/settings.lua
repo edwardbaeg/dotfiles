@@ -12,6 +12,7 @@ vim.o.cursorline = true -- highlight line with cursor, window scoped for use wit
 vim.o.hidden = true -- allow switching buffers without saving
 vim.o.scrolloff = 24 -- number of lines to keep above/below the cursor
 vim.o.linebreak = true -- wrap at spaces instead of the middle of a word
+-- vim.o.winblend = 10 -- floating window transparency -- disable for transparent mode
 
 vim.o.ignorecase = true -- case insensitive searching
 vim.o.smartcase = true -- ...unless /C or capital in search
@@ -134,6 +135,7 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
 -- [[ Highlights ]]
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" }) -- TODO: only highlight trailing whitespace

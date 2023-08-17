@@ -34,7 +34,7 @@ return {
                border = "single",
                margin = { 0, 0, 0, 0 },
                padding = { 1, 0, 1, 0 },
-               winblend = 10,
+               -- winblend = 10, -- disable for transparency mode
             },
          })
       end,
@@ -76,7 +76,7 @@ return {
          require("indent_blankline").setup({
             char = "┊",
             show_trailing_blankline_indent = false,
-            show_current_context = true,
+            -- show_current_context = true,
          })
       end,
    },
