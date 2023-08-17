@@ -100,9 +100,17 @@ return {
                show_close_icon = false,
                separator_style = { "", "" }, -- no separators
                modified_icon = "+",
+               offsets = {
+                  {
+                     filetype = "NvimTree",
+                     text = "File Explorer",
+                     highlight = "Directory",
+                     separator = true, -- use a "true" to enable the default, or set your own character
+                  },
+               },
             },
             highlights = {
-               fill = { -- the backgruond of the whole bar
+               fill = { -- the background of the whole bar
                   -- bg = background_color,
                },
                background = { -- for background "tabs"
@@ -197,6 +205,23 @@ return {
 
    {
       "nvim-tree/nvim-tree.lua",
-      config = true,
+      config = function()
+         require("nvim-tree").setup({})
+      end,
+   },
+
+   {
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v3.x",
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         "nvim-tree/nvim-web-devicons",
+         "MunifTanjim/nui.nvim",
+      },
+      config = function()
+         require("neo-tree").setup({
+            -- close_if_last_window = false, -- this closes vim entirely...
+         })
+      end,
    },
 }
