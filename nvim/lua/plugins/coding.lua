@@ -1,6 +1,6 @@
 -- plugins that focus on improving coding and typing experience
 return {
-   "christoomey/vim-sort-motion", -- add sort operator
+   -- "christoomey/vim-sort-motion", -- add sort operator
    "peitalin/vim-jsx-typescript", -- better support for react?
 
    {
@@ -20,6 +20,21 @@ return {
          vim.api.nvim_create_user_command("Files", "lua MiniFiles.open()", {})
 
          require("mini.pairs").setup({}) -- automatic pair closing
+
+         -- TODO: remap gx
+         -- g= -> evaluate
+         -- gx -> exchange
+         -- gm -> multiply/duplicate
+         -- gr -> replace
+         -- gs -> sort
+         require("mini.operators").setup({
+            replace = {
+               prefix = "gR",
+            },
+            prefix = {
+               exhange = "",
+            },
+         })
       end,
    },
 

@@ -26,9 +26,12 @@ return {
          vim.o.timeout = true
          vim.o.timeoutlen = 200
          require("which-key").setup({
-            operators = {
+            operators = { -- only works if pressed after timeout
                gc = "Comments",
                sa = "Surround",
+               gR = "Replace",
+               gs = "Sort",
+               gx = "Exchange",
             },
             window = {
                border = "single",
