@@ -142,6 +142,7 @@ alias nv="nvim ~/.config/nvim/init.lua"
 alias ev="nvim ~/.config/nvim/init.lua"
 alias vt="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
+alias vw="nvim ~/.wezterm.lua"
 
 # open vim with functions
 alias vp="nvim -c \"Telescope find_files\""
