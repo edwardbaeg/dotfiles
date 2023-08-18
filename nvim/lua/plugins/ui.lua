@@ -102,8 +102,14 @@ return {
                modified_icon = "+",
                offsets = {
                   {
+                     filetype = "neo-tree",
+                     text = "",
+                     highlight = "Directory",
+                     separator = true, -- use a "true" to enable the default, or set your own character
+                  },
+                  {
                      filetype = "NvimTree",
-                     text = "File Explorer",
+                     text = "",
                      highlight = "Directory",
                      separator = true, -- use a "true" to enable the default, or set your own character
                   },
@@ -221,6 +227,9 @@ return {
       config = function()
          require("neo-tree").setup({
             -- close_if_last_window = false, -- this closes vim entirely...
+            filesystem = {
+               hijack_netrw_behavior = "disabled",
+            },
          })
       end,
    },
