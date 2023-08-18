@@ -84,6 +84,23 @@ return {
       end,
    },
 
+   { -- highlight the current indent chunk
+      "shellRaining/hlchunk.nvim",
+      config = function()
+         require("hlchunk").setup({
+            indent = {
+               enable = false,
+            },
+            line_num = {
+               enable = false,
+            },
+            blank = {
+               enable = false,
+            },
+         })
+      end,
+   },
+
    {
       -- fancier tabline
       "akinsho/bufferline.nvim",

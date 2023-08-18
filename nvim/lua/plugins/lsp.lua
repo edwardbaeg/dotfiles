@@ -42,6 +42,10 @@ return {
                   vsplit = "v", -- open in vertical split
                },
             },
+            definition = {
+               width = 0.7,
+               height = 0.7,
+            },
          })
 
          local keymap = vim.keymap.set
