@@ -348,6 +348,9 @@ function wttr() {
 # FZF_DEFAULT_COMMAND='rg -g ""'
 export FZF_DEFAULT_COMMAND='rg --files --ignore'
 
+source /usr/share/doc/fzf/examples/completion.zsh # Enable keybindings for fzf
+source /usr/share/doc/fzf/examples/key-bindings.zsh # enable auto-compleition for fzf
+
 # for mysql
 # export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
