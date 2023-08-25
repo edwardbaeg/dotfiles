@@ -34,7 +34,7 @@ config.macos_window_background_blur = 25
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 
-config.font = wezterm.font("Operator Mono")
+config.font = wezterm.font("Operator Mono", { weight = "Book" })
 -- config.font = wezterm.font("JetBrains Mono", { weight = "Medium" })
 -- config.font = wezterm.font("Nerd Font Symbols", { weight = "Medium" })
 config.font_size = 16
