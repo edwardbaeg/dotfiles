@@ -7,10 +7,10 @@ if wezterm.config_builder then
 end
 
 config.window_padding = {
-   left = 24,
-   right = 24,
-   top = 32,
-   bottom = 32,
+   left = 60,
+   right = 60,
+   top = 60,
+   bottom = 60,
 }
 
 config.color_scheme = "tokyonight"
