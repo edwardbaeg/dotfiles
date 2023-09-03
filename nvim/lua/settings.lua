@@ -67,6 +67,7 @@ vim.cmd([[
     if has("unix")
       let s:uname = system("uname")
       if s:uname == "Darwin\n"
+        echo "is mac"
         set clipboard=unnamedplus " integrate with mac
       endif
     endif
@@ -150,15 +151,11 @@ vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#bbbbbb" }) -- highlight cod
 
 -- [[ Legacy config syntax ]]
 vim.cmd([[
-
-" Center after jumps
-nnoremap g; g;zz
-
-" center after search "don't really need this with scrolloffset
-" nnoremap n nzz
-" nnoremap N Nzz
-" nnoremap * *zz
-" nnoremap # #zz
-" nnoremap g* g*zz
-" nnoremap g# g#zz
+   " center after search "don't really need this with scrolloffset
+   " nnoremap n nzz
+   " nnoremap N Nzz
+   " nnoremap * *zz
+   " nnoremap # #zz
+   " nnoremap g* g*zz
+   " nnoremap g# g#zz
 ]])

@@ -56,6 +56,18 @@ vim.keymap.set("n", "<down>", "<C-w>j")
 vim.keymap.set("n", "<up>", "<C-w>k")
 vim.keymap.set("n", "<right>", "<C-w>l")
 
+-- Searching
+-- center after search "don't really need this with scrolloffset
+-- vim.keymap.set("n", "n", "nzz")
+-- vim.keymap.set("n", "N", "Nzz")
+-- vim.keymap.set("n", "*", "*zz")
+-- vim.keymap.set("n", "#", "#zz")
+-- vim.keymap.set("n", "g*", "g*zz")
+-- vim.keymap.set("n", "g#", "g#zz")
+
 -- Abbreviations
 -- TODO: in a future release, this can be refactored to: vim.keymap.set('ca', 'foo', 'bar')
-vim.cmd([[ab functino function]])
+vim.cmd([[
+ab functino function
+ab fn function
+]])
