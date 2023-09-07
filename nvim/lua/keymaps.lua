@@ -10,18 +10,18 @@ vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky
 vim.keymap.set("n", "<c-f>", "za") -- toggle folds
 
--- macros
-vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
-vim.keymap.set("n", "q", "<nop>") -- disable q for macros as it interferes with completions
-
 -- leader keymaps
-vim.keymap.set("n", "<leader>+", "<c-a>") -- increment and decrement
-vim.keymap.set("n", "<leader>-", "<c-x>")
 vim.keymap.set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
 vim.keymap.set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
 vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear searches" })
 vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file
 vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
+-- vim.keymap.set("n", "<leader>+", "<c-a>") -- increment and decrement
+-- vim.keymap.set("n", "<leader>-", "<c-x>")
+
+-- macros
+vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
+vim.keymap.set("n", "q", "<nop>") -- disable q for macros as it interferes with completions
 
 -- Remaps for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
