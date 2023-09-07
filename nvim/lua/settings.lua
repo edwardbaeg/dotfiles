@@ -85,6 +85,7 @@ function! Build()
   elseif &filetype == 'lua'
     exec "!lua %"
   elseif &filetype == "python"
+    exec "!python3 %"
   elseif &filetype == "sh"
   elseif &filetype == "sh"
     exec "!bash %"
