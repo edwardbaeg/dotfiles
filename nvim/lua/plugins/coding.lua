@@ -19,7 +19,7 @@ return {
          vim.api.nvim_create_user_command("MiniFiles", "lua MiniFiles.open()", {})
          vim.api.nvim_create_user_command("Files", "lua MiniFiles.open()", {})
 
-         require("mini.pairs").setup({}) -- automatic pair closing
+         -- require("mini.pairs").setup({}) -- automatic pair closing
 
          -- TODO: remap gx
          -- g= -> evaluate
@@ -39,6 +39,15 @@ return {
    },
 
    {
+      "altermo/ultimate-autopair.nvim",
+      event = { "InsertEnter", "CmdlineEnter" },
+      branch = "v0.6",
+      opts = {
+         --Config goes here
+      },
+   },
+
+   {
       -- automatically adds closing brackets
       -- note: doesn't automatically pad brackets... sometimes doesn't move closing {} when opening {} {}
       "windwp/nvim-autopairs",
@@ -49,6 +58,7 @@ return {
          })
       end,
    },
+
    {
       -- add motions for substituting text
       "gbprod/substitute.nvim",
