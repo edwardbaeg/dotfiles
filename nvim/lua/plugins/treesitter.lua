@@ -7,6 +7,7 @@ return {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
          "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
          "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
+         "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua
       },
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
@@ -14,6 +15,9 @@ return {
       config = function()
          -- don't forget to run :TSInstall tsx
          require("nvim-treesitter.configs").setup({
+            endwise = {
+               enable = true, -- for "RRethy/nvim-treesitter-endwise"
+            },
             matchup = {
                enable = true,
             },
