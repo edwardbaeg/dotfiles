@@ -361,6 +361,5 @@ source /usr/share/doc/fzf/examples/key-bindings.zsh # enable auto-compleition fo
 # setup zoxide completions. must be called after compinit
 eval "$(zoxide init zsh)"
 
-
-
+# setup direnv
 eval "$(direnv hook zsh)"
