@@ -37,11 +37,11 @@ return {
                "markdown",
                "markdown_inline",
                "python",
-               "rust",
+               -- "rust",
                "tsx",
                "typescript",
                "vim",
-               "vue",
+               -- "vue",
             },
             context_commentstring = {
                enable = true,
@@ -109,7 +109,8 @@ return {
       end,
    },
 
-   { -- consistently color function arguments. Works without LSP
+   {
+      -- consistently color function arguments. Works without LSP
       "m-demare/hlargs.nvim",
       config = function()
          require("hlargs").setup({})
@@ -195,7 +196,8 @@ return {
       end,
    },
 
-   { -- quickly select wrapping text objects with <cr>
+   {
+      -- quickly select wrapping text objects with <cr>
       "sustech-data/wildfire.nvim",
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
