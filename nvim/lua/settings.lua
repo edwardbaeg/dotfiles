@@ -2,7 +2,7 @@
 
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
-vim.o.wrap = false -- Don't wrap lines
+-- vim.o.wrap = false -- Don't wrap lines
 vim.o.breakindent = true -- wrapped lines will have consistent indents
 vim.o.updatetime = 250 -- Decrease update time
 vim.o.signcolumn = "yes" -- always show sign column
