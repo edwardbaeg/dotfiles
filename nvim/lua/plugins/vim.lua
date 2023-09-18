@@ -16,6 +16,18 @@ return {
    },
 
    {
+      -- persist undo history even if file is changes outside nvim
+      "kevinhwang91/nvim-fundo",
+      dependencies = { "kevinhwang91/promise-async" },
+      build = function()
+         require("fundo").install()
+      end,
+      config = function()
+         require("fundo").setup({})
+      end,
+   },
+
+   {
       -- show search information in virtual text
       "kevinhwang91/nvim-hlslens",
       enabled = true,
