@@ -31,8 +31,8 @@ return {
             replace = {
                prefix = "gR",
             },
-            prefix = {
-               exhange = "",
+            exhange = {
+               prefix = "", -- this doesn't disable??
             },
          })
       end,

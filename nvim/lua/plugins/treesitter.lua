@@ -202,7 +202,7 @@ return {
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
-         require("wildfire").setup()
+         require("wildfire").setup({})
       end,
    },
 }

@@ -1,7 +1,7 @@
 -- plugins that connect to external programs
 return {
    "tpope/vim-fugitive", -- add git commands
-   "tpope/vim-rhubarb", -- add GBrowse
+   "tpope/vim-rhubarb", -- add GBrowse (needs fugitive)
    {
       -- git actions and visual git signs
       "lewis6991/gitsigns.nvim",
