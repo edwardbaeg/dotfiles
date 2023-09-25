@@ -361,10 +361,21 @@ return {
    {
       -- display usage counts for document symbols
       "Wansmer/symbol-usage.nvim",
+      enabled = false,
       event = "BufReadPre", -- need run before LspAttach if you use nvim 0.9. On 0.10 use 'LspAttach'
       config = function()
+         local SymbolKind = vim.lsp.protocol.SymbolKind
+
          require("symbol-usage").setup({
             vt_position = "end_of_line",
+            -- kinds = { SymbolKind.Function, SymbolKind.Method },
+            kinds = { SymbolKind.Function },
+            references = {
+               -- enabled = false,
+            },
+            filetypes = {
+               "typescriptreact",
+            },
          })
       end,
    },
