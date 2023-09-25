@@ -190,8 +190,8 @@ alias sn="spotify next"
 alias spp="spotify pause"
 alias gcal="gcalcli"
 alias gcalt="gcalcli agenda 12am 11pm --detail_location --color_reader 'blue'"
-alias exa1="exa -T -L 1"
-alias exa2="exa -T -L 2"
+# alias exa1="exa -T -L 1"
+# alias exa2="exa -T -L 2"
 alias end="cowsay 'Thats it! Thank you for listening!!' | nms -c -a"
 alias ns="npm start"
 # alias tree="exa -T"
@@ -207,9 +207,9 @@ alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 # alias wcli="wally-cli"
 
 # conditional command aliases
-if command -v exa &> /dev/null
+if command -v eza &> /dev/null
 then
-    alias ls="exa"
+    alias ls="eza"
 fi
 if command -v bat &> /dev/null
 then
@@ -239,7 +239,7 @@ function sshbb () {
 }
 
 function cs () {
-    cd "$1" && exa;
+    cd "$1" && eza;
 }
 
 function mkcd () {

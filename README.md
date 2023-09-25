@@ -23,6 +23,7 @@ Configuration: [init.lua](nvim/init.lua)
 **Apps used by config**:
 
 - `bat` better cat (syntax highlighting and pager)
+- `eza` better ls
 - `fd` better find
 - `fzf` fuzzy finder
 - `git-delta` better diff
