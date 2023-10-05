@@ -26,7 +26,8 @@ return {
          vim.o.timeout = true
          vim.o.timeoutlen = 200
          require("which-key").setup({
-            operators = { -- only works if pressed after timeout
+            operators = {
+               -- only works if pressed after timeout
                gc = "Comments",
                sa = "Surround",
                gR = "Replace",
@@ -76,15 +77,19 @@ return {
       -- Add indentation guides
       "lukas-reineke/indent-blankline.nvim",
       config = function()
-         require("indent_blankline").setup({
-            char = "┊",
-            show_trailing_blankline_indent = false,
-            -- show_current_context = true,
+         require("ibl").setup({
+            indent = {
+               char = "┊",
+            },
+            scope = {
+               -- enabled = false,
+            },
          })
       end,
    },
 
-   { -- highlight the current indent chunk
+   {
+      -- highlight the current indent chunk
       "shellRaining/hlchunk.nvim",
       config = function()
          require("hlchunk").setup({
