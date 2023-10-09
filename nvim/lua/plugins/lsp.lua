@@ -6,7 +6,7 @@ return {
       dependencies = {
          "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
-         "jose-elias-alvarez/null-ls.nvim", -- set up formatters and linters
+         "nvimtools/none-ls.nvim", -- set up formatters and linters
          "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
 
          "pmizio/typescript-tools.nvim", -- native lua typescript support
