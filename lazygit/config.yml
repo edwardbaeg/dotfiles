@@ -11,5 +11,9 @@ git:
     colorArg:
       always
       # pager: diff-so-fancy
-    pager: delta --dark --paging=never
 confirmOnQuit: true
+customCommands:
+  - key: "W"
+    command: git commit --no-verify
+    context: "global"
+    subprocess: true
