@@ -82,7 +82,7 @@ return {
                char = "┊",
             },
             scope = {
-               -- enabled = false,
+               enabled = false,
             },
          })
       end,

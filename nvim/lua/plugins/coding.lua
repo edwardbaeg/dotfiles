@@ -134,8 +134,10 @@ return {
          })
       end,
    },
+
    {
       -- AI code autocompletion
+      -- NOTE: to fix an issue with the macos language server, delete the ~/.codeium dir
       "Exafunction/codeium.vim",
       init = function()
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defaults
@@ -148,6 +150,16 @@ return {
          -- vim.keymap.set({ "i", "n" }, "<c-h>", "<Plug>(codeium-dismiss)")
          vim.keymap.set("i", "<c-h>", "<Plug>(codeium-dismiss)")
       end,
+   },
+
+   {
+      -- AI code autocompletion
+      "Exafunction/codeium.nvim",
+      enabled = false,
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         "hrsh7th/nvim-cmp",
+      },
    },
 
    {
