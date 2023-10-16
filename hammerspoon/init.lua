@@ -119,6 +119,8 @@ end
 
 -- Application hotkeys ---------------------------------------------------
 --------------------------------------------------------------------------
+local hostname = hs.host.localizedName()
+
 hs.hotkey.bind(hyperkey, "0", function()
    -- local success = hs.application.launchOrFocus("iTerm")
    local success = hs.application.launchOrFocus("Wezterm")
@@ -126,15 +128,27 @@ hs.hotkey.bind(hyperkey, "0", function()
 end)
 
 hs.hotkey.bind(hyperkey, "9", function()
-   -- success = hs.application.launchOrFocus("Google Chrome")
-   local success = hs.application.launchOrFocus("Google Chrome")
+   local success
+   if hostname == "MacBook Pro14" then
+      success = hs.application.launchOrFocus("Microsoft Edge")
+   else
+      success = hs.application.launchOrFocus("Google Chrome")
+   end
+
+   if success == false then
+      hs.alert.show("Failed to launch")
+   end
 
    print(success)
 end)
 
 hs.hotkey.bind({ "cmd", "shift", "ctrl" }, "9", function()
-   -- success = hs.application.launchOrFocus("Google Chrome")
-   local success = hs.application.launchOrFocus("Microsoft Edge")
+   local success
+   if hostname == "MacBook Pro14" then
+      success = hs.application.launchOrFocus("Google Chrome")
+   else
+      success = hs.application.launchOrFocus("Microsoft Edge")
+   end
 
    print(success)
 end)
