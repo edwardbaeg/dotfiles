@@ -10,25 +10,26 @@
 # past this point for scp and rcp, and it's important to refrain from
 # outputting anything in those cases.
 if [[ $- != *i* ]] ; then
-	# Shell is non-interactive.  Be done now!
-	return
+    # Shell is non-interactive.  Be done now!
+    return
 fi
-
 
 # Put your fun stuff here.
 # Enables ^s and ^q in rTorrent, when running in screen
 stty -ixon -ixoff
-# PATH=$HOME/bin:$PATH
-# export PATH="$PATH:/home/$USER/bin:"
-# PATH=$HOME/bin:$PATH
-# export PATH=$PATH:$HOME/bin/ranger
+
+# Add custom programs
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/bin/nvim-linux64/bin
-export PATH=$PATH:$HOME/bin/ranger/ranger.py
 
-alias v=vim
-alias vb='vim ~/.bashrc'
+# use nvim as default
+export VISUAL=nvim
+export EDITOR=$VISUAL
+
+alias v=nvim
+alias vim=nvim
+alias vb='nvim ~/.bashrc'
 alias sb='source ~/.bashrc'
-# alias ranger='~/bin/ranger/ranger.py'
-# alias ra='~/bin/ranger/ranger.py'
+alias ranger='~/bin/ranger/ranger.py'
+alias ra='~/bin/ranger/ranger.py'
 alias ..='cd ..'
