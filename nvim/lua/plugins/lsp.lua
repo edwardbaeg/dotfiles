@@ -49,6 +49,8 @@ return {
          })
 
          local keymap = vim.keymap.set
+
+         -- lsp saga keymaps
          -- keymap("n", "gh", "<cmd>Lspsaga lsp_finder<cr>")
          keymap("n", "ch", "<cmd>Lspsaga lsp_finder<cr>")
          keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>")
@@ -64,6 +66,9 @@ return {
          keymap("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
          -- keymap('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
          keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" })
+
+         -- backup keymaps
+         keymap("n", "gk", vim.lsp.buf.hover, {desc = "Hover Documentation"})
 
          -- [[ LSP Settings ]]
          --  This function gets run when an LSP connects to a particular buffer.
