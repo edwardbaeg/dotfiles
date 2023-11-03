@@ -11,13 +11,13 @@ return {
          require("mini.cursorword").setup({ -- highlighs the word under the cursor
             delay = 500, -- in ms
          })
-         require("mini.files").setup({ -- file explorer
-            windows = {
-               preview = true,
-            },
-         })
-         vim.api.nvim_create_user_command("MiniFiles", "lua MiniFiles.open()", {})
-         vim.api.nvim_create_user_command("Files", "lua MiniFiles.open()", {})
+         -- require("mini.files").setup({ -- file explorer
+         --    windows = {
+         --       preview = true,
+         --    },
+         -- })
+         -- vim.api.nvim_create_user_command("MiniFiles", "lua MiniFiles.open()", {})
+         -- vim.api.nvim_create_user_command("Files", "lua MiniFiles.open()", {})
 
          -- require("mini.pairs").setup({}) -- automatic pair closing
 
