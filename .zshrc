@@ -165,6 +165,7 @@ alias gdo="git diff origin"
 alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
+alias gcm2="git checkout master2 && git reset --hard origin/master"
 
 # from zsh git-open plugin
 alias gop="git open"
