@@ -121,37 +121,22 @@ end
 --------------------------------------------------------------------------
 local hostname = hs.host.localizedName()
 
-hs.hotkey.bind(hyperkey, "0", function()
-   -- local success = hs.application.launchOrFocus("iTerm")
-   local success = hs.application.launchOrFocus("Wezterm")
-   print(success)
-end)
+function _G.launchOrFocus(modifiers, key, appName)
+   hs.hotkey.bind(modifiers, key, function()
+      local success = hs.application.launchOrFocus(appName)
+      print(success)
+   end)
+end
 
-hs.hotkey.bind(hyperkey, "9", function()
-   local success
-   if hostname == "MacBook Pro14" then
-      success = hs.application.launchOrFocus("Microsoft Edge")
-   else
-      success = hs.application.launchOrFocus("Google Chrome")
-   end
+launchOrFocus(hyperkey, "0", "Wezterm")
 
-   if success == false then
-      hs.alert.show("Failed to launch")
-   end
-
-   print(success)
-end)
-
-hs.hotkey.bind({ "cmd", "shift", "ctrl" }, "9", function()
-   local success
-   if hostname == "MacBook Pro14" then
-      success = hs.application.launchOrFocus("Google Chrome")
-   else
-      success = hs.application.launchOrFocus("Microsoft Edge")
-   end
-
-   print(success)
-end)
+if hostname == "MacBook Pro14" then
+   launchOrFocus(hyperkey, "9", "Microsoft Edge")
+   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Google Chrome")
+else
+   launchOrFocus(hyperkey, "9", "Google Chrome")
+   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Microsoft Edge")
+end
 
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
