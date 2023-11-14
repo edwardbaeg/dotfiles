@@ -12,7 +12,7 @@ return {
          "pmizio/typescript-tools.nvim", -- native lua typescript support
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
-         { "j-hui/fidget.nvim", tag = "legacy" }, -- small nvim-lsp progress ui
+         "j-hui/fidget.nvim", -- small nvim-lsp progress ui
          "folke/neodev.nvim", -- automatically configures lua-language-server for vim/neovim
          "nvim-tree/nvim-web-devicons", -- adds icons
       },
