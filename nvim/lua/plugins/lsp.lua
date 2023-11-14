@@ -68,7 +68,7 @@ return {
          keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" })
 
          -- backup keymaps
-         keymap("n", "gk", vim.lsp.buf.hover, {desc = "Hover Documentation"})
+         keymap("n", "gk", vim.lsp.buf.hover, { desc = "Hover Documentation" })
 
          -- [[ LSP Settings ]]
          --  This function gets run when an LSP connects to a particular buffer.
