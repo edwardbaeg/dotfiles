@@ -6,6 +6,7 @@ return {
       config = function()
          require("symbols-outline").setup({
             -- auto_preview = true,
+            autofold_depth = 2,
          })
          vim.keymap.set("n", "so", "<cmd>SymbolsOutline<cr>")
       end,
