@@ -1,6 +1,7 @@
 # dotfiles
 
-This is my neovim and terminal based development setup. Always a work progress!
+This is my neovim and terminal based development setup: Neovim in Tmux in Wezterm in MacOSX. Always a work progress!
+
 ![screenshot](assets/main.png)
 
 # Neovim
@@ -42,20 +43,6 @@ Configuration: [init.lua](nvim/init.lua)
 - Configuration: [tmux.conf](.tmux.conf)
   - keymaps, session keybing toggle
 
-**App**: iTerm2
-
-- Load Preferences: `General -> Preferences -> [x] Load preferences from a custom folder or URL -> ./iterm2`
-  - Some changes made:
-    - `margins`: 8px
-    - `key bindings`: ignore `cmd k`
-- Load Profile: `Profiles -> Other Actions -> Import JSON profiles`
-  - Some changes made:
-    - `text`:
-      - Operator Mono Book (main font, has cursive for italics)
-      - MesloLGS NF (non-ASCII font)
-    - `window style`: no title bar
-    - `keys`: Left / Right option key -> Esc+ (tmux compatibility)
-
 # MacOSX Setup
 
 Install brew (this will also install x-code command line tools if you don't have them yet)
@@ -77,6 +64,16 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 ```
 
 - Settings -> Keyboard -> Key repeat rate & Delay until repeat
+
+## Applications:
+
+- `Raycast`: launcher
+- `Karabiner Elements`: remap keys; RShift -> Backspace
+- `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
+- `Shortcat`: keyboard shortcuts everywhere
+- `Bartender`: keep menubar tider
+- `Choosy`: smart browser launcher
+- `Shottr`: screenshot tool
 
 #### oh-my-zsh
 
