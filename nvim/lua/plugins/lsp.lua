@@ -158,7 +158,6 @@ return {
                "stylua",
                "beautysh",
                "eslint",
-               -- "prettier",
             },
          })
 
