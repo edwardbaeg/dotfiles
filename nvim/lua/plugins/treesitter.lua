@@ -136,24 +136,6 @@ return {
    },
 
    {
-      -- visually shows treesitter data
-      "nvim-treesitter/playground",
-      cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
-      config = function()
-         require("nvim-treesitter.configs").setup({})
-      end,
-      init = function()
-         vim.keymap.set(
-            "n",
-            "<leader>ph",
-            ":TSHighlightCapturesUnderCursor<CR>",
-            { desc = "[P]layground[H]ighlightCapturesunderCursor" }
-         )
-         vim.keymap.set("n", "<leader>pt", ":TSPlaygroundToggle<CR>", { desc = "[P]layground[T]oggle" })
-      end,
-   },
-
-   {
       -- show code context at the top of the buffer
       "nvim-treesitter/nvim-treesitter-context",
       -- enabled = false,
