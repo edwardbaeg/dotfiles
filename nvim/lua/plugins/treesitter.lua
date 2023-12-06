@@ -6,7 +6,6 @@ return {
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
          "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
-         "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
          "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua
       },
       build = function()
@@ -42,10 +41,6 @@ return {
                "typescript",
                "vim",
                -- "vue",
-            },
-            context_commentstring = {
-               enable = true,
-               enable_autocmd = false,
             },
             highlight = {
                enable = true, --[[ additional_vim_regex_highlighting = true ]]
@@ -124,6 +119,9 @@ return {
          "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
       },
       config = function()
+         require("ts_context_commentstring").setup({
+            enable_autocmd = false,
+         })
          require("Comment").setup({
             pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
          })
