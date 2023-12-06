@@ -388,6 +388,7 @@ return {
       -- debug with AI
       -- NOTE: this requires env var OPENAI_API_KEY
       "piersolenski/wtf.nvim",
+      enabled = false,
       dependencies = {
          "MunifTanjim/nui.nvim",
       },

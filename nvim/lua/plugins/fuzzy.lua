@@ -45,8 +45,7 @@ return {
          -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
          vim.keymap.set("n", "<c-t>", "<cmd>Telescope<cr>")
 
-         vim.keymap.set("n", "<leader>fd", "<cmd>Telescope<cr>", { desc = "[f]uzzy [f]ind" })
-         vim.keymap.set("n", "<leader>ff", "<cmd>Telescope<cr>", { desc = "[f]uzzy [f]ind" })
+         vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
          vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })
          vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "[f]uzzy [k]eymaps" })
          vim.keymap.set("n", "<leader>fc", "<cmd>Telescope commands<cr>", { desc = "[f]uzzy [c]ommands" })
@@ -56,14 +55,20 @@ return {
          vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
       end,
       config = function()
-         -- local actions = require("telescope.actions")
+         local actions = require("telescope.actions")
          require("telescope").setup({
             defaults = {
                mappings = {
                   i = {
                      ["<C-u>"] = false,
                      ["<C-d>"] = false,
-                     -- ["<C-cr>"] = actions.select_tab, -- cannot map to <c-cr>
+
+                     -- open selections in new buffers
+                     -- OR can use <c-q> to open all matches to a quickfix
+                     ["<C-o>"] = function(p_bufnr)
+                        actions.send_selected_to_qflist(p_bufnr)
+                        vim.cmd.cfdo("edit")
+                     end,
                   },
                },
                layout_strategy = "flex",

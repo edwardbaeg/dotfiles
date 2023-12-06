@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 -- plugins that add visual elements to the vim ui
 return {
    {

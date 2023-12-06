@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 -- plugins that use nvim treesitter
 return {
    {
