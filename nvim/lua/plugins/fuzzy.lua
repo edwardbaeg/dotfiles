@@ -26,6 +26,7 @@ return {
       dependencies = {
          "nvim-lua/plenary.nvim", -- library of async functons
          "nvim-telescope/telescope-ui-select.nvim", -- replace nvim's ui select with telescope
+         "nvim-telescope/telescope-frecency.nvim", -- intelligent priority of editing history
          "debugloop/telescope-undo.nvim", -- visually shows undo history
          "nvim-telescope/telescope-fzf-native.nvim", -- c port of fzf
          "tsakirist/telescope-lazy.nvim", -- for navigating plugins installed by lazy.nvim
@@ -53,6 +54,7 @@ return {
          vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<cr>", { desc = "[f]uzzy [o]ldfiles" })
          vim.keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<cr>", { desc = "[f]uzzy [s]pell_suggest" })
          vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
+         vim.keymap.set("n", "<leader>ff", "<cmd>Telescope frecency<cr>", { desc = "[f]uzzy [f]recency" })
       end,
       config = function()
          local actions = require("telescope.actions")
@@ -100,10 +102,14 @@ return {
                   use_delta = true,
                   diff_context_lines = 6, -- defaults to scroll
                },
+               frecency = {
+                  default_workspace = "CWD",
+               },
             },
          })
 
          -- require("telescope").load_extension("harpoon")
+         require("telescope").load_extension("frecency")
          require("telescope").load_extension("ui-select")
          require("telescope").load_extension("undo")
          require("telescope").load_extension("lazy")
