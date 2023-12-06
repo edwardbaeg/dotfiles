@@ -221,7 +221,7 @@ return {
 
          cmp.setup({
             sources = { -- this also sets priority
-               { name = "nvim_lsp", max_item_count = 8 },
+               { name = "nvim_lsp", max_item_count = 10 },
                { name = "luasnip", max_item_count = 2 },
                { name = "cmp_tabnine", max_item_count = 5 },
             },
