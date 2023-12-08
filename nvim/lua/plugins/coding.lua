@@ -28,15 +28,15 @@ return {
 
          -- require("mini.pairs").setup({}) -- automatic pair closing
 
+         -- Default mappings:
          -- g= -> evaluate
          -- gx -> exchange
          -- gm -> multiply/duplicate
          -- gr -> replace
          -- gs -> sort
          require("mini.operators").setup({
-            exhange = {
-               -- TODO: remap this
-               prefix = nil,
+            exchange = {
+               prefix = "gX",
             },
             replace = {
                prefix = "gR",
