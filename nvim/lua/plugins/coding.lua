@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 -- plugins that focus on improving coding and typing experience
 return {
    -- "christoomey/vim-sort-motion", -- add sort operator
@@ -8,9 +9,11 @@ return {
       "echasnovski/mini.nvim",
       config = function()
          require("mini.move").setup({}) -- adds ability to move text around with <m-h/j/k/l>
+
          require("mini.cursorword").setup({ -- highlighs the word under the cursor
             delay = 500, -- in ms
          })
+
          require("mini.files").setup({
             -- file explorer
             windows = {

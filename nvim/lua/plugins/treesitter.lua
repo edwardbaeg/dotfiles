@@ -31,7 +31,6 @@ return {
                "cpp",
                "css",
                "go",
-               -- "help",
                "html",
                "javascript",
                "lua",
