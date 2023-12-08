@@ -11,7 +11,8 @@ return {
          require("mini.cursorword").setup({ -- highlighs the word under the cursor
             delay = 500, -- in ms
          })
-         require("mini.files").setup({ -- file explorer
+         require("mini.files").setup({
+            -- file explorer
             windows = {
                preview = true,
             },
@@ -27,18 +28,18 @@ return {
 
          -- require("mini.pairs").setup({}) -- automatic pair closing
 
-         -- TODO: remap gx
          -- g= -> evaluate
          -- gx -> exchange
          -- gm -> multiply/duplicate
          -- gr -> replace
          -- gs -> sort
          require("mini.operators").setup({
+            exhange = {
+               -- TODO: remap this
+               prefix = nil,
+            },
             replace = {
                prefix = "gR",
-            },
-            exhange = {
-               prefix = "", -- this doesn't disable??
             },
          })
       end,
@@ -177,7 +178,8 @@ return {
       end,
    },
 
-   { -- adds kakoune/helix style select first editing
+   {
+      -- adds kakoune/helix style select first editing
       "00sapo/visual.nvim",
       enabled = false,
       config = function()
