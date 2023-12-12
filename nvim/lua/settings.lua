@@ -67,7 +67,7 @@ vim.cmd([[
     if has("unix")
       let s:uname = system("uname")
       if s:uname == "Darwin\n"
-        echo "is mac"
+        " echo "is mac"
         set clipboard=unnamedplus " integrate with mac
       endif
     endif

@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 -- LSP, completion, snippets
 return {
    {
@@ -212,6 +213,7 @@ return {
             path = "[Path]",
             luasnip = "[SNIP]",
             cmdline = "[Cmd]",
+            -- codeium = "[Code]", -- requires codeium.nvim
          }
 
          local has_words_before = function()
@@ -222,6 +224,7 @@ return {
          cmp.setup({
             sources = { -- this also sets priority
                { name = "nvim_lsp", max_item_count = 10 },
+               -- { name = "codeium", max_item_count = 5 },
                { name = "luasnip", max_item_count = 2 },
                { name = "cmp_tabnine", max_item_count = 5 },
             },
