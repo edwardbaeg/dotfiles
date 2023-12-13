@@ -111,6 +111,7 @@ vim.api.nvim_create_autocmd("filetype", {
 })
 
 vim.api.nvim_create_user_command("PrintFile", "echo @%", { desc = "Show the path for the current file" })
+vim.api.nvim_create_user_command("Pwf", "echo @%", { desc = "Show the path for the current file" })
 
 vim.api.nvim_create_user_command("Bda", "bufdo bd", { desc = "Close all buffers" })
 
