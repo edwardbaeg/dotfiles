@@ -145,7 +145,8 @@ alias vh="nvim ~/.hammerspoon/init.lua"
 alias vw="nvim ~/.wezterm.lua"
 
 # open vim with functions
-alias vp="nvim -c \"Telescope find_files\""
+# alias vp="nvim -c \"Telescope find_files\""
+alias vp="nvim -c \"lua require('fzf-lua').files()\""
 alias vg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsc="nvim -c \"SessionManager load_current_dir_session\""
 

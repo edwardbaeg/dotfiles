@@ -6,8 +6,13 @@ return {
       config = function()
          require("fzf-lua").setup({
             winopts = {
+               height = 0.9, -- default is 0.85
+               width = 0.9, -- default is 0.80
+               row = 0.35, -- default is 0.35
+               col = 0.5, -- default is 0.50
                preview = {
-                  layout = "vertical",
+                  layout = "flex",
+                  horizontal = "right:50%",
                },
             },
          })
@@ -15,20 +20,23 @@ return {
       init = function()
          vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
          vim.keymap.set("n", "<c-b>", "<cmd>lua require('fzf-lua').buffers()<cr>", { silent = true })
+         vim.keymap.set("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<cr>", { silent = true })
       end,
    },
 
    {
       -- Fuzzy Finder (files, lsp, etc)
       "nvim-telescope/telescope.nvim",
-      branch = "0.1.x",
       cmd = "Telescope",
       dependencies = {
          "nvim-lua/plenary.nvim", -- library of async functons
          "nvim-telescope/telescope-ui-select.nvim", -- replace nvim's ui select with telescope
-         "nvim-telescope/telescope-frecency.nvim", -- intelligent priority of editing history
+         -- "nvim-telescope/telescope-frecency.nvim", -- intelligent priority of editing history
          "debugloop/telescope-undo.nvim", -- visually shows undo history
-         "nvim-telescope/telescope-fzf-native.nvim", -- c port of fzf
+         { -- c port of fzf
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+         },
          "tsakirist/telescope-lazy.nvim", -- for navigating plugins installed by lazy.nvim
          {
             "aaronhallaert/ts-advanced-git-search.nvim", -- look through git history
@@ -38,7 +46,7 @@ return {
       init = function()
          vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")
 
-         vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>")
+         -- vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>")
          -- vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>")
          vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
          vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
@@ -54,7 +62,7 @@ return {
          vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<cr>", { desc = "[f]uzzy [o]ldfiles" })
          vim.keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<cr>", { desc = "[f]uzzy [s]pell_suggest" })
          vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
-         vim.keymap.set("n", "<leader>ff", "<cmd>Telescope frecency<cr>", { desc = "[f]uzzy [f]recency" })
+         -- vim.keymap.set("n", "<leader>ff", "<cmd>Telescope frecency<cr>", { desc = "[f]uzzy [f]recency" })
       end,
       config = function()
          local actions = require("telescope.actions")
@@ -102,14 +110,19 @@ return {
                   use_delta = true,
                   diff_context_lines = 6, -- defaults to scroll
                },
-               frecency = {
-                  default_workspace = "CWD",
-               },
+               -- frecency = {
+               --    default_workspace = "CWD",
+               -- },
             },
          })
 
+         -- require("telescope").extensions.frecency.frecency({
+         --    sorter = require("telescope").extensions.fzf.native_fzf_sorter(),
+         -- })
+
          -- require("telescope").load_extension("harpoon")
-         require("telescope").load_extension("frecency")
+         require("telescope").load_extension("fzf")
+         -- require("telescope").load_extension("frecency") -- this adds "A"?
          require("telescope").load_extension("ui-select")
          require("telescope").load_extension("undo")
          require("telescope").load_extension("lazy")
