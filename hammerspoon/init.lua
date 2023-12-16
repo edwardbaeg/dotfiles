@@ -131,11 +131,11 @@ end
 launchOrFocus(hyperkey, "0", "Wezterm")
 
 if hostname == "MacBook Pro14" then
-   launchOrFocus(hyperkey, "9", "Microsoft Edge")
+   launchOrFocus(hyperkey, "9", "Arc")
    launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Google Chrome")
 else
    launchOrFocus(hyperkey, "9", "Google Chrome")
-   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Microsoft Edge")
+   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Arc")
 end
 
 -- Windows grids ---------------------------------------------------------
