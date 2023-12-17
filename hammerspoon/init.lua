@@ -25,18 +25,62 @@ hs.expose.ui.textSize = 60 -- [40]
 --   expose:toggleShow()
 -- end)
 
--- Some shortcuts --------------------------------------------------------
+-- Remaps ----------------------------------------------------------------
 --------------------------------------------------------------------------
+-- Disable default hotkey
 hs.hotkey.bind({ "cmd" }, "M", function()
    hs.alert("[ cmd + m ] disabled")
 end)
 
--- Spoons ----------------------------------------------------------------
---------------------------------------------------------------------------
--- hs.loadSpoon("AClock")
--- this doesn't work
--- local clock = AClock.init()
--- clock:show()
+-- Arrow keys
+function _G.pressAndHoldKey(key)
+   return function()
+      hs.eventtap.keyStroke({}, key, 1000)
+   end
+end
+
+function _G.simpleKeyRemap(modMap, keyMap, sendKey)
+   hs.hotkey.bind(modMap, keyMap, pressAndHoldKey(sendKey), nil, pressAndHoldKey(sendKey))
+end
+
+simpleKeyRemap({ "ctrl", "alt" }, "J", "DOWN")
+simpleKeyRemap({ "ctrl", "alt" }, "K", "UP")
+simpleKeyRemap({ "ctrl", "alt" }, "H", "LEFT")
+simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
+
+-- Media controls
+
+local cmdShift = { "cmd", "shift" }
+
+hs.hotkey.bind(cmdShift, ".", function()
+   hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
+   hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
+end)
+
+hs.hotkey.bind(cmdShift, ",", function()
+   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
+   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
+end)
+
+hs.hotkey.bind(cmdShift, "/", function()
+   hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
+   hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
+end)
+
+-- hs.hotkey.bind(hyperkey, ".", function()
+--    hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
+--    hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
+-- end)
+--
+-- hs.hotkey.bind(hyperkey, ",", function()
+--    hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
+--    hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
+-- end)
+--
+-- hs.hotkey.bind(hyperkey, "/", function()
+--    hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
+--    hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
+-- end)
 
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
@@ -45,30 +89,20 @@ hs.window.highlight.ui.overlay = false
 hs.window.highlight.ui.frameWidth = 12 -- draw a frame around the focused window in overlay mode; 0 to disable
 hs.window.highlight.start()
 
--- Toggle on fullscreen toggle
-hs.window.filter.default:subscribe(hs.window.filter.hasNoWindows, function(window, appName)
-   -- hs.alert("hasNoWindows")
-   -- hs.window.highlight.ui.overlay = false
-end)
-hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function(window, appName)
-   hs.window.highlight.ui.overlay = false
-end)
-hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(window, appName)
-   hs.window.highlight.ui.overlay = true
-end)
-
+-- When focusing a window that is fullscreen or not
 hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
    local win = hs.window.focusedWindow()
    local isFullScreen = win:isFullScreen()
 
    if isFullScreen and hs.window.highlight.ui.overlay then
       hs.window.highlight.ui.overlay = false
+      hs.alert("fullscreen focused")
    elseif not isFullScreen and not hs.window.highlight.ui.overlay then
       hs.window.highlight.ui.overlay = true
    end
 end)
 
--- Detect when focusing an application that has no windows
+-- When focusing an application that has no windows
 applicationWatcher = hs.application.watcher
    .new(function(appName, eventType, appObject)
       if eventType == hs.application.watcher.activated then
@@ -82,6 +116,18 @@ applicationWatcher = hs.application.watcher
    end)
    :start()
 
+-- Toggle on fullscreen toggle?
+hs.window.filter.default:subscribe(hs.window.filter.hasNoWindows, function(window, appName)
+   -- hs.alert("hasNoWindows")
+   -- hs.window.highlight.ui.overlay = false
+end)
+hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function(window, appName)
+   hs.window.highlight.ui.overlay = false
+end)
+hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(window, appName)
+   hs.window.highlight.ui.overlay = true
+end)
+
 -- Not good
 -- hs.window.highlight.ui.windowShownFlashColor = { 0, 1, 0, 0.8 } -- flash color when a window is shown (created or unhidden)
 -- hs.window.highlight.ui.flashDuration = 0.3
@@ -90,7 +136,7 @@ applicationWatcher = hs.application.watcher
 --------------------------------------------------------------------------
 -- Automatically reload config on file changes
 -- NOTE: this does not work with symlinked files, point to source
--- TODO: refactor to check for symlinks and to reload linked file
+-- TODO?: refactor to check for symlinks and to reload linked file
 hs.pathwatcher
    .new(os.getenv("HOME") .. "/dev/dotfiles/", function(files)
       local doReload = false
@@ -111,12 +157,6 @@ hs.hotkey.bind(hyperkey, "R", function()
    hs.reload()
 end)
 
--- Helpers ---------------------------------------------------------------
---------------------------------------------------------------------------
-function _G.within(a, b, margin)
-   return math.abs(a - b) <= margin
-end
-
 -- Application hotkeys ---------------------------------------------------
 --------------------------------------------------------------------------
 local hostname = hs.host.localizedName()
@@ -136,6 +176,12 @@ if hostname == "MacBook Pro14" then
 else
    launchOrFocus(hyperkey, "9", "Google Chrome")
    launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Arc")
+end
+
+-- Helpers ---------------------------------------------------------------
+--------------------------------------------------------------------------
+function _G.within(a, b, margin)
+   return math.abs(a - b) <= margin
 end
 
 -- Windows grids ---------------------------------------------------------
@@ -272,57 +318,57 @@ hs.hotkey.bind(hyperkey, "J", function()
    end)
 end)
 
-_G.quadKey = { "cmd", "ctrl", "shift" }
-
--- Top left quadrant
-hs.hotkey.bind(quadKey, "J", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y
-      frame.w = screen.w / 2
-      frame.h = screen.h / 2
-   end)
-end)
-
--- Top right quadrant
-hs.hotkey.bind(quadKey, "K", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x + (screen.w / 2)
-      frame.y = screen.y
-      frame.w = screen.w / 2
-      frame.h = screen.h / 2
-   end)
-end)
-
--- Bottom left quadrant
-hs.hotkey.bind(quadKey, "N", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y + (screen.h / 2)
-      frame.w = screen.w / 2
-      frame.h = screen.h / 2
-   end)
-end)
-
--- Bottom right quadrant
--- hs.hotkey.bind(quadKey, "M", function()
---   moveAndResizeFocused(function (frame, screen)
---     frame.x = screen.x + (screen.w / 2)
---     frame.y = screen.y + (screen.h / 2)
---     frame.w = screen.w / 2
---     frame.h = screen.h / 2
---   end)
+-- _G.quadKey = { "cmd", "ctrl", "shift" }
+--
+-- -- Top left quadrant
+-- hs.hotkey.bind(quadKey, "J", function()
+--    moveAndResizeFocused(function(frame, screen)
+--       frame.x = screen.x
+--       frame.y = screen.y
+--       frame.w = screen.w / 2
+--       frame.h = screen.h / 2
+--    end)
 -- end)
-
--- Middle 60%
-hs.hotkey.bind(quadKey, "M", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x + (screen.w * 0.15)
-      frame.y = screen.y
-      frame.w = screen.w * 0.7
-      frame.h = screen.h * 0.99
-   end)
-end)
+--
+-- -- Top right quadrant
+-- hs.hotkey.bind(quadKey, "K", function()
+--    moveAndResizeFocused(function(frame, screen)
+--       frame.x = screen.x + (screen.w / 2)
+--       frame.y = screen.y
+--       frame.w = screen.w / 2
+--       frame.h = screen.h / 2
+--    end)
+-- end)
+--
+-- -- Bottom left quadrant
+-- hs.hotkey.bind(quadKey, "N", function()
+--    moveAndResizeFocused(function(frame, screen)
+--       frame.x = screen.x
+--       frame.y = screen.y + (screen.h / 2)
+--       frame.w = screen.w / 2
+--       frame.h = screen.h / 2
+--    end)
+-- end)
+--
+-- -- Bottom right quadrant
+-- -- hs.hotkey.bind(quadKey, "M", function()
+-- --   moveAndResizeFocused(function (frame, screen)
+-- --     frame.x = screen.x + (screen.w / 2)
+-- --     frame.y = screen.y + (screen.h / 2)
+-- --     frame.w = screen.w / 2
+-- --     frame.h = screen.h / 2
+-- --   end)
+-- -- end)
+--
+-- -- Middle 60%
+-- hs.hotkey.bind(quadKey, "M", function()
+--    moveAndResizeFocused(function(frame, screen)
+--       frame.x = screen.x + (screen.w * 0.15)
+--       frame.y = screen.y
+--       frame.w = screen.w * 0.7
+--       frame.h = screen.h * 0.99
+--    end)
+-- end)
 
 -- Resize and center windows ---------------------------------------------
 --------------------------------------------------------------------------
@@ -358,7 +404,7 @@ hs.hotkey.bind(hyperkey, "V", function()
    resizeAndCenter(0.49)
 end)
 
--- Change monitor --------------------------------------------------------
+-- Move to monitor -------------------------------------------------------
 --------------------------------------------------------------------------
 -- Move to the left screen
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
@@ -379,30 +425,6 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
    -- move to window
    win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
 end)
-
--- Arrow key remaps ------------------------------------------------------
---------------------------------------------------------------------------
-function _G.pressAndHoldKey(key)
-   return function()
-      hs.eventtap.keyStroke({}, key, 1000)
-   end
-end
-
-function _G.simpleKeyRemap(modMap, keyMap, sendKey)
-   hs.hotkey.bind(modMap, keyMap, pressAndHoldKey(sendKey), nil, pressAndHoldKey(sendKey))
-end
-
-simpleKeyRemap({ "ctrl", "alt" }, "J", "DOWN")
-simpleKeyRemap({ "ctrl", "alt" }, "K", "UP")
-simpleKeyRemap({ "ctrl", "alt" }, "H", "LEFT")
-simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
-
--- Modal mode ------------------------------------------------------------
---------------------------------------------------------------------------
--- appCuts = {
---   i = 'iterm',
---   c = 'Google chrome'
--- }
 
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------
@@ -429,7 +451,7 @@ end
 --------------------------------------------------------------------------
 
 local wifiWatcher = nil
-local homeSSID = "ORBI66"
+local homeSSID = "!wifi"
 local lastSSID = hs.wifi.currentNetwork()
 
 function _G.ssidChangedCallback()
@@ -474,40 +496,19 @@ wifiWatcher:start()
 --   end
 -- end)
 
---  Media remaps ---------------------------------------------------------
+-- Spoons ----------------------------------------------------------------
 --------------------------------------------------------------------------
+-- hs.loadSpoon("AClock")
+-- this doesn't work
+-- local clock = AClock.init()
+-- clock:show()
 
-local cmdShift = { "cmd", "shift" }
-
-hs.hotkey.bind(cmdShift, ".", function()
-   hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
-   hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
-end)
-
-hs.hotkey.bind(cmdShift, ",", function()
-   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
-   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
-end)
-
-hs.hotkey.bind(cmdShift, "/", function()
-   hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
-   hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
-end)
-
--- hs.hotkey.bind(hyperkey, ".", function()
---    hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
---    hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
--- end)
---
--- hs.hotkey.bind(hyperkey, ",", function()
---    hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
---    hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
--- end)
---
--- hs.hotkey.bind(hyperkey, "/", function()
---    hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
---    hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
--- end)
+-- Modal mode ------------------------------------------------------------
+--------------------------------------------------------------------------
+-- appCuts = {
+--   i = 'iterm',
+--   c = 'Google chrome'
+-- }
 
 -- Notes -----------------------------------------------------------------
 --------------------------------------------------------------------------
