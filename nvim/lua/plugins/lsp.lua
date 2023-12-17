@@ -133,6 +133,8 @@ return {
                   telemetry = { enable = false },
                },
             },
+            cssls = {},
+            -- vtsls = {}, -- wrapper for vscode lsp
          }
 
          mason_lspconfig.setup({
