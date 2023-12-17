@@ -73,3 +73,6 @@ vim.cmd([[
 ab functino function
 ab fn function
 ]])
+
+-- work
+vim.keymap.set("n", "<leader>mo", "Hfs/xwct/localhost:5173<esc>") -- convert link to localhost
