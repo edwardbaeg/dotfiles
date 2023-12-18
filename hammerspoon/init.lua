@@ -118,10 +118,8 @@ end)
 -- Reload Config ---------------------------------------------------------
 --------------------------------------------------------------------------
 -- Automatically reload config on file changes
--- NOTE: this does not work with symlinked files, point to source
--- TODO?: refactor to check for symlinks and to reload linked file
-hs.pathwatcher
-   .new(os.getenv("HOME") .. "/dev/dotfiles/", function(files)
+ReloadWatcher = hs.pathwatcher
+   .new(os.getenv("HOME") .. "/dev/dotfiles/hammerspoon/", function(files)
       local doReload = false
       for _, file in pairs(files) do
          if file:sub(-4) == ".lua" then
@@ -130,15 +128,20 @@ hs.pathwatcher
       end
 
       if doReload then
-         hs.alert("Starting autoreload")
-         hs.reload()
+         hs.alert("Autoreloading...")
+         hs.timer.doAfter(0.1, function()
+            hs.reload()
+         end)
       end
    end)
    :start()
 
 -- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
 hs.hotkey.bind(hyperkey, "R", function()
-   hs.reload()
+   hs.alert("Reloading config...")
+   hs.timer.doAfter(0.1, function() -- put reload async so alert executes
+      hs.reload()
+   end)
 end)
 
 -- Application hotkeys ---------------------------------------------------
@@ -446,7 +449,6 @@ hs.loadSpoon("EmmyLua")
 -- Wifi switcher ---------------------------------------------------------
 --------------------------------------------------------------------------
 
-local wifiWatcher = nil
 local homeSSID = "!wifi"
 local lastSSID = hs.wifi.currentNetwork()
 
@@ -456,18 +458,18 @@ function _G.ssidChangedCallback()
    if newSSID == homeSSID and lastSSID ~= homeSSID then
       -- We just joined our home WiFi network
       hs.audiodevice.defaultOutputDevice():setVolume(25)
-      hs.alert.show("Home network: setting volume.")
+      hs.alert("Home network: setting volume.")
    elseif newSSID ~= homeSSID and lastSSID == homeSSID then
       -- We just departed our home WiFi network
-      hs.alert.show("External network: muting volume.")
+      hs.alert("External network: muting volume.")
       hs.audiodevice.defaultOutputDevice():setVolume(0)
    end
 
    lastSSID = newSSID
 end
 
-wifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
-wifiWatcher:start()
+WifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
+WifiWatcher:start()
 
 -- Expose ----------------------------------------------------------------
 --------------------------------------------------------------------------
@@ -492,10 +494,10 @@ hs.expose.ui.textSize = 60 -- [40]
 
 -- k = hs.hotkey.modal.new({ "cmd", "ctrl" }, "I");
 -- function k:entered()
---   hs.alert.show("Entered mode")
+--   hs.alert("Entered mode")
 -- end
 -- function k:exited()
---   hs.alert.show("Exited mode")
+--   hs.alert("Exited mode")
 -- end
 -- k:bind("", "escape", function()
 --   k:exit()
@@ -519,6 +521,10 @@ hs.expose.ui.textSize = 60 -- [40]
 -- Notes -----------------------------------------------------------------
 --------------------------------------------------------------------------
 --[[
+
+Created ojects should be captured in gloal variables.
+Otherwise, they will be garbage collected.
+https://www.hammerspoon.org/go/ "A quick aside about variable lifecycles"
 
 Get the name of screens
   hs.screen.allScreens()[1]:name()

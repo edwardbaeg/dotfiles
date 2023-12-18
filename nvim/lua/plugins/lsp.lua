@@ -128,7 +128,9 @@ return {
                Lua = {
                   workspace = {
                      checkThirdParty = false,
-                     library = { "/Users/edwardbaeg/.hammerspoon/Spoons/EmmyLua.spoon/annotations" },
+                     library = {
+                        string.format("%s/.hammerspoon/Spoons/EmmyLua.spoon/annotations", os.getenv("HOME")),
+                     },
                   },
                   telemetry = { enable = false },
                },
