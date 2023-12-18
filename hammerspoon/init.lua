@@ -26,13 +26,12 @@ function _G.simpleKeyRemap(modMap, keyMap, sendKey)
    hs.hotkey.bind(modMap, keyMap, pressAndHoldKey(sendKey), nil, pressAndHoldKey(sendKey))
 end
 
-simpleKeyRemap({ "ctrl", "alt" }, "J", "DOWN")
-simpleKeyRemap({ "ctrl", "alt" }, "K", "UP")
-simpleKeyRemap({ "ctrl", "alt" }, "H", "LEFT")
-simpleKeyRemap({ "ctrl", "alt" }, "L", "RIGHT")
+simpleKeyRemap({ "cmd", "shift" }, "J", "DOWN")
+simpleKeyRemap({ "cmd", "shift" }, "K", "UP")
+simpleKeyRemap({ "cmd", "shift" }, "H", "LEFT")
+simpleKeyRemap({ "cmd", "shift" }, "L", "RIGHT")
 
 -- Media controls
-
 local cmdShift = { "cmd", "shift" }
 
 hs.hotkey.bind(cmdShift, ".", function()
