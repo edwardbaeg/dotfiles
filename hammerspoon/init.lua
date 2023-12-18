@@ -8,23 +8,6 @@ local hs = hs
 -- Install command line interface as `hs`
 hs.ipc.cliInstall()
 
--- Expose ----------------------------------------------------------------
---------------------------------------------------------------------------
--- hs.expose.ui.backgroundColor = { 0.30, 0.03, 0.03, 0.5 }
-hs.expose.highlightColor = { 1, 1 }
-hs.expose.ui.showThumbnails = true -- [true]
-hs.expose.ui.fitWindowsInBackground = true -- [true] improve performance with false
-hs.expose.ui.thumbnailAlpha = 0.5 -- [0] improve performance with false
-hs.expose.ui.textSize = 60 -- [40]
-
--- expose = hs.expose.new(nil,  {  })
--- hs.hotkey.bind(hyperkey, "E", function()
---   expose:toggleShow()
--- end)
--- hs.hotkey.bind({ "cmd" }, "E", function()
---   expose:toggleShow()
--- end)
-
 -- Remaps ----------------------------------------------------------------
 --------------------------------------------------------------------------
 -- Disable default hotkey
@@ -103,7 +86,7 @@ hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(wind
 end)
 
 -- When focusing an application that has no windows
-applicationWatcher = hs.application.watcher
+ApplicationWatcher = hs.application.watcher
    .new(function(appName, eventType, appObject)
       if eventType == hs.application.watcher.activated then
          local win = hs.window.focusedWindow()
@@ -147,6 +130,7 @@ hs.pathwatcher
       end
 
       if doReload then
+         hs.alert("Starting autoreload")
          hs.reload()
       end
    end)
@@ -447,6 +431,18 @@ if caffeine then
    setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
 end
 
+-- Spoons ----------------------------------------------------------------
+--------------------------------------------------------------------------
+-- Builds annotations for Hammerspoon and install Spoons for lua lsp in ${configDir}/annotations
+-- This requires configuring lua_lsp workspace.library to point to the annotations dir
+-- https://github.com/Hammerspoon/Spoons/pull/240
+hs.loadSpoon("EmmyLua")
+
+-- hs.loadSpoon("AClock")
+-- this doesn't work
+-- local clock = AClock.init()
+-- clock:show()
+
 -- Wifi switcher ---------------------------------------------------------
 --------------------------------------------------------------------------
 
@@ -459,7 +455,7 @@ function _G.ssidChangedCallback()
 
    if newSSID == homeSSID and lastSSID ~= homeSSID then
       -- We just joined our home WiFi network
-      hs.audiodevice.defaultOutputDevice():setVOlume(25)
+      hs.audiodevice.defaultOutputDevice():setVolume(25)
       hs.alert.show("Home network: setting volume.")
    elseif newSSID ~= homeSSID and lastSSID == homeSSID then
       -- We just departed our home WiFi network
@@ -472,6 +468,23 @@ end
 
 wifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
 wifiWatcher:start()
+
+-- Expose ----------------------------------------------------------------
+--------------------------------------------------------------------------
+-- hs.expose.ui.backgroundColor = { 0.30, 0.03, 0.03, 0.5 }
+-- hs.expose.ui.highlightColor = { 1, 1 }
+hs.expose.ui.showThumbnails = true -- [true]
+hs.expose.ui.fitWindowsInBackground = true -- [true] improve performance with false
+hs.expose.ui.thumbnailAlpha = 0.5 -- [0] improve performance with false
+hs.expose.ui.textSize = 60 -- [40]
+
+-- expose = hs.expose.new(nil,  {  })
+-- hs.hotkey.bind(hyperkey, "E", function()
+--   expose:toggleShow()
+-- end)
+-- hs.hotkey.bind({ "cmd" }, "E", function()
+--   expose:toggleShow()
+-- end)
 
 -- Playground ------------------------------------------------------------
 --------------------------------------------------------------------------
@@ -495,13 +508,6 @@ wifiWatcher:start()
 --     end)
 --   end
 -- end)
-
--- Spoons ----------------------------------------------------------------
---------------------------------------------------------------------------
--- hs.loadSpoon("AClock")
--- this doesn't work
--- local clock = AClock.init()
--- clock:show()
 
 -- Modal mode ------------------------------------------------------------
 --------------------------------------------------------------------------
@@ -527,4 +533,4 @@ Get the name of running apps
 --   hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
 -- end)
 
-hs.alert.show("Config loaded")
+hs.alert("Config loaded!")

@@ -126,7 +126,10 @@ return {
             eslint = {},
             lua_ls = { -- aka lua-language-server
                Lua = {
-                  workspace = { checkThirdParty = false },
+                  workspace = {
+                     checkThirdParty = false,
+                     library = { "/Users/edwardbaeg/.hammerspoon/Spoons/EmmyLua.spoon/annotations" },
+                  },
                   telemetry = { enable = false },
                },
             },
