@@ -38,7 +38,16 @@ config.font = wezterm.font("Operator Mono", { weight = "Book" })
 -- config.font = wezterm.font("Operator Mono", { weight = "Medium" })
 -- config.font = wezterm.font("JetBrains Mono", { weight = "Medium" })
 -- config.font = wezterm.font("Nerd Font Symbols", { weight = "Medium" })
-config.font_size = 18
+
+if wezterm.hostname() == "OA.local" then
+   config.font_size = 16
+else
+   config.font_size = 18
+end
+
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- disable ligatures
 
 return config
+
+-- Notes
+-- ctrl+shift+L to show the debug overlay, ctrl+c to close
