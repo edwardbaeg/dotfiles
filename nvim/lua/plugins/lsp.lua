@@ -14,7 +14,7 @@ return {
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
          "j-hui/fidget.nvim", -- small nvim-lsp progress ui
-         "folke/neodev.nvim", -- automatically configures lua-language-server for vim/neovim
+         "folke/neodev.nvim", -- adds type annotations for neovim config in lua
          "nvim-tree/nvim-web-devicons", -- adds icons
       },
       config = function()
@@ -123,17 +123,17 @@ return {
          local mason_lspconfig = require("mason-lspconfig")
          -- these will be automatically installed
          local language_servers = {
-            -- vls = {}, -- vue v2
-            -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
             eslint = {},
-            -- tsserver = {}, -- replaced with typescript-tools
-            lua_ls = {
+            lua_ls = { -- aka lua-language-server
                Lua = {
                   workspace = { checkThirdParty = false },
                   telemetry = { enable = false },
                },
             },
             cssls = {},
+            -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
+            -- tsserver = {}, -- replaced with typescript-tools
+            -- vls = {}, -- vue v2
             -- vtsls = {}, -- wrapper for vscode lsp
          }
 
