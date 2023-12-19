@@ -10,59 +10,43 @@ hs.ipc.cliInstall()
 
 -- Remaps ----------------------------------------------------------------
 --------------------------------------------------------------------------
+
+local cmdShift = { "cmd", "shift" }
+
 -- Disable default hotkey
 hs.hotkey.bind({ "cmd" }, "M", function()
    hs.alert("[ cmd + m ] disabled")
 end)
 
 -- Arrow keys
-function _G.pressAndHoldKey(key)
+function _G.pressAndHoldKeyCb(key)
    return function()
       hs.eventtap.keyStroke({}, key, 1000)
    end
 end
 
-function _G.simpleKeyRemap(modMap, keyMap, sendKey)
-   hs.hotkey.bind(modMap, keyMap, pressAndHoldKey(sendKey), nil, pressAndHoldKey(sendKey))
+function _G.pressAndHoldRemap(modMap, keyMap, sendKey)
+   hs.hotkey.bind(modMap, keyMap, pressAndHoldKeyCb(sendKey), nil, pressAndHoldKeyCb(sendKey))
 end
 
-simpleKeyRemap({ "cmd", "shift" }, "J", "DOWN")
-simpleKeyRemap({ "cmd", "shift" }, "K", "UP")
-simpleKeyRemap({ "cmd", "shift" }, "H", "LEFT")
-simpleKeyRemap({ "cmd", "shift" }, "L", "RIGHT")
+pressAndHoldRemap(cmdShift, "J", "DOWN")
+pressAndHoldRemap(cmdShift, "K", "UP")
+pressAndHoldRemap(cmdShift, "H", "LEFT")
+pressAndHoldRemap(cmdShift, "L", "RIGHT")
 
 -- Media controls
-local cmdShift = { "cmd", "shift" }
+function _G.systemKeyRemap(modMap, keyMap, sendKey)
+   hs.hotkey.bind(modMap, keyMap, function()
+      hs.eventtap.event.newSystemKeyEvent(sendKey, true):post()
+      hs.eventtap.event.newSystemKeyEvent(sendKey, false):post()
+   end)
+end
 
-hs.hotkey.bind(cmdShift, ".", function()
-   hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
-   hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
-end)
-
-hs.hotkey.bind(cmdShift, ",", function()
-   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
-   hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
-end)
-
-hs.hotkey.bind(cmdShift, "/", function()
-   hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
-   hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
-end)
-
--- hs.hotkey.bind(hyperkey, ".", function()
---    hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
---    hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
--- end)
---
--- hs.hotkey.bind(hyperkey, ",", function()
---    hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
---    hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
--- end)
---
--- hs.hotkey.bind(hyperkey, "/", function()
---    hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
---    hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
--- end)
+systemKeyRemap(cmdShift, ".", "NEXT")
+systemKeyRemap(cmdShift, ",", "PREVIOUS")
+systemKeyRemap(cmdShift, "/", "PLAY")
+systemKeyRemap(cmdShift, "n", "SOUND_DOWN")
+systemKeyRemap(cmdShift, "m", "SOUND_UP")
 
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
