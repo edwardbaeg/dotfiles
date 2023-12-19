@@ -10,6 +10,7 @@ hs.ipc.cliInstall()
 
 -- Remaps ----------------------------------------------------------------
 --------------------------------------------------------------------------
+-- TODO: remap caps to control?
 
 local cmdShift = { "cmd", "shift" }
 
@@ -54,6 +55,8 @@ hs.window.highlight.ui.overlayColor = { 0, 0, 0, 0.01 } -- overlay color
 hs.window.highlight.ui.overlay = false
 hs.window.highlight.ui.frameWidth = 12 -- draw a frame around the focused window in overlay mode; 0 to disable
 hs.window.highlight.start()
+
+hs.window.highlight.ui.overlay = true
 
 -- When focusing a window that is fullscreen or not
 hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
@@ -162,7 +165,7 @@ hs.grid.MARGINY = 0
 hs.grid.GRIDWIDTH = 6
 hs.grid.GRIDHEIGHT = 4
 
--- show interactive modal interface for a 3x3 grid
+-- show interactive modal interface for resizing
 hs.hotkey.bind(hyperkey, "G", function()
    hs.grid.show()
 end)
@@ -179,10 +182,40 @@ function _G.moveAndResizeFocused(callback)
    win:setFrame(f, needsResize and 0 or 0.1)
 end
 
+-- Top half
+hs.hotkey.bind(hyperkey, "K", function()
+   moveAndResizeFocused(function(frame, screen)
+      frame.x = screen.x
+      frame.y = screen.y
+      frame.w = screen.w
+      frame.h = screen.h / 2
+   end)
+end)
+
+-- Bottom half
+hs.hotkey.bind(hyperkey, "J", function()
+   moveAndResizeFocused(function(frame, screen)
+      frame.x = screen.x
+      frame.y = screen.y + (screen.h / 2)
+      frame.w = screen.w
+      frame.h = screen.h / 2
+   end)
+end)
+
 -- Left half
 hs.hotkey.bind(hyperkey, "H", function()
    moveAndResizeFocused(function(frame, screen)
       frame.x = screen.x
+      frame.y = screen.y
+      frame.w = screen.w / 2
+      frame.h = screen.h
+   end)
+end)
+
+-- Right half
+hs.hotkey.bind(hyperkey, "L", function()
+   moveAndResizeFocused(function(frame, screen)
+      frame.x = screen.x + (screen.w / 2)
       frame.y = screen.y
       frame.w = screen.w / 2
       frame.h = screen.h
@@ -210,16 +243,6 @@ end)
 -- 		frame.h = screen.h
 -- 	end)
 -- end)
-
--- Right half
-hs.hotkey.bind(hyperkey, "L", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x + (screen.w / 2)
-      frame.y = screen.y
-      frame.w = screen.w / 2
-      frame.h = screen.h
-   end)
-end)
 
 -- Right two thirds
 -- hs.hotkey.bind(hyperkey, "I", function()
@@ -267,26 +290,6 @@ end)
 -- 		frame.h = screen.h
 -- 	end)
 -- end)
-
--- Top half
-hs.hotkey.bind(hyperkey, "K", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y
-      frame.w = screen.w
-      frame.h = screen.h / 2
-   end)
-end)
-
--- Bottom half
-hs.hotkey.bind(hyperkey, "J", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y + (screen.h / 2)
-      frame.w = screen.w
-      frame.h = screen.h / 2
-   end)
-end)
 
 -- _G.quadKey = { "cmd", "ctrl", "shift" }
 --
@@ -342,13 +345,13 @@ end)
 
 -- Resize and center windows ---------------------------------------------
 --------------------------------------------------------------------------
-function _G.resizeAndCenter(frac)
+function _G.resizeAndCenter(fraction)
    local win = hs.window.focusedWindow()
    local f = win:frame()
    local screenMax = win:screen():frame()
 
-   f.w = screenMax.w * frac
-   f.h = screenMax.h * frac
+   f.w = screenMax.w * fraction
+   f.h = screenMax.h * fraction
    f.x = screenMax.x + (screenMax.w - f.w) / 2
    f.y = screenMax.y + (screenMax.h - f.h) / 2
    win:setFrame(f, 0)
