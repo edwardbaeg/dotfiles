@@ -39,6 +39,9 @@ config.font = wezterm.font("Operator Mono", { weight = "Book" })
 -- config.font = wezterm.font("JetBrains Mono", { weight = "Medium" })
 -- config.font = wezterm.font("Nerd Font Symbols", { weight = "Medium" })
 
+-- offset for rendering underline
+config.underline_position = -6
+
 if wezterm.hostname() == "OA.local" then
    config.font_size = 16
 else
