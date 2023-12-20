@@ -46,8 +46,8 @@ end
 systemKeyRemap(cmdShift, ".", "NEXT")
 systemKeyRemap(cmdShift, ",", "PREVIOUS")
 systemKeyRemap(cmdShift, "/", "PLAY")
-systemKeyRemap(cmdShift, "n", "SOUND_DOWN")
-systemKeyRemap(cmdShift, "m", "SOUND_UP")
+systemKeyRemap(cmdShift, "o", "SOUND_UP")
+systemKeyRemap(cmdShift, "i", "SOUND_DOWN")
 
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
@@ -143,12 +143,14 @@ end
 
 launchOrFocus(hyperkey, "0", "Wezterm")
 
+local personalBrowser = "Arc"
+local workBrowser = "Google Chrome"
 if hostname == "MacBook Pro14" then
-   launchOrFocus(hyperkey, "9", "Arc")
-   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Google Chrome")
+   launchOrFocus(hyperkey, "9", personalBrowser)
+   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", workBrowser)
 else
-   launchOrFocus(hyperkey, "9", "Google Chrome")
-   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", "Arc")
+   launchOrFocus(hyperkey, "9", workBrowser)
+   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", personalBrowser)
 end
 
 -- Helpers ---------------------------------------------------------------
