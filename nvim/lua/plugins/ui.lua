@@ -114,7 +114,10 @@ return {
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
-         -- local background_color = "#0a0a0a" -- dark gray
+         local background_color = "#151515" -- dark gray
+         local dim_color = "#1a1a1a" -- dark gray
+         -- local teal = "#00ffff"
+
          require("bufferline").setup({
             options = {
                numbers = function(opts)
@@ -123,8 +126,12 @@ return {
                end,
                show_buffer_close_icons = false,
                show_close_icon = false,
-               separator_style = { "", "" }, -- no separators
-               modified_icon = "+",
+               modified_icon = "•",
+               -- separator_style = { "", "" }, -- no separators
+               separator_style = "slant",
+               indicator = {
+                  -- style = "underline",
+               },
                offsets = {
                   {
                      filetype = "neo-tree",
@@ -141,25 +148,53 @@ return {
                },
             },
             highlights = {
-               fill = { -- the background of the whole bar
-                  -- bg = background_color,
+               -- the background of the whole bar
+               fill = {
+                  bg = background_color,
                },
-               background = { -- for background "tabs"
-                  -- bg = background_color,
-               },
+
+               -- active buffer
                buffer_selected = {
-                  -- active buffer
                   bold = true,
                   italic = false,
                   fg = "white",
                },
-               numbers = { -- background
-                  -- bg = background_color,
+               -- for inactive tabs
+               background = {
+                  bg = dim_color,
                },
-               modified_selected = { -- current
+               -- for visible tabs, but inactive
+               buffer_visible = {
+                  bold = false,
+                  italic = false,
+                  fg = "#bbbbbb",
+               },
+
+               -- separator for active tab
+               separator_selected = {
+                  fg = background_color,
+               },
+               -- separator for inactive tabs
+               separator = {
+                  fg = background_color,
+                  bg = dim_color,
+               },
+               -- separtor for visible tabs, but not active
+               separator_visible = {
+                  fg = background_color,
+               },
+
+               -- numbers in backgrund background buffers
+               numbers = {
+                  bg = dim_color,
+               },
+
+               -- modified icon for active tab
+               modified_selected = {
                   fg = "yellow",
                },
-               modified = { -- background
+               -- modified icon for inactive tabs
+               modified = {
                   fg = "yellow",
                },
             },

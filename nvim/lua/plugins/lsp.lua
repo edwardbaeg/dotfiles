@@ -19,7 +19,7 @@ return {
       },
       config = function()
          require("neodev").setup() -- NOTE: setup BEFORE lspconfig. this does not work if it's a symlink!
-         require("fidget").setup()
+         require("fidget").setup({})
 
          require("lspsaga").setup({
             lightbulb = {
