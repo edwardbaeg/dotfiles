@@ -9,8 +9,8 @@ end
 config.window_padding = {
    left = "3cell",
    right = "3cell",
-   top = "1.5cell",
-   bottom = "1.5cell",
+   top = "1cell",
+   bottom = "1cell",
 }
 
 config.color_scheme = "tokyonight"
