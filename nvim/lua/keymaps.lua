@@ -36,7 +36,7 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- Edit configuration files
-vim.keymap.set("n", "<leader>ev", ":edit $MYVIMRC<cr>")
+vim.keymap.set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>")
 vim.keymap.set("n", "<leader>et", ":edit ~/.tmux.conf<cr>")
 vim.keymap.set("n", "<leader>ez", ":edit ~/.zshrc<cr>")
 vim.keymap.set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>")
