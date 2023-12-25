@@ -45,7 +45,7 @@ config.underline_position = -6
 if wezterm.hostname() == "OA.local" then
    config.font_size = 16
 else
-   config.font_size = 18
+   config.font_size = 16
 end
 
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- disable ligatures
