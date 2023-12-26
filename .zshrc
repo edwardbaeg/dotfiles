@@ -152,7 +152,7 @@ alias vsc="nvim -c \"SessionManager load_current_dir_session\""
 
 # -- Sourcing
 alias st="tmux source-file ~/.tmux.conf"
-alias sz="source ~/.zshrc"
+alias sz="exec zsh"
 
 # -- git
 alias gdt="git difftool"
@@ -182,7 +182,8 @@ alias py="python3"
 alias nf="neofetch"
 alias vtop="vtop --theme brew"
 # alias clock="tty-clock -c -C 0 -t -d 10"
-alias ra="ranger"
+# alias ra="ranger"
+alias ra="yazi"
 alias ya="yazi"
 alias hdi="howdoi -c -n 3"
 alias npml="npm -g ls --depth=0"
@@ -237,18 +238,9 @@ alias hsr="hs -c \"hs.reload()\""
 
 # -- Functions -----------------------------------------------------------------
 
-function sshbb () {
-    ssh pi@192.168.1.4 "$@"
-}
-
-function cs () {
-    cd "$1" && eza;
-}
-
-function mkcd () {
-    mkdir -p -- "$1" &&
-    cd -P -- "$1"
-}
+# function sshbb () {
+#     ssh pi@192.168.1.4 "$@"
+# }
 
 # fuzzy search git branches
 function gcof () {
@@ -258,15 +250,29 @@ function gcof () {
     git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
-# Install and then delete ergodox configuration
-function wcli () {
-    wally-cli "$1" &&
-    rm "$1"
+# Update (one or multiple) selected application(s)
+# mnemonic [B]rew [U]pdate [P]ackage
+function bup() {
+    local upd=$(brew outdated | fzf -m)
+
+    if [[ $upd ]]; then
+        brew update
+        for prog in $(echo $upd);
+        do; brew upgrade $prog; done;
+    fi
+}
+
+# fe [FUZZY PATTERN] - Open the selected file with the default editor
+#   - Bypass fuzzy finder if there's only one match (--select-1)
+#   - Exit if there's no match (--exit-0)
+function fe() {
+    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+    [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
 # alias for npm leaves to list globally installed packages
 function npm () {
-    if [[ $@ == "leaves" ]]; then
+    if [[ $@ == "leaves" ]] || [[ $@ == "ls" ]]; then
         command npm -g ls --depth=0
     else
         command npm "$@"
@@ -349,7 +355,13 @@ function wttr() {
 
 # Use rg for fzf
 # FZF_DEFAULT_COMMAND='rg -g ""'
-export FZF_DEFAULT_COMMAND='rg --files --ignore'
+# export FZF_DEFAULT_COMMAND='rg --files --ignore'
+export FZF_DEFAULT_COMMAND='rg --hidden -l --files --ignore' # include hidden files
+
+export FZF_DEFAULT_OPTS='
+--layout=reverse
+--height=50%
+'
 
 # source /usr/share/doc/fzf/examples/completion.zsh # Enable keybindings for fzf
 # source /usr/share/doc/fzf/examples/key-bindings.zsh # enable auto-compleition for fzf
