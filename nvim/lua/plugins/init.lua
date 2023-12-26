@@ -29,16 +29,26 @@ return {
    },
 
    {
-      -- Highlight TODO, HACK, BUG, etc
+      -- Highlight TODO, HACK, BUG, FIXME etc
+      -- TODO
+      -- FIXME
       "folke/todo-comments.nvim",
-      opts = {
-         signs = false,
-         highlight = {
-            keyword = "fg",
-            after = "",
-            pattern = [[.*<(KEYWORDS)\s*]], -- removed the `:` from the default pattern
-         },
-      },
+      config = function()
+         require("todo-comments").setup({
+            signs = false,
+            highlight = {
+               keyword = "fg",
+               after = "",
+               pattern = [[.*<(KEYWORDS)\s*]], -- removed the `:` from the default pattern
+            },
+         })
+         -- This doesn't work... but works if manually called.. maybe needs to be in an autogroup?
+         -- vim.api.nvim_set_hl(0, "shTodo", { bg = "NONE" })
+         -- vim.cmd("highlight shTodo ctermbg=NONE guibg=NONE")
+
+         -- But this works...
+         vim.api.nvim_set_hl(0, "shTodo", { bg = "#1c1c1c" })
+      end,
    },
 
    {

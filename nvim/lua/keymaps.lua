@@ -18,8 +18,8 @@ vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file
 vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<leader>n", "<cmd>bnext<cr>") -- next buffer
 vim.keymap.set("n", "<leader>p", "<cmd>bprevious<cr>") -- previous buffer
--- vim.keymap.set("n", "<leader>+", "<c-a>") -- increment and decrement
--- vim.keymap.set("n", "<leader>-", "<c-x>")
+vim.keymap.set("n", "<leader>+", "<c-a>") -- increment and decrement
+vim.keymap.set("n", "<leader>-", "<c-x>")
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro

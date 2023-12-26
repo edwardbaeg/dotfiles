@@ -44,6 +44,7 @@ return {
          },
       },
       init = function()
+         -- NOTE: use <c-r> to revert to selected commit
          vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")
 
          -- vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>")

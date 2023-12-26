@@ -25,3 +25,4 @@ require("settings")
 --  Telescope
 --  - open [help] in new tab -> <c-t>
 -- :options
+-- :TSPlaygroundToggle replaced with :Inspect
