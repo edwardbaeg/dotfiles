@@ -59,42 +59,44 @@ hs.window.highlight.start()
 hs.window.highlight.ui.overlay = true
 
 -- When focusing a window that is fullscreen or not
-hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
-   local win = hs.window.focusedWindow()
-   local isFullScreen = win:isFullScreen()
+hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window)
+   local isFullScreen = window:isFullScreen()
 
    if isFullScreen and hs.window.highlight.ui.overlay then
-      hs.alert("fullscreen app focused")
       hs.window.highlight.ui.overlay = false
    elseif not isFullScreen and not hs.window.highlight.ui.overlay then
       hs.window.highlight.ui.overlay = true
    end
 end)
 
--- When focusing an application that has no windows
 ApplicationWatcher = hs.application.watcher
    .new(function(appName, eventType, appObject)
+      -- When focusing an application that has no windows
       if eventType == hs.application.watcher.activated then
          local win = hs.window.focusedWindow()
          if win == nil then
             hs.alert("[" .. appName .. "]" .. " has no windows")
          end
-         -- local allwindows = appObject:allWindows()
-         -- print(allwindows)
+      end
+
+      -- highlight when unhiding an application
+      if eventType == hs.application.watcher.unhidden then
+         hs.window.highlight.ui.overlay = true
       end
    end)
    :start()
 
--- Toggle on fullscreen toggle?
-hs.window.filter.default:subscribe(hs.window.filter.hasNoWindows, function(window, appName)
-   -- hs.alert("hasNoWindows")
-   -- hs.window.highlight.ui.overlay = false
-end)
+-- Toggle on fullscreen toggle
 hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function(window, appName)
    hs.window.highlight.ui.overlay = false
 end)
 hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(window, appName)
    hs.window.highlight.ui.overlay = true
+end)
+
+hs.window.filter.default:subscribe(hs.window.filter.hasNoWindows, function(window, appName)
+   -- hs.alert("hasNoWindows")
+   -- hs.window.highlight.ui.overlay = false
 end)
 
 -- Not good
