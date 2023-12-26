@@ -83,7 +83,7 @@ return {
          -- add substitute operator, replaces with register
          vim.keymap.set("n", "ss", "<cmd>lua require('substitute').operator()<cr>", { noremap = true })
          -- vim.keymap.set("n", "S", "<cmd>lua require('substitute').line()<cr>", { noremap = true })
-         vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
+         -- vim.keymap.set("x", "s", "<cmd>lua require('substitute').visual()<cr>", { noremap = true })
       end,
    },
 
@@ -105,7 +105,7 @@ return {
                normal_cur = false,
                normal_line = false,
                normal_cur_line = false,
-               visual = "A", -- default is S
+               visual = "s", -- default is S
                visual_line = false,
             },
             aliases = {

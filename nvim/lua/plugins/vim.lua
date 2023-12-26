@@ -180,7 +180,7 @@ return {
          },
          {
             "S",
-            mode = { "n", "o", "x" },
+            mode = { "n", "o" },
             function()
                require("flash").treesitter()
             end,
