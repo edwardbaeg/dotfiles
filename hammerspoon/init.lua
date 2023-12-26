@@ -64,8 +64,8 @@ hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(wind
    local isFullScreen = win:isFullScreen()
 
    if isFullScreen and hs.window.highlight.ui.overlay then
+      hs.alert("fullscreen app focused")
       hs.window.highlight.ui.overlay = false
-      hs.alert("fullscreen focused")
    elseif not isFullScreen and not hs.window.highlight.ui.overlay then
       hs.window.highlight.ui.overlay = true
    end

@@ -13,6 +13,12 @@ function symlink_file_or_folder () {
     DESTINATION_PATH=$2
     APP_NAME=$3
 
+    # TODO: modify the path string
+    if [[ $SOURCE_PATH == */ ]]; then
+        echo "paths should not end with /"
+        return 0
+    fi
+
     # Check if file/folder "exists" and create a backup
     if test -f "$DESTINATION_PATH"; then
         echo "$3 already exists, creating backup"
@@ -45,8 +51,8 @@ symlink_file_or_folder \
     nvim
 
 symlink_file_or_folder \
-    "$DIR/hammerspoon/init.lua" \
-    "$HOME/.hammerspoon/init.lua" \
+    $DIR/hammerspoon \
+    $HOME/.hammerspoon \
     Hammerspoon
 
 symlink_file_or_folder \
