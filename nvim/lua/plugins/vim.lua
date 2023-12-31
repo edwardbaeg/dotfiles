@@ -208,8 +208,8 @@ return {
          vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
 
          -- yank ring
-         vim.keymap.set("n", "<c-j>", "<Plug>(YankyCycleForward)")
-         vim.keymap.set("n", "<c-k>", "<Plug>(YankyCycleBackward)")
+         vim.keymap.set("n", "<leader>j", "<Plug>(YankyCycleForward)")
+         vim.keymap.set("n", "<leader>k", "<Plug>(YankyCycleBackward)")
       end,
    },
 

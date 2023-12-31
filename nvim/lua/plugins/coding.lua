@@ -1,5 +1,6 @@
 ---@diagnostic disable: missing-fields
 -- plugins that focus on improving coding and typing experience
+
 return {
    -- "christoomey/vim-sort-motion", -- add sort operator
    "peitalin/vim-jsx-typescript", -- better support for react?
@@ -146,10 +147,38 @@ return {
    },
 
    {
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      event = "InsertEnter",
+      config = function()
+         require("copilot").setup({
+            panel = {
+               enabled = false, -- this can interfere with nvim-cmp
+               auto_refresh = true,
+            },
+            suggestion = {
+               enabled = false,
+               auto_trigger = true, -- automatically show suggestions in insert mode
+               keymap = {
+                  accept = "<C-l>", -- accept suggestion
+                  next = "<C-j>", -- next suggestion
+                  prev = "<C-k>", -- previous suggestion
+                  -- dismiss = 'fixme'
+               },
+            },
+         })
+      end,
+   },
+
+   {
       -- AI code autocompletion
       -- NOTE: to fix an issue with the macos language server, delete the ~/.codeium dir
       "Exafunction/codeium.vim",
+      -- enabled = false,
       init = function()
+         -- Disable by default
+         vim.g.codeium_enabled = false
+
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defaults
          -- vim.g.codeium_enabled = false -- disable by default
          vim.keymap.set("i", "<C-l>", function()

@@ -55,7 +55,7 @@ return {
    {
       -- live scratchpad
       "metakirby5/codi.vim",
-      enabled = false,
+      -- enabled = false,
       init = function()
          vim.cmd([[ let g:codi#rightalign=1 ]])
       end,

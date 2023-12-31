@@ -207,12 +207,14 @@ return {
             "tzachar/cmp-tabnine", -- AI powered completion
             build = "./install.sh",
          },
+         "zbirenbaum/copilot-cmp", -- add copilot as a source
       },
       config = function()
          local cmp = require("cmp")
          local luasnip = require("luasnip")
          local lspkind = require("lspkind")
-         local source_mapping = {
+
+         local format_source_mapping = {
             buffer = "[Buffer]",
             nvim_lsp = "[LSP]",
             nvim_lua = "[Lua]",
@@ -220,8 +222,14 @@ return {
             path = "[Path]",
             luasnip = "[SNIP]",
             cmdline = "[Cmd]",
+            copilot = "[Copilot]",
             -- codeium = "[Code]", -- requires codeium.nvim
          }
+
+         -- Don't hide copilot suggestions when nvim-cmp is shown
+         cmp.event:on("menu_opened", function()
+            vim.b.copilot_suggestion_hidden = false
+         end)
 
          local has_words_before = function()
             local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -230,7 +238,8 @@ return {
 
          cmp.setup({
             sources = { -- this also sets priority
-               { name = "nvim_lsp", max_item_count = 10 },
+               { name = "nvim_lsp", max_item_count = 5 },
+               { name = "copilot", max_item_count = 5 },
                -- { name = "codeium", max_item_count = 5 },
                { name = "luasnip", max_item_count = 2 },
                { name = "cmp_tabnine", max_item_count = 5 },
@@ -248,7 +257,7 @@ return {
                -- format the display of the completion menu items
                format = function(entry, vim_item)
                   vim_item.kind = lspkind.symbolic(vim_item.kind, { mode = "symbol" })
-                  vim_item.menu = source_mapping[entry.source.name] or ""
+                  vim_item.menu = format_source_mapping[entry.source.name] or ""
                   -- vim_item.menu = (entry.source.name or "") .. " " .. (source_mapping[entry.source.name] or "")
                   if entry.source.name == "cmp_tabnine" then
                      local detail = (entry.completion_item.data or {}).detail
@@ -261,7 +270,7 @@ return {
                         vim_item.kind = vim_item.kind .. " " .. "[ML]"
                      end
                   end
-                  local maxwidth = 80
+                  local maxwidth = 80 -- TODO: consider changing this for copilot...
                   vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
 
                   vim_item.kind = "  " .. vim_item.kind -- add some padding after the word
