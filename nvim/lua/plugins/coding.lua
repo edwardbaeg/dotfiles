@@ -177,7 +177,7 @@ return {
       -- enabled = false,
       init = function()
          -- Disable by default
-         vim.g.codeium_enabled = false
+         -- vim.g.codeium_enabled = false
 
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defaults
          -- vim.g.codeium_enabled = false -- disable by default
@@ -194,11 +194,14 @@ return {
    {
       -- AI code autocompletion
       "Exafunction/codeium.nvim",
-      enabled = false,
+      -- enabled = false,
       dependencies = {
          "nvim-lua/plenary.nvim",
          "hrsh7th/nvim-cmp",
       },
+      config = function()
+         require("codeium").setup({})
+      end,
    },
 
    {

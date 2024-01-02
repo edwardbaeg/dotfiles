@@ -213,6 +213,18 @@ return {
          local cmp = require("cmp")
          local luasnip = require("luasnip")
          local lspkind = require("lspkind")
+         require("copilot_cmp").setup({
+            fix_pairs = true,
+         })
+
+         local sources = { -- this also sets priority
+            { name = "nvim_lsp", max_item_count = 5 },
+            { name = "codeium", max_item_count = 5 },
+            { name = "copilot", max_item_count = 5 },
+            { name = "luasnip", max_item_count = 2 },
+            { name = "cmp_tabnine", max_item_count = 5 },
+            { name = "cmdline" },
+         }
 
          local format_source_mapping = {
             buffer = "[Buffer]",
@@ -223,7 +235,7 @@ return {
             luasnip = "[SNIP]",
             cmdline = "[Cmd]",
             copilot = "[Copilot]",
-            -- codeium = "[Code]", -- requires codeium.nvim
+            codeium = "[Codeium]", -- requires codeium.nvim
          }
 
          -- Don't hide copilot suggestions when nvim-cmp is shown
@@ -237,13 +249,7 @@ return {
          end
 
          cmp.setup({
-            sources = { -- this also sets priority
-               { name = "nvim_lsp", max_item_count = 5 },
-               { name = "copilot", max_item_count = 5 },
-               -- { name = "codeium", max_item_count = 5 },
-               { name = "luasnip", max_item_count = 2 },
-               { name = "cmp_tabnine", max_item_count = 5 },
-            },
+            sources = sources,
             snippet = {
                expand = function(args)
                   luasnip.lsp_expand(args.body)
@@ -269,6 +275,12 @@ return {
                      if (entry.completion_item.data or {}).multiline then
                         vim_item.kind = vim_item.kind .. " " .. "[ML]"
                      end
+                  end
+                  if entry.source.name == "copilot" then
+                     vim_item.kind = "🤖"
+                  end
+                  if entry.source.name == "codeium" then
+                     vim_item.kind = ""
                   end
                   local maxwidth = 80 -- TODO: consider changing this for copilot...
                   vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
