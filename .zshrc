@@ -44,9 +44,16 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
+# Add homebrew's sbin to path
+# export PATH="/usr/local/sbin:$PATH"
+export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH
+
 # Don't automatically load ranger rc to prevent loading it twice
 # TODO: make conditional for if the rc already exists
 export RANGER_LOAD_DEFAULT_RC=FALSE
+
+# Add python to path
+export PATH=$PATH:/$HOME/Library/Python/3.9/bin
 
 # Key bindings
 set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
@@ -69,10 +76,6 @@ if type brew &>/dev/null; then
     # compinit
 fi
 
-# Add homebrew's sbin to path
-# export PATH="/usr/local/sbin:$PATH"
-export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH
-
 # Improve less
 export LESS="$LESS -FRXK"
 
@@ -81,7 +84,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 
 # -- OneAdvisory -------------------------------------------------------------------
-# export AWS_PROFILE=oa-dev
+export AWS_PROFILE=oa-dev
 
 # -- Plugins -------------------------------------------------------------------
 
