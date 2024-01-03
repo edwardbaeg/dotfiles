@@ -213,8 +213,15 @@ return {
       end,
    },
 
-   { -- extend % matching -- this is a vimscript plugin with treesitter integration
+   {
+      -- extend % matching -- this is a vimscript plugin with treesitter integration
       "andymass/vim-matchup",
+      config = true,
+   },
+
+   {
+      -- find and suggest keybindings
+      "tris203/hawtkeys.nvim",
       config = true,
    },
 }
