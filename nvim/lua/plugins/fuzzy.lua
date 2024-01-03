@@ -64,6 +64,7 @@ return {
          vim.keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<cr>", { desc = "[f]uzzy [s]pell_suggest" })
          vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
          -- vim.keymap.set("n", "<leader>ff", "<cmd>Telescope frecency<cr>", { desc = "[f]uzzy [f]recency" })
+         vim.keymap.set("n", "<leader>fj", "<cmd>Telescope jumplist<cr>", { desc = "[f]uzzy [j]umplist" })
       end,
       config = function()
          local actions = require("telescope.actions")
