@@ -11,7 +11,7 @@ return {
       config = function()
          require("mini.move").setup({}) -- adds ability to move text around with <m-h/j/k/l>
 
-         require("mini.cursorword").setup({ -- highlighs the word under the cursor
+         require("mini.cursorword").setup({ -- highlights/underlines the word under the cursor
             delay = 500, -- in ms
          })
 
