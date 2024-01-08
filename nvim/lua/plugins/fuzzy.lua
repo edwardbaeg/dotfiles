@@ -5,6 +5,8 @@ return {
       dependencies = { "nvim-tree/nvim-web-devicons" },
       config = function()
          require("fzf-lua").setup({
+            -- "fzf-tmux",
+            "default",
             winopts = {
                height = 0.9, -- default is 0.85
                width = 0.9, -- default is 0.80

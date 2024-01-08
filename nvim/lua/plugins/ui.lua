@@ -77,39 +77,6 @@ return {
    },
 
    {
-      -- Add indentation guides
-      "lukas-reineke/indent-blankline.nvim",
-      config = function()
-         require("ibl").setup({
-            indent = {
-               char = "┊",
-            },
-            scope = {
-               enabled = false,
-            },
-         })
-      end,
-   },
-
-   {
-      -- highlight the current indent chunk
-      "shellRaining/hlchunk.nvim",
-      config = function()
-         require("hlchunk").setup({
-            indent = {
-               enable = false,
-            },
-            line_num = {
-               enable = false,
-            },
-            blank = {
-               enable = false,
-            },
-         })
-      end,
-   },
-
-   {
       -- fancier tabline
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
@@ -157,7 +124,7 @@ return {
                buffer_selected = {
                   bold = true,
                   italic = false,
-                  fg = "white",
+                  fg = "#ffffff",
                },
                -- for inactive tabs
                background = {
@@ -167,7 +134,7 @@ return {
                buffer_visible = {
                   bold = false,
                   italic = false,
-                  fg = "#bbbbbb",
+                  fg = "#cccccc",
                },
 
                -- separator for active tab
@@ -197,6 +164,39 @@ return {
                modified = {
                   fg = "yellow",
                },
+            },
+         })
+      end,
+   },
+
+   {
+      -- Add indentation guides
+      "lukas-reineke/indent-blankline.nvim",
+      config = function()
+         require("ibl").setup({
+            indent = {
+               char = "┊",
+            },
+            scope = {
+               enabled = false,
+            },
+         })
+      end,
+   },
+
+   {
+      -- highlight the current indent chunk
+      "shellRaining/hlchunk.nvim",
+      config = function()
+         require("hlchunk").setup({
+            indent = {
+               enable = false,
+            },
+            line_num = {
+               enable = false,
+            },
+            blank = {
+               enable = false,
             },
          })
       end,

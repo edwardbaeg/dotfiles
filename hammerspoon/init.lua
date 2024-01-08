@@ -19,7 +19,6 @@ hs.hotkey.bind({ "cmd" }, "M", function()
    hs.alert("[ cmd + m ] disabled")
 end)
 
--- Arrow keys
 function _G.pressAndHoldKeyCb(key)
    return function()
       hs.eventtap.keyStroke({}, key, 1000)
@@ -30,12 +29,15 @@ function _G.pressAndHoldRemap(modMap, keyMap, sendKey)
    hs.hotkey.bind(modMap, keyMap, pressAndHoldKeyCb(sendKey), nil, pressAndHoldKeyCb(sendKey))
 end
 
+-- Arrow keys
 pressAndHoldRemap(cmdShift, "J", "DOWN")
 pressAndHoldRemap(cmdShift, "K", "UP")
 pressAndHoldRemap(cmdShift, "H", "LEFT")
 pressAndHoldRemap(cmdShift, "L", "RIGHT")
 
--- Media controls
+pressAndHoldRemap(cmdShift, "N", "DOWN")
+pressAndHoldRemap(cmdShift, "P", "UP")
+
 function _G.systemKeyRemap(modMap, keyMap, sendKey)
    hs.hotkey.bind(modMap, keyMap, function()
       hs.eventtap.event.newSystemKeyEvent(sendKey, true):post()
@@ -43,6 +45,7 @@ function _G.systemKeyRemap(modMap, keyMap, sendKey)
    end)
 end
 
+-- Media controls
 systemKeyRemap(cmdShift, ".", "NEXT")
 systemKeyRemap(cmdShift, ",", "PREVIOUS")
 systemKeyRemap(cmdShift, "/", "PLAY")

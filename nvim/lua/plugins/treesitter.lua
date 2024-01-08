@@ -129,12 +129,12 @@ return {
          -- alternative keymap to toggle comment line; rolling keys is faster
          vim.keymap.set("n", "gjk", "<Plug>(comment_toggle_linewise_current)", { noremap = false, silent = true })
          -- comment line in insert mode
-         vim.keymap.set(
-            "i",
-            "<c-g>c",
-            "<esc><Plug>(comment_toggle_linewise_current)",
-            { noremap = false, silent = true }
-         )
+         -- vim.keymap.set(
+         --    "i",
+         --    "<c-g>c",
+         --    "<esc><Plug>(comment_toggle_linewise_current)",
+         --    { noremap = false, silent = true }
+         -- )
       end,
    },
 
