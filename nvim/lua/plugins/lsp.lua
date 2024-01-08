@@ -214,9 +214,9 @@ return {
          local cmp = require("cmp")
          local luasnip = require("luasnip")
          local lspkind = require("lspkind")
-         -- require("copilot_cmp").setup({
-         --    fix_pairs = true,
-         -- })
+         require("copilot_cmp").setup({
+            --    fix_pairs = true,
+         })
 
          local sources = { -- this also sets priority
             { name = "nvim_lsp", max_item_count = 5, priority = 100 },
