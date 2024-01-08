@@ -104,6 +104,8 @@ brew install neovim
 pip3 install --upgrade pynvim
 ```
 
+Ensure python is working with :checkhealth
+
 **Homebrew formulae** (`brew leaves`):
 
 - `ncdu` ncurses disk usage viewer

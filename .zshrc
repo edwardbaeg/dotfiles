@@ -146,6 +146,7 @@ alias ev="nvim ~/.config/nvim/init.lua -c \":cd %:h\""
 alias vt="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
 alias vw="nvim ~/.wezterm.lua"
+alias vhi="nvim ~/.zsh_history"
 
 # open vim with functions
 # alias vp="nvim -c \"Telescope find_files\""
@@ -224,7 +225,7 @@ then
 fi
 
 alias serv="python3 -m http.server"
-alias pip="pip3"
+# alias pip="pip3"
 
 #-- macos
 alias mactemp="sudo powermetrics --samplers smc -i1 -n1 | grep 'CPU die temperature'"
