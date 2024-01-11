@@ -106,7 +106,8 @@ return {
                normal_cur = false,
                normal_line = false,
                normal_cur_line = false,
-               visual = "s", -- default is S
+               -- visual = "s", -- default is S
+               visual = "a", -- default is S
                visual_line = false,
             },
             aliases = {
@@ -173,8 +174,10 @@ return {
    {
       -- AI code autocompletion
       -- NOTE: to fix an issue with the macos language server, delete the ~/.codeium dir
+      -- This is used to show ghost text for suggestions
       "Exafunction/codeium.vim",
       -- enabled = false,
+      enabled = not vim.g.vscode,
       init = function()
          -- Disable by default
          -- vim.g.codeium_enabled = false
@@ -193,7 +196,9 @@ return {
 
    {
       -- AI code autocompletion
+      -- This is used to show suggestions in the popup menu
       "Exafunction/codeium.nvim",
+      enabled = not vim.g.vscode,
       -- enabled = false,
       dependencies = {
          "nvim-lua/plenary.nvim",

@@ -172,6 +172,7 @@ return {
    {
       -- Add indentation guides
       "lukas-reineke/indent-blankline.nvim",
+      enabled = not vim.g.vscode,
       config = function()
          require("ibl").setup({
             indent = {
