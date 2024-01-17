@@ -153,6 +153,7 @@ alias vhi="nvim ~/.zsh_history"
 alias vp="nvim -c \"lua require('fzf-lua').files()\""
 alias vg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsc="nvim -c \"SessionManager load_current_dir_session\""
+alias ve="nvim -c \"enew\"" # open empty buffer
 
 # -- Sourcing
 alias st="tmux source-file ~/.tmux.conf"
