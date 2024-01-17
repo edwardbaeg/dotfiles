@@ -13,33 +13,43 @@ hs.ipc.cliInstall()
 -- TODO: remap caps to control?
 
 local cmdShift = { "cmd", "shift" }
+local altShift = { "alt", "shift" }
 
 -- Disable default hotkey
 hs.hotkey.bind({ "cmd" }, "M", function()
    hs.alert("[ cmd + m ] disabled")
 end)
 
-function _G.pressAndHoldKeyCb(key)
+function _G.pressAndHoldKeyCb(sendModifiers, key)
    return function()
-      hs.eventtap.keyStroke({}, key, 1000)
+      hs.eventtap.keyStroke(sendModifiers, key, 1000)
    end
 end
 
-function _G.pressAndHoldRemap(modMap, keyMap, sendKey)
-   hs.hotkey.bind(modMap, keyMap, pressAndHoldKeyCb(sendKey), nil, pressAndHoldKeyCb(sendKey))
+function _G.pressAndHoldRemap(modifiers, key, sendModifiers, sendKey)
+   hs.hotkey.bind(
+      modifiers,
+      key,
+      pressAndHoldKeyCb(sendModifiers, sendKey),
+      nil,
+      pressAndHoldKeyCb(sendModifiers, sendKey)
+   )
 end
 
 -- Arrow keys
-pressAndHoldRemap(cmdShift, "J", "DOWN")
-pressAndHoldRemap(cmdShift, "K", "UP")
-pressAndHoldRemap(cmdShift, "H", "LEFT")
-pressAndHoldRemap(cmdShift, "L", "RIGHT")
+pressAndHoldRemap(cmdShift, "J", {}, "DOWN")
+pressAndHoldRemap(cmdShift, "K", {}, "UP")
+pressAndHoldRemap(cmdShift, "H", {}, "LEFT")
+pressAndHoldRemap(cmdShift, "L", {}, "RIGHT")
 
-pressAndHoldRemap(cmdShift, "N", "DOWN")
-pressAndHoldRemap(cmdShift, "P", "UP")
+pressAndHoldRemap(altShift, "H", { "alt" }, "LEFT")
+pressAndHoldRemap(altShift, "L", { "alt" }, "RIGHT")
 
-function _G.systemKeyRemap(modMap, keyMap, sendKey)
-   hs.hotkey.bind(modMap, keyMap, function()
+-- pressAndHoldRemap(cmdShift, "N", "DOWN")
+-- pressAndHoldRemap(cmdShift, "P", "UP")
+
+function _G.systemKeyRemap(modifiers, key, sendKey)
+   hs.hotkey.bind(modifiers, key, function()
       hs.eventtap.event.newSystemKeyEvent(sendKey, true):post()
       hs.eventtap.event.newSystemKeyEvent(sendKey, false):post()
    end)
