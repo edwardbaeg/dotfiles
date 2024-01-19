@@ -8,6 +8,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 #  $2 destination path (eg `~/.config/nvim/init.lua`)
 #  $3 app name (eg vim) - optional
 #  returns 0
+# TODO: move existing to archive folder with date subfolders
 function symlink_file_or_folder () {
     SOURCE_PATH=$1
     DESTINATION_PATH=$2
@@ -44,6 +45,12 @@ function symlink_file_or_folder () {
     echo "Symlinked $APP_NAME"
     return 0
 }
+
+#TODO: add yazu
+symlink_file_or_folder \
+    $DIR/yazi \
+    $HOME/.config/yazi \
+    yazi
 
 symlink_file_or_folder \
     $DIR/nvim \
