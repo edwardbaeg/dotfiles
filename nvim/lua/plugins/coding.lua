@@ -50,6 +50,7 @@ return {
    },
 
    {
+      -- automatically add closing brackets
       "altermo/ultimate-autopair.nvim",
       event = { "InsertEnter", "CmdlineEnter" },
       branch = "v0.6",
@@ -138,6 +139,7 @@ return {
    {
       -- colorizer and color picker
       "uga-rosa/ccc.nvim",
+      event = "VeryLazy",
       config = function()
          require("ccc").setup({
             highlighter = {
@@ -150,7 +152,7 @@ return {
    {
       "zbirenbaum/copilot.lua",
       cmd = "Copilot",
-      event = "InsertEnter",
+      event = "VeryLazy",
       config = function()
          require("copilot").setup({
             panel = {
@@ -178,6 +180,7 @@ return {
       "Exafunction/codeium.vim",
       -- enabled = false,
       enabled = not vim.g.vscode,
+      event = "VeryLazy",
       init = function()
          -- Disable by default
          -- vim.g.codeium_enabled = false
@@ -199,6 +202,8 @@ return {
       -- This is used to show suggestions in the popup menu
       "Exafunction/codeium.nvim",
       enabled = not vim.g.vscode,
+      event = "VeryLazy",
+      -- event = "CmdwinEnter",
       -- enabled = false,
       dependencies = {
          "nvim-lua/plenary.nvim",

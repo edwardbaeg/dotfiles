@@ -1,9 +1,9 @@
 -- plugins that extend builtin vim functionality
 return {
-   "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+   "tpope/vim-sleuth",              -- Detect tabstop and shiftwidth automatically
    "gabebw/vim-github-link-opener", -- opens 'foo/bar' in github
 
-   "arp242/undofile_warn.vim", -- warn when access undofile before current open
+   "arp242/undofile_warn.vim",      -- warn when access undofile before current open
    {
       -- visual undotree
       "simnalamburt/vim-mundo",
@@ -30,11 +30,11 @@ return {
    {
       -- show search information in virtual text
       "kevinhwang91/nvim-hlslens",
-      enabled = true,
+      event = "VeryLazy",
       config = function()
          require("scrollbar.handlers.search").setup({}) -- integrate with nvim-scrollbar
          require("hlslens").setup({
-            calm_down = true, -- this doesn't work? clear highlights wen cursor leaves
+            calm_down = true,                           -- this doesn't work? clear highlights wen cursor leaves
             nearest_only = true,
          })
 
@@ -216,6 +216,7 @@ return {
    {
       -- extend % matching -- this is a vimscript plugin with treesitter integration
       "andymass/vim-matchup",
+      event = "VeryLazy",
       config = true,
    },
 

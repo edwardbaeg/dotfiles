@@ -82,7 +82,7 @@ return {
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
          local background_color = "#151515" -- dark gray
-         local dim_color = "#1a1a1a" -- dark gray
+         local dim_color = "#1a1a1a"        -- dark gray
          -- local teal = "#00ffff"
 
          require("bufferline").setup({
@@ -226,7 +226,7 @@ return {
    {
       -- add visual scrollbar
       "petertriho/nvim-scrollbar",
-      -- enabled = false,
+      event = "VeryLazy",
       config = function()
          require("scrollbar").setup({
             handle = {

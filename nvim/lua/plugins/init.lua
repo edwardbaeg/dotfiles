@@ -21,8 +21,11 @@ return {
 
    {
       -- project wide search and replace
-      -- NOTE: does not support undo
+      -- NOTE: does not support undo!
+      -- :Spectre
+      -- type `?` to see mappings
       "nvim-pack/nvim-spectre",
+      cmd = "Spectre",
       config = function()
          require("spectre").setup({})
       end,

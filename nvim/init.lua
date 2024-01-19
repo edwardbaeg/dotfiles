@@ -8,7 +8,6 @@ require("settings")
 -- [[ TODO ]]
 -- rewrite all vimscript stuff to lua
 -- fix showing git stuff (lua line and vim fugitive) for lua line (but it works for gitsigns?)
--- upgrade from ts-server to https://github.com/pmizio/typescript-tools.nvim ; this is supposed to be much faster
 -- determine a way to open *.stories or *.test for the given file
 
 -- [[ Usability Notes ]]
@@ -26,3 +25,5 @@ require("settings")
 --  - open [help] in new tab -> <c-t>
 -- :options
 -- :TSPlaygroundToggle replaced with :Inspect
+-- gv -> select last visual selection
+-- :enew to open an empty buffer
