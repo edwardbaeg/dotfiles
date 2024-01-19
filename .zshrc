@@ -103,7 +103,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/vi-mode
     zgen oh-my-zsh plugins/colored-man-pages
-    zgen oh-my-zsh plugins/tmux
+    # zgen oh-my-zsh plugins/tmux
 
     # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
     zgen load zdharma-continuum/fast-syntax-highlighting
