@@ -379,17 +379,17 @@ hs.hotkey.bind(hyperkey, "M", function()
    resizeAndCenter(0.99)
 end)
 
--- Resize window
+-- Resize window 80%
 hs.hotkey.bind(hyperkey, "N", function()
    resizeAndCenter(0.81)
 end)
 
--- Resize window
+-- Resize window 64%
 hs.hotkey.bind(hyperkey, "B", function()
    resizeAndCenter(0.64)
 end)
 
--- Resize window
+-- Resize window 50%
 hs.hotkey.bind(hyperkey, "V", function()
    resizeAndCenter(0.49)
 end)
