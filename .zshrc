@@ -5,6 +5,9 @@
 # Run the following to benchmark shell boot times
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
 
+# setup direnv
+emulate zsh -c "$(direnv export zsh)"
+
 # -- Instant prompt ------------------------------------------------------------
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -14,6 +17,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # -- Core ----------------------------------------------------------------------
+emulate zsh -c "$(direnv hook zsh)"
 
 GITSTATUS_LOG_LEVEL=DEBUG
 
@@ -380,6 +384,3 @@ export FZF_DEFAULT_OPTS='
 
 # setup zoxide completions. must be called after compinit
 eval "$(zoxide init zsh)"
-
-# setup direnv
-eval "$(direnv hook zsh)"
