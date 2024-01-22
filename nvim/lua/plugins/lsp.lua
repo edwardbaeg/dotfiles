@@ -5,26 +5,26 @@ return {
       -- LSP, formatter, and linter config and plugins
       "neovim/nvim-lspconfig",
       dependencies = {
-         "williamboman/mason.nvim",           -- package manager for external editor tools (LSP, DAP, linters, formatters)
+         "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
-         "nvimtools/none-ls.nvim",            -- set up formatters and linters
-         "jay-babu/mason-null-ls.nvim",       -- automatically install linters and formatters
+         "nvimtools/none-ls.nvim", -- set up formatters and linters
+         "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
 
-         "pmizio/typescript-tools.nvim",      -- native lua typescript support
+         "pmizio/typescript-tools.nvim", -- native lua typescript support
 
-         "nvimdev/lspsaga.nvim",              -- pretty lsp ui
-         "j-hui/fidget.nvim",                 -- small nvim-lsp progress ui
-         "folke/neodev.nvim",                 -- adds type annotations for neovim config in lua
-         "nvim-tree/nvim-web-devicons",       -- adds icons
+         "nvimdev/lspsaga.nvim", -- pretty lsp ui
+         "j-hui/fidget.nvim", -- small nvim-lsp progress ui
+         "folke/neodev.nvim", -- adds type annotations for neovim config in lua
+         "nvim-tree/nvim-web-devicons", -- adds icons
       },
-      event = "VeryLazy",
+      -- event = "VeryLazy",
       config = function()
          require("neodev").setup() -- NOTE: setup BEFORE lspconfig. this does not work if it's a symlink!
          require("fidget").setup({})
 
          require("lspsaga").setup({
             lightbulb = {
-               sign = false,             -- don't show in sign column
+               sign = false, -- don't show in sign column
                enable_in_insert = false, -- don't show to fix conflict with codeium
             },
             symbol_in_winbar = {
@@ -202,13 +202,13 @@ return {
       -- event = "CmdwinEnter",
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
-         "hrsh7th/cmp-cmdline",          -- cmdline menu fuzzy
-         "L3MON4D3/LuaSnip",             -- snippet engine
+         "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
+         "L3MON4D3/LuaSnip", -- snippet engine
          "saadparwaiz1/cmp_luasnip",
          "rafamadriz/friendly-snippets", -- vscode like snippets
-         "onsails/lspkind.nvim",         -- pictograms for completion items
+         "onsails/lspkind.nvim", -- pictograms for completion items
          {
-            "tzachar/cmp-tabnine",       -- AI powered completion
+            "tzachar/cmp-tabnine", -- AI powered completion
             build = "./install.sh",
          },
          "zbirenbaum/copilot-cmp", -- add copilot as a source
@@ -223,10 +223,10 @@ return {
          })
 
          local sources = { -- this also sets priority
-            { name = "nvim_lsp",    max_item_count = 5 },
-            { name = "codeium",     max_item_count = 5 },
-            { name = "copilot",     max_item_count = 5 },
-            { name = "luasnip",     max_item_count = 2 },
+            { name = "nvim_lsp", max_item_count = 5 },
+            { name = "codeium", max_item_count = 5 },
+            { name = "copilot", max_item_count = 5 },
+            { name = "luasnip", max_item_count = 2 },
             { name = "cmp_tabnine", max_item_count = 5 },
             -- { name = "cmdline" },
          }

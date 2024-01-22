@@ -7,10 +7,10 @@ return {
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
-         "windwp/nvim-ts-autotag",                      -- autoclose html tags using treesitter
-         "RRethy/nvim-treesitter-endwise",              -- wisely add "end" in lua
+         "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
+         "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua
       },
-      event = "VeryLazy",
+      -- event = "VeryLazy",
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
       end,
