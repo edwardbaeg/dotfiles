@@ -86,7 +86,6 @@ export LESS="$LESS -FRXK"
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
-
 # -- OneAdvisory -------------------------------------------------------------------
 export AWS_PROFILE=oa-dev
 
@@ -105,7 +104,7 @@ if ! zgen saved; then
     zgen oh-my-zsh
 
     zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/vi-mode
+    # zgen oh-my-zsh plugins/vi-mode
     zgen oh-my-zsh plugins/colored-man-pages
     # zgen oh-my-zsh plugins/tmux
 
@@ -114,6 +113,7 @@ if ! zgen saved; then
     zgen load zsh-users/zsh-autosuggestions
     # zgen load agkozak/zsh-z # directory jumper
     # zgen load changyuheng/fz # add fuzzy search for z
+    zgen load jeffreytse/zsh-vi-mode # better vi mode
 
     # zgen oh-my-zsh themes/sorin
     zgen load romkatv/powerlevel10k powerlevel10k
@@ -122,6 +122,13 @@ if ! zgen saved; then
     # generate the init script from plugins above
     zgen save
 fi
+
+# Configure zsh-vi-mode
+# show blinking cursor in normal mode
+# NOTE: use `vv` to edit in vim
+ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_USER_DEFAULT
+ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # always start in insert mode (default is ZVM_MODE_LAST)
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
