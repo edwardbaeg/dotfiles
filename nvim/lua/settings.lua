@@ -187,6 +187,16 @@ vim.api.nvim_create_autocmd("FileType", {
    end,
 })
 
+-- fix issue with opening files in telescope entering insert mode with `reactive.nvim`
+-- https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
+vim.api.nvim_create_autocmd("WinLeave", {
+   callback = function()
+      if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
+         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
+      end
+   end,
+})
+
 -- [[ Highlights ]]
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
