@@ -24,11 +24,18 @@ return {
 
    {
       -- shows possible key bindings
+      -- NOTE: this can prevent reactive.nvim from working for operators
       "folke/which-key.nvim",
+      -- enabled = false,
       config = function()
          vim.o.timeout = true
          vim.o.timeoutlen = 200
          require("which-key").setup({
+            plugins = {
+               presets = {
+                  operators = false,
+               },
+            },
             operators = {
                -- only works if pressed after timeout
                gc = "Comments",
@@ -82,7 +89,7 @@ return {
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
          local background_color = "#151515" -- dark gray
-         local dim_color = "#1a1a1a"        -- dark gray
+         local dim_color = "#1a1a1a" -- dark gray
          -- local teal = "#00ffff"
 
          require("bufferline").setup({
@@ -292,6 +299,22 @@ return {
             -- close_if_last_window = false, -- this closes vim entirely...
             filesystem = {
                hijack_netrw_behavior = "disabled",
+            },
+         })
+      end,
+   },
+
+   {
+      -- different cursor colors for different modes
+      -- TODO: disable for visual mode
+      "rasulomaroff/reactive.nvim",
+      -- enabled = false, -- this starts :help in insert mode from telescope
+      config = function()
+         require("reactive").setup({
+            builtin = {
+               cursorline = true,
+               -- cursor = true,
+               modemsg = true,
             },
          })
       end,

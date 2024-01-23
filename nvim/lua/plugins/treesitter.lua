@@ -42,6 +42,7 @@ return {
                "tsx",
                "typescript",
                "vim",
+               "vimdoc",
                -- "vue",
             },
             highlight = {
