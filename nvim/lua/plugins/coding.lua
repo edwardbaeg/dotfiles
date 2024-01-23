@@ -111,7 +111,7 @@ return {
                visual = "a", -- default is S
                visual_line = false,
                delete = "sd", -- default is ds
-               change = "sc", -- default is cs
+               -- change = "sc", -- default is cs
             },
             aliases = {
                ["b"] = { ")", "}", "]" }, -- adds the other brackets

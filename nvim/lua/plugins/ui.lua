@@ -306,9 +306,10 @@ return {
 
    {
       -- different cursor colors for different modes
-      -- TODO: disable for visual mode
+      -- TODO: disable for visual mode?
+      -- NOTE: this plugin seems to cause telescope to open files in insert mode. Workaround is to set a winleave autocmd. https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
       "rasulomaroff/reactive.nvim",
-      -- enabled = false, -- this starts :help in insert mode from telescope
+      -- enabled = false,
       config = function()
          require("reactive").setup({
             builtin = {
