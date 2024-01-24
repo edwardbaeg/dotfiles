@@ -43,10 +43,6 @@ return {
             build = "make",
          },
          "tsakirist/telescope-lazy.nvim", -- for navigating plugins installed by lazy.nvim
-         {
-            "aaronhallaert/ts-advanced-git-search.nvim", -- look through git history
-            dependencies = "tpope/vim-fugitive",
-         },
       },
       init = function()
          -- NOTE: use <c-r> to revert to selected commit
@@ -133,7 +129,6 @@ return {
          require("telescope").load_extension("ui-select")
          require("telescope").load_extension("undo")
          require("telescope").load_extension("lazy")
-         require("telescope").load_extension("advanced_git_search")
 
          -- custom picker that greps the word under the cursor (cword)
          -- https://github.com/nvim-telescope/telescope.nvim/issues/1766#issuecomment-1150437074

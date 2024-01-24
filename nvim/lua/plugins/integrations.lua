@@ -1,7 +1,5 @@
 -- plugins that connect to external programs
 return {
-   "tpope/vim-fugitive", -- add git commands
-   "tpope/vim-rhubarb", -- add GBrowse (needs fugitive)
    {
       -- git actions and visual git signs
       "lewis6991/gitsigns.nvim",
@@ -95,6 +93,28 @@ return {
          --
          -- vim.api.nvim_set_keymap("n", "<leader>ra", "<cmd>lua _ranger_toggle()<cr>", { noremap = true, silent = true })
          -- vim.api.nvim_create_user_command("RangerToggle", "lua _G._ranger_toggle()<cr>", {})
+      end,
+   },
+
+   {
+      -- open current line in github permalink
+      "ruifm/gitlinker.nvim",
+      config = function()
+         require("gitlinker").setup({
+            -- mappings = "<leader>gg", -- default is gy
+         })
+         vim.api.nvim_set_keymap(
+            "n",
+            "<leader>gb",
+            '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
+            { silent = true }
+         )
+         vim.api.nvim_set_keymap(
+            "v",
+            "<leader>gb",
+            '<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
+            {}
+         )
       end,
    },
 }
