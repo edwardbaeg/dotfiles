@@ -14,8 +14,8 @@ return {
          })
 
          -- test!
-         vim.keymap.set("n", "gh", ":Gitsigns next_hunk<cr>")
-         vim.keymap.set("n", "gH", ":Gitsigns prev_hunk<cr>")
+         -- vim.keymap.set("n", "gh", ":Gitsigns next_hunk<cr>")
+         -- vim.keymap.set("n", "gH", ":Gitsigns prev_hunk<cr>")
 
          -- these highlight groups need to be loaded async?
          -- vim.defer_fn(function ()

@@ -44,6 +44,12 @@ return {
                   vsplit = "v", -- open in vertical split
                },
             },
+            callhierarchy = {
+               keys = {
+                  -- toggle_or_req = "<cr>",
+                  toggle_or_req = "o",
+               },
+            },
             definition = {
                width = 0.7,
                height = 0.7,
@@ -61,6 +67,7 @@ return {
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>")
          keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
          keymap("n", "gr", "<cmd>Lspsaga finder<cr>")
+         keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
          keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
          keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
          keymap("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
