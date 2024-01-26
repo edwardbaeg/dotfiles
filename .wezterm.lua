@@ -53,4 +53,4 @@ config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- disable ligatures
 return config
 
 -- Notes
--- ctrl+shift+L to show the debug overlay, ctrl+c to close
+-- ctrl+shift+L to show the debug overlay, ctrl+c/esc to close
