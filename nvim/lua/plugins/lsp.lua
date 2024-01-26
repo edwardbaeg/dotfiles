@@ -47,7 +47,8 @@ return {
             callhierarchy = {
                keys = {
                   -- toggle_or_req = "<cr>",
-                  toggle_or_req = "o",
+                  toggle_or_req = "<cr>",
+                  edit = "o", -- open file
                },
             },
             definition = {
