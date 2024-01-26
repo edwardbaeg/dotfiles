@@ -15,6 +15,7 @@ return {
                col = 0.5, -- default is 0.50
                preview = {
                   layout = "flex",
+                  flip_columns = 150, -- number of columns at which to flip to horizontal, default is 120
                   horizontal = "right:50%",
                },
             },
