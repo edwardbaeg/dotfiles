@@ -1,6 +1,15 @@
 -- plugins that connect to external programs
 return {
    {
+      -- Adds git commands
+      -- This is mostly used for :Git blame
+      "tpope/vim-fugitive",
+      init = function()
+         vim.g.fugitive_no_maps = true -- disable default mappings (specifically y<c-g>)
+      end,
+   },
+
+   {
       -- git actions and visual git signs
       "lewis6991/gitsigns.nvim",
       config = function()
