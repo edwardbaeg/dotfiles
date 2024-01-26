@@ -42,7 +42,7 @@ return {
                sa = "Surround",
                gR = "Replace",
                gs = "Sort",
-               gx = "Exchange",
+               gX = "Exchange",
             },
             window = {
                border = "single",
@@ -305,7 +305,7 @@ return {
    },
 
    {
-      -- different cursor colors for different modes
+      -- Hook into mode changes, change cursor colors
       -- TODO: change visual mode colors
       -- NOTE: this plugin seems to cause telescope to open files in insert mode. Workaround is to set a winleave autocmd. https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
       "rasulomaroff/reactive.nvim",
