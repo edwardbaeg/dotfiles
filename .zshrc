@@ -1,7 +1,6 @@
 # ~/.zshrc
 
-# -- NOTES ---------------------------------------------------------------------
-
+# -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
 
@@ -124,11 +123,16 @@ if ! zgen saved; then
 fi
 
 # Configure zsh-vi-mode
-# show blinking cursor in normal mode
 # NOTE: use `vv` to edit in vim
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_USER_DEFAULT
-ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
+ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK # show blinking cursor in normal mode
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # always start in insert mode (default is ZVM_MODE_LAST)
+
+# fix setting fzf keymaps after zsh-vi-mode
+# https://github.com/jeffreytse/zsh-vi-mode/issues/4#issuecomment-757234569
+function zvm_after_init() {
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+}
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -366,6 +370,7 @@ function wttr() {
 
 # -- Post install --------------------------------------------------------------
 
+# fzf
 # Load fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -379,10 +384,7 @@ export FZF_DEFAULT_OPTS='
 --height=50%
 '
 
-# source /usr/share/doc/fzf/examples/completion.zsh # Enable keybindings for fzf
-# source /usr/share/doc/fzf/examples/key-bindings.zsh # enable auto-compleition for fzf
-
-# for mysql
+# mysql
 # export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # p10k
