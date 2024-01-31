@@ -60,10 +60,7 @@ return {
          local keymap = vim.keymap.set
 
          -- lsp saga keymaps
-         -- keymap("n", "gh", "<cmd>Lspsaga lsp_finder<cr>")
-         keymap("n", "ch", "<cmd>Lspsaga lsp_finder<cr>")
          keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>")
-         keymap("n", "cr", "<cmd>Lspsaga rename<cr>")
          keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>")
          keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
@@ -432,7 +429,7 @@ return {
 
    {
       -- debug with AI
-      -- NOTE: this requires env var OPENAI_API_KEY
+      -- NOTE: this requires env var OPENAI_API_KEY (paid)
       "piersolenski/wtf.nvim",
       enabled = false,
       dependencies = {
@@ -457,5 +454,21 @@ return {
             desc = "Search diagnostic with Google",
          },
       },
+   },
+
+   {
+      -- popup with interactive breadcrumb navigation
+      "SmiteshP/nvim-navbuddy",
+      dependencies = {
+         "SmiteshP/nvim-navic",
+         "MunifTanjim/nui.nvim",
+      },
+      config = function()
+         require("nvim-navbuddy").setup({
+            lsp = {
+               auto_attach = true,
+            },
+         })
+      end,
    },
 }
