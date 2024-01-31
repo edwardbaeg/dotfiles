@@ -138,16 +138,13 @@ return {
         ]])
       end,
    },
+
    {
-      -- colorizer and color picker
-      "uga-rosa/ccc.nvim",
-      event = "VeryLazy",
+      -- colorizer
+      -- NOTE: lazy loading this breaks automatic highlighting
+      "NvChad/nvim-colorizer.lua",
       config = function()
-         require("ccc").setup({
-            highlighter = {
-               auto_enable = true,
-            },
-         })
+         require("colorizer").setup()
       end,
    },
 
