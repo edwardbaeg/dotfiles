@@ -180,6 +180,7 @@ vim.api.nvim_create_autocmd("FileType", {
       "checkhealth",
       "neotest-summary",
       "neotest-output-panel",
+      "fugitiveblame",
    },
    callback = function(event)
       vim.bo[event.buf].buflisted = false
@@ -207,7 +208,7 @@ vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens
 
 vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db" }) -- eg +, =, || -- TODO?: only do for js?
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -- eg +, =, || -- TODO?: only do for js?
-vim.api.nvim_set_hl(0, "Exception", { italic = true }) -- eg +, =, || -- TODO?: only do for js?
+vim.api.nvim_set_hl(0, "Exception", { italic = true }) -- eg try, catch, TODO: set to green?
 -- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
