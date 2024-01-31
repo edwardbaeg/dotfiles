@@ -175,4 +175,23 @@ return {
          require("wildfire").setup({})
       end,
    },
+
+   {
+      -- create annotations for func, class, type
+      "danymat/neogen",
+      dependencies = "nvim-treesitter/nvim-treesitter",
+      config = function()
+         require("neogen").setup({
+            enabled = true,
+            snippet_engine = "luasnip",
+            languages = {
+               typescriptreact = {
+                  template = {
+                     annotation_convention = "tsdoc",
+                  },
+               },
+            },
+         })
+      end,
+   },
 }
