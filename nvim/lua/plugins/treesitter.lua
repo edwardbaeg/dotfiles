@@ -17,6 +17,13 @@ return {
       config = function()
          -- don't forget to run :TSInstall tsx
          require("nvim-treesitter.configs").setup({
+            incremental_selection = {
+               enable = true,
+               keymaps = {
+                  node_incremental = "v",
+                  node_decremental = "V",
+               },
+            },
             endwise = {
                enable = true, -- for "RRethy/nvim-treesitter-endwise"
             },
@@ -49,15 +56,6 @@ return {
                enable = true, --[[ additional_vim_regex_highlighting = true ]]
             }, -- regex highlighting helps with jsx indenting, but otherwise its bad
             indent = { enable = true, disable = { "python" } },
-            incremental_selection = {
-               enable = true,
-               keymaps = {
-                  init_selection = "<c-space>",
-                  node_incremental = "<c-space>",
-                  scope_incremental = "<c-s>",
-                  node_decremental = "<c-backspace>",
-               },
-            },
             textobjects = {
                select = {
                   enable = true,
@@ -170,6 +168,7 @@ return {
    {
       -- quickly select wrapping text objects with <cr>
       "sustech-data/wildfire.nvim",
+      enabled = false, -- this can be replaced with treesitter's built in incremental_selection
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
