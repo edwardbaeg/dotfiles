@@ -27,3 +27,8 @@ require("settings")
 -- :TSPlaygroundToggle replaced with :Inspect
 -- gv -> select last visual selection
 -- :enew to open an empty buffer
+
+-- [[ KEYMAP GUIDE ]]
+-- Don't add to operator pending for y, d
+--  - and maybe c?
+-- catchalls: g,
