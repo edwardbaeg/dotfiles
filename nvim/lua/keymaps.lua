@@ -9,6 +9,7 @@ vim.keymap.set("n", "Y", "y$") -- yank to end of line (like C or D)
 vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky
 vim.keymap.set("n", "<c-f>", "za") -- toggle folds
+vim.keymap.set("n", "<bs>", [[ciw]], { noremap = true }) -- ciw
 
 -- various leader keymaps
 vim.keymap.set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
@@ -58,6 +59,15 @@ vim.keymap.set("n", "<left>", "<C-w>h")
 vim.keymap.set("n", "<down>", "<C-w>j")
 vim.keymap.set("n", "<up>", "<C-w>k")
 vim.keymap.set("n", "<right>", "<C-w>l")
+
+-- Don't copy empty lines to the register
+-- NOTE: this interferes with reactive.nvim
+vim.keymap.set("n", "dd", function()
+   if vim.fn.getline(".") == "" then
+      return '"_dd'
+   end
+   return "dd"
+end, { expr = true })
 
 -- Searching
 -- center after search "don't really need this with scrolloffset
