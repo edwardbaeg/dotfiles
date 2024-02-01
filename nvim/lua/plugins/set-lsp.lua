@@ -460,15 +460,22 @@ return {
       -- popup with interactive breadcrumb navigation
       "SmiteshP/nvim-navbuddy",
       dependencies = {
+         "neovim/nvim-lspconfig",
          "SmiteshP/nvim-navic",
          "MunifTanjim/nui.nvim",
+         "nvim-telescope/telescope.nvim", -- Optional
       },
       config = function()
          require("nvim-navbuddy").setup({
             lsp = {
                auto_attach = true,
             },
+            window = {
+               size = { height = "50%", width = "70%" },
+            },
          })
+
+         vim.keymap.set("n", "<leader>gn", "<cmd>Navbuddy<CR>", { desc = "Navbuddy" })
       end,
    },
 }
