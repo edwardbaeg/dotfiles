@@ -165,11 +165,15 @@ return {
 
                -- modified icon for active tab
                modified_selected = {
-                  fg = "yellow",
+                  fg = "#FFFF00",
                },
                -- modified icon for inactive tabs
                modified = {
-                  fg = "yellow",
+                  fg = "#FFFF00",
+               },
+               -- modified icon for inactive but visible tabs
+               modified_visible = {
+                  fg = "#FFFF00",
                },
             },
          })
