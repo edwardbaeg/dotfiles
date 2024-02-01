@@ -45,11 +45,12 @@ return {
                "markdown",
                "markdown_inline",
                "python",
-               -- "rust",
+               "terraform",
                "tsx",
                "typescript",
                "vim",
                "vimdoc",
+               -- "rust",
                -- "vue",
             },
             highlight = {

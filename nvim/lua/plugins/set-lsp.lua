@@ -142,6 +142,7 @@ return {
                },
             },
             cssls = {},
+            terraformls = {},
             -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
             -- tsserver = {}, -- replaced with typescript-tools
             -- vls = {}, -- vue v2
