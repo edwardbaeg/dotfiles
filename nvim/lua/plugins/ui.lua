@@ -324,33 +324,12 @@ return {
 
    {
       -- Hook into mode changes and change cursor, colors
-      -- TODO: change visual mode colors
       -- TODO: use catpuccin colors
       -- NOTE: this plugin seems to cause telescope to open files in insert mode. Workaround is to set a winleave autocmd. https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
       "rasulomaroff/reactive.nvim",
-      -- enabled = false,
       config = function()
-         local reactive = require("reactive")
-         local my_preset = {}
-
-         -- require("reactive").setup({
-         --    -- builtin = {
-         --    --    cursorline = true,
-         --    --    -- cursor = true,
-         --    --    modemsg = true,
-         --    -- },
-         -- })
-         --
          require("reactive").add_preset({
             name = "custom",
-            -- static = {
-            --    winhl = {
-            --       inactive = {
-            --          CursorLine = { bg = "#222228" },
-            --          CursorLineNr = { fg = "#b0b0b0", bg = "#222228" },
-            --       },
-            --    },
-            -- },
             modes = {
                no = {
                   operators = {
@@ -384,86 +363,16 @@ return {
                      },
                   },
                },
-               -- i = {
-               --    winhl = {
-               --       CursorLine = { bg = "#1f1d2e" },
-               --       CursorLineNr = { fg = "#3e8fb0", bg = "#1f1d2e" },
-               --    },
-               -- },
-               -- n = {
-               --    winhl = {
-               --       CursorLine = { bg = "#1f1d2e" },
-               --       CursorLineNr = { fg = "#ffffff", bg = "#1f1d2e" },
-               --    },
-               -- },
                -- visual
                [{ "v", "V", "\x16" }] = {
                   winhl = {
-                     CursorLineNr = { fg = "#c4a7e7", bg = "#2e2438" },
-                     Visual = { bg = "#2e2438" },
-                  },
-               },
-               -- replace
-               R = {
-                  winhl = {
-                     CursorLine = { bg = "#26233a" },
-                     CursorLineNr = { fg = "#eb6f92", bg = "#26233a" },
+                     CursorLineNr = { fg = "#c4a7e7", bg = "#2F354D" },
+                     -- CursorLineNr = { fg = "#c4a7e7", bg = "#2e2438" },
+                     Visual = { bg = "#2F354D" },
                   },
                },
             },
          })
-         -- require("reactive").load_preset("rosepine")
-         --      require("reactive").add_preset({
-         --         name = "my-preset",
-         --         init = function()
-         --            -- making our cursor to use `MyCursor` highlight group
-         --            vim.opt.guicursor:append("MyCursor")
-         --         end,
-         --         modes = {
-         --            n = {
-         --               winhl = {
-         --                  -- we use `winhl` because we want to highlight CursorLine only in a current window, not in all of them
-         --                  -- if you want to change global highlights, use the `hl` field instead.
-         --                  CursorLine = { bg = "#21202e" },
-         --               },
-         --               hl = {
-         --                  MyCursor = { bg = "#FFFFFF" },
-         --               },
-         --            },
-         --            no = {
-         --               -- You can also specify winhl and hl that will be applied with every operator
-         --               winhl = {},
-         --               hl = {},
-         --               operators = {
-         --                  d = {
-         --                     winhl = {
-         --                        CursorLine = { bg = "#450a0a" },
-         --                     },
-         --                     hl = {
-         --                        MyCursor = { bg = "#fca5a5" },
-         --                     },
-         --                  },
-         --                  y = {
-         --                     winhl = {
-         --                        CursorLine = { bg = "#422006" },
-         --                     },
-         --                     hl = {
-         --                        MyCursor = { bg = "#fdba74" },
-         --                     },
-         --                  },
-         --               },
-         --            },
-         --            i = {
-         --               winhl = {
-         --                  CursorLine = { bg = "#042f2e" },
-         --               },
-         --               hl = {
-         --                  MyCursor = { bg = "#5eead4" },
-         --               },
-         --            },
-         --         },
-         --      })
-         -- require("reactive").load_preset("my_preset")
       end,
    },
 }
