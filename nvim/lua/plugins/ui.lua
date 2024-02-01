@@ -217,11 +217,25 @@ return {
    {
       -- smooth scrolling
       "karb94/neoscroll.nvim",
-      -- enabled = false,
+      -- enabled = false, -- sometimes this causes nvim to exit without errors for c-d/u
       config = function()
          require("neoscroll").setup({
             mappings = {}, -- do not set default mappings... only use for <c-d/u>
-            easing_function = "sine",
+            -- easing_function = "sine",
+            easing_function = nil,
+            -- disable sending events with each line scroll. has weird interactions with nvim-scrollbar
+            -- pre_hook = function()
+            --    vim.opt.eventignore:append({
+            --       "WinScrolled",
+            --       "CursorMoved",
+            --    })
+            -- end,
+            -- post_hook = function()
+            --    vim.opt.eventignore:remove({
+            --       "WinScrolled",
+            --       "CursorMoved",
+            --    })
+            -- end,
          })
 
          -- speed up the animation time https://github.com/karb94/neoscroll.nvim/pull/68
