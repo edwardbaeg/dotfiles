@@ -169,6 +169,7 @@ alias vp="nvim -c \"lua require('fzf-lua').files()\""
 alias vg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsc="nvim -c \"SessionManager load_current_dir_session\""
 alias ve="nvim -c \"enew\"" # open empty buffer
+alias leet="nvim leetcode.nvim"
 
 # -- Sourcing
 alias st="tmux source-file ~/.tmux.conf"
