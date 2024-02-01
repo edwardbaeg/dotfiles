@@ -228,6 +228,7 @@ return {
 
    {
       -- highlight undo and redo changes
+      -- NOTE: this doesn't work with `d`
       "tzachar/highlight-undo.nvim",
       config = function()
          require("highlight-undo").setup({})

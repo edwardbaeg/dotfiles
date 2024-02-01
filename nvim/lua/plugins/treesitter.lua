@@ -162,6 +162,7 @@ return {
       end,
       init = function()
          vim.keymap.set("n", "<leader>sj", ":TSJToggle<CR>", { desc = "[S]plit/[J]oin" })
+         vim.keymap.set("n", "sj", ":TSJToggle<CR>", { desc = "[S]plit/[J]oin" })
       end,
    },
 

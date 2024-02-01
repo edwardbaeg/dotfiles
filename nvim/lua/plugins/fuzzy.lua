@@ -55,7 +55,7 @@ return {
          vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
          vim.keymap.set("n", "<c-h>", "<cmd>Telescope help_tags<cr>")
          -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
-         vim.keymap.set("n", "<c-t>", "<cmd>Telescope<cr>")
+         -- vim.keymap.set("n", "<c-t>", "<cmd>Telescope<cr>")
 
          vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
          vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })

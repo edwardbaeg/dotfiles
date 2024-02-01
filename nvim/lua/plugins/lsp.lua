@@ -3,6 +3,7 @@
 return {
    {
       -- LSP, formatter, and linter config and plugins
+      -- NOTE: do not lazy load
       "neovim/nvim-lspconfig",
       dependencies = {
          "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
@@ -17,7 +18,6 @@ return {
          "folke/neodev.nvim", -- adds type annotations for neovim config in lua
          "nvim-tree/nvim-web-devicons", -- adds icons
       },
-      -- event = "VeryLazy",
       config = function()
          require("neodev").setup() -- NOTE: setup BEFORE lspconfig. this does not work if it's a symlink!
          require("fidget").setup({})
@@ -169,7 +169,7 @@ return {
          -- Set up formatting
          require("mason-null-ls").setup({
             ensure_installed = {
-               "stylua",
+               -- "stylua", -- check to see if this is aligning comments...
                "beautysh",
                "eslint",
             },
@@ -201,10 +201,9 @@ return {
 
    {
       -- Autocomplete menu, snippets, and AI completion
+      -- NOTE: do not lazy load this
       "hrsh7th/nvim-cmp",
       event = "VeryLazy",
-      -- event = "InsertEnter",
-      -- event = "CmdwinEnter",
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
