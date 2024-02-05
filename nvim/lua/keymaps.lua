@@ -10,6 +10,7 @@ vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky
 vim.keymap.set("n", "<c-f>", "za") -- toggle folds
 vim.keymap.set("n", "<bs>", [[ciw]], { noremap = true }) -- ciw
+vim.keymap.set("n", "<cr>", "o<esc>0D") -- add empty line below
 
 -- various leader keymaps
 vim.keymap.set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
