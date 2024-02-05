@@ -62,8 +62,8 @@ return {
          -- lsp saga keymaps
          keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>")
          keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
-         -- keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
-         keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
+         keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
+         -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
          keymap("n", "gr", "<cmd>Lspsaga finder<cr>")
          keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
          keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")

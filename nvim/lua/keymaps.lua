@@ -61,15 +61,15 @@ vim.keymap.set("n", "<down>", "<C-w>j")
 vim.keymap.set("n", "<up>", "<C-w>k")
 vim.keymap.set("n", "<right>", "<C-w>l")
 
-vim.keymap.set("n", "gd", "<C-]>")
+-- Use builtin go to definition/tag
+vim.keymap.set("n", "gD", "<C-]>")
 
 -- yank and then paste
 vim.keymap.set("n", "yp", "yyp")
--- vim.keymap.set("n", "yp", "yypkgccj") -- NOTE: this doesn't work
+-- vim.keymap.set("n", "yp", "yypkgccj") -- NOTE: this doesn't work, comment the previous one
 -- vim.keymap.set("n", "yp", "yypp")
 
 -- Don't copy empty lines to the register
--- NOTE: this interferes with reactive.nvim
 vim.keymap.set("n", "dd", function()
    if vim.fn.getline(".") == "" then
       return '"_dd'
