@@ -4,13 +4,9 @@ return {
       -- This is used to show ghost text for suggestions
       -- NOTE: to fix an issue with the macos language server, delete the ~/.codeium dir
       "Exafunction/codeium.vim",
-      -- enabled = false,
       enabled = not vim.g.vscode,
       event = "VeryLazy",
       init = function()
-         -- Disable by default
-         -- vim.g.codeium_enabled = false
-
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defaults
          -- vim.g.codeium_enabled = false -- disable by default
          vim.keymap.set("i", "<Right>", function()
@@ -23,6 +19,21 @@ return {
          vim.keymap.set("i", "<C-k>", "<Plug>(codeium-previous)")
          -- vim.keymap.set({ "i", "n" }, "<c-h>", "<Plug>(codeium-dismiss)")
          vim.keymap.set("i", "<c-h>", "<Plug>(codeium-dismiss)")
+      end,
+   },
+
+   {
+      -- AI code autocompletion
+      -- This is used to show suggestions in the popup menu
+      "Exafunction/codeium.nvim",
+      enabled = not vim.g.vscode,
+      event = "VeryLazy",
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         "hrsh7th/nvim-cmp",
+      },
+      config = function()
+         require("codeium").setup({})
       end,
    },
 }
