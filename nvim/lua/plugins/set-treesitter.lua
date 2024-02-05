@@ -20,6 +20,7 @@ return {
             incremental_selection = {
                enable = true,
                keymaps = {
+                  init_selection = "<leader>gi", -- this is just to disable the default keymap gnn€þXkb
                   node_incremental = "v",
                   node_decremental = "V",
                },
