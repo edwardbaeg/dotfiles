@@ -34,6 +34,10 @@ vim.o.spellsuggest = "best,9"
 vim.o.splitright = true -- open splits on the right
 vim.o.splitbelow = true -- open splits on the bottom
 
+-- vim.o.showbreak = " " -- string added to the start of wrapped lines
+-- vim.o.showbreak = "⬞" -- string added to the start of wrapped lines
+vim.o.showbreak = "‥" -- string added to the start of wrapped lines
+
 -- vim.o.showmatch = true -- briefly flash matching bracket -- replaced with a plugin
 -- vim.o.matchtime = 2 = multiple of 100ms
 
@@ -199,10 +203,12 @@ vim.api.nvim_create_autocmd("WinLeave", {
 })
 
 -- [[ Highlights ]]
+local frappe = require("catppuccin.palettes").get_palette("frappe")
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" }) -- darker cursorline
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" }) -- TODO: only highlight trailing whitespace
 
@@ -210,7 +216,7 @@ vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db" }) -- eg +,
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -- eg +, =, || -- TODO?: only do for js?
 vim.api.nvim_set_hl(0, "Exception", { italic = true }) -- eg try, catch, TODO: set to green?
 -- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
--- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
+-- vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function' vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function' vim.api.nvim_set_hl(0, 'Keyword', { italic = true }) -- highlights the keyword 'function'
 -- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
 
 vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#bbbbbb" }) -- highlight codeium suggestions
