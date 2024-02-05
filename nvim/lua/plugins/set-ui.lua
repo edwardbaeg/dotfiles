@@ -236,10 +236,6 @@ return {
          --   bg_highlight = "#292e42",
          --   terminal_black = "#414868",
          --   fg = "#c0caf5",
-         --   fg_dark = "#a9b1d6",
-         --   fg_gutter = "#3b4261",
-         --   dark3 = "#545c7e",
-         --   comment = "#565f89",
          --   dark5 = "#737aa2",
          --   blue0 = "#3d59a1",
          --   blue = "#7aa2f7",
@@ -391,6 +387,18 @@ return {
                      Visual = { bg = "#2F354D" },
                   },
                },
+            },
+         })
+      end,
+   },
+
+   {
+      -- preview macros and norm commands
+      "smjonas/live-command.nvim",
+      config = function()
+         require("live-command").setup({
+            commands = {
+               Norm = { cmd = "norm" },
             },
          })
       end,
