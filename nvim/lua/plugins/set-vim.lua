@@ -28,7 +28,7 @@ return {
    },
 
    {
-      -- show search information in virtual text
+      -- show search status in virtual text
       "kevinhwang91/nvim-hlslens",
       event = "VeryLazy",
       config = function()
@@ -91,18 +91,6 @@ return {
    },
 
    {
-      -- only show cursorline on active window
-      "Tummetott/reticle.nvim",
-      enabled = false,
-      config = true,
-      opts = {
-         never = {
-            cursorline = { "toggleterm" }, -- has issues with lazygit
-         },
-      },
-   },
-
-   {
       -- adds some visuals to folds
       "anuvyklack/pretty-fold.nvim",
       enabled = false, -- idk folds
@@ -138,6 +126,7 @@ return {
 
    {
       -- color f/t targets
+      -- NOTE: consier removing this for `flash.nvim`
       "unblevable/quick-scope",
       enabled = true,
       init = function()
@@ -214,14 +203,15 @@ return {
    },
 
    {
-      -- extend % matching -- this is a vimscript plugin with treesitter integration
+      -- extend % matching
+      -- NOTE: this is a vimscript plugin with treesitter integration
       "andymass/vim-matchup",
       event = "VeryLazy",
       config = true,
    },
 
    {
-      -- find and suggest keybindings
+      -- find dupes, suggest keybindings
       "tris203/hawtkeys.nvim",
       config = true,
    },
