@@ -1,6 +1,5 @@
 -- misc plugins
 
-local leet_arg = "leetcode.nvim"
 return {
    {
       -- persist cursor location
@@ -95,37 +94,5 @@ return {
          keymap({ "n", "v" }, "<leader>cbb", "<cmd>CBccbox<CR>", opts) -- centered box with centered text
          keymap({ "n", "v" }, "<leader>cbd", "<cmd>CBd<CR>", opts) -- delete
       end,
-   },
-
-   {
-      -- leetcode in nvim
-      -- launch with nvim leetcode.nvim or :Leet
-      "kawre/leetcode.nvim",
-      build = ":TSUpdate html",
-      lazy = leet_arg ~= vim.fn.argv()[1],
-      cmd = "Leet",
-      dependencies = {
-         "nvim-telescope/telescope.nvim",
-         "nvim-lua/plenary.nvim", -- required by telescope
-         "MunifTanjim/nui.nvim",
-
-         -- optional
-         "nvim-treesitter/nvim-treesitter",
-         -- "rcarriga/nvim-notify",
-         "nvim-tree/nvim-web-devicons",
-      },
-      opts = {
-         arg = leet_arg,
-         lang = "typescript",
-         keys = {
-            toggle = { "q", "<Esc>" }, ---@type string|string[]
-            confirm = { "<CR>" }, ---@type string|string[]
-
-            reset_testcases = "r", ---@type string
-            use_testcase = "U", ---@type string
-            focus_testcases = "H", ---@type string
-            focus_result = "L", ---@type string
-         },
-      },
    },
 }
