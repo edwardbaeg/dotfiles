@@ -76,7 +76,7 @@ return {
       "LudoPinelli/comment-box.nvim",
       config = function()
          require("comment-box").setup({
-            comment_style = "auto",
+            -- comment_style = "auto",
             lines = {
                line = "-",
                line_start = "-",
@@ -89,10 +89,10 @@ return {
          local keymap = vim.keymap.set
          local opts = { noremap = true, silent = true }
 
-         keymap("n", "<leader>cbsl", "<cmd>CBline<CR>", opts) -- insert a line
-         keymap({ "n", "v" }, "<leader>cbll", "<cmd>CBllline<CR>", opts) -- left aligned line with left aligned text
-         keymap({ "n", "v" }, "<leader>cbb", "<cmd>CBccbox<CR>", opts) -- centered box with centered text
-         keymap({ "n", "v" }, "<leader>cbd", "<cmd>CBd<CR>", opts) -- delete
+         keymap("n", "<leader>gcsl", "<cmd>CBline<CR>", opts) -- insert a line
+         keymap({ "n", "v" }, "<leader>gcll", "<cmd>CBllline<CR>", opts) -- left aligned line with left aligned text
+         keymap({ "n", "v" }, "<leader>gcb", "<cmd>CBccbox<CR>", opts) -- centered box with centered text
+         keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts) -- delete
       end,
    },
 }
