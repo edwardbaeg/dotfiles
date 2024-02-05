@@ -14,9 +14,11 @@ config.window_padding = {
 }
 
 config.color_scheme = "tokyonight"
+-- config.color_scheme = "nord"
+-- config.color_scheme = "Catppuccin Mocha"
 config.colors = {
-   cursor_bg = "#008080",
-   cursor_fg = "#ffffff",
+   -- cursor_bg = "#008080",
+   -- cursor_fg = "#ffffff",
    background = "#1e1e1e",
    visual_bell = "#202020",
 }
