@@ -20,14 +20,14 @@ require("settings")
 -- Files
 --  - do :e to reload a file from external changes
 -- commands
---  - set showmatch? <- add ? to check its setting
---  Telescope
---  - open [help] in new tab -> <c-t>
--- :options
+--  - :set showmatch? - add ? to check its setting
+--  Telescope - open [help] in new tab -> <c-t>
+--  - :options - interactive view and set all options
 -- :TSPlaygroundToggle replaced with :Inspect
 -- gv -> select last visual selection
 -- :enew to open an empty buffer
 -- after :recover a swapfile, do :e to delete the older one
+-- :vert[ical] e[dit]
 
 -- [[ KEYMAP GUIDE ]]
 -- Don't add to operator pending for y, d
