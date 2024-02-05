@@ -85,10 +85,11 @@ export LESS="$LESS -FRXK"
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# -- OneAdvisory -------------------------------------------------------------------
+# -- OneAdvisory -------------------------------------------------------
 export AWS_PROFILE=oa-dev
+export AWS_REGION=us-east-1
 
-# -- Plugins -------------------------------------------------------------------
+# -- Plugins -----------------------------------------------------------
 
 # https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 
