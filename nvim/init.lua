@@ -1,7 +1,13 @@
 -- [[ NVIM CONFIG ROOT ]]
 
 require("lazysetup")
-require("lazy").setup("plugins", { change_detection = { enabled = false } })
+
+require("lazy").setup("plugins", {
+   change_detection = {
+      enabled = false,
+   },
+})
+
 require("keymaps")
 require("settings")
 

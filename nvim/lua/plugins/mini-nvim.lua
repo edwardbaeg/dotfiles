@@ -46,7 +46,8 @@ return {
             scroll = {
                timing = animate.gen_timing.linear({
                   easing = "out",
-                  duration = 100,
+                  -- duration = 100,
+                  duration = 70,
                   unit = "total",
                }),
             },
