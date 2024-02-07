@@ -224,4 +224,12 @@ return {
          require("highlight-undo").setup({})
       end,
    },
+
+   {
+      -- improve interacting with quickfix and location list
+      "kevinhwang91/nvim-bqf",
+      config = function()
+         require("bqf").setup()
+      end,
+   },
 }
