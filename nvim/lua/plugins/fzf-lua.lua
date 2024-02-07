@@ -17,6 +17,12 @@ return {
                horizontal = "right:50%",
             },
          },
+         buffers = {
+            winopts = {
+               height = 0.6,
+               width = 0.6,
+            },
+         },
       })
    end,
    init = function()
