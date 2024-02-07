@@ -7,6 +7,8 @@ return {
       dependencies = { "tpope/vim-rhubarb" }, -- this is required for :Gbrowse
       init = function()
          vim.g.fugitive_no_maps = true -- disable default mappings (specifically y<c-g>)
+
+         vim.keymap.set("n", "<leader>gb", ":Git blame<cr>")
       end,
    },
 
@@ -115,13 +117,13 @@ return {
          })
          vim.api.nvim_set_keymap(
             "n",
-            "<leader>gb",
+            "<leader>gl",
             '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
             { silent = true }
          )
          vim.api.nvim_set_keymap(
             "v",
-            "<leader>gb",
+            "<leader>gl",
             '<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
             {}
          )
