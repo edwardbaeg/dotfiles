@@ -46,7 +46,6 @@ function symlink_file_or_folder () {
     return 0
 }
 
-#TODO: add yazu
 symlink_file_or_folder \
     $DIR/yazi \
     $HOME/.config/yazi \
