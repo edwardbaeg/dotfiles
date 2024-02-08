@@ -10,7 +10,7 @@ return {
          "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
          "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua
       },
-      -- event = "VeryLazy",
+      -- event = "VeryLazy", -- Don't lazy load treesitter
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
       end,
@@ -182,6 +182,7 @@ return {
    {
       -- create annotations for func, class, type
       "danymat/neogen",
+      event = "VeryLazy",
       dependencies = "nvim-treesitter/nvim-treesitter",
       config = function()
          require("neogen").setup({

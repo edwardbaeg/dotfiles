@@ -459,6 +459,7 @@ return {
    {
       -- popup with interactive breadcrumb navigation
       "SmiteshP/nvim-navbuddy",
+      event = "VeryLazy",
       dependencies = {
          "neovim/nvim-lspconfig",
          "SmiteshP/nvim-navic",
