@@ -418,24 +418,61 @@ end)
 
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------
+-- Caffeine state can be toggled by clicking on the menu bar
+-- or by linking to `hammerspoon://toggleCaffineState?state={true|false}`
 
-local caffeine = hs.menubar.new()
+local caffeineMenuBar = hs.menubar.new()
 function _G.setCaffeineDisplay(state)
    if state then
-      caffeine:setTitle("A")
+      caffeineMenuBar:setTitle("A") -- for awake
    else
-      caffeine:setTitle("S")
+      caffeineMenuBar:setTitle("S") -- for sleep
    end
 end
 
-function _G.caffeineClicked()
-   setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
+_G.handleCaffeineUrl = function(_eventName, params)
+   local state = params["state"]
+   if state then
+      hs.alert("state is not nil")
+      if state == "true" then
+         enableCaffeine()
+      elseif state == "false" then
+         disableCaffeine()
+      else
+         hs.alert("state is invalid value")
+      end
+   else
+      toggleCaffeine()
+   end
 end
 
-if caffeine then
-   caffeine:setClickCallback(caffeineClicked)
-   setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+_G.enableCaffeine = function()
+   hs.caffeinate.set("systemIdle", true)
+   setCaffeineDisplay(true)
 end
+
+_G.disableCaffeine = function()
+   hs.caffeinate.set("systemIdle", false)
+   setCaffeineDisplay(false)
+end
+
+_G.toggleCaffeine = function()
+   setCaffeineDisplay(hs.caffeinate.toggle("systemIdle"))
+end
+
+function _G.caffeineClicked()
+   hs.alert("Caffeine clicked")
+   toggleCaffeine()
+end
+
+if caffeineMenuBar then
+   caffeineMenuBar:setClickCallback(caffeineClicked)
+   setCaffeineDisplay(hs.caffeinate.get("systemIdle"))
+end
+
+hs.urlevent.bind("toggleCaffeineState", handleCaffeineUrl)
+hs.urlevent.bind("enableCaffeine", enableCaffeine)
+hs.urlevent.bind("disableCaffeine", disableCaffeine)
 
 -- Spoons ----------------------------------------------------------------
 --------------------------------------------------------------------------
