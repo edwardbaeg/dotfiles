@@ -42,11 +42,9 @@ pressAndHoldRemap(cmdShift, "K", {}, "UP")
 pressAndHoldRemap(cmdShift, "H", {}, "LEFT")
 pressAndHoldRemap(cmdShift, "L", {}, "RIGHT")
 
+-- Arrow and option
 pressAndHoldRemap(altShift, "H", { "alt" }, "LEFT")
 pressAndHoldRemap(altShift, "L", { "alt" }, "RIGHT")
-
--- pressAndHoldRemap(cmdShift, "N", "DOWN")
--- pressAndHoldRemap(cmdShift, "P", "UP")
 
 function _G.systemKeyRemap(modifiers, key, sendKey)
    hs.hotkey.bind(modifiers, key, function()
@@ -83,7 +81,7 @@ hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(wind
 end)
 
 ApplicationWatcher = hs.application.watcher
-   .new(function(appName, eventType, appObject)
+   .new(function(appName, eventType, _appObject)
       -- When focusing an application that has no windows
       if eventType == hs.application.watcher.activated then
          local win = hs.window.focusedWindow()
@@ -111,10 +109,6 @@ hs.window.filter.default:subscribe(hs.window.filter.hasNoWindows, function(windo
    -- hs.alert("hasNoWindows")
    -- hs.window.highlight.ui.overlay = false
 end)
-
--- Not good
--- hs.window.highlight.ui.windowShownFlashColor = { 0, 1, 0, 0.8 } -- flash color when a window is shown (created or unhidden)
--- hs.window.highlight.ui.flashDuration = 0.3
 
 -- Reload Config ---------------------------------------------------------
 --------------------------------------------------------------------------
@@ -168,12 +162,6 @@ else
    launchOrFocus({ "cmd", "shift", "ctrl" }, "9", personalBrowser)
 end
 
--- Helpers ---------------------------------------------------------------
---------------------------------------------------------------------------
-function _G.within(a, b, margin)
-   return math.abs(a - b) <= margin
-end
-
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
 
@@ -186,6 +174,10 @@ hs.grid.GRIDHEIGHT = 4
 hs.hotkey.bind(hyperkey, "G", function()
    hs.grid.show()
 end)
+
+function _G.within(a, b, margin)
+   return math.abs(a - b) <= margin
+end
 
 function _G.moveAndResizeFocused(callback)
    local win = hs.window.focusedWindow()
@@ -238,127 +230,6 @@ hs.hotkey.bind(hyperkey, "L", function()
       frame.h = screen.h
    end)
 end)
-
--- Left two thirds
--- hs.hotkey.bind(hyperkey, "U", function()
--- 	local win = hs.window.focusedWindow()
--- 	local frame = win:frame()
--- 	local screen = win:screen():frame()
--- 	if frame.x == screen.x and frame.y == screen.y and frame.w == screen.w * 2 / 3 and frame.h == screen.h then
--- 		moveAndResizeFocused(function(frame, screen)
--- 			frame.x = screen.x
--- 			frame.y = screen.y
--- 			frame.w = screen.w * 1 / 3
--- 			frame.h = screen.h
--- 		end)
--- 		return
--- 	end
--- 	moveAndResizeFocused(function(frame, screen)
--- 		frame.x = screen.x
--- 		frame.y = screen.y
--- 		frame.w = screen.w * 2 / 3
--- 		frame.h = screen.h
--- 	end)
--- end)
-
--- Right two thirds
--- hs.hotkey.bind(hyperkey, "I", function()
--- 	local win = hs.window.focusedWindow()
--- 	local frame = win:frame()
--- 	local screen = win:screen():frame()
--- 	if
--- 		frame.x == screen.x + screen.w / 3
--- 		and frame.y == screen.y
--- 		and frame.w == screen.w * 2 / 3
--- 		and frame.h == screen.h
--- 	then
--- 		moveAndResizeFocused(function(frame, screen)
--- 			frame.x = screen.x + screen.w * 2 / 3
--- 			frame.y = screen.y
--- 			frame.w = screen.w * 1 / 3
--- 			frame.h = screen.h
--- 		end)
--- 		return
--- 	end
--- 	moveAndResizeFocused(function(frame, screen)
--- 		frame.x = screen.x + screen.w / 3
--- 		frame.y = screen.y
--- 		frame.w = screen.w * 2 / 3
--- 		frame.h = screen.h
--- 	end)
--- end)
-
--- Left 60
--- hs.hotkey.bind(hyperkey, "Y", function()
--- 	moveAndResizeFocused(function(frame, screen)
--- 		frame.x = screen.x
--- 		frame.y = screen.y
--- 		frame.w = screen.w * 0.6
--- 		frame.h = screen.h
--- 	end)
--- end)
-
--- Right 40
--- hs.hotkey.bind(hyperkey, "O", function()
--- 	moveAndResizeFocused(function(frame, screen)
--- 		frame.x = screen.x + (screen.w * 0.6)
--- 		frame.y = screen.y
--- 		frame.w = screen.w * 0.4
--- 		frame.h = screen.h
--- 	end)
--- end)
-
--- _G.quadKey = { "cmd", "ctrl", "shift" }
---
--- -- Top left quadrant
--- hs.hotkey.bind(quadKey, "J", function()
---    moveAndResizeFocused(function(frame, screen)
---       frame.x = screen.x
---       frame.y = screen.y
---       frame.w = screen.w / 2
---       frame.h = screen.h / 2
---    end)
--- end)
---
--- -- Top right quadrant
--- hs.hotkey.bind(quadKey, "K", function()
---    moveAndResizeFocused(function(frame, screen)
---       frame.x = screen.x + (screen.w / 2)
---       frame.y = screen.y
---       frame.w = screen.w / 2
---       frame.h = screen.h / 2
---    end)
--- end)
---
--- -- Bottom left quadrant
--- hs.hotkey.bind(quadKey, "N", function()
---    moveAndResizeFocused(function(frame, screen)
---       frame.x = screen.x
---       frame.y = screen.y + (screen.h / 2)
---       frame.w = screen.w / 2
---       frame.h = screen.h / 2
---    end)
--- end)
---
--- -- Bottom right quadrant
--- -- hs.hotkey.bind(quadKey, "M", function()
--- --   moveAndResizeFocused(function (frame, screen)
--- --     frame.x = screen.x + (screen.w / 2)
--- --     frame.y = screen.y + (screen.h / 2)
--- --     frame.w = screen.w / 2
--- --     frame.h = screen.h / 2
--- --   end)
--- -- end)
---
--- -- Middle 60%
--- hs.hotkey.bind(quadKey, "M", function()
---    moveAndResizeFocused(function(frame, screen)
---       frame.x = screen.x + (screen.w * 0.15)
---       frame.y = screen.y
---       frame.w = screen.w * 0.7
---       frame.h = screen.h * 0.99
---    end)
--- end)
 
 -- Resize and center windows ---------------------------------------------
 --------------------------------------------------------------------------
@@ -510,53 +381,6 @@ end
 
 WifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
 WifiWatcher:start()
-
--- Expose ----------------------------------------------------------------
---------------------------------------------------------------------------
--- hs.expose.ui.backgroundColor = { 0.30, 0.03, 0.03, 0.5 }
--- hs.expose.ui.highlightColor = { 1, 1 }
-hs.expose.ui.showThumbnails = true -- [true]
-hs.expose.ui.fitWindowsInBackground = true -- [true] improve performance with false
-hs.expose.ui.thumbnailAlpha = 0.5 -- [0] improve performance with false
-hs.expose.ui.textSize = 60 -- [40]
-
--- expose = hs.expose.new(nil,  {  })
--- hs.hotkey.bind(hyperkey, "E", function()
---   expose:toggleShow()
--- end)
--- hs.hotkey.bind({ "cmd" }, "E", function()
---   expose:toggleShow()
--- end)
-
--- Playground ------------------------------------------------------------
---------------------------------------------------------------------------
--- hs.dialog.alert()
-
--- k = hs.hotkey.modal.new({ "cmd", "ctrl" }, "I");
--- function k:entered()
---   hs.alert("Entered mode")
--- end
--- function k:exited()
---   hs.alert("Exited mode")
--- end
--- k:bind("", "escape", function()
---   k:exit()
--- end)
--- k:bind("", "I", "Select app", function()
---   for key, app in pairs(appCuts) do
---     hs.hotkey.bind({}, key, function()
---       k:exit()
---       hs.application.launchOrFocus(app)
---     end)
---   end
--- end)
-
--- Modal mode ------------------------------------------------------------
---------------------------------------------------------------------------
--- appCuts = {
---   i = 'iterm',
---   c = 'Google chrome'
--- }
 
 -- Notes -----------------------------------------------------------------
 --------------------------------------------------------------------------
