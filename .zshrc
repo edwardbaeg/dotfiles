@@ -52,6 +52,10 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 # Add python to path
 export PATH=$PATH:/$HOME/Library/Python/3.9/bin
 
+# Add deno to path
+export DENO_INSTALL="/Users/edwardbaeg/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # Key bindings
 set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
 
