@@ -13,6 +13,7 @@ return {
    {
       -- preview markdown
       "iamcco/markdown-preview.nvim",
+      enabled = false,
       build = "cd app && npm install",
       init = function()
          vim.g.mkdp_filetypes = { "markdown" }
@@ -89,10 +90,10 @@ return {
          local keymap = vim.keymap.set
          local opts = { noremap = true, silent = true }
 
-         keymap("n", "<leader>gcsl", "<cmd>CBline<CR>", opts) -- insert a line
+         keymap("n", "<leader>gcsl", "<cmd>CBline<CR>", opts)            -- insert a line
          keymap({ "n", "v" }, "<leader>gcll", "<cmd>CBllline<CR>", opts) -- left aligned line with left aligned text
-         keymap({ "n", "v" }, "<leader>gcb", "<cmd>CBccbox<CR>", opts) -- centered box with centered text
-         keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts) -- delete
+         keymap({ "n", "v" }, "<leader>gcb", "<cmd>CBccbox<CR>", opts)   -- centered box with centered text
+         keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts)       -- delete
       end,
    },
 }
