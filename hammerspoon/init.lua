@@ -304,7 +304,6 @@ end
 _G.handleCaffeineUrl = function(_eventName, params)
    local state = params["state"]
    if state then
-      hs.alert("state is not nil")
       if state == "true" then
          enableCaffeine()
       elseif state == "false" then
@@ -318,27 +317,26 @@ _G.handleCaffeineUrl = function(_eventName, params)
 end
 
 _G.enableCaffeine = function()
-   hs.caffeinate.set("systemIdle", true)
+   hs.caffeinate.set("displayIdle", true)
    setCaffeineDisplay(true)
 end
 
 _G.disableCaffeine = function()
-   hs.caffeinate.set("systemIdle", false)
+   hs.caffeinate.set("displayIdle", false)
    setCaffeineDisplay(false)
 end
 
 _G.toggleCaffeine = function()
-   setCaffeineDisplay(hs.caffeinate.toggle("systemIdle"))
+   setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
 end
 
 function _G.caffeineClicked()
-   hs.alert("Caffeine clicked")
    toggleCaffeine()
 end
 
 if caffeineMenuBar then
    caffeineMenuBar:setClickCallback(caffeineClicked)
-   setCaffeineDisplay(hs.caffeinate.get("systemIdle"))
+   setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
 end
 
 hs.urlevent.bind("toggleCaffeineState", handleCaffeineUrl)
