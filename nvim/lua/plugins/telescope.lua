@@ -59,7 +59,7 @@ return {
                -- prompt_position = 'bottom',
                width = 0.9,
                height = 0.9,
-               flip_columns = 150,
+               -- flip_columns = 150, -- this is in the wrong spot?
             },
             dynamic_preview_title = true,
          },

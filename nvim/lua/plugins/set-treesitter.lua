@@ -10,17 +10,17 @@ return {
          "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
          "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua
       },
-      -- event = "VeryLazy", -- Don't lazy load treesitter
+      -- NOTE: Don't lazy load treesitter
+      -- Run :TSInstall tsx after initial install
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
       end,
       config = function()
-         -- don't forget to run :TSInstall tsx
          require("nvim-treesitter.configs").setup({
             incremental_selection = {
                enable = true,
                keymaps = {
-                  init_selection = "<leader>gi", -- this is just to disable the default keymap gnn€þXkb
+                  init_selection = "<leader>gi", -- this is just to disable the default keymap gnn
                   node_incremental = "v",
                   node_decremental = "V",
                },
@@ -37,7 +37,7 @@ return {
             },
             ensure_installed = {
                "c",
-               "cpp",
+               -- "cpp",
                "css",
                "go",
                "html",
@@ -63,10 +63,10 @@ return {
                   enable = true,
                   lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
                   keymaps = {
-                     -- You can use the capture groups defined in textobjects.scm
+                     -- Can use the capture groups defined in textobjects.scm
+                     ["af"] = "@function.outer",
                      -- ['aa'] = '@parameter.outer',
                      -- ['ia'] = '@parameter.inner',
-                     ["af"] = "@function.outer",
                      -- ['if'] = '@function.inner',
                      -- ['ac'] = '@class.outer',
                      -- ['ic'] = '@class.inner',
@@ -109,6 +109,7 @@ return {
 
    {
       -- consistently color function arguments. Works without LSP
+      -- TODO: add italics to this highlight group, adding to Hlargs doesn't work
       "m-demare/hlargs.nvim",
       config = function()
          require("hlargs").setup({})

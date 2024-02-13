@@ -19,8 +19,12 @@ return {
          },
          buffers = {
             winopts = {
-               height = 0.6,
-               width = 0.6,
+               height = 0.7,
+               width = 0.5,
+               preview = {
+                  layout = "vertical",
+                  vertical = "down:50%", -- preview takes bottom % of floating window
+               },
             },
          },
       })

@@ -24,7 +24,7 @@ config.colors = {
    visual_bell = "#202020",
 }
 
--- Makes the background flash for visual bell
+-- Makes the background flash/opaque for visual bell
 config.visual_bell = {
    fade_in_function = "EaseIn",
    fade_in_duration_ms = 150,
