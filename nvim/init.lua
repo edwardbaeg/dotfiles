@@ -36,6 +36,7 @@ require("settings")
 -- :vert[ical] e[dit]
 -- instead of using `dd` for an empty line, use `J`
 -- ...and to add an empty line: `<cr>`
+-- indent in insert mode with `<c-t>/<c-d>`
 
 -- [[ KEYMAP GUIDE ]]
 -- Don't add to operator pending for y, d

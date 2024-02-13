@@ -476,7 +476,7 @@ return {
             },
          })
 
-         vim.keymap.set("n", "gn", "<cmd>Navbuddy<CR>", { desc = "Navbuddy" })
+         vim.keymap.set("n", "<leader>gn", "<cmd>Navbuddy<CR>", { desc = "[N]avbuddy" })
       end,
    },
 }
