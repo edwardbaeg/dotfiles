@@ -112,7 +112,7 @@ return {
                buffer_visible = {
                   bold = false,
                   italic = false,
-                  fg = "#cccccc",
+                  fg = "#b1b1b1",
                },
 
                -- separator for active tab
@@ -189,7 +189,7 @@ return {
       -- smooth scrolling
       "karb94/neoscroll.nvim",
       -- NOTE: this can be replaced with mini.animate
-      enabled = false, -- sometimes this causes nvim to exit without errors for c-d/u
+      -- enabled = false,
       config = function()
          require("neoscroll").setup({
             mappings = {}, -- do not set default mappings... only use for <c-d/u>

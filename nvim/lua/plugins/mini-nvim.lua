@@ -41,21 +41,21 @@ return {
          })
 
          -- smooth scrolling
-         local animate = require("mini.animate")
-         animate.setup({
-            scroll = {
-               timing = animate.gen_timing.linear({
-                  easing = "out",
-                  -- duration = 100,
-                  duration = 70,
-                  unit = "total",
-               }),
-            },
-            cursor = { enable = false },
-            resize = { enable = false },
-            open = { enable = false },
-            close = { enable = false },
-         })
+         -- local animate = require("mini.animate")
+         -- animate.setup({
+         --    scroll = {
+         --       timing = animate.gen_timing.linear({
+         --          easing = "out",
+         --          -- duration = 100,
+         --          duration = 70,
+         --          unit = "total",
+         --       }),
+         --    },
+         --    cursor = { enable = false },
+         --    resize = { enable = false },
+         --    open = { enable = false },
+         --    close = { enable = false },
+         -- })
       end,
    },
 }
