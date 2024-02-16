@@ -66,7 +66,7 @@ return {
                -- visual = "s", -- default is S
                visual = "a", -- default is S
                visual_line = false,
-               delete = "sd", -- default is ds
+               -- delete = "sd", -- default is ds
                -- change = "sc", -- default is cs
             },
             aliases = {
