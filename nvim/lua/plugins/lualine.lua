@@ -20,7 +20,7 @@ return {
             },
             sections = {
                lualine_a = { "mode" },
-               lualine_b = { "branch", "diff", "diagnostics" },
+               -- lualine_b = { "branch", "diff", "diagnostics" },
                -- lualine_c = { { "filename", path = 1 }, "searchcount" },
                lualine_c = { { "filename", path = 1 }, "searchcount", "codeium#GetStatusString" }, -- FIXME: the codeium portion makes vim enter insert mode when opening a new cile...
                -- lualine_c = {
