@@ -25,10 +25,10 @@ return {
                   node_decremental = "V",
                },
             },
-            endwise = {
-               enable = true, -- for "RRethy/nvim-treesitter-endwise"
+            endwise = { -- for "RRethy/nvim-treesitter-endwise"
+               enable = true,
             },
-            matchup = {
+            matchup = { -- for "andymass/vim-matchup"
                enable = true,
             },
             autotag = {
@@ -65,9 +65,9 @@ return {
                   keymaps = {
                      -- Can use the capture groups defined in textobjects.scm
                      ["af"] = "@function.outer",
+                     ["if"] = "@function.inner",
                      -- ['aa'] = '@parameter.outer',
                      -- ['ia'] = '@parameter.inner',
-                     -- ['if'] = '@function.inner',
                      -- ['ac'] = '@class.outer',
                      -- ['ic'] = '@class.inner',
                   },
