@@ -206,7 +206,6 @@ return {
       -- extend % matching
       -- NOTE: this is a vimscript plugin with treesitter integration
       "andymass/vim-matchup",
-      event = "VeryLazy",
       config = true,
    },
 
@@ -230,6 +229,18 @@ return {
       "kevinhwang91/nvim-bqf",
       config = function()
          require("bqf").setup()
+      end,
+   },
+
+   {
+      -- preview macros and norm commands
+      "smjonas/live-command.nvim",
+      config = function()
+         require("live-command").setup({
+            commands = {
+               Norm = { cmd = "norm" },
+            },
+         })
       end,
    },
 }
