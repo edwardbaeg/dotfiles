@@ -58,6 +58,7 @@ return {
       -- fancier tabline
       "akinsho/bufferline.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
+      enabled = not vim.g.vscode,
       config = function()
          local background_color = "#151515" -- dark gray
          local dim_color = "#1a1a1a" -- dark gray
@@ -170,6 +171,7 @@ return {
    {
       -- highlight the current indent chunk
       "shellRaining/hlchunk.nvim",
+      enabled = not vim.g.vscode,
       config = function()
          require("hlchunk").setup({
             indent = {
@@ -189,7 +191,8 @@ return {
       -- smooth scrolling
       "karb94/neoscroll.nvim",
       -- NOTE: this can be replaced with mini.animate
-      -- enabled = false,
+      -- enabled = not vim.g.vscode,
+      enabled = false,
       config = function()
          require("neoscroll").setup({
             mappings = {}, -- do not set default mappings... only use for <c-d/u>
@@ -224,6 +227,7 @@ return {
       -- add visual scrollbar
       "petertriho/nvim-scrollbar",
       event = "VeryLazy",
+      enabled = not vim.g.vscode,
       config = function()
          local frappe = require("catppuccin.palettes").get_palette("frappe")
          local tokyonight = require("tokyonight.colors").setup()
@@ -285,6 +289,7 @@ return {
    {
       -- start page for nvim
       "goolord/alpha-nvim",
+      enabled = not vim.g.vscode,
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
          require("alpha").setup(require("alpha.themes.startify").config)
@@ -294,6 +299,7 @@ return {
    {
       -- color the line separating windows
       "nvim-zh/colorful-winsep.nvim",
+      enabled = not vim.g.vscode,
       config = function()
          require("colorful-winsep").setup({
             highlight = {
@@ -343,6 +349,7 @@ return {
       -- TODO: use catpuccin colors
       -- NOTE: this plugin seems to cause telescope to open files in insert mode. Workaround is to set a winleave autocmd. https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
       "rasulomaroff/reactive.nvim",
+      enabled = not vim.g.vscode,
       config = function()
          require("reactive").add_preset({
             name = "custom",
@@ -387,18 +394,6 @@ return {
                      Visual = { bg = "#2F354D" },
                   },
                },
-            },
-         })
-      end,
-   },
-
-   {
-      -- preview macros and norm commands
-      "smjonas/live-command.nvim",
-      config = function()
-         require("live-command").setup({
-            commands = {
-               Norm = { cmd = "norm" },
             },
          })
       end,

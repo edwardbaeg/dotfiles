@@ -2,6 +2,7 @@ return {
    {
       -- a collection of mini 'submodules'
       "echasnovski/mini.nvim",
+      enabled = not vim.g.vscode,
       config = function()
          -- adds ability to move text around with <m-h/j/k/l>
          require("mini.move").setup({})
@@ -41,21 +42,23 @@ return {
          })
 
          -- smooth scrolling
-         -- local animate = require("mini.animate")
-         -- animate.setup({
-         --    scroll = {
-         --       timing = animate.gen_timing.linear({
-         --          easing = "out",
-         --          -- duration = 100,
-         --          duration = 70,
-         --          unit = "total",
-         --       }),
-         --    },
-         --    cursor = { enable = false },
-         --    resize = { enable = false },
-         --    open = { enable = false },
-         --    close = { enable = false },
-         -- })
+         if not vim.g.vscode then
+            local animate = require("mini.animate")
+            animate.setup({
+               scroll = {
+                  timing = animate.gen_timing.linear({
+                     easing = "out",
+                     -- duration = 100,
+                     duration = 70,
+                     unit = "total",
+                  }),
+               },
+               cursor = { enable = false },
+               resize = { enable = false },
+               open = { enable = false },
+               close = { enable = false },
+            })
+         end
       end,
    },
 }
