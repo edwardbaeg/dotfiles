@@ -36,7 +36,7 @@ vim.o.splitbelow = true -- open splits on the bottom
 
 -- vim.o.showbreak = " " -- string added to the start of wrapped lines
 -- vim.o.showbreak = "⬞" -- string added to the start of wrapped lines
-vim.o.showbreak = "‥" -- string added to the start of wrapped lines
+vim.o.showbreak = "… " -- string added to the start of wrapped lines
 
 -- vim.o.showmatch = true -- briefly flash matching bracket -- replaced with a plugin
 -- vim.o.matchtime = 2 = multiple of 100ms
