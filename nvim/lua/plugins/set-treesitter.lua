@@ -9,6 +9,7 @@ return {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
          "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
          "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua
+         "andymass/vim-matchup", -- extend % matching
       },
       -- NOTE: Don't lazy load treesitter
       -- Run :TSInstall tsx after initial install

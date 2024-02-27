@@ -203,13 +203,6 @@ return {
    },
 
    {
-      -- extend % matching
-      -- NOTE: this is a vimscript plugin with treesitter integration
-      "andymass/vim-matchup",
-      config = true,
-   },
-
-   {
       -- find dupes, suggest keybindings
       "tris203/hawtkeys.nvim",
       config = true,
