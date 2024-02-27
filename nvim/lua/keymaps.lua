@@ -25,6 +25,8 @@ vim.keymap.set("n", "<leader>-", "<c-x>")
 vim.keymap.set("n", "<leader>es", ":EslintFixAll<cr>")
 vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>")
 vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>")
+vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>")
+vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>")
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
