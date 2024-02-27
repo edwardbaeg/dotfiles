@@ -52,8 +52,10 @@ return {
          -- vim.cmd("highlight shTodo ctermbg=NONE guibg=NONE")
 
          -- But this works...
-         vim.api.nvim_set_hl(0, "shTodo", { bg = "#1c1c1c" })
-         vim.api.nvim_set_hl(0, "zshTodo", { bg = "#1c1c1c" })
+         vim.api.nvim_set_hl(0, "Todo", { bg = "#1c1c1c" })
+         -- vim.api.nvim_set_hl(0, "shTodo", { bg = "#1c1c1c" })
+         -- vim.api.nvim_set_hl(0, "zshTodo", { bg = "#1c1c1c" })
+         -- vim.api.nvim_set_hl(0, "luaTodo", { bg = "#1c1c1c" })
       end,
    },
 
@@ -90,10 +92,10 @@ return {
          local keymap = vim.keymap.set
          local opts = { noremap = true, silent = true }
 
-         keymap("n", "<leader>gcsl", "<cmd>CBline<CR>", opts)            -- insert a line
+         keymap("n", "<leader>gcsl", "<cmd>CBline<CR>", opts) -- insert a line
          keymap({ "n", "v" }, "<leader>gcll", "<cmd>CBllline<CR>", opts) -- left aligned line with left aligned text
-         keymap({ "n", "v" }, "<leader>gcb", "<cmd>CBccbox<CR>", opts)   -- centered box with centered text
-         keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts)       -- delete
+         keymap({ "n", "v" }, "<leader>gcb", "<cmd>CBccbox<CR>", opts) -- centered box with centered text
+         keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts) -- delete
       end,
    },
 }
