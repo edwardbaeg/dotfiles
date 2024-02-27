@@ -176,7 +176,7 @@ return {
          require("mason-null-ls").setup({
             ensure_installed = {
                -- "stylua", -- check to see if this is aligning comments...
-               "beautysh",
+               "shfmt",
                "eslint",
             },
          })
@@ -187,7 +187,7 @@ return {
             sources = {
                null_ls.builtins.formatting.prettier,
                null_ls.builtins.formatting.stylua,
-               null_ls.builtins.formatting.beautysh,
+               null_ls.builtins.formatting.shfmt,
             },
             on_attach = function(client, bufnr) -- format on save
                if client.supports_method("textDocument/formatting") then
