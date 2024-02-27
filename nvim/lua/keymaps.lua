@@ -23,10 +23,10 @@ vim.keymap.set("n", "<leader>p", "<cmd>bprevious<cr>") -- previous buffer
 vim.keymap.set("n", "<leader>+", "<c-a>") -- increment
 vim.keymap.set("n", "<leader>-", "<c-x>") -- decrement
 vim.keymap.set("n", "<leader>es", ":EslintFixAll<cr>")
-vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>") -- save
-vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>") -- quite
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
+vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) -- save
+vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>", { desc = "[q]uit" }) -- quite
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
