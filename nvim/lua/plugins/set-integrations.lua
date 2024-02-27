@@ -4,6 +4,7 @@ return {
       -- Adds git commands
       -- This is mostly used for :Git blame
       "tpope/vim-fugitive",
+      enabled = false,
       dependencies = { "tpope/vim-rhubarb" }, -- this is required for :Gbrowse
       init = function()
          vim.g.fugitive_no_maps = true -- disable default mappings (specifically y<c-g>)
@@ -105,28 +106,6 @@ return {
          --
          -- vim.api.nvim_set_keymap("n", "<leader>ra", "<cmd>lua _ranger_toggle()<cr>", { noremap = true, silent = true })
          -- vim.api.nvim_create_user_command("RangerToggle", "lua _G._ranger_toggle()<cr>", {})
-      end,
-   },
-
-   {
-      -- open current line in github permalink
-      "ruifm/gitlinker.nvim",
-      config = function()
-         require("gitlinker").setup({
-            -- mappings = "<leader>gg", -- default is gy
-         })
-         vim.api.nvim_set_keymap(
-            "n",
-            "<leader>gl",
-            '<cmd>lua require"gitlinker".get_buf_range_url("n", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-            { silent = true }
-         )
-         vim.api.nvim_set_keymap(
-            "v",
-            "<leader>gl",
-            '<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-            {}
-         )
       end,
    },
 }
