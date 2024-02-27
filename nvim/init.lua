@@ -42,3 +42,5 @@ require("settings")
 -- Don't add to operator pending for y, d
 --  - and maybe c?
 -- catchalls: g,
+-- <leader>f: fuzzy/telescope
+-- <leader>s: sessions

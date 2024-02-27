@@ -12,6 +12,7 @@ return {
                icons_enabled = false,
                component_separators = "|",
                section_separators = "",
+               globalstatus = true,
             },
             extensions = {
                "lazy", -- doesn't seem to do anything?

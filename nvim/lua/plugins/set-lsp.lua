@@ -121,6 +121,11 @@ return {
          end
 
          -- Set up LSP servers
+
+         -- Options for typescript:
+         -- tsserver: official
+         -- tsls: vscode wrapper
+         -- typescript-tools: drop in lua replacement
          require("typescript-tools").setup({
             on_attach = on_attach,
          })
@@ -463,7 +468,7 @@ return {
       dependencies = {
          "neovim/nvim-lspconfig",
          "SmiteshP/nvim-navic",
-         "MunifTanjim/nui.nvim",
+         "MunifTanjim/nui.nvim", -- ui library
          "nvim-telescope/telescope.nvim", -- Optional
       },
       config = function()
@@ -472,11 +477,20 @@ return {
                auto_attach = true,
             },
             window = {
-               size = { height = "50%", width = "70%" },
+               size = { height = "50%", width = "60%" },
             },
          })
 
          vim.keymap.set("n", "<leader>gn", "<cmd>Navbuddy<CR>", { desc = "[N]avbuddy" })
+      end,
+   },
+
+   {
+      -- lua port of 'ts-error-translator' for vscode
+      -- TODO: update to work with typescript-tools https://github.com/dmmulroy/ts-error-translator.nvim/pull/18
+      "dmmulroy/ts-error-translator.nvim",
+      config = function()
+         require("ts-error-translator").setup({})
       end,
    },
 }

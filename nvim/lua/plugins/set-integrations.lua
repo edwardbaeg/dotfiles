@@ -2,10 +2,9 @@
 return {
    {
       -- Adds git commands
-      -- This is mostly used for :Git blame
+      -- This is mostly used for :Git blame, TODO find replacement for it
       "tpope/vim-fugitive",
-      enabled = false,
-      dependencies = { "tpope/vim-rhubarb" }, -- this is required for :Gbrowse
+      -- dependencies = { "tpope/vim-rhubarb" }, -- this is required for :Gbrowse
       init = function()
          vim.g.fugitive_no_maps = true -- disable default mappings (specifically y<c-g>)
 

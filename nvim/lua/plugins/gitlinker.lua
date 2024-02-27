@@ -1,6 +1,5 @@
 return {
    -- open current line in github permalink
-   -- TODO?: create a command :GBrowse/:GLink for this
    "ruifm/gitlinker.nvim",
    config = function()
       require("gitlinker").setup({
