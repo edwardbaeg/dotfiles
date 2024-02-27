@@ -8,25 +8,25 @@ vim.keymap.set("n", "L", "$") -- go to start of line
 vim.keymap.set("n", "Y", "y$") -- yank to end of line (like C or D)
 vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky
-vim.keymap.set("n", "<c-f>", "za") -- toggle folds
+-- vim.keymap.set("n", "<c-f>", "za") -- toggle folds
 vim.keymap.set("n", "<bs>", [[ciw]], { noremap = true }) -- ciw
 vim.keymap.set("n", "<cr>", "o<esc>0D") -- add empty line below
 
 -- various leader keymaps
 vim.keymap.set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
 vim.keymap.set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
-vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear searches" })
+vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file
 vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<leader>n", "<cmd>bnext<cr>") -- next buffer
 vim.keymap.set("n", "<leader>p", "<cmd>bprevious<cr>") -- previous buffer
-vim.keymap.set("n", "<leader>+", "<c-a>") -- increment and decrement
-vim.keymap.set("n", "<leader>-", "<c-x>")
+vim.keymap.set("n", "<leader>+", "<c-a>") -- increment
+vim.keymap.set("n", "<leader>-", "<c-x>") -- decrement
 vim.keymap.set("n", "<leader>es", ":EslintFixAll<cr>")
-vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>")
-vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>")
-vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>")
-vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>")
+vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>") -- save
+vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>") -- quite
+vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
+vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
@@ -43,7 +43,7 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- Edit configuration files
-vim.keymap.set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>")
+vim.keymap.set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>") -- also set as working directory
 vim.keymap.set("n", "<leader>et", ":edit ~/.tmux.conf<cr>")
 vim.keymap.set("n", "<leader>ez", ":edit ~/.zshrc<cr>")
 vim.keymap.set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>")
@@ -54,10 +54,10 @@ vim.keymap.set("n", "<leader>bp", ":bp<cr>")
 vim.keymap.set("n", "<leader>bd", ":bd<cr>")
 
 -- emacs style window movement
-vim.keymap.set("n", "<leader>wj", "<cmd>wincmd j<cr>")
-vim.keymap.set("n", "<leader>wk", "<cmd>wincmd k<cr>")
-vim.keymap.set("n", "<leader>wh", "<cmd>wincmd h<cr>")
-vim.keymap.set("n", "<leader>wl", "<cmd>wincmd l<cr>")
+-- vim.keymap.set("n", "<leader>wj", "<cmd>wincmd j<cr>")
+-- vim.keymap.set("n", "<leader>wk", "<cmd>wincmd k<cr>")
+-- vim.keymap.set("n", "<leader>wh", "<cmd>wincmd h<cr>")
+-- vim.keymap.set("n", "<leader>wl", "<cmd>wincmd l<cr>")
 
 -- Move to window using the arrow keys
 vim.keymap.set("n", "<left>", "<C-w>h")
@@ -66,10 +66,10 @@ vim.keymap.set("n", "<up>", "<C-w>k")
 vim.keymap.set("n", "<right>", "<C-w>l")
 
 -- Use builtin go to definition/tag
-vim.keymap.set("n", "gD", "<C-]>")
+vim.keymap.set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
 
 -- yank and then paste
-vim.keymap.set("n", "yp", "yyp")
+-- vim.keymap.set("n", "yp", "yyp") -- replaced with mini.operators `gmm`
 -- vim.keymap.set("n", "yp", "yypkgccj") -- NOTE: this doesn't work, comment the previous one
 -- vim.keymap.set("n", "yp", "yypp")
 
@@ -91,10 +91,11 @@ end, { expr = true })
 -- vim.keymap.set("n", "g#", "g#zz")
 
 -- Abbreviations
--- TODO: in a future release, this can be refactored to: vim.keymap.set('ca', 'foo', 'bar')
+-- TODO: refactor to lua first class api when available
 vim.cmd([[
-ab functino function
-ab fn function
+   ab functino function
+   ab fn function
+   ab exfn export function
 ]])
 
 -- work
