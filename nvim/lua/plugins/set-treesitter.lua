@@ -56,8 +56,9 @@ return {
                -- "vue",
             },
             highlight = {
-               enable = true, --[[ additional_vim_regex_highlighting = true ]]
-            }, -- regex highlighting helps with jsx indenting, but otherwise its bad
+               enable = true,
+               additional_vim_regex_highlighting = true, -- regex highlighting helps with jsx indenting, but otherwise its bad
+            },
             indent = { enable = true, disable = { "python" } },
             textobjects = {
                select = {
@@ -149,7 +150,7 @@ return {
       -- enabled = false,
       config = function()
          require("treesitter-context").setup({
-            max_lines = 5,
+            max_lines = 3,
             separator = "-",
          })
       end,
@@ -166,18 +167,7 @@ return {
       end,
       init = function()
          vim.keymap.set("n", "<leader>sj", ":TSJToggle<CR>", { desc = "[S]plit/[J]oin" })
-         vim.keymap.set("n", "sj", ":TSJToggle<CR>", { desc = "[S]plit/[J]oin" })
-      end,
-   },
-
-   {
-      -- quickly select wrapping text objects with <cr>
-      "sustech-data/wildfire.nvim",
-      enabled = false, -- this can be replaced with treesitter's built in incremental_selection
-      event = "VeryLazy",
-      dependencies = { "nvim-treesitter/nvim-treesitter" },
-      config = function()
-         require("wildfire").setup({})
+         -- vim.keymap.set("n", "sj", ":TSJToggle<CR>", { desc = "[S]plit/[J]oin" })
       end,
    },
 
