@@ -59,6 +59,11 @@ return {
          require("tokyonight").setup({
             transparent = true, -- don't set a background color
          })
+         -- local tokyonight = require("tokyonight.colors").setup()
+         -- local util = require("tokyonight.util")
+         -- color = util.darken(tokyonight.orange, 0.5),
+         -- color = util.darken(tokyonight.black, 0.5),
+
          -- vim.cmd([[colorscheme tokyonight-night]])
       end,
    },

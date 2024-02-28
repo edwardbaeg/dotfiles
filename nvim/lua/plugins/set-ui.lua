@@ -55,29 +55,23 @@ return {
    },
 
    {
-      -- Add indentation guides
-      "lukas-reineke/indent-blankline.nvim",
-      enabled = not vim.g.vscode,
-      config = function()
-         require("ibl").setup({
-            indent = {
-               char = "┊",
-            },
-            scope = {
-               enabled = false,
-            },
-         })
-      end,
-   },
-
-   {
-      -- highlight the current indent chunk
+      -- indentation guides and highlight the current indent chunk -- this replaced indent-blankline.nvim
       "shellRaining/hlchunk.nvim",
       enabled = not vim.g.vscode,
+      -- enabled = false,
       config = function()
+         local frappe = require("catppuccin.palettes").get_palette("frappe")
          require("hlchunk").setup({
+            chunk = {
+               style = {
+                  { fg = frappe.surface2 },
+               },
+            },
             indent = {
-               enable = false,
+               chars = { "┊" },
+               style = {
+                  { fg = frappe.surface0 },
+               },
             },
             line_num = {
                enable = false,
@@ -131,53 +125,10 @@ return {
       event = "VeryLazy",
       enabled = not vim.g.vscode,
       config = function()
-         local frappe = require("catppuccin.palettes").get_palette("frappe")
-         local tokyonight = require("tokyonight.colors").setup()
-         local util = require("tokyonight.util")
-
-         --          {
-         --   none = "NONE",
-         --   bg_dark = "#1f2335",
-         --   bg = "#24283b",
-         --   bg_highlight = "#292e42",
-         --   terminal_black = "#414868",
-         --   fg = "#c0caf5",
-         --   dark5 = "#737aa2",
-         --   blue0 = "#3d59a1",
-         --   blue = "#7aa2f7",
-         --   cyan = "#7dcfff",
-         --   blue1 = "#2ac3de",
-         --   blue2 = "#0db9d7",
-         --   blue5 = "#89ddff",
-         --   blue6 = "#b4f9f8",
-         --   blue7 = "#394b70",
-         --   magenta = "#bb9af7",
-         --   magenta2 = "#ff007c",
-         --   purple = "#9d7cd8",
-         --   orange = "#ff9e64",
-         --   yellow = "#e0af68",
-         --   green = "#9ece6a",
-         --   green1 = "#73daca",
-         --   green2 = "#41a6b5",
-         --   teal = "#1abc9c",
-         --   red = "#f7768e",
-         --   red1 = "#db4b4b",
-         --   git = { change = "#6183bb", add = "#449dab", delete = "#914c54" },
-         --   gitSigns = {
-         --     add = "#266d6a",
-         --     change = "#536c9e",
-         --     delete = "#b2555b",
-         --   },
-         -- }
-
          require("scrollbar").setup({
             handle = {
-               color = "#111111",
-               -- color = "black",
-               -- color = frappe.base,
-               -- color = tokyonight.black,
-               -- color = util.darken(tokyonight.orange, 0.5),
-               -- color = util.darken(tokyonight.black, 0.5),
+               -- color = "#111111",
+               color = "grey9",
             },
             handlers = {
                cursor = false,
@@ -251,7 +202,7 @@ return {
    },
 
    {
-      -- floating statusline
+      -- per window floating statusline
       "b0o/incline.nvim",
       event = "VeryLazy",
       config = function()
@@ -260,16 +211,22 @@ return {
                padding = 0,
                margin = {
                   horizontal = 0,
+                  vertical = 0, -- overlap window border
                },
             },
             render = function(props)
                local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+               local modified = vim.bo[props.buf].modified
+
                if filename == "" then
                   filename = "[No Name]"
                end
-               local modified = vim.bo[props.buf].modified
+               if modified then
+                  filename = "[+] " .. filename
+               end
+
                return {
-                  { filename .. (modified and " [+]" or ""), gui = modified and "bold,italic" or "bold" },
+                  { filename, gui = modified and "bold,italic" or "bold" },
                }
             end,
          })

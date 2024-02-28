@@ -2,16 +2,19 @@
 
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
+
 -- vim.o.wrap = false -- Don't wrap lines
+vim.o.linebreak = true -- wrap at spaces instead of the middle of a word
 vim.o.breakindent = true -- wrapped lines will have consistent indents
+vim.o.showbreak = "… " -- string added to the start of wrapped lines
+
 vim.o.updatetime = 250 -- Decrease update time
 vim.o.signcolumn = "yes" -- always show sign column
 vim.o.completeopt = "menuone,noselect" -- better completion experience
 vim.o.mouse = "a" -- Enable mouse moedwardbaeg9@gmail.com@de
-vim.o.cursorline = true -- highlight line with cursor, window scoped for use with reticle.nvim
+vim.o.cursorline = true -- highlight line with cursor
 vim.o.hidden = true -- allow switching buffers without saving
 vim.o.scrolloff = 24 -- number of lines to keep above/below the cursor
-vim.o.linebreak = true -- wrap at spaces instead of the middle of a word
 -- vim.o.winblend = 10 -- floating window transparency -- disable for transparent mode
 
 vim.o.ignorecase = true -- case insensitive searching
@@ -34,11 +37,7 @@ vim.o.spellsuggest = "best,9"
 vim.o.splitright = true -- open splits on the right
 vim.o.splitbelow = true -- open splits on the bottom
 
--- vim.o.showbreak = " " -- string added to the start of wrapped lines
--- vim.o.showbreak = "⬞" -- string added to the start of wrapped lines
-vim.o.showbreak = "… " -- string added to the start of wrapped lines
-
--- vim.o.showmatch = true -- briefly flash matching bracket -- replaced with a plugin
+-- vim.o.showmatch = true -- briefly flash matching bracket -- replaced with vim-matchup
 -- vim.o.matchtime = 2 = multiple of 100ms
 
 -- set tabstop for specific filetypes
@@ -208,7 +207,8 @@ local frappe = require("catppuccin.palettes").get_palette("frappe")
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" }) -- darker cursorline
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" }) -- darker cursorline
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- darker cursorline
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" }) -- TODO: only highlight trailing whitespace
 
