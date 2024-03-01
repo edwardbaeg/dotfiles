@@ -13,9 +13,14 @@ return {
          })
 
          -- file explorer as a buffer
+         -- TODO: disable flash F when in this mode?
          require("mini.files").setup({
             windows = {
                preview = true,
+               max_number = 3,
+               width_focus = 50,
+               width_nofocus = 50,
+               width_preview = 50,
             },
             options = {
                use_as_default_explorer = false,
