@@ -148,6 +148,7 @@ return {
             },
             cssls = {},
             terraformls = {},
+            jsonls = {},
             -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
             -- tsserver = {}, -- replaced with typescript-tools
             -- vls = {}, -- vue v2
@@ -175,7 +176,7 @@ return {
          -- Set up formatting
          require("mason-null-ls").setup({
             ensure_installed = {
-               -- "stylua", -- check to see if this is aligning comments...
+               "stylua", -- check to see if this is aligning comments...
                "shfmt",
                "eslint",
             },
