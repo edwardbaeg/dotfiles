@@ -107,4 +107,15 @@ return {
          -- vim.api.nvim_create_user_command("RangerToggle", "lua _G._ranger_toggle()<cr>", {})
       end,
    },
+
+   {
+      -- Render svg in browser with :PreviewSvg
+      "nmassardot/nvim-preview-svg",
+      config = function()
+         require("nvim-preview-svg").setup({
+            browser = "safari",
+            args = false,
+         })
+      end,
+   },
 }
