@@ -52,7 +52,7 @@ return {
          -- vim.cmd("highlight shTodo ctermbg=NONE guibg=NONE")
 
          -- But this works...
-         vim.api.nvim_set_hl(0, "Todo", { bg = "#1c1c1c" })
+         vim.api.nvim_set_hl(0, "Todo", { bg = "NONE" })
          -- vim.api.nvim_set_hl(0, "shTodo", { bg = "#1c1c1c" })
          -- vim.api.nvim_set_hl(0, "zshTodo", { bg = "#1c1c1c" })
          -- vim.api.nvim_set_hl(0, "luaTodo", { bg = "#1c1c1c" })

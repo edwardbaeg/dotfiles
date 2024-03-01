@@ -9,9 +9,9 @@ return {
          name = "custom",
          modes = {
             n = {
-               -- highlight CursorLine only in a current window, not in all
+               -- highlight CursorLine only in current window
                winhl = {
-                  CursorLineNr = { bg = "gray4" }, -- same as cursorline
+                  CursorLineNr = { bg = "gray4" },
                },
             },
             no = {

@@ -68,7 +68,9 @@ return {
                },
             },
             indent = {
-               chars = { "┊" },
+               -- chars = { "┊" },
+               chars = { "┆" },
+               -- chars = { "╎" },
                style = {
                   { fg = frappe.surface0 },
                },
