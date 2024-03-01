@@ -151,6 +151,7 @@ function _G.launchOrFocus(modifiers, key, appName)
 end
 
 launchOrFocus(hyperkey, "0", "Wezterm")
+launchOrFocus(hyperkey, "8", "Slack")
 
 local personalBrowser = "Arc"
 local workBrowser = "Google Chrome"
