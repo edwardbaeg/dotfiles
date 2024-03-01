@@ -4,6 +4,7 @@ return {
    -- NOTE: this plugin seems to cause telescope to open files in insert mode. Workaround is to set a winleave autocmd. https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
    "rasulomaroff/reactive.nvim",
    enabled = not vim.g.vscode,
+   event = "VeryLazy",
    config = function()
       require("reactive").add_preset({
          name = "custom",

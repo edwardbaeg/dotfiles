@@ -190,4 +190,21 @@ return {
          })
       end,
    },
+
+   {
+      -- Add virtual text to ending parens with context
+      "code-biscuits/nvim-biscuits",
+      dependencies = "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
+      -- lazy loading is currently broken https://github.com/code-biscuits/nvim-biscuits/issues/47
+      -- event = "VeryLazy",
+      config = function()
+         require("nvim-biscuits").setup({
+            -- cursor_line_only = true,
+            default_config = {
+               prefix_string = "- ",
+            },
+         })
+      end,
+   },
 }
