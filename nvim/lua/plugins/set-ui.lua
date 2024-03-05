@@ -86,42 +86,6 @@ return {
    },
 
    {
-      -- smooth scrolling
-      "karb94/neoscroll.nvim",
-      -- NOTE: this can be replaced with mini.animate
-      -- enabled = not vim.g.vscode,
-      enabled = false,
-      config = function()
-         require("neoscroll").setup({
-            mappings = {}, -- do not set default mappings... only use for <c-d/u>
-            -- easing_function = "sine",
-            easing_function = nil,
-            -- disable sending events with each line scroll. has weird interactions with nvim-scrollbar
-            -- pre_hook = function()
-            --    vim.opt.eventignore:append({
-            --       "WinScrolled",
-            --       "CursorMoved",
-            --    })
-            -- end,
-            -- post_hook = function()
-            --    vim.opt.eventignore:remove({
-            --       "WinScrolled",
-            --       "CursorMoved",
-            --    })
-            -- end,
-         })
-
-         -- speed up the animation time https://github.com/karb94/neoscroll.nvim/pull/68
-         local t = {}
-         -- Syntax: t[keys] = {function, {function arguments}}
-         t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "100" } }
-         t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "100" } }
-
-         require("neoscroll.config").set_mappings(t)
-      end,
-   },
-
-   {
       -- add visual scrollbar
       "petertriho/nvim-scrollbar",
       event = "VeryLazy",
