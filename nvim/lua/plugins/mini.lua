@@ -58,12 +58,16 @@ return {
                      unit = "total",
                   }),
                },
-               cursor = { enable = false },
-               resize = { enable = false },
-               open = { enable = false },
-               close = { enable = false },
+               cursor = { enable = false }, -- cursor path
+               resize = { enable = false }, -- window resize
+               open = { enable = false }, -- window opening
+               close = { enable = false }, -- window closing
             })
          end
+
+         -- track and reuse system visits
+         require("mini.visits").setup({})
+         vim.keymap.set("n", "<leader>fv", ":lua MiniVisits.select_path()<cr>")
       end,
    },
 }
