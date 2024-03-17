@@ -196,13 +196,19 @@ return {
       "code-biscuits/nvim-biscuits",
       dependencies = "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
+      -- enabled = false, -- this drastically slows down help file scrolling... and disabling does not work
       -- lazy loading is currently broken https://github.com/code-biscuits/nvim-biscuits/issues/47
       -- event = "VeryLazy",
       config = function()
          require("nvim-biscuits").setup({
-            -- cursor_line_only = true,
+            cursor_line_only = true,
             default_config = {
                prefix_string = "- ",
+            },
+            language_config = {
+               help = {
+                  disabled = true,
+               },
             },
          })
       end,
