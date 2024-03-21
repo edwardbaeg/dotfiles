@@ -189,7 +189,7 @@ function _G.moveAndResizeFocused(callback)
 
    callback(f, screenMax)
    local needsResize = not (within(f.h, prevH, 1) and within(f.w, prevW, 1))
-   win:setFrame(f, needsResize and 0 or 0.1)
+   win:setFrame(f, needsResize and 0 or 0.15)
 end
 
 -- Top half
