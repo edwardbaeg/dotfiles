@@ -148,6 +148,8 @@ return {
    },
 
    {
+      -- multiple cursors mode
+      -- use <ctrl-n> to add multiple cursors
       "mg979/vim-visual-multi",
    },
 }

@@ -54,7 +54,7 @@ return {
                   timing = animate.gen_timing.linear({
                      easing = "out",
                      -- duration = 100,
-                     duration = 70,
+                     duration = 50,
                      unit = "total",
                   }),
                },

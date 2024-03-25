@@ -115,6 +115,7 @@ return {
       "m-demare/hlargs.nvim",
       config = function()
          require("hlargs").setup({})
+         vim.api.nvim_set_hl(0, "Hlargs", { italic = true })
       end,
    },
 
@@ -196,7 +197,7 @@ return {
       "code-biscuits/nvim-biscuits",
       dependencies = "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
-      -- enabled = false, -- this drastically slows down help file scrolling... and disabling does not work
+      enabled = false, -- this drastically slows down help file scrolling... and disabling does not work
       -- lazy loading is currently broken https://github.com/code-biscuits/nvim-biscuits/issues/47
       -- event = "VeryLazy",
       config = function()

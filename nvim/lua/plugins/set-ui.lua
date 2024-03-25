@@ -68,7 +68,7 @@ return {
                },
             },
             indent = {
-               -- chars = { "┊" },
+               -- chars = { "┊" }, -- default
                chars = { "┆" },
                -- chars = { "╎" },
                style = {
