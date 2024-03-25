@@ -81,6 +81,7 @@ export LESS="$LESS -FRXK"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 # -- OneAdvisory -------------------------------------------------------
+alias gcm2="git checkout master2 && git reset --hard origin/master"
 export AWS_PROFILE=oa-dev
 export AWS_REGION=us-east-1
 
@@ -176,7 +177,6 @@ alias gdo="git diff origin"
 alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
-alias gcm2="git checkout master2 && git reset --hard origin/master"
 # alias glmm="git checkout master && git pull && git checkout - && git merge master"
 alias grpo="git remote prune origin"
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
@@ -215,7 +215,7 @@ alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 # conditional command aliases
 if command -v eza &> /dev/null
 then
-    alias ls="eza"
+    alias ls="eza --group-directories-first"
 fi
 if command -v bat &> /dev/null
 then
