@@ -288,6 +288,28 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
    win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
 end)
 
+-- Move cursor between screens -------------------------------------------
+--------------------------------------------------------------------------
+function _G.move_cursor(direction)
+   return function()
+      local screen = hs.mouse.getCurrentScreen()
+      local nextScreen
+      if direction == "right" then
+         nextScreen = screen:next()
+      else
+         nextScreen = screen:previous()
+      end
+
+      local rect = nextScreen:fullFrame()
+      -- get the center of the rect
+      local center = hs.geometry.rect(rect).center
+      hs.mouse.absolutePosition(center)
+   end
+end
+
+hs.hotkey.bind(hyperkey, "f", move_cursor("right"))
+hs.hotkey.bind(hyperkey, "d", move_cursor("left"))
+
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------
 -- Caffeine state can be toggled by clicking on the menu bar
