@@ -494,4 +494,11 @@ return {
          require("ts-error-translator").setup({})
       end,
    },
+
+   {
+      "aznhe21/actions-preview.nvim",
+      config = function()
+         require("actions-preview").setup({})
+      end,
+   },
 }
