@@ -6,7 +6,6 @@ return {
    dependencies = {
       "nvim-lua/plenary.nvim", -- library of async functons
       "nvim-telescope/telescope-ui-select.nvim", -- replace nvim's ui select with telescope
-      -- "nvim-telescope/telescope-frecency.nvim", -- intelligent priority of editing history
       "debugloop/telescope-undo.nvim", -- visually shows undo history
       { -- c port of fzf
          "nvim-telescope/telescope-fzf-native.nvim",
@@ -15,16 +14,10 @@ return {
       "tsakirist/telescope-lazy.nvim", -- for navigating plugins installed by lazy.nvim
    },
    init = function()
-      -- NOTE: use <c-r> to revert to selected commit
-      vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>", { desc = "[f]uzzy [u]ndo" })
-
-      -- vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>")
-      -- vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>")
-      vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
+      -- vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>") -- replaced with fzflua
+      -- vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>") -- replaced with fzflua
       vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
-      vim.keymap.set("n", "<c-h>", "<cmd>Telescope help_tags<cr>")
-      -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor
-      -- vim.keymap.set("n", "<c-t>", "<cmd>Telescope<cr>")
+      -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor -- replaced with fzflua
 
       vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
       vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })
@@ -34,8 +27,11 @@ return {
       vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<cr>", { desc = "[f]uzzy [o]ldfiles" })
       vim.keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<cr>", { desc = "[f]uzzy [s]pell_suggest" })
       vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
-      -- vim.keymap.set("n", "<leader>ff", "<cmd>Telescope frecency<cr>", { desc = "[f]uzzy [f]recency" })
       vim.keymap.set("n", "<leader>fj", "<cmd>Telescope jumplist<cr>", { desc = "[f]uzzy [j]umplist" })
+      vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
+
+      -- NOTE: use <c-r> to revert to selected commit
+      vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>", { desc = "[f]uzzy [u]ndo" })
    end,
    config = function()
       local actions = require("telescope.actions")
@@ -84,19 +80,10 @@ return {
                use_delta = true,
                diff_context_lines = 6, -- defaults to scroll
             },
-            -- frecency = {
-            --    default_workspace = "CWD",
-            -- },
          },
       })
 
-      -- require("telescope").extensions.frecency.frecency({
-      --    sorter = require("telescope").extensions.fzf.native_fzf_sorter(),
-      -- })
-
-      -- require("telescope").load_extension("harpoon")
       require("telescope").load_extension("fzf")
-      -- require("telescope").load_extension("frecency") -- this adds "A"?
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("undo")
       require("telescope").load_extension("lazy")

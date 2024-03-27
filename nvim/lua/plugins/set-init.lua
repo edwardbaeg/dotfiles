@@ -60,21 +60,6 @@ return {
    },
 
    {
-      -- interactive marks
-      "theprimeagen/harpoon",
-      enabled = false,
-      config = function()
-         require("harpoon").setup({})
-
-         vim.api.nvim_create_user_command("HarpoonAddFile", "lua require('harpoon.mark').add_file()", {})
-         vim.api.nvim_create_user_command("HarpoonUI", "lua require('harpoon.ui').toggle_quick_menu()", {})
-
-         vim.keymap.set("n", "<leader>ha", "<cmd>HarpoonAddFile<cr>", {})
-         vim.keymap.set("n", "<leader>hu", "<cmd>HarpoonUI<cr>", {})
-      end,
-   },
-
-   {
       -- ability to format comments with fancy boxes and lines
       "LudoPinelli/comment-box.nvim",
       config = function()
