@@ -35,6 +35,7 @@ require("settings")
 -- instead of using `dd` for an empty line, use `J`
 -- ...and to add an empty line: `<cr>`
 -- indent in insert mode with `<c-t>/<c-d>`
+-- use <c-t> instead of <c-o>, tagstack
 
 -- [[ KEYMAP GUIDE ]]
 -- Don't add to operator pending for y, d

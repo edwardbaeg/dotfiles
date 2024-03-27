@@ -14,6 +14,12 @@ return {
    config = function()
       require("harpeek").setup()
       vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
+      vim.api.nvim_set_keymap(
+         "n",
+         "<c-h>",
+         "<cmd>lua require('harpeek').toggle()<cr>",
+         { noremap = true, silent = true }
+      )
    end,
    keys = {
       { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
