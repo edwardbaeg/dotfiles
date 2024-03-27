@@ -62,7 +62,7 @@ return {
    {
       -- interactive marks
       "theprimeagen/harpoon",
-      -- enabled = false,
+      enabled = false,
       config = function()
          require("harpoon").setup({})
 

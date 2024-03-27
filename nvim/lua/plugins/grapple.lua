@@ -5,11 +5,16 @@ return {
    opts = {
       scope = "git",
       statusline = {
-         icon = "󰛢",
+         icon = "󰛢", -- check lualine options.icons_enabled
       },
    },
+   dependencies = { "WolfeCub/harpeek.nvim" },
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
+   config = function()
+      require("harpeek").setup()
+      vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
+   end,
    keys = {
       { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
       { "<c-m>", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
