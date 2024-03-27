@@ -246,4 +246,9 @@ return {
          })
       end,
    },
+
+   {
+      -- automatically disable certain features in large files
+      "LunarVim/bigfile.nvim",
+   },
 }
