@@ -1,6 +1,5 @@
 return {
    -- Quick access marks
-   -- TODO: fix showing the statusline icon
    "cbochs/grapple.nvim",
    opts = {
       scope = "git",
@@ -12,13 +11,20 @@ return {
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
    config = function()
-      require("harpeek").setup()
+      local size = vim.api.nvim_list_uis()[1]
+      require("harpeek").setup({
+         winopts = {
+            row = size.height * 0.85,
+            col = size.width,
+         },
+      })
+
       vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
       vim.api.nvim_set_keymap(
          "n",
          "<c-h>",
          "<cmd>lua require('harpeek').toggle()<cr>",
-         { noremap = true, silent = true }
+         { noremap = true, silent = true, desc = "[H]arpeek toggle" }
       )
    end,
    keys = {
@@ -26,7 +32,6 @@ return {
       { "<c-m>", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
 
       { "<c-k>", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
-      -- { "<leader>k", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
 
       { "<leader>K", "<cmd>Grapple toggle_scopes<cr>", desc = "Grapple toggle scopes" },
 
