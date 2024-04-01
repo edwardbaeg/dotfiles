@@ -290,7 +290,8 @@ end)
 
 -- Move cursor between screens -------------------------------------------
 --------------------------------------------------------------------------
-function _G.move_cursor(direction)
+
+function _G.move_cursor_to_monitor(direction)
    return function()
       local screen = hs.mouse.getCurrentScreen()
       local nextScreen
@@ -303,12 +304,37 @@ function _G.move_cursor(direction)
       local rect = nextScreen:fullFrame()
       -- get the center of the rect
       local center = hs.geometry.rect(rect).center
-      hs.mouse.absolutePosition(center)
+
+      local currentPosition = hs.mouse.absolutePosition()
+
+      move_mouse(currentPosition.x, currentPosition.y, center.x, center.y, 10)
    end
 end
 
-hs.hotkey.bind(hyperkey, "f", move_cursor("right"))
-hs.hotkey.bind(hyperkey, "d", move_cursor("left"))
+--- Animate moving the mouse cursor
+---@param x1 number
+---@param y1 number
+---@param x2 number
+---@param y2 number
+---@param sleep number Duration in milliseconds
+function _G.move_mouse(x1, y1, x2, y2, sleep)
+   local xdiff = x2 - x1
+   local ydiff = y2 - y1
+   local loop = math.floor(math.sqrt((xdiff * xdiff) + (ydiff * ydiff)))
+   local xinc = xdiff / loop
+   local yinc = ydiff / loop
+   sleep = math.floor((sleep * 1000) / loop)
+   for i = 1, loop do
+      x1 = x1 + xinc
+      y1 = y1 + yinc
+      hs.mouse.absolutePosition({ x = math.floor(x1), y = math.floor(y1) })
+      hs.timer.usleep(sleep)
+   end
+   hs.mouse.absolutePosition({ x = math.floor(x2), y = math.floor(y2) })
+end
+
+hs.hotkey.bind(hyperkey, "f", move_cursor_to_monitor("right"))
+hs.hotkey.bind(hyperkey, "d", move_cursor_to_monitor("left"))
 
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------
