@@ -84,6 +84,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 alias gcm2="git checkout master2 && git reset --hard origin/master"
 export AWS_PROFILE=oa-dev
 export AWS_REGION=us-east-1
+export ECR_AWS_PROFILE=oa-dev
 
 # -- Plugins -----------------------------------------------------------
 
