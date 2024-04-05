@@ -290,7 +290,6 @@ end)
 
 -- Move cursor between screens -------------------------------------------
 --------------------------------------------------------------------------
-
 function _G.move_cursor_to_monitor(direction)
    return function()
       local screen = hs.mouse.getCurrentScreen()
@@ -333,6 +332,8 @@ function _G.move_mouse(x1, y1, x2, y2, sleep)
    hs.mouse.absolutePosition({ x = math.floor(x2), y = math.floor(y2) })
 end
 
+hs.hotkey.bind(cmdShift, "f", move_cursor_to_monitor("right"))
+hs.hotkey.bind(cmdShift, "d", move_cursor_to_monitor("left"))
 hs.hotkey.bind(hyperkey, "f", move_cursor_to_monitor("right"))
 hs.hotkey.bind(hyperkey, "d", move_cursor_to_monitor("left"))
 
@@ -407,7 +408,6 @@ hs.loadSpoon("EmmyLua")
 
 -- Wifi switcher ---------------------------------------------------------
 --------------------------------------------------------------------------
-
 local homeSSID = "!wifi"
 local lastSSID = hs.wifi.currentNetwork()
 
@@ -427,8 +427,8 @@ function _G.ssidChangedCallback()
    lastSSID = newSSID
 end
 
-WifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
-WifiWatcher:start()
+-- WifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
+-- WifiWatcher:start()
 
 -- Notes -----------------------------------------------------------------
 --------------------------------------------------------------------------
