@@ -208,12 +208,13 @@ return {
 
    {
       -- Autocomplete menu, snippets, and AI completion
-      -- NOTE: do not lazy load this
+      -- NOTE: do NOT lazy load this
       "hrsh7th/nvim-cmp",
       event = "VeryLazy",
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
+         "hrsh7th/cmp-buffer", -- source for buffer words
          "L3MON4D3/LuaSnip", -- snippet engine
          "saadparwaiz1/cmp_luasnip",
          "rafamadriz/friendly-snippets", -- vscode like snippets
@@ -239,6 +240,21 @@ return {
             { name = "copilot", max_item_count = 5 },
             { name = "luasnip", max_item_count = 2 },
             { name = "cmp_tabnine", max_item_count = 5 },
+            {
+               name = "buffer",
+               max_item_count = 5,
+               options = {
+                  -- Don't index files that are larger than 1 Megabyte
+                  get_bufnrs = function()
+                     local buf = vim.api.nvim_get_current_buf()
+                     local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+                     if byte_size > 1024 * 1024 then -- 1 Megabyte max
+                        return {}
+                     end
+                     return { buf }
+                  end,
+               },
+            },
             -- { name = "cmdline" },
          }
 

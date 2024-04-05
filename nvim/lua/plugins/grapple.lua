@@ -17,6 +17,7 @@ return {
             row = size.height * 0.85,
             col = size.width,
          },
+         format = "filename",
       })
 
       vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
