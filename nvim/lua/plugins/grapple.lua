@@ -11,11 +11,16 @@ return {
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
    config = function()
-      local size = vim.api.nvim_list_uis()[1]
+      -- local height = vim.api.nvim_win_get_height(0)
+      -- local width = vim.api.nvim_win_get_width(0)
+      local columns = vim.api.nvim_get_option("columns")
+      local lines = vim.api.nvim_get_option("lines")
+
       require("harpeek").setup({
          winopts = {
-            row = size.height * 0.85,
-            col = size.width,
+            -- move to borrom right
+            row = lines * 0.80,
+            col = columns,
          },
          format = "filename",
       })
