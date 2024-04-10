@@ -29,6 +29,7 @@ return {
       vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
       vim.keymap.set("n", "<leader>fj", "<cmd>Telescope jumplist<cr>", { desc = "[f]uzzy [j]umplist" })
       vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
+      -- vim.keymap.set("n", "<leader>fg", "<cmd>Telescope git_bcommits<cr>", { desc = "[f]uzzy [g]ic bcommits" })
 
       -- NOTE: use <c-r> to revert to selected commit
       vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>", { desc = "[f]uzzy [u]ndo" })

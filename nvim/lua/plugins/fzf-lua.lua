@@ -34,5 +34,7 @@ return {
       vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
       vim.keymap.set("n", "<c-b>", "<cmd>lua require('fzf-lua').buffers()<cr>", { silent = true })
       vim.keymap.set("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<cr>", { silent = true })
+      vim.keymap.set("n", "<leader>fb", "<cmd>lua require('fzf-lua').git_bcommits()<cr>", { silent = true })
+      vim.keymap.set("n", "<leader>ff", "<cmd>lua require('fzf-lua').builtin()<cr>", { silent = true })
    end,
 }
