@@ -368,10 +368,10 @@ return {
             sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline", max_item_count = 10 } }),
          })
 
-         -- idk what this does
+         -- Add suggestions from the current buffer for searches
          cmp.setup.cmdline({ "/", "?" }, {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = { { name = "buffer" } },
+            sources = { { name = "buffer", max_item_count = 5 } },
          })
 
          local ls = luasnip
