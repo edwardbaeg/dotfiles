@@ -38,6 +38,9 @@ return {
             nearest_only = true,
          })
 
+         -- change highlight colors for search matches away from nearest
+         vim.api.nvim_set_hl(0, "HlSearchLens", { fg = "#737994", bg = "grey20" })
+
          local kopts = { noremap = true, silent = true }
 
          -- NOTE this is the old keymap api
