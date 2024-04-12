@@ -60,6 +60,18 @@ systemKeyRemap(cmdShift, "/", "PLAY")
 systemKeyRemap(cmdShift, "o", "SOUND_UP")
 systemKeyRemap(cmdShift, "i", "SOUND_DOWN")
 
+-- App Specific bindings -------------------------------------------------
+--------------------------------------------------------------------------
+hs.loadSpoon("AppBindings")
+spoon.AppBindings:bind("Google Chrome", {
+   { { "alt", "ctrl" }, "l", { "ctrl" }, "tab" },
+   { { "alt", "ctrl" }, "h", { "ctrl", "shift" }, "tab" },
+})
+spoon.AppBindings:bind("Arc", {
+   { { "alt", "ctrl" }, "l", { "ctrl" }, "tab" },
+   { { "alt", "ctrl" }, "h", { "ctrl", "shift" }, "tab" },
+})
+
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
 hs.window.highlight.ui.overlayColor = { 0, 0, 0, 0.01 } -- overlay color
@@ -84,6 +96,7 @@ ApplicationWatcher = hs.application.watcher
    .new(function(appName, eventType, _appObject)
       -- When focusing an application that has no windows
       if eventType == hs.application.watcher.activated then
+         -- hs.alert("[" .. appName .. "]" .. " focused")
          local win = hs.window.focusedWindow()
          if win == nil then
             hs.alert("[" .. appName .. "]" .. " has no windows")
