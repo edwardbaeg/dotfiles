@@ -11,27 +11,25 @@ return {
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
    config = function()
-      -- local height = vim.api.nvim_win_get_height(0)
-      -- local width = vim.api.nvim_win_get_width(0)
       local columns = vim.api.nvim_get_option("columns")
       local lines = vim.api.nvim_get_option("lines")
-
       require("harpeek").setup({
+         -- move to borrom right
          winopts = {
-            -- move to borrom right
             row = lines * 0.80,
             col = columns,
          },
          format = "filename",
       })
 
+      local function harpeek_toggle()
+         columns = vim.api.nvim_get_option("columns")
+         lines = vim.api.nvim_get_option("lines")
+         require("harpeek").toggle({ winopts = { row = lines * 0.80, col = columns } })
+      end
+      vim.keymap.set("n", "<c-h>", harpeek_toggle, { noremap = true, silent = true, desc = "[H]arpeek toggle" })
+
       vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
-      vim.api.nvim_set_keymap(
-         "n",
-         "<c-h>",
-         "<cmd>lua require('harpeek').toggle()<cr>",
-         { noremap = true, silent = true, desc = "[H]arpeek toggle" }
-      )
    end,
    keys = {
       { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
