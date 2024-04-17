@@ -64,36 +64,6 @@ return {
    },
 
    {
-      -- wrapper for session commands
-      "Shatur/neovim-session-manager",
-      config = function()
-         require("session_manager").setup({
-            -- autoload_mode = require('session_manager.config').AutoloadMode.CurrentDir
-            autoload_mode = require("session_manager.config").AutoloadMode.Disabled,
-         })
-
-         vim.api.nvim_set_keymap(
-            "n",
-            "<leader>sc",
-            ":SessionManager load_current_dir_session<CR>",
-            { desc = "[S]essionManager load_[c]urrent_dir_session" }
-         )
-         vim.api.nvim_set_keymap(
-            "n",
-            "<leader>sl",
-            ":SessionManager load_session<CR>",
-            { desc = "[S]essionManager [l]oad_session" }
-         )
-         vim.api.nvim_set_keymap(
-            "n",
-            "<leader>sd",
-            ":SessionManager delete_session<CR>",
-            { desc = "[S]essionManager [d]elete_session" }
-         )
-      end,
-   },
-
-   {
       -- adds some visuals to folds
       "anuvyklack/pretty-fold.nvim",
       enabled = false, -- idk folds

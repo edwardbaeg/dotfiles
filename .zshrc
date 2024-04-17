@@ -148,7 +148,7 @@ alias ovim="oldvim"
 # alias vp="nvim -c \"Telescope find_files\""
 alias vp="nvim -c \"lua require('fzf-lua').files()\""
 alias vg="nvim -c \"lua require('fzf-lua').grep_project()\""
-alias vsc="nvim -c \"SessionManager load_current_dir_session\""
+alias vsr="nvim -c \"SessionRestore\""
 alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
 
