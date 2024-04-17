@@ -88,6 +88,7 @@ return {
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("undo")
       require("telescope").load_extension("lazy")
+      require("telescope").load_extension("session-lens")
 
       -- custom picker that greps the word under the cursor (cword)
       -- https://github.com/nvim-telescope/telescope.nvim/issues/1766#issuecomment-1150437074
