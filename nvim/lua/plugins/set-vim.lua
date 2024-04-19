@@ -176,6 +176,16 @@ return {
    },
 
    {
+      -- quick access menu for yanks
+      -- :YankBank
+      "ptdewey/yankbank-nvim",
+      config = function()
+         require("yankbank").setup()
+         -- vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true })
+      end,
+   },
+
+   {
       -- find dupes, suggest keybindings
       "tris203/hawtkeys.nvim",
       config = true,
