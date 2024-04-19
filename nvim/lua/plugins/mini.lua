@@ -8,8 +8,9 @@ return {
          require("mini.move").setup({})
 
          -- highlights/underlines the word under the cursor
+         -- TODO: consider separate highlight for the current word, MiniCursorwordCurrent
          require("mini.cursorword").setup({
-            delay = 500, -- in ms
+            delay = 200, -- in ms
          })
 
          -- file explorer as a buffer
@@ -51,6 +52,7 @@ return {
             local animate = require("mini.animate")
             animate.setup({
                scroll = {
+                  -- enable = false,
                   timing = animate.gen_timing.linear({
                      easing = "out",
                      -- duration = 100,
