@@ -18,8 +18,14 @@ return {
       -- lists of diagnostics, references, telescopes, quickfix, and location lists
       "folke/trouble.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
-      config = true,
-      cmd = "Trouble", -- lazy load
+      event = "VeryLazy",
+      -- cmd = "Trouble", -- lazy load
+      config = function()
+         require("trouble").setup()
+         vim.keymap.set("n", "<leader>gt", function()
+            require("trouble").toggle()
+         end)
+      end,
    },
 
    {

@@ -30,7 +30,9 @@ vim.keymap.set("n", "<leader>es", ":EslintFixAll<cr>")
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
 vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) -- save
-vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>", { desc = "[q]uit" }) -- quite
+vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>", { desc = "[q]uit" }) -- quit
+vim.keymap.set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
+vim.keymap.set("n", "<leader>gi", ":Inspect<cr>")
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
@@ -71,6 +73,8 @@ vim.keymap.set("n", "<right>", "<C-w>l")
 
 -- Use builtin go to definition/tag
 vim.keymap.set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
+-- open goto definition in vertical split
+vim.keymap.set("n", "g>", "<cmd>vs<cr><c-]>", { desc = "Goto [D]efinition" })
 
 -- yank and then paste
 -- vim.keymap.set("n", "yp", "yyp") -- replaced with mini.operators `gmm`
