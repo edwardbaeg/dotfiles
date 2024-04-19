@@ -132,6 +132,7 @@ return {
 
          require("mason").setup()
          local mason_lspconfig = require("mason-lspconfig")
+
          -- these will be automatically installed
          local language_servers = {
             eslint = {},
@@ -215,7 +216,10 @@ return {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
          "hrsh7th/cmp-buffer", -- source for buffer words
-         "L3MON4D3/LuaSnip", -- snippet engine
+         {
+            "L3MON4D3/LuaSnip", -- snippet engine
+            build = "make install_jsregexp",
+         },
          "saadparwaiz1/cmp_luasnip",
          "rafamadriz/friendly-snippets", -- vscode like snippets
          "onsails/lspkind.nvim", -- pictograms for completion items
@@ -398,17 +402,7 @@ return {
             }),
          })
 
-         luasnip.add_snippets("all", {
-            luasnip.snippet("ternary", {
-               -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
-               luasnip.insert_node(1, "cond"),
-               luasnip.text_node(" ? "),
-               luasnip.insert_node(2, "then"),
-               luasnip.text_node(" : "),
-               luasnip.insert_node(3, "else"),
-            }),
-         })
-         luasnip.add_snippets("all", {
+         luasnip.add_snippets("javascript", {
             luasnip.snippet("cll", {
                luasnip.text_node("console.log("),
                luasnip.insert_node(1, "val"),
