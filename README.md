@@ -15,28 +15,45 @@ Configuration: [init.lua](nvim/init.lua)
 - **Motions/operators/jump**: textobjects, comments, surrounds, sorting
 - **Terminal Integrations**: lazygit, ranger
 
+Set up [below](#neovim-setup).
+
 # Terminal
 
 **Shell + Framework**: `zsh` + `oh-my-zsh`
 
 - autocompletions, vi-mode, syntax highlighting, fzf, z jumping
 
-**Apps used by config**:
+## Apps
+
+#### Tools
 
 - `bat` better cat (syntax highlighting and pager)
 - `eza` better ls
 - `fd` better find
 - `fzf` fuzzy finder
 - `git-delta` better diff
-- `gnu-sed` for vim-spectre
-- `lazygit` tui for git
 - `neofetch` display system info
-- `neovim` better vim (async, community developed)
-- `ranger` visual file manager (install with `pip install ranger-fm`)
 - `ripgrep` better grep (and faster than ag)
-- `tmux` terminal multiplexer
 - `zoxide` directory jumper
-- `zsh-completions` command line autocompletions
+- `ncdu` ncurses disk usage viewer
+- `tldr` community written short man pages
+- `hyperfine` commandline benchmarking
+
+#### TUI
+
+- `lazygit` git interface
+- `neovim` better vim (async, community developed)
+- `ranger` file manager (install with `pip install ranger-fm`)
+- `tmux` terminal multiplexer
+- `yazi` file manager, seemingly faster than ranger
+- `nchat` telegram
+
+#### Dependencies:
+
+- `unar` for yazi, archive preview
+- `poppler` for yazi, pdf preview
+- `gnu-sed` for vim-spectre
+- `zsh-completions` for zsh, command line autocompletions
 
 **Terminal Multiplexer**: `tmux`
 
@@ -95,7 +112,7 @@ Set up fzf
 $(brew --prefix)/opt/fzf/install
 ```
 
-## Neovim
+## Neovim setup
 
 Install neovim and pynvim (to support python plugins in nvim)
 
@@ -108,13 +125,8 @@ Ensure python is working with :checkhealth
 
 ### Dependencies
 
-- deno - for peek.nvim
-
-**Homebrew formulae** (`brew leaves`):
-
-- `ncdu` ncurses disk usage viewer
-- `tldr` community written short man pages
-- `hyperfine` commandline benchmarking
+- `deno` - for peek.nvim
+- `fzf`
 
 ## Hammerspoon
 
