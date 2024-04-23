@@ -215,6 +215,7 @@ alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 
 #-- Jumping
 alias dot="cd ~/dev/dotfiles"
+alias dots="cd ~/dev/dotfiles"
 
 # conditional command aliases
 if command -v eza &> /dev/null
