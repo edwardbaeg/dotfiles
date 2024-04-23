@@ -83,4 +83,11 @@ return {
          keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts) -- delete
       end,
    },
+
+   {
+      "NStefan002/screenkey.nvim",
+      cmd = "Screenkey",
+      version = "*",
+      config = true,
+   },
 }
