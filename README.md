@@ -75,7 +75,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Choosy`: smart browser launcher
 - `Shottr`: screenshot tool
 
-#### oh-my-zsh
+## oh-my-zsh
 
 Install zsh framework
 
@@ -95,7 +95,7 @@ Set up fzf
 $(brew --prefix)/opt/fzf/install
 ```
 
-#### Neovim
+## Neovim
 
 Install neovim and pynvim (to support python plugins in nvim)
 
@@ -106,19 +106,23 @@ pip3 install --upgrade pynvim
 
 Ensure python is working with :checkhealth
 
+### Dependencies
+
+- deno - for peek.nvim
+
 **Homebrew formulae** (`brew leaves`):
 
 - `ncdu` ncurses disk usage viewer
 - `tldr` community written short man pages
 - `hyperfine` commandline benchmarking
 
-### Hammerspoon
+## Hammerspoon
 
 Configuration: [init.lua](hammerspoon/init.lua)
 
 - window management, sleep toggle, toggle apps
 
-### Configure git for github
+## Configure git for github
 
 - Create ssh key for git (press enter for default file location)
 - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
