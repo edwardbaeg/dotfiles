@@ -165,7 +165,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
    end,
 })
 
--- close some filetypes with <q>
+-- close/quit some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
    group = augroup("close_with_q"),
    pattern = {
@@ -183,7 +183,8 @@ vim.api.nvim_create_autocmd("FileType", {
       "checkhealth",
       "neotest-summary",
       "neotest-output-panel",
-      "fugitiveblame",
+      "fugitiveblame", -- from vim-fugitive
+      "git", -- from vim-fugitive
    },
    callback = function(event)
       vim.bo[event.buf].buflisted = false
