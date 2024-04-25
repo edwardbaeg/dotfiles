@@ -63,14 +63,20 @@ systemKeyRemap(cmdShift, "i", "SOUND_DOWN")
 -- App Specific bindings -------------------------------------------------
 --------------------------------------------------------------------------
 hs.loadSpoon("AppBindings")
-spoon.AppBindings:bind("Google Chrome", {
-   { { "alt", "ctrl" }, "l", { "ctrl" }, "tab" },
-   { { "alt", "ctrl" }, "h", { "ctrl", "shift" }, "tab" },
-})
-spoon.AppBindings:bind("Arc", {
-   { { "alt", "ctrl" }, "l", { "ctrl" }, "tab" },
-   { { "alt", "ctrl" }, "h", { "ctrl", "shift" }, "tab" },
-})
+-- spoon.AppBindings:bind("Google Chrome", { -- this is the same as vimium H / L
+--    { { "alt", "ctrl" }, "l", { "ctrl" }, "tab" },
+--    { { "alt", "ctrl" }, "h", { "ctrl", "shift" }, "tab" },
+-- })
+
+-- These may be causing preformance issues
+-- spoon.AppBindings:bind("Arc", { -- option tab doesn't work...
+--    { { "alt" }, "tab", { "ctrl" }, "tab" },
+--    { { "alt" }, "tab", { "ctrl", "shift" }, "tab" },
+-- })
+-- spoon.AppBindings:bind("Arc", { -- option tab doesn't work...
+--    { { "alt", "ctrl" }, "l", { "ctrl" }, "tab" },
+--    { { "alt", "ctrl" }, "h", { "ctrl", "shift" }, "tab" },
+-- })
 
 -- Window highlighting ---------------------------------------------------
 --------------------------------------------------------------------------
@@ -144,6 +150,7 @@ ReloadWatcher = hs.pathwatcher
    end)
    :start()
 
+-- TODO: create a hammerspoon url for this to run with Raycast
 -- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
 hs.hotkey.bind(hyperkey, "R", function()
    hs.alert("Reloading config...")
@@ -193,17 +200,89 @@ function _G.within(a, b, margin)
    return math.abs(a - b) <= margin
 end
 
+-- TODO: extend this so that if the hotkey is pressed multiple times / the target
+-- dimensions already exist for the window, then cycle through to another dimension
+-- eg, cycle between halves and thirds
 function _G.moveAndResizeFocused(callback)
    local win = hs.window.focusedWindow()
-   local f = win:frame()
-   local screenMax = win:screen():frame()
-   local prevW = f.w
-   local prevH = f.h
+   local frame = win:frame()
+   local screenFrame = win:screen():frame()
+   local prevW = frame.w
+   local prevH = frame.h
 
-   callback(f, screenMax)
-   local needsResize = not (within(f.h, prevH, 1) and within(f.w, prevW, 1))
-   win:setFrame(f, needsResize and 0 or 0.15)
+   callback(frame, screenFrame)
+   local needsResize = not (within(frame.h, prevH, 1) and within(frame.w, prevW, 1))
+   win:setFrame(frame, needsResize and 0 or 0.15)
 end
+
+-- left half or third
+hs.hotkey.bind(hyperkey, "H", function()
+   local win = hs.window.focusedWindow()
+   local frame = win:frame()
+   local screenFrame = win:screen():frame()
+
+   local currentX = frame.x
+   local currentY = frame.y
+   local currentW = frame.w
+   local currentH = frame.h
+
+   -- calculate new dimensions
+   local newW = screenFrame.w / 2
+   local newH = screenFrame.h
+
+   -- determine if a resize is needed
+   local needsFirstResize = not (within(currentH, newH, 1) and within(currentW, newW, 1))
+
+   -- calculate new position
+   local newX = screenFrame.x
+   local newY = screenFrame.y
+
+   -- determine if a move is needed
+   local needsMove = not (within(currentX, newX, 1) and within(currentY, newY, 1))
+
+   print("needsMove: " .. tostring(needsMove))
+   print("needsResize: " .. tostring(needsFirstResize))
+
+   if needsFirstResize or needsMove then
+      print("half")
+      -- move to half
+      frame.x = newX
+      frame.y = newY
+      frame.w = newW
+      frame.h = newH
+      win:setFrame(frame, needsFirstResize and 0 or 0.15)
+   end
+
+   if (not needsMove) and not needsFirstResize then
+      print("third")
+      -- move to third
+      frame.x = currentX
+      frame.y = currentY
+      frame.w = screenFrame.w / 3
+      frame.h = screenFrame.h
+      win:setFrame(frame, 0)
+   end
+end)
+
+-- Left half
+-- hs.hotkey.bind(hyperkey, "H", function()
+--    moveAndResizeFocused(function(frame, screen)
+--       frame.x = screen.x
+--       frame.y = screen.y
+--       frame.w = screen.w / 2
+--       frame.h = screen.h
+--    end)
+-- end)
+
+-- Right half
+hs.hotkey.bind(hyperkey, "L", function()
+   moveAndResizeFocused(function(frame, screen)
+      frame.x = screen.x + (screen.w / 2)
+      frame.y = screen.y
+      frame.w = screen.w / 2
+      frame.h = screen.h
+   end)
+end)
 
 -- Top half
 hs.hotkey.bind(hyperkey, "K", function()
@@ -222,26 +301,6 @@ hs.hotkey.bind(hyperkey, "J", function()
       frame.y = screen.y + (screen.h / 2)
       frame.w = screen.w
       frame.h = screen.h / 2
-   end)
-end)
-
--- Left half
-hs.hotkey.bind(hyperkey, "H", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y
-      frame.w = screen.w / 2
-      frame.h = screen.h
-   end)
-end)
-
--- Right half
-hs.hotkey.bind(hyperkey, "L", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x + (screen.w / 2)
-      frame.y = screen.y
-      frame.w = screen.w / 2
-      frame.h = screen.h
    end)
 end)
 
