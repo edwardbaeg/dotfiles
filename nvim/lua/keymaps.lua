@@ -32,7 +32,8 @@ vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
 vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) -- save
 vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>", { desc = "[q]uit" }) -- quit
 vim.keymap.set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
-vim.keymap.set("n", "<leader>gi", ":Inspect<cr>")
+vim.keymap.set("n", "<leader>gi", ":Inspect<cr>") -- inspect treesitter nodes, helps with highlighting
+vim.keymap.set("n", "<leader>tq", ":cclose<cr>") -- close quickfix window
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro

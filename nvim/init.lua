@@ -36,6 +36,7 @@ require("settings")
 -- ...and to add an empty line: `<cr>`
 -- indent in insert mode with `<c-t>/<c-d>`
 -- use <c-t> instead of <c-o>, tagstack
+-- :copen to open the quickfix window
 
 -- [[ KEYMAP GUIDE ]]
 -- Don't add to operator pending for y, d
@@ -43,3 +44,4 @@ require("settings")
 -- catchalls: g,
 -- <leader>f: fuzzy/telescope
 -- <leader>s: sessions
+-- <leader>t: tab or toggle
