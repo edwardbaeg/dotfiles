@@ -200,9 +200,6 @@ function _G.within(a, b, margin)
    return math.abs(a - b) <= margin
 end
 
--- TODO: extend this so that if the hotkey is pressed multiple times / the target
--- dimensions already exist for the window, then cycle through to another dimension
--- eg, cycle between halves and thirds
 function _G.moveAndResizeFocused(callback)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
@@ -226,41 +223,45 @@ hs.hotkey.bind(hyperkey, "H", function()
    local currentW = frame.w
    local currentH = frame.h
 
-   -- calculate new dimensions
-   local newW = screenFrame.w / 2
-   local newH = screenFrame.h
+   local options = {
+      {
+         x = screenFrame.x,
+         y = screenFrame.y,
+         w = screenFrame.w / 2,
+         h = screenFrame.h,
+      },
+      {
+         x = screenFrame.x,
+         y = screenFrame.y,
+         w = screenFrame.w / 3,
+         h = screenFrame.h,
+      },
+      {
+         x = screenFrame.x,
+         y = screenFrame.y,
+         w = screenFrame.w / 4,
+         h = screenFrame.h,
+      },
+   }
 
-   -- determine if a resize is needed
-   local needsFirstResize = not (within(currentH, newH, 1) and within(currentW, newW, 1))
+   local firstOption = options[1]
 
-   -- calculate new position
-   local newX = screenFrame.x
-   local newY = screenFrame.y
-
-   -- determine if a move is needed
-   local needsMove = not (within(currentX, newX, 1) and within(currentY, newY, 1))
-
-   print("needsMove: " .. tostring(needsMove))
-   print("needsResize: " .. tostring(needsFirstResize))
-
-   if needsFirstResize or needsMove then
-      print("half")
-      -- move to half
-      frame.x = newX
-      frame.y = newY
-      frame.w = newW
-      frame.h = newH
-      win:setFrame(frame, needsFirstResize and 0 or 0.15)
+   -- if the position does not match, then set the first option
+   if frame.x ~= firstOption.x or frame.y ~= firstOption.y then
+      local isSizeMatch = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
+      win:setFrame(firstOption, isSizeMatch and 0.15 or 0)
+      return
    end
 
-   if (not needsMove) and not needsFirstResize then
-      print("third")
-      -- move to third
-      frame.x = currentX
-      frame.y = currentY
-      frame.w = screenFrame.w / 3
-      frame.h = screenFrame.h
-      win:setFrame(frame, 0)
+   -- check if the window matches any of the options
+   -- if so, then move to the next option
+   -- otherwise set the first option.
+   for i, option in ipairs(options) do
+      if within(currentH, option.h, 1) and within(currentW, option.w, 1) then
+         local nextOption = options[i + 1] or firstOption
+         win:setFrame(nextOption, 0)
+         return
+      end
    end
 end)
 
