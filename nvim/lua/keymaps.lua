@@ -22,6 +22,7 @@ vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "cl
 vim.keymap.set("n", "<esc>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file
 vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
+vim.keymap.set("n", "<c-j>", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<leader>n", "<cmd>bnext<cr>") -- next buffer
 vim.keymap.set("n", "<leader>p", "<cmd>bprevious<cr>") -- previous buffer
 vim.keymap.set("n", "<leader>+", "<c-a>") -- increment
