@@ -2,7 +2,7 @@ gui:
   showIcons: true # enable nerd fonts
   theme:
     selectedLineBgColor:
-      - "#000000" # use hex instead of 'black' for nvim terminal coloring
+      - '#000000' # use hex instead of 'black' for nvim terminal coloring
     selectedRangeBgColor:
       - reverse
 git:
@@ -12,9 +12,15 @@ git:
       always
       # pager: diff-so-fancy
   disableForcePushing: true
+keybinding:
+  universal:
+    toggleRangeSelect: 'V'
+  commits:
+    cherryPickCopy: 'c'
+    pasteCommits: 'v'
 confirmOnQuit: true
 customCommands:
-  - key: "W"
+  - key: 'W'
     command: git commit --no-verify
-    context: "global"
+    context: 'global'
     subprocess: true
