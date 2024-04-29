@@ -212,18 +212,40 @@ function _G.moveAndResizeFocused(callback)
    win:setFrame(frame, needsResize and 0 or 0.15)
 end
 
--- left half or third
-hs.hotkey.bind(hyperkey, "H", function()
+function _G.cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
+
+   local firstOption = options[1]
+
+   -- check if the window matches any of the options
+   -- if so, then move to the next option
+   -- otherwise set the first option.
+   for i, option in ipairs(options) do
+      if
+         within(frame.h, option.h, 1)
+         and within(frame.w, option.w, 1)
+         and within(frame.x, option.x, 1)
+         and within(frame.y, option.y, 1)
+      then
+         local nextOption = options[i + 1] or firstOption
+         local sameSize = within(frame.h, nextOption.h, 1) and within(frame.w, nextOption.w, 1)
+         win:setFrame(nextOption, sameSize and 0.15 or 0)
+         return
+      end
+   end
+
+   local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
+   win:setFrame(firstOption, sameSize and 0.15 or 0)
+end
+
+-- left half, third, quarter
+-- TODO: consider added left two thirds
+hs.hotkey.bind(hyperkey, "H", function()
+   local win = hs.window.focusedWindow()
    local screenFrame = win:screen():frame()
 
-   local currentX = frame.x
-   local currentY = frame.y
-   local currentW = frame.w
-   local currentH = frame.h
-
-   local options = {
+   cyclePositions({
       {
          x = screenFrame.x,
          y = screenFrame.y,
@@ -242,47 +264,34 @@ hs.hotkey.bind(hyperkey, "H", function()
          w = screenFrame.w / 4,
          h = screenFrame.h,
       },
-   }
-
-   local firstOption = options[1]
-
-   -- if the position does not match, then set the first option
-   if frame.x ~= firstOption.x or frame.y ~= firstOption.y then
-      local isSizeMatch = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
-      win:setFrame(firstOption, isSizeMatch and 0.15 or 0)
-      return
-   end
-
-   -- check if the window matches any of the options
-   -- if so, then move to the next option
-   -- otherwise set the first option.
-   for i, option in ipairs(options) do
-      if within(currentH, option.h, 1) and within(currentW, option.w, 1) then
-         local nextOption = options[i + 1] or firstOption
-         win:setFrame(nextOption, 0)
-         return
-      end
-   end
+   })
 end)
-
--- Left half
--- hs.hotkey.bind(hyperkey, "H", function()
---    moveAndResizeFocused(function(frame, screen)
---       frame.x = screen.x
---       frame.y = screen.y
---       frame.w = screen.w / 2
---       frame.h = screen.h
---    end)
--- end)
 
 -- Right half
 hs.hotkey.bind(hyperkey, "L", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x + (screen.w / 2)
-      frame.y = screen.y
-      frame.w = screen.w / 2
-      frame.h = screen.h
-   end)
+   local win = hs.window.focusedWindow()
+   local screenFrame = win:screen():frame()
+
+   cyclePositions({
+      {
+         x = screenFrame.x + (screenFrame.w / 2),
+         y = screenFrame.y,
+         w = screenFrame.w / 2,
+         h = screenFrame.h,
+      },
+      {
+         x = screenFrame.x + (screenFrame.w * 2 / 3),
+         y = screenFrame.y,
+         w = screenFrame.w / 3,
+         h = screenFrame.h,
+      },
+      {
+         x = screenFrame.x + (screenFrame.w * 3 / 4),
+         y = screenFrame.y,
+         w = screenFrame.w / 4,
+         h = screenFrame.h,
+      },
+   })
 end)
 
 -- Top half
