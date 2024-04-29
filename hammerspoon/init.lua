@@ -212,6 +212,8 @@ function _G.moveAndResizeFocused(callback)
    win:setFrame(frame, needsResize and 0 or 0.15)
 end
 
+---Cycles through a list of rects
+---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
 function _G.cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
@@ -239,8 +241,7 @@ function _G.cyclePositions(options)
    win:setFrame(firstOption, sameSize and 0.15 or 0)
 end
 
--- left half, third, quarter
--- TODO: consider added left two thirds
+-- Left positions
 hs.hotkey.bind(hyperkey, "H", function()
    local win = hs.window.focusedWindow()
    local screenFrame = win:screen():frame()
@@ -261,13 +262,13 @@ hs.hotkey.bind(hyperkey, "H", function()
       {
          x = screenFrame.x,
          y = screenFrame.y,
-         w = screenFrame.w / 4,
+         w = screenFrame.w * 2 / 3,
          h = screenFrame.h,
       },
    })
 end)
 
--- Right half
+-- Right positions
 hs.hotkey.bind(hyperkey, "L", function()
    local win = hs.window.focusedWindow()
    local screenFrame = win:screen():frame()
@@ -286,9 +287,9 @@ hs.hotkey.bind(hyperkey, "L", function()
          h = screenFrame.h,
       },
       {
-         x = screenFrame.x + (screenFrame.w * 3 / 4),
+         x = screenFrame.x + (screenFrame.w * 1 / 3),
          y = screenFrame.y,
-         w = screenFrame.w / 4,
+         w = screenFrame.w * 2 / 3,
          h = screenFrame.h,
       },
    })
