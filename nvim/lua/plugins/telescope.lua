@@ -16,7 +16,9 @@ return {
    init = function()
       -- vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>") -- replaced with fzflua
       -- vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>") -- replaced with fzflua
-      vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
+      -- vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
+      vim.keymap.set("n", "<c-;>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
+      vim.keymap.set("n", "<leader>l", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
       -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor -- replaced with fzflua
 
       vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
