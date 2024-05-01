@@ -80,8 +80,10 @@ export LESS="$LESS -FRXK"
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
-# -- OneAdvisory -------------------------------------------------------
+# -- OneAdvisory, Dispatch -------------------------------------------------------
 alias gcm2="git checkout master2 && git reset --hard origin/master"
+alias front="cd ~/dev/oneadvisory/frontend"
+alias work="cd ~/dev/oneadvisory/frontend-worktree"
 export AWS_PROFILE=oa-dev
 export AWS_REGION=us-east-1
 export ECR_AWS_PROFILE=oa-dev
