@@ -7,6 +7,7 @@ return {
          icon = "󰛢", -- check lualine options.icons_enabled
       },
    },
+   -- TODO: consider opening PR to add the ability to open in splits
    dependencies = { "WolfeCub/harpeek.nvim" },
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
@@ -35,9 +36,10 @@ return {
       { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
       { "<c-m>", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
 
-      { "<c-k>", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
+      -- { "<c-k>", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
+      { "<leader>k", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
 
-      { "<leader>K", "<cmd>Grapple toggle_scopes<cr>", desc = "Grapple toggle scopes" },
+      -- { "<leader>K", "<cmd>Grapple toggle_scopes<cr>", desc = "Grapple toggle scopes" },
 
       { "<leader>L", "<cmd>Grapple cycle forward<cr>", desc = "Grapple cycle forward" },
       { "<leader>H", "<cmd>Grapple cycle backward<cr>", desc = "Grapple cycle backward" },
