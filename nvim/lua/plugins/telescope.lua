@@ -16,12 +16,11 @@ return {
    init = function()
       -- vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>") -- replaced with fzflua
       -- vim.keymap.set("n", "<c-b>", "<cmd>Telescope buffers<cr>") -- replaced with fzflua
-      -- vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
-      vim.keymap.set("n", "<c-;>", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
-      vim.keymap.set("n", "<leader>l", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
+      -- vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>") -- replace with tmux navigator keymap
       -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor -- replaced with fzflua
 
       vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
+      vim.keymap.set("n", "<leader>fl", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
       vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })
       vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "[f]uzzy [k]eymaps" })
       vim.keymap.set("n", "<leader>fc", "<cmd>Telescope commands<cr>", { desc = "[f]uzzy [c]ommands" })
