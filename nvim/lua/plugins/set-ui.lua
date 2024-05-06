@@ -22,9 +22,9 @@ return {
       -- cmd = "Trouble", -- lazy load
       config = function()
          require("trouble").setup()
-         vim.keymap.set("n", "<leader>gt", function()
+         vim.keymap.set("n", "<leader>tt", function()
             require("trouble").toggle()
-         end)
+         end, { silent = true, noremap = true, desc = "[T]oggle [T]rouble" })
       end,
    },
 
