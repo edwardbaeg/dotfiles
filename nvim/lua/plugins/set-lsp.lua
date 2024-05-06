@@ -129,6 +129,8 @@ return {
          require("typescript-tools").setup({
             on_attach = on_attach,
          })
+         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>")
+         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>")
 
          require("mason").setup()
          local mason_lspconfig = require("mason-lspconfig")
