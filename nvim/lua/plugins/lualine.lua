@@ -15,27 +15,42 @@ return {
                globalstatus = true,
             },
             extensions = {
-               "lazy", -- doesn't seem to do anything?
+               "lazy",
                "mundo",
                "trouble",
             },
             sections = {
-               lualine_a = { "mode" },
+               lualine_a = {
+                  "mode",
+               },
 
-               lualine_b = { "branch", "diff", "diagnostics", "grapple" },
-               -- lualine_b = { "grapple" },
-               -- lualine_c = { { "filename", path = 1 }, "searchcount" },
+               lualine_b = {
+                  "branch",
+                  "diff",
+                  "diagnostics",
+                  "grapple",
+               },
 
-               lualine_c = { { "filename", path = 1 }, "searchcount", "codeium#GetStatusString" }, -- FIXME: the codeium portion makes vim enter insert mode when opening a new file...
-               -- lualine_c = {
-               --    { "filename", path = 1 },
-               --    "searchcount",
-               --    "codeium#GetStatusString", -- FIXME: the codeium portion makes vim enter insert mode when opening a new file...
-               --    { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available },
-               -- },
+               lualine_c = {
+                  {
+                     "filename",
+                     -- path = 1, -- full relative path
+                     path = 4, -- parent path
+                  },
+                  "searchcount",
+                  "codeium#GetStatusString",
+                  {
+                     git_blame.get_current_blame_text,
+                     cond = git_blame.is_blame_text_available,
+                  },
+               },
 
-               lualine_x = { "filetype" },
-               -- lualine_x = { "encoding", "fileformat", "filetype" },
+               -- lualine_x = { "filetype" },
+               lualine_x = {
+                  -- "encoding",
+                  -- "fileformat",
+                  "filetype",
+               },
 
                lualine_y = { "progress" },
                lualine_z = { "location" },
