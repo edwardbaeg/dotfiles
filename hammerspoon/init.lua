@@ -218,11 +218,10 @@ function _G.cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
 
-   local firstOption = options[1]
-
    -- check if the window matches any of the options
    -- if so, then move to the next option
    -- otherwise set the first option.
+   local firstOption = options[1]
    for i, option in ipairs(options) do
       if
          within(frame.h, option.h, 1)
@@ -476,6 +475,23 @@ end
 hs.urlevent.bind("toggleCaffeineState", handleCaffeineUrl)
 hs.urlevent.bind("enableCaffeine", enableCaffeine)
 hs.urlevent.bind("disableCaffeine", disableCaffeine)
+
+-- Toggle sleepmode for ryujinx
+local onRyujinx = function(appName, eventType, appObject)
+   if eventType == hs.application.watcher.activated then
+      if string.sub(appName, 1, #"Ryujinx") == "Ryujinx" then
+         enableCaffeine()
+      end
+   end
+   if eventType == hs.application.watcher.deactivated then
+      if string.sub(appName, 1, #"Ryujinx") == "Ryujinx" then
+         disableCaffeine()
+      end
+   end
+end
+
+local ryujinxWatcher = hs.application.watcher.new(onRyujinx)
+ryujinxWatcher:start()
 
 -- Spoons ----------------------------------------------------------------
 --------------------------------------------------------------------------
