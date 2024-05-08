@@ -17,6 +17,9 @@ return {
                horizontal = "right:50%",
             },
          },
+         files = {
+            formatter = "path.filename_first",
+         },
          buffers = {
             winopts = {
                height = 0.7,
