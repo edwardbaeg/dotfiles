@@ -26,19 +26,19 @@ return {
             autoload_mode = require("session_manager.config").AutoloadMode.Disabled,
          })
 
-         vim.api.nvim_set_keymap(
+         vim.keymap.set(
             "n",
             "<leader>sc",
             ":SessionManager load_current_dir_session<CR>",
             { desc = "[S]essionManager load_[c]urrent_dir_session" }
          )
-         vim.api.nvim_set_keymap(
+         vim.keymap.set(
             "n",
             "<leader>sl",
             ":SessionManager load_session<CR>",
             { desc = "[S]essionManager [l]oad_session" }
          )
-         vim.api.nvim_set_keymap(
+         vim.keymap.set(
             "n",
             "<leader>sd",
             ":SessionManager delete_session<CR>",

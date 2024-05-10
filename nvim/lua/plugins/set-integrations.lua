@@ -46,7 +46,7 @@ return {
       -- enabled = false, -- have to install ranger with python
       config = function()
          vim.api.nvim_create_user_command("RangerToggle", ":RnvimrToggle", {})
-         vim.api.nvim_set_keymap("n", "<leader>ra", ":RnvimrToggle<cr>", {})
+         vim.keymap.set("n", "<leader>ra", ":RnvimrToggle<cr>", {})
       end,
    },
 
@@ -93,7 +93,7 @@ return {
             lazygit:toggle()
          end
 
-         vim.api.nvim_set_keymap("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
+         vim.keymap.set("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
 
          -- set up ranger
          -- local ranger = Terminal:new({
@@ -103,7 +103,7 @@ return {
          --    ranger:toggle()
          -- end
          --
-         -- vim.api.nvim_set_keymap("n", "<leader>ra", "<cmd>lua _ranger_toggle()<cr>", { noremap = true, silent = true })
+         -- vim.keymap.set("n", "<leader>ra", "<cmd>lua _ranger_toggle()<cr>", { noremap = true, silent = true })
          -- vim.api.nvim_create_user_command("RangerToggle", "lua _G._ranger_toggle()<cr>", {})
       end,
    },
