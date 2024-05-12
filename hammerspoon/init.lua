@@ -477,20 +477,22 @@ hs.urlevent.bind("enableCaffeine", enableCaffeine)
 hs.urlevent.bind("disableCaffeine", disableCaffeine)
 
 -- Toggle sleepmode for ryujinx
-local onRyujinx = function(appName, eventType, appObject)
+local watchRyujinx = function(appName, eventType, appObject)
    if eventType == hs.application.watcher.activated then
       if string.sub(appName, 1, #"Ryujinx") == "Ryujinx" then
+         hs.alert("Activating caffeine - Ryujinx")
          enableCaffeine()
       end
    end
    if eventType == hs.application.watcher.deactivated then
       if string.sub(appName, 1, #"Ryujinx") == "Ryujinx" then
+         hs.alert("Disabling caffeine - Ryujinx")
          disableCaffeine()
       end
    end
 end
 
-local ryujinxWatcher = hs.application.watcher.new(onRyujinx)
+local ryujinxWatcher = hs.application.watcher.new(watchRyujinx)
 ryujinxWatcher:start()
 
 -- Spoons ----------------------------------------------------------------
