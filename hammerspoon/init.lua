@@ -149,9 +149,16 @@ ReloadWatcher = hs.pathwatcher
    end)
    :start()
 
--- TODO: create a hammerspoon url for this to run with Raycast
 -- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
 hs.hotkey.bind(hyperkey, "R", function()
+   hs.alert("Reloading config...")
+   hs.timer.doAfter(0.1, function() -- put reload async so alert executes
+      hs.reload()
+   end)
+end)
+
+-- hammerspoon://reloadConfig
+hs.urlevent.bind("reloadConfig", function()
    hs.alert("Reloading config...")
    hs.timer.doAfter(0.1, function() -- put reload async so alert executes
       hs.reload()
@@ -473,6 +480,7 @@ if caffeineMenuBar then
    setCaffeineDisplay(hs.caffeinate.get(sleepType))
 end
 
+-- hammerspoon://toggleCaffeineState?state={true|false}
 hs.urlevent.bind("toggleCaffeineState", handleCaffeineUrl)
 hs.urlevent.bind("enableCaffeine", enableCaffeine)
 hs.urlevent.bind("disableCaffeine", disableCaffeine)
