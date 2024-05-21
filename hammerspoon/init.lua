@@ -10,14 +10,13 @@ hs.ipc.cliInstall()
 
 -- Remaps ----------------------------------------------------------------
 --------------------------------------------------------------------------
--- TODO: remap caps to control?
-
+-- Set up modifier combos
 local cmdShift = { "cmd", "shift" }
 local altShift = { "alt", "shift" }
 
--- Disable default hotkey
+-- Disable global macos hotkeys
 hs.hotkey.bind({ "cmd" }, "M", function()
-   hs.alert("[ cmd + m ] disabled")
+   hs.alert("[ cmd + m ] disabled") -- minimizes the current window. Annoying because does not unminimize on focus
 end)
 
 function _G.pressAndHoldKeyCb(sendModifiers, key)
@@ -166,7 +165,6 @@ local hostname = hs.host.localizedName()
 function _G.launchOrFocus(modifiers, key, appName)
    hs.hotkey.bind(modifiers, key, function()
       local success = hs.application.launchOrFocus(appName)
-      print(success)
    end)
 end
 
@@ -212,7 +210,7 @@ function _G.moveAndResizeFocused(callback)
    win:setFrame(frame, needsResize and 0 or 0.15)
 end
 
----Cycles through a list of rects
+---Cycles through a list of rects to set focused window position
 ---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
 function _G.cyclePositions(options)
    local win = hs.window.focusedWindow()
@@ -230,14 +228,15 @@ function _G.cyclePositions(options)
          and within(frame.y, option.y, 1)
       then
          local nextOption = options[i + 1] or firstOption
+         -- TODO: three different animation levels: same size, same one dimension, different size
          local sameSize = within(frame.h, nextOption.h, 1) and within(frame.w, nextOption.w, 1)
-         win:setFrame(nextOption, sameSize and 0.15 or 0)
+         win:setFrame(nextOption, sameSize and 0.15 or 0.10)
          return
       end
    end
 
    local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
-   win:setFrame(firstOption, sameSize and 0.15 or 0)
+   win:setFrame(firstOption, sameSize and 0.15 or 0.10)
 end
 
 -- Left positions
@@ -414,16 +413,18 @@ function _G.move_mouse(x1, y1, x2, y2, sleep)
    hs.mouse.absolutePosition({ x = math.floor(x2), y = math.floor(y2) })
 end
 
-hs.hotkey.bind(cmdShift, "f", move_cursor_to_monitor("right"))
-hs.hotkey.bind(cmdShift, "d", move_cursor_to_monitor("left"))
-hs.hotkey.bind(hyperkey, "f", move_cursor_to_monitor("right"))
-hs.hotkey.bind(hyperkey, "d", move_cursor_to_monitor("left"))
+-- hs.hotkey.bind(cmdShift, "f", move_cursor_to_monitor("right"))
+-- hs.hotkey.bind(cmdShift, "d", move_cursor_to_monitor("left"))
+-- hs.hotkey.bind(hyperkey, "f", move_cursor_to_monitor("right"))
+-- hs.hotkey.bind(hyperkey, "d", move_cursor_to_monitor("left"))
 
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------
 -- Caffeine state can be toggled by clicking on the menu bar
 -- or by linking to `hammerspoon://toggleCaffineState?state={true|false}`
 
+-- TODO: persist state using hs.settings
+-- https://www.hammerspoon.org/docs/hs.settings.html
 local caffeineMenuBar = hs.menubar.new()
 function _G.setCaffeineDisplay(state)
    if state then
