@@ -84,6 +84,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 alias gcm2="git checkout master2 && git reset --hard origin/master"
 alias front="cd ~/dev/oneadvisory/frontend"
 alias work="cd ~/dev/oneadvisory/frontend-worktree"
+alias back="cd ~/dev/oneadvisory/backend"
 export AWS_PROFILE=oa-dev
 export AWS_REGION=us-east-1
 export ECR_AWS_PROFILE=oa-dev
@@ -218,6 +219,9 @@ alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 #-- Jumping
 alias dot="cd ~/dev/dotfiles"
 alias dots="cd ~/dev/dotfiles"
+
+#-- SSH
+alias whatbox="ssh dwrdbg@proteus.whatbox.ca"
 
 # conditional command aliases
 if command -v eza &> /dev/null
