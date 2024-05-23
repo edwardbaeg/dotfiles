@@ -32,12 +32,10 @@ Set up [below](#neovim-setup).
 - `fd` better find
 - `fzf` fuzzy finder
 - `git-delta` better diff
-- `neofetch` display system info
 - `ripgrep` better grep (and faster than ag)
 - `zoxide` directory jumper
 - `ncdu` ncurses disk usage viewer
 - `tldr` community written short man pages
-- `hyperfine` commandline benchmarking
 
 #### TUI
 
@@ -47,6 +45,12 @@ Set up [below](#neovim-setup).
 - `tmux` terminal multiplexer
 - `yazi` file manager, seemingly faster than ranger
 - `nchat` telegram
+
+#### Less common
+
+- `hyperfine` commandline benchmarking
+- `neofetch` display system info
+- `qrcp` qr code generator for wifi transfer
 
 #### Dependencies:
 
