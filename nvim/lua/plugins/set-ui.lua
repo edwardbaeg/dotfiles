@@ -204,4 +204,37 @@ return {
          })
       end,
    },
+
+   {
+      -- improved markdown view in neovim
+      "MeanderingProgrammer/markdown.nvim",
+      event = "VeryLazy",
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+      config = function()
+         require("render-markdown").setup({})
+      end,
+   },
+
+   {
+      -- dim inactive windows
+      "levouh/tint.nvim",
+      config = function()
+         require("tint").setup({
+            tint = -20, -- default is -45, positive numbers will brighten
+            saturation = 0.9, -- saturation to preserve
+         })
+      end,
+   },
+
+   {
+      -- colors devicons to the nearest predefined color in the colorscheme
+      "rachartier/tiny-devicons-auto-colors.nvim",
+      dependencies = {
+         "nvim-tree/nvim-web-devicons",
+      },
+      event = "VeryLazy",
+      config = function()
+         require("tiny-devicons-auto-colors").setup()
+      end,
+   },
 }
