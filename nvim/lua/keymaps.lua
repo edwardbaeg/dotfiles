@@ -25,12 +25,12 @@ vim.keymap.set("n", "<leader>q", "") -- close whichkey / cancel leader without s
 vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<esc>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file
-vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
+-- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<m-o>", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<leader>n", "<cmd>bnext<cr>") -- next buffer
 vim.keymap.set("n", "<leader>p", "<cmd>bprevious<cr>") -- previous buffer
-vim.keymap.set("n", "<leader>+", "<c-a>") -- increment
-vim.keymap.set("n", "<leader>-", "<c-x>") -- decrement
+vim.keymap.set("n", "<leader>+", "<c-a>", { desc = "increment" }) -- increment
+vim.keymap.set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
 vim.keymap.set("n", "<leader>es", ":EslintFixAll<cr>")
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
@@ -38,7 +38,7 @@ vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) --
 vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>", { desc = "[q]uit" }) -- quit
 vim.keymap.set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
 vim.keymap.set("n", "<leader>gi", ":Inspect<cr>") -- inspect treesitter nodes, helps with highlighting
-vim.keymap.set("n", "<leader>tq", ":cclose<cr>") -- close quickfix window
+vim.keymap.set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
@@ -55,10 +55,10 @@ vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- Edit configuration files
-vim.keymap.set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>") -- also set as working directory
-vim.keymap.set("n", "<leader>et", ":edit ~/.tmux.conf<cr>")
-vim.keymap.set("n", "<leader>ez", ":edit ~/.zshrc<cr>")
-vim.keymap.set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>")
+vim.keymap.set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>", { desc = "edit [v]imrc" }) -- also set as working directory
+vim.keymap.set("n", "<leader>et", ":edit ~/.tmux.conf<cr>", { desc = "edit [t]mux.conf" })
+vim.keymap.set("n", "<leader>ez", ":edit ~/.zshrc<cr>", { desc = "edit [z]shrc" })
+vim.keymap.set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "edit [h]ammerspoon" })
 
 -- emacs style buffer movement
 vim.keymap.set("n", "<leader>bn", ":bn<cr>")
