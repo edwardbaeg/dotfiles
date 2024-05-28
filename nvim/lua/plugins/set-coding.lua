@@ -115,13 +115,16 @@ return {
                auto_refresh = true,
             },
             suggestion = {
-               enabled = false,
+               enabled = false, -- this can interfere with nvim-cmp
                auto_trigger = true, -- automatically show suggestions in insert mode
                keymap = {
-                  accept = "<C-l>", -- accept suggestion
+                  -- accept = "<C-l>", -- accept suggestion
+                  accept = "<Right>", -- accept suggestion
+
+                  -- these don't interfere with vim-tmux c-j/k keymaps because these are in insert mode
                   next = "<C-j>", -- next suggestion
                   prev = "<C-k>", -- previous suggestion
-                  -- dismiss = 'fixme'
+                  -- dismiss = 'FIXME'
                },
             },
          })
