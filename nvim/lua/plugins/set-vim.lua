@@ -160,17 +160,25 @@ return {
 
    {
       -- ability to cycle through pastes, highlights yanks and pastes
+      -- TODO: set up highlight on yank and put elsewhere
       "gbprod/yanky.nvim",
+      -- enabled = false, -- replaced with yank-bank
       config = function()
-         require("yanky").setup({})
+         require("yanky").setup({
+            highlight = {
+               on_put = true,
+               on_yank = true,
+               timer = 500,
+            },
+         })
       end,
       init = function()
-         vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-         vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+         -- vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+         -- vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
 
          -- yank ring
-         vim.keymap.set("n", "<leader>j", "<Plug>(YankyCycleForward)")
-         vim.keymap.set("n", "<leader>k", "<Plug>(YankyCycleBackward)")
+         -- vim.keymap.set("n", "<leader>j", "<Plug>(YankyCycleForward)")
+         -- vim.keymap.set("n", "<leader>k", "<Plug>(YankyCycleBackward)")
       end,
    },
 
@@ -251,5 +259,31 @@ return {
          { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
          { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
       },
+   },
+
+   {
+      -- Prevent nested vim sessions
+      "samjwill/nvim-unception",
+      enabled = false, -- this breaks lazygit commit messages
+      init = function()
+         -- Optional settings go here!
+         -- e.g.) vim.g.unception_open_buffer_in_new_tab = true
+      end,
+   },
+
+   {
+      -- show preview for jump list options
+      "cbochs/portal.nvim",
+      -- enabled = false,
+      -- Optional dependencies
+      dependencies = {
+         "cbochs/grapple.nvim",
+         "ThePrimeagen/harpoon",
+      },
+      config = function()
+         require("portal").setup()
+         vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
+         vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
+      end,
    },
 }
