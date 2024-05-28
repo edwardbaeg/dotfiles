@@ -14,6 +14,7 @@ vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "<bs>", [[ciw]], { noremap = true }) -- ciw -- this is unused
 -- vim.keymap.set("n", "<cr>", "o<esc>0D") -- add empty line below -- this keymap breaks various things, eg mini-files
 vim.keymap.set("n", "<leader><cr>", "o<esc>0D") -- add empty line below
+vim.keymap.set("n", "gjk", "gcc", { desc = "comment line", remap = true }) -- comment line
 vim.keymap.set("n", "<leader>j", function()
    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end)
