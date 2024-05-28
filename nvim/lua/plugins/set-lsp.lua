@@ -55,6 +55,9 @@ return {
                width = 0.7,
                height = 0.7,
             },
+            diagnostic = {
+               show_code_action = false, -- annoying to preview "move to new file"
+            },
          })
 
          local keymap = vim.keymap.set
@@ -128,7 +131,24 @@ return {
          -- typescript-tools: drop in lua replacement
          require("typescript-tools").setup({
             on_attach = on_attach,
+            settings = {
+               tsserver_file_preferences = {
+                  -- enable inlay hints (vim.lsp.inlay_hint.enable())
+                  includeInlayParameterNameHints = "all",
+                  includeInlayEnumMemberValueHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayVariableTypeHints = true,
+               },
+            },
          })
+         -- FIXME
+         -- vim.api.nvim_create_user_command(
+         --    "TSToolsLSP",
+         --    ":TSToolsAddMissingImports <bar> TSToolsSortImports",
+         --    { desc = "" }
+         -- )
          vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>")
          vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>")
 
@@ -187,6 +207,9 @@ return {
 
          local null_ls = require("null-ls")
          local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+         -- TODO: check why it seems that there are multiple formatters running for :Format
+         -- example: long chain of multiline foo && bar && baz
+         -- TODO: add a spell checker, function, functino
          require("null-ls").setup({
             sources = {
                null_ls.builtins.formatting.prettier,
@@ -500,17 +523,17 @@ return {
 
    {
       -- lua port of 'ts-error-translator' for vscode
-      -- TODO: update to work with typescript-tools https://github.com/dmmulroy/ts-error-translator.nvim/pull/18
       "dmmulroy/ts-error-translator.nvim",
       config = function()
          require("ts-error-translator").setup({})
       end,
    },
 
-   {
-      "aznhe21/actions-preview.nvim",
-      config = function()
-         require("actions-preview").setup({})
-      end,
-   },
+   -- {
+   --    -- preview lsp actions
+   --    "aznhe21/actions-preview.nvim",
+   --    config = function()
+   --       require("actions-preview").setup({})
+   --    end,
+   -- },
 }
