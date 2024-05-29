@@ -125,17 +125,23 @@ return {
       -- color the line separating windows
       "nvim-zh/colorful-winsep.nvim",
       enabled = not vim.g.vscode,
+      -- branch = "alpha", -- doesn't seem to work for me...
+      -- local frappe = require("catppuccin.palettes").get_palette("frappe")
       config = function()
-         -- local frappe = require("catppuccin.palettes").get_palette("frappe")
          require("colorful-winsep").setup({
-            highlight = {
+            hi = {
                bg = "none",
                fg = "cyan4",
             },
-            integrations = {
-               bufferline = true,
-            },
+
+            -- integrations = {
+            --    bufferline = true,
+            -- },
             -- interval = 1000,
+
+            -- these are curerntly on the alpha branch:
+            -- smooth = true,
+            -- exponential_smoothing = true,
          })
       end,
    },
