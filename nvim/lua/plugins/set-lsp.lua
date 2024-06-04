@@ -15,11 +15,9 @@ return {
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
          "j-hui/fidget.nvim", -- small nvim-lsp progress ui
-         "folke/neodev.nvim", -- adds type annotations for neovim config in lua
          "nvim-tree/nvim-web-devicons", -- adds icons
       },
       config = function()
-         require("neodev").setup() -- NOTE: setup BEFORE lspconfig. this does not work if it's a symlink!
          require("fidget").setup({})
 
          require("lspsaga").setup({
@@ -536,4 +534,31 @@ return {
    --       require("actions-preview").setup({})
    --    end,
    -- },
+
+   {
+      -- configure lua-ls for neocim config
+      "folke/lazydev.nvim",
+      ft = "lua", -- only load on lua files
+      opts = {
+         library = {
+            -- Library items can be absolute paths
+            -- "~/projects/my-awesome-lib",
+            -- Or relative, which means they will be resolved as a plugin
+            -- "LazyVim",
+            -- When relative, you can also provide a path to the library in the plugin dir
+            "luvit-meta/library", -- see below
+         },
+      },
+   },
+   { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+   { -- optional completion source for require statements and module annotations
+      "hrsh7th/nvim-cmp",
+      opts = function(_, opts)
+         opts.sources = opts.sources or {}
+         table.insert(opts.sources, {
+            name = "lazydev",
+            group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+         })
+      end,
+   },
 }
