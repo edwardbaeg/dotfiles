@@ -501,8 +501,9 @@ local watchRyujinx = function(appName, eventType, appObject)
    end
 end
 
-local ryujinxWatcher = hs.application.watcher.new(watchRyujinx)
-ryujinxWatcher:start()
+-- NOTE: do not create as local variable or it will be garbage collected
+RyujinxWatcher = hs.application.watcher.new(watchRyujinx)
+RyujinxWatcher:start()
 
 -- Spoons ----------------------------------------------------------------
 --------------------------------------------------------------------------
