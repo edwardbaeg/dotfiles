@@ -121,10 +121,10 @@ return {
 
    {
       -- comment
-      -- this is now part of nvim 0.10
+      -- this is now part of nvim 0.10, but doesn't seem to be context aware...
       "numToStr/Comment.nvim",
-      enabled = false,
-      event = "VeryLazy",
+      -- enabled = false,
+      lazy = false,
       dependencies = {
          "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
       },
