@@ -274,7 +274,7 @@ return {
    {
       -- show preview for jump list options
       "cbochs/portal.nvim",
-      -- enabled = false,
+      enabled = false,
       -- Optional dependencies
       dependencies = {
          "cbochs/grapple.nvim",
