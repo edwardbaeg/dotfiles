@@ -17,6 +17,8 @@ return {
                horizontal = "right:50%",
             },
          },
+         -- TODO: figure out a way to allow searching in the pathname direction
+         -- eg matching "hooks/init" by searching "hooks init" instead of "init hooks"
          files = {
             formatter = "path.filename_first",
          },
@@ -44,5 +46,6 @@ return {
       vim.keymap.set("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<cr>", { silent = true })
       vim.keymap.set("n", "<leader>fb", "<cmd>lua require('fzf-lua').git_bcommits()<cr>", { silent = true })
       vim.keymap.set("n", "<leader>ff", "<cmd>lua require('fzf-lua').builtin()<cr>", { silent = true })
+      vim.keymap.set("n", "<leader>fj", "<cmd>lua require('fzf-lua').jumps()<cr>", { silent = true })
    end,
 }

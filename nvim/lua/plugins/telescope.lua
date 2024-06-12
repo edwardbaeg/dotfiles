@@ -28,7 +28,7 @@ return {
       vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<cr>", { desc = "[f]uzzy [o]ldfiles" })
       vim.keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<cr>", { desc = "[f]uzzy [s]pell_suggest" })
       vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
-      vim.keymap.set("n", "<leader>fj", "<cmd>Telescope jumplist<cr>", { desc = "[f]uzzy [j]umplist" })
+      -- vim.keymap.set("n", "<leader>fj", "<cmd>Telescope jumplist<cr>", { desc = "[f]uzzy [j]umplist" }) -- replaced with fzflua
       vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
       -- vim.keymap.set("n", "<leader>fg", "<cmd>Telescope git_bcommits<cr>", { desc = "[f]uzzy [g]ic bcommits" })
 
