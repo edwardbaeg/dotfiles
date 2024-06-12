@@ -7,8 +7,8 @@ return {
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
-         "windwp/nvim-ts-autotag", -- autoclose html tags using treesitter
-         "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua
+         "windwp/nvim-ts-autotag", -- autoclose and autorename html tags using treesitter
+         "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua, vimscript, ruby, etc
          "andymass/vim-matchup", -- extend % matching
       },
       -- NOTE: Don't lazy load treesitter
@@ -31,10 +31,6 @@ return {
             },
             matchup = { -- for "andymass/vim-matchup"
                enable = true,
-            },
-            autotag = {
-               enable = true,
-               enable_close_on_slash = false,
             },
             ensure_installed = {
                "c",
@@ -104,6 +100,14 @@ return {
                      ["<leader>A"] = "@parameter.inner",
                   },
                },
+            },
+         })
+
+         require("nvim-ts-autotag").setup({
+            opts = {
+               enable_close = true, -- Auto close tags
+               enable_rename = true, -- Auto rename pairs of tags
+               enable_close_on_slash = false, -- Auto close on trailing </
             },
          })
       end,
