@@ -20,6 +20,11 @@ return {
          files = {
             formatter = "path.filename_first",
          },
+         grep = {
+            -- split results into multiple lines for narrow widths
+            -- this requires fzf-lua >= 0.53
+            multiline = 1,
+         },
          buffers = {
             winopts = {
                height = 0.7,
