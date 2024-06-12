@@ -64,25 +64,31 @@ return {
       -- indentation guides and highlight the current indent chunk -- this replaced indent-blankline.nvim
       "shellRaining/hlchunk.nvim",
       enabled = not vim.g.vscode,
-      -- enabled = false,
       config = function()
          local frappe = require("catppuccin.palettes").get_palette("frappe")
          require("hlchunk").setup({
+            -- highlight current indent chunk
             chunk = {
+               enable = true,
                style = {
                   { fg = frappe.surface2 },
                },
+               duration = 150, -- default 200
+               delay = 300, -- default 300
             },
+            -- highlight the line numbers for the current text chunk
+            line_num = {
+               enable = false,
+            },
+            -- add indent guides
             indent = {
+               enable = true,
                -- chars = { "┊" }, -- default
                chars = { "┆" },
                -- chars = { "╎" },
                style = {
                   { fg = frappe.surface0 },
                },
-            },
-            line_num = {
-               enable = false,
             },
             blank = {
                enable = false,
@@ -92,7 +98,7 @@ return {
    },
 
    {
-      -- add visual scrollbar
+      -- visual scrollbar
       "petertriho/nvim-scrollbar",
       event = "VeryLazy",
       enabled = not vim.g.vscode,
