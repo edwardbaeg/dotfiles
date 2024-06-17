@@ -2,6 +2,7 @@
 
 # setup direnv
 emulate zsh -c "$(direnv export zsh)"
+eval "$(direnv hook zsh)"
 
 # -- Instant prompt ------------------------------------------------------------
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
