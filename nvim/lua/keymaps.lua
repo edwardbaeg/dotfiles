@@ -36,6 +36,7 @@ vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
 vim.keymap.set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) -- save
 vim.keymap.set("n", "<leader>eq", "<cmd>q<cr>", { desc = "[q]uit" }) -- quit
+vim.keymap.set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "[q]uit [a]ll" }) -- quit
 vim.keymap.set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
 vim.keymap.set("n", "<leader>gi", ":Inspect<cr>") -- inspect treesitter nodes, helps with highlighting
 vim.keymap.set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
@@ -89,6 +90,9 @@ vim.keymap.set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split
 -- vim.keymap.set("n", "yp", "yyp") -- replaced with mini.operators `gmm`
 -- vim.keymap.set("n", "yp", "yypkgccj") -- NOTE: this doesn't work, comment the previous one
 -- vim.keymap.set("n", "yp", "yypp")
+
+-- type console.log with yanked text
+vim.api.nvim_set_keymap("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true })
 
 -- Don't copy empty lines to the register
 vim.keymap.set("n", "dd", function()
