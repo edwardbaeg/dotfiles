@@ -24,7 +24,7 @@ return {
                width_preview = 50,
             },
             options = {
-               use_as_default_explorer = false,
+               use_as_default_explorer = false, -- using oil.nvim
             },
          })
          -- open with focus on the current file
@@ -34,11 +34,11 @@ return {
          -- Add various operators
          require("mini.operators").setup({
             -- Default mappings:
-            -- g= -> evaluate
-            -- gx -> exchange
-            -- gm -> multiply/duplicate
-            -- gr -> replace
-            -- gs -> sort
+            -- - g= -> evaluate
+            -- - gx -> exchange
+            -- - gm -> multiply/duplicate
+            -- - gr -> replace
+            -- - gs -> sort
             exchange = {
                prefix = "gX",
             },
@@ -48,24 +48,23 @@ return {
          })
 
          -- smooth scrolling
-         if not vim.g.vscode then
-            local animate = require("mini.animate")
-            animate.setup({
-               scroll = {
-                  -- enable = false,
-                  timing = animate.gen_timing.linear({
-                     easing = "out",
-                     -- duration = 100,
-                     duration = 50,
-                     unit = "total",
-                  }),
-               },
-               cursor = { enable = false }, -- cursor path
-               resize = { enable = false }, -- window resize
-               open = { enable = false }, -- window opening
-               close = { enable = false }, -- window closing
-            })
-         end
+         local animate = require("mini.animate")
+         animate.setup({
+            scroll = {
+               enable = not vim.g.vscode,
+               timing = animate.gen_timing.linear({
+                  easing = "out",
+                  -- duration = 100,
+                  -- duration = 50,
+                  duration = 75,
+                  unit = "total",
+               }),
+            },
+            cursor = { enable = false }, -- cursor path
+            resize = { enable = false }, -- window resize
+            open = { enable = false }, -- window opening
+            close = { enable = false }, -- window closing
+         })
 
          -- track and reuse system visits
          require("mini.visits").setup({})
