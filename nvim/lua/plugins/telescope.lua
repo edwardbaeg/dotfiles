@@ -80,7 +80,10 @@ return {
             },
             undo = {
                use_delta = true,
-               diff_context_lines = 6, -- defaults to scroll
+               -- TODO: look up what this is
+               vim_diff_opts = {
+                  ctxlen = 6,
+               },
             },
          },
       })
