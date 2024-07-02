@@ -43,7 +43,7 @@ return {
                },
             },
             operators = {
-               -- only works if pressed after timeout
+               -- only works if second char pressed after timeout
                gc = "Comments",
                sa = "Surround",
                gR = "Replace",
@@ -74,7 +74,7 @@ return {
                   { fg = frappe.surface2 },
                },
                duration = 150, -- default 200
-               delay = 300, -- default 300
+               delay = 200, -- default 300
             },
             -- highlight the line numbers for the current text chunk
             line_num = {
@@ -168,8 +168,8 @@ return {
 
    {
       "nvim-neo-tree/neo-tree.nvim",
-      enabled = false,
-      branch = "v3.x",
+      -- enabled = false,
+      -- branch = "v3.x",
       dependencies = {
          "nvim-lua/plenary.nvim",
          "nvim-tree/nvim-web-devicons",
@@ -190,6 +190,7 @@ return {
       "b0o/incline.nvim",
       event = "VeryLazy",
       config = function()
+         local frappe = require("catppuccin.palettes").get_palette("frappe")
          require("incline").setup({
             window = {
                padding = 0,
@@ -210,7 +211,12 @@ return {
                end
 
                return {
-                  { filename, gui = modified and "bold,italic" or "bold" },
+                  {
+                     filename,
+                     gui = modified and "bold,italic" or "bold",
+                     guibg = props.focused and frappe.overlay2 or frappe.surface1,
+                     guifg = frappe.crust,
+                  },
                }
             end,
          })
@@ -219,6 +225,7 @@ return {
 
    {
       -- improved markdown view in neovim
+      -- :RenderMarkdownToggle
       "MeanderingProgrammer/markdown.nvim",
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
