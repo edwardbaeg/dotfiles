@@ -1,6 +1,10 @@
 -- ~/.hammerspoon/init.lua
 
+-- Set up modifier combos
 local hyperkey = { "cmd", "ctrl" }
+local cmdShift = { "cmd", "shift" }
+local altShift = { "alt", "shift" }
+local altCtrl = { "alt", "ctrl" }
 
 ---@diagnostic disable-next-line: undefined-global
 local hs = hs
@@ -8,11 +12,11 @@ local hs = hs
 -- Install command line interface as `hs`
 hs.ipc.cliInstall()
 
+local hostname = hs.host.localizedName()
+local isPersonal = hostname == "MacBook Pro14"
+
 -- Remaps ----------------------------------------------------------------
 --------------------------------------------------------------------------
--- Set up modifier combos
-local cmdShift = { "cmd", "shift" }
-local altShift = { "alt", "shift" }
 
 -- Disable global macos hotkeys
 hs.hotkey.bind({ "cmd" }, "M", function()
@@ -81,10 +85,20 @@ hs.loadSpoon("AppBindings")
 --------------------------------------------------------------------------
 hs.window.highlight.ui.overlayColor = { 0, 0, 0, 0.01 } -- overlay color
 hs.window.highlight.ui.overlay = false
-hs.window.highlight.ui.frameWidth = 12 -- draw a frame around the focused window in overlay mode; 0 to disable
+hs.window.highlight.ui.frameWidth = 8 -- draw a frame around the focused window in overlay mode; 0 to disable
 hs.window.highlight.start()
 
 hs.window.highlight.ui.overlay = true
+
+-- Toggle window highlighting
+hs.hotkey.bind(altCtrl, "H", function()
+   if (hs.window.highlight.ui.overlay) then
+      hs.alert("Disabling window highlighting")
+   else
+      hs.alert("Enabling window highlighting")
+   end
+   hs.window.highlight.ui.overlay = not hs.window.highlight.ui.overlay
+end)
 
 -- When focusing a window that is fullscreen or not
 hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window)
@@ -167,25 +181,25 @@ end)
 
 -- Application hotkeys ---------------------------------------------------
 --------------------------------------------------------------------------
-local hostname = hs.host.localizedName()
 
-function _G.launchOrFocus(modifiers, key, appName)
+-- TODO: if the application is already focused, then hide it
+function _G.assignAppHotKey(modifiers, key, appName)
    hs.hotkey.bind(modifiers, key, function()
       local success = hs.application.launchOrFocus(appName)
    end)
 end
 
-launchOrFocus(hyperkey, "0", "Wezterm")
-launchOrFocus(hyperkey, "8", "Slack")
+assignAppHotKey(hyperkey, "0", "Wezterm")
+assignAppHotKey(hyperkey, "8", "Slack")
 
 local personalBrowser = "Arc"
 local workBrowser = "Google Chrome"
-if hostname == "MacBook Pro14" then
-   launchOrFocus(hyperkey, "9", personalBrowser)
-   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", workBrowser)
+if isPersonal then
+   assignAppHotKey(hyperkey, "9", personalBrowser)
+   assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", workBrowser)
 else
-   launchOrFocus(hyperkey, "9", workBrowser)
-   launchOrFocus({ "cmd", "shift", "ctrl" }, "9", personalBrowser)
+   assignAppHotKey(hyperkey, "9", workBrowser)
+   assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", personalBrowser)
 end
 
 -- Windows grids ---------------------------------------------------------
@@ -354,6 +368,9 @@ hs.hotkey.bind(hyperkey, "V", function()
    resizeAndCenter(0.49)
 end)
 
+-- TODO: add hotkeys to increase and decrease window size (from raycast)
+-- cmd + ctrl + -/=
+
 -- Move to monitor -------------------------------------------------------
 --------------------------------------------------------------------------
 -- Move to the left screen
@@ -501,9 +518,11 @@ local watchRyujinx = function(appName, eventType, appObject)
    end
 end
 
--- NOTE: do not create as local variable or it will be garbage collected
-RyujinxWatcher = hs.application.watcher.new(watchRyujinx)
-RyujinxWatcher:start()
+if isPersonal then
+   -- NOTE: do not create watcher as local variable or it will be garbage collected
+   RyujinxWatcher = hs.application.watcher.new(watchRyujinx)
+   RyujinxWatcher:start()
+end
 
 -- Spoons ----------------------------------------------------------------
 --------------------------------------------------------------------------
