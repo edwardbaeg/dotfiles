@@ -231,6 +231,7 @@ return {
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
          require("render-markdown").setup({})
+         vim.api.nvim_create_user_command("MarkdownRenderToggle", require("render-markdown").toggle, {})
       end,
    },
 
