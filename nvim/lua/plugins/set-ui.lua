@@ -210,10 +210,13 @@ return {
                   filename = "[+] " .. filename
                end
 
+               filename = " " .. filename .. " "
+
                return {
                   {
                      filename,
-                     gui = modified and "bold,italic" or "bold",
+                     -- gui = modified and "bold,italic" or "bold",
+                     gui = "bold",
                      guibg = props.focused and frappe.overlay2 or frappe.surface1,
                      guifg = frappe.crust,
                   },
