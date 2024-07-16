@@ -261,15 +261,16 @@ return {
             --    fix_pairs = true,
          })
 
-         local sources = { -- this also sets priority
-            { name = "nvim_lsp", max_item_count = 5 },
-            { name = "codeium", max_item_count = 5 },
-            { name = "copilot", max_item_count = 5 },
-            { name = "luasnip", max_item_count = 2 },
-            { name = "cmp_tabnine", max_item_count = 5 },
+         local sources = {
+            { name = "nvim_lsp", max_item_count = 10, priority = 2 },
+            { name = "codeium", max_item_count = 5, priority = 1  },
+            { name = "copilot", max_item_count = 5, priority = 1  },
+            { name = "luasnip", max_item_count = 2, priority = 1  },
+            { name = "cmp_tabnine", max_item_count = 5, priority = 1 },
             {
                name = "buffer",
                max_item_count = 5,
+               priority = 1,
                options = {
                   -- Don't index files that are larger than 1 Megabyte
                   get_bufnrs = function()
@@ -388,11 +389,11 @@ return {
             completion = { keyword_length = 2 },
             mapping = cmp.mapping.preset.cmdline({
                -- TODO: disable <c-n/p> when nothing is selected
-               ["<C-l>"] = cmp.mapping.abort(), -- this doesn't work...
+               ["<C-l>"] = cmp.mapping.abort(), -- this doesn't work, it autocompletes
                ["<c-p>"] = cmp.mapping.close(),
                ["<c-n>"] = cmp.mapping.close(),
             }),
-            sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline", max_item_count = 10 } }),
+            sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline", max_item_count = 15 } }),
          })
 
          -- Add suggestions from the current buffer for searches
