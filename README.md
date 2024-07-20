@@ -23,7 +23,7 @@ Set up [below](#neovim-setup).
 
 - autocompletions, vi-mode, syntax highlighting, fzf, z jumping
 
-## Apps
+## Terminal Apps
 
 #### Tools
 
@@ -88,13 +88,19 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 ## Applications:
 
-- `Raycast`: launcher
-- `Karabiner Elements`: remap keys; RShift -> Backspace
+- `Raycast`: launcher, see ./raycast
+- `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
 - `Shortcat`: keyboard shortcuts everywhere
-- `Bartender`: keep menubar tider
-- `Choosy`: smart browser launcher
+- `Bartender`: keep menubar tidier
+- `Choosy`: browser launcher
 - `Shottr`: screenshot tool
+- `Arc`: brower
+- `Hammerspoon`: mac scripting
+- `Stats`: menubar system monitoring
+- `Dato`: menubar calendar and meetings
+- `Monitor Control`: menubar monitor brightness
+- `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
 
 ## oh-my-zsh
 
