@@ -66,7 +66,7 @@ return {
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
          -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
          keymap("n", "gr", "<cmd>Lspsaga finder<cr>")
-         keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
+         -- keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
          keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
          keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
          keymap("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")

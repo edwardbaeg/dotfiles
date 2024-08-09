@@ -36,6 +36,9 @@ return {
          vim.api.nvim_set_hl(0, "GitSignsUntracked", { fg = "#626880" })
          vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff2222" })
          -- end, 0)
+
+         vim.keymap.set("n", "gh", ":Gitsigns next_hunk<cr>")
+         vim.keymap.set("n", "gH", ":Gitsigns prev_hunk<cr>")
       end,
    },
 
