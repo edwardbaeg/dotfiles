@@ -92,7 +92,7 @@ hs.window.highlight.ui.overlay = true
 
 -- Toggle window highlighting
 hs.hotkey.bind(altCtrl, "H", function()
-   if (hs.window.highlight.ui.overlay) then
+   if hs.window.highlight.ui.overlay then
       hs.alert("Disabling window highlighting")
    else
       hs.alert("Enabling window highlighting")
@@ -183,9 +183,13 @@ end)
 --------------------------------------------------------------------------
 
 -- TODO: if the application is already focused, then hide it
-function _G.assignAppHotKey(modifiers, key, appName)
+function _G.assignAppHotKey(modifiers, key, appName, callback)
    hs.hotkey.bind(modifiers, key, function()
       local success = hs.application.launchOrFocus(appName)
+      callback = callback or function() end
+      if success then
+         callback()
+      end
    end)
 end
 
@@ -193,13 +197,22 @@ assignAppHotKey(hyperkey, "0", "Wezterm")
 assignAppHotKey(hyperkey, "8", "Slack")
 
 local personalBrowser = "Arc"
-local workBrowser = "Google Chrome"
+local workBrowser = "Arc"
+
 if isPersonal then
    assignAppHotKey(hyperkey, "9", personalBrowser)
    assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", workBrowser)
-else
-   assignAppHotKey(hyperkey, "9", workBrowser)
-   assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", personalBrowser)
+end
+
+if not isPersonal then
+   assignAppHotKey(hyperkey, "9", workBrowser, function()
+      -- keymap for changing workspace
+      hs.eventtap.keyStroke({ "ctrl" }, "4")
+   end)
+   assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", personalBrowser, function()
+      -- keymap for changing workspace
+      hs.eventtap.keyStroke({ "ctrl" }, "2")
+   end)
 end
 
 -- Windows grids ---------------------------------------------------------
