@@ -36,6 +36,7 @@ return {
 
    {
       -- search and replace
+      --:GrugFar
       "MagicDuck/grug-far.nvim",
       config = function()
          require("grug-far").setup({})
