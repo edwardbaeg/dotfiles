@@ -5,6 +5,7 @@ local hyperkey = { "cmd", "ctrl" }
 local cmdShift = { "cmd", "shift" }
 local altShift = { "alt", "shift" }
 local altCtrl = { "alt", "ctrl" }
+local allkey = { "cmd", "ctrl", "shift" }
 
 ---@diagnostic disable-next-line: undefined-global
 local hs = hs
@@ -182,7 +183,7 @@ end)
 -- Application hotkeys ---------------------------------------------------
 --------------------------------------------------------------------------
 
--- TODO: if the application is already focused, then hide it
+-- TODO?: if the application is already focused, then hide it
 function _G.assignAppHotKey(modifiers, key, appName, callback)
    hs.hotkey.bind(modifiers, key, function()
       local success = hs.application.launchOrFocus(appName)
@@ -196,25 +197,46 @@ end
 assignAppHotKey(hyperkey, "0", "Wezterm")
 assignAppHotKey(hyperkey, "8", "Slack")
 
-local personalBrowser = "Arc"
-local workBrowser = "Arc"
-
-if isPersonal then
-   assignAppHotKey(hyperkey, "9", personalBrowser)
-   assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", workBrowser)
-end
-
-if not isPersonal then
-   assignAppHotKey(hyperkey, "9", workBrowser, function()
-      -- keymap for changing workspace
-      hs.eventtap.keyStroke({ "ctrl" }, "4")
-   end)
-   assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", personalBrowser, function()
-      -- keymap for changing workspace
+-- personal config
+assignAppHotKey(allkey, "9", "Arc", function()
+   hs.eventtap.keyStroke({ "ctrl" }, "2")
+   hs.timer.doAfter(0.1, function()
       hs.eventtap.keyStroke({ "ctrl" }, "2")
    end)
-end
+end)
 
+-- work config
+assignAppHotKey(hyperkey, "9", "Arc", function()
+   hs.eventtap.keyStroke({ "ctrl" }, "4")
+   hs.timer.doAfter(0.1, function()
+      hs.eventtap.keyStroke({ "ctrl" }, "4")
+   end)
+end)
+
+-- LEGACY: separate browsers / keymaps for personal and work
+-- local personalBrowser = "Arc"
+-- local workBrowser = "Arc"
+--
+-- if isPersonal then
+--    assignAppHotKey(hyperkey, "9", personalBrowser)
+--    assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", workBrowser)
+-- end
+--
+-- if not isPersonal then
+--    assignAppHotKey(hyperkey, "9", workBrowser, function()
+--       hs.eventtap.keyStroke({ "ctrl" }, "4")
+--       hs.timer.doAfter(0.1, function()
+--          hs.eventtap.keyStroke({ "ctrl" }, "4")
+--       end)
+--    end)
+--    assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", personalBrowser, function()
+--       hs.eventtap.keyStroke({ "ctrl" }, "2")
+--       hs.timer.doAfter(0.1, function()
+--          hs.eventtap.keyStroke({ "ctrl" }, "2")
+--       end)
+--    end)
+-- end
+--
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
 
