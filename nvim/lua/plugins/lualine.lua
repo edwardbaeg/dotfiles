@@ -37,7 +37,7 @@ return {
                      -- path = 1, -- full relative path
                      path = 4, -- parent path
                   },
-                  "searchcount",
+                  -- "searchcount",
                   "codeium#GetStatusString",
                   {
                      git_blame.get_current_blame_text,
