@@ -29,38 +29,6 @@ return {
    },
 
    {
-      -- shows possible key bindings
-      -- NOTE: this can prevent reactive.nvim from working for operators
-      "folke/which-key.nvim",
-      -- enabled = false,
-      config = function()
-         vim.o.timeout = true
-         vim.o.timeoutlen = 200
-         require("which-key").setup({
-            plugins = {
-               presets = {
-                  operators = false,
-               },
-            },
-            operators = {
-               -- only works if second char pressed after timeout
-               gc = "Comments",
-               sa = "Surround",
-               gR = "Replace",
-               gs = "Sort",
-               gX = "Exchange",
-            },
-            window = {
-               border = "single",
-               margin = { 0, 0, 0, 0 },
-               padding = { 1, 0, 1, 0 },
-               -- winblend = 10, -- disable for transparency mode
-            },
-         })
-      end,
-   },
-
-   {
       -- indentation guides and highlight the current indent chunk -- this replaced indent-blankline.nvim
       "shellRaining/hlchunk.nvim",
       enabled = not vim.g.vscode,
