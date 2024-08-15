@@ -197,22 +197,37 @@ end
 assignAppHotKey(hyperkey, "0", "Wezterm")
 assignAppHotKey(hyperkey, "8", "Slack")
 
--- personal config
-assignAppHotKey(allkey, "9", "Arc", function()
-   hs.eventtap.keyStroke({ "ctrl" }, "2")
-   hs.timer.doAfter(0.1, function()
+if isPersonal then
+   -- personal profile
+   assignAppHotKey(hyperkey, "9", "Arc", function()
       hs.eventtap.keyStroke({ "ctrl" }, "2")
+      hs.timer.doAfter(0.1, function()
+         hs.eventtap.keyStroke({ "ctrl" }, "2")
+      end)
    end)
-end)
-
--- work config
-assignAppHotKey(hyperkey, "9", "Arc", function()
-   hs.eventtap.keyStroke({ "ctrl" }, "4")
-   hs.timer.doAfter(0.1, function()
+   -- work profile
+   assignAppHotKey(allkey, "9", "Arc", function()
       hs.eventtap.keyStroke({ "ctrl" }, "4")
+      hs.timer.doAfter(0.1, function()
+         hs.eventtap.keyStroke({ "ctrl" }, "4")
+      end)
    end)
-end)
-
+else
+   -- personal profile
+   assignAppHotKey(allkey, "9", "Arc", function()
+      hs.eventtap.keyStroke({ "ctrl" }, "2")
+      hs.timer.doAfter(0.1, function()
+         hs.eventtap.keyStroke({ "ctrl" }, "2")
+      end)
+   end)
+   -- work profile
+   assignAppHotKey(hyperkey, "9", "Arc", function()
+      hs.eventtap.keyStroke({ "ctrl" }, "4")
+      hs.timer.doAfter(0.1, function()
+         hs.eventtap.keyStroke({ "ctrl" }, "4")
+      end)
+   end)
+end
 -- LEGACY: separate browsers / keymaps for personal and work
 -- local personalBrowser = "Arc"
 -- local workBrowser = "Arc"
