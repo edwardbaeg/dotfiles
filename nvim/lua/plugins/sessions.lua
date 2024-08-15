@@ -14,6 +14,9 @@ return {
          vim.keymap.set("n", "<leader>sr", "<cmd>SessionRestore<cr>", {
             noremap = true,
          })
+
+         -- recommended settings
+         vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
       end,
    },
    {
