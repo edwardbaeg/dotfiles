@@ -34,7 +34,7 @@ return {
          },
       })
 
-      vim.keymap.set("n", "<leader>lt", ":Leet test<CR>", { desc = "Leetcode test" })
-      vim.keymap.set("n", "<leader>ls", ":Leet submit<CR>", { desc = "Leetcode submit" })
+      -- vim.keymap.set("n", "<leader>lt", ":Leet test<CR>", { desc = "Leetcode test" })
+      -- vim.keymap.set("n", "<leader>ls", ":Leet submit<CR>", { desc = "Leetcode submit" })
    end,
 }

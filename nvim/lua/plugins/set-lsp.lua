@@ -78,6 +78,8 @@ return {
          -- backup keymaps
          keymap("n", "gk", vim.lsp.buf.hover, { desc = "Hover Documentation" })
 
+         -- other keymaps
+         keymap("n", "ls", ":LspRestart<cr>", { desc = "LspRestart", silent = false })
          -- [[ LSP Settings ]]
          --  This function gets run when an LSP connects to a particular buffer.
          -- TODO: remove code action to switch parameters?
