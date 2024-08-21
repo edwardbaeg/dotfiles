@@ -15,22 +15,29 @@ vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "<cr>", "o<esc>0D") -- add empty line below -- this keymap breaks various things, eg mini-files
 vim.keymap.set("n", "<leader><cr>", "o<esc>0D") -- add empty line below
 vim.keymap.set("n", "gjk", "gcc", { desc = "comment line", remap = true }) -- comment line
-vim.keymap.set("n", "<leader>j", function()
-   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end)
+-- vim.keymap.set("n", "<leader>j", function() -- show inlay lsp hints
+--    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+-- end)
+
+-- TODO: Disable s command
+vim.keymap.set('n', 's', '<nop>', { noremap = true, silent = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
+-- vim.keymap.del("n", "s") -- disable s -- doesn't work
+-- vim.cmd([[unmap s]]) -- doesn't work
 
 -- various leader keymaps
 vim.keymap.set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
 vim.keymap.set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
 vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<esc>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
--- vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file -- use :%yank instead
+vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file -- can use :%yank instead
 -- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<m-o>", "i<cr><esc>") -- split line
-vim.keymap.set("n", "<leader>n", "<cmd>bnext<cr>") -- next buffer
-vim.keymap.set("n", "<leader>p", "<cmd>bprevious<cr>") -- previous buffer
+-- TODO: consider making these require double press; <leader>nn and <leader>pp
+vim.keymap.set("n", "<leader>nn", "<cmd>bnext<cr>") -- next buffer
+vim.keymap.set("n", "<leader>pp", "<cmd>bprevious<cr>") -- previous buffer
 vim.keymap.set("n", "<leader>+", "<c-a>", { desc = "increment" }) -- increment
 vim.keymap.set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
+-- TODO: make this do :EslintFixAll in js/ts and :Format in others
 vim.keymap.set("n", "<leader>es", ":EslintFixAll<cr>")
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 vim.keymap.set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
@@ -83,7 +90,7 @@ vim.keymap.set("n", "<leader>w", "<c-w>")
 -- Use builtin go to definition/tag
 vim.keymap.set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
 -- open goto definition in vertical split
-vim.keymap.set("n", "g>", "<cmd>vs<cr><c-]>", { desc = "Goto Definition in vertical split" })
+vim.keymap.set("n", "g>", "<cmd>vs<cr><c-]>", { desc = "Goto definition in vertical split" })
 vim.keymap.set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
 
 -- yank and then paste
@@ -101,6 +108,12 @@ vim.keymap.set("n", "dd", function()
    end
    return "dd"
 end, { expr = true })
+
+-- FIXME
+vim.keymap.set('n', '<c-m>', function ()
+   print"here"
+  vim.api.nvim_win_set_cursor(0, {vim.api.nvim_win_get_cursor(0)[1] + vim.api.nvim_win_get_height(0) / 4, 0})
+end, {noremap = true, silent = true})
 
 -- Searching
 -- center after search "don't really need this with scrolloffset

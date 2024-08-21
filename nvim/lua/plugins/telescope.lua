@@ -20,7 +20,7 @@ return {
       -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor -- replaced with fzflua
 
       vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
-      vim.keymap.set("n", "<leader>fl", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
+      -- vim.keymap.set("n", "<leader>fl", "<cmd>Telescope current_buffer_fuzzy_find<cr>") -- replace with fzflua
       vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })
       vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "[f]uzzy [k]eymaps" })
       vim.keymap.set("n", "<leader>fc", "<cmd>Telescope commands<cr>", { desc = "[f]uzzy [c]ommands" })
@@ -39,6 +39,7 @@ return {
       local actions = require("telescope.actions")
       require("telescope").setup({
          defaults = {
+            -- TODO: add the ability to move up and down selections with <c-j/k>
             mappings = {
                i = {
                   ["<C-u>"] = false,
@@ -53,6 +54,7 @@ return {
                },
             },
             layout_strategy = "flex",
+            -- TODO: add a max width
             layout_config = {
                -- prompt_position = 'bottom',
                width = 0.9,

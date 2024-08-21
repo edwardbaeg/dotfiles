@@ -34,7 +34,7 @@ return {
    end,
    keys = {
       { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
-      { "<c-m>", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
+      -- { "<c-m>", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
 
       -- { "<c-k>", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
       { "<leader>k", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },

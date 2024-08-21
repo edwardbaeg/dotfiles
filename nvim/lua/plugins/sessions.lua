@@ -8,9 +8,9 @@ return {
             auto_restore_enabled = false,
             auto_save_enabled = true,
          })
-         vim.keymap.set("n", "<leader>ls", require("auto-session.session-lens").search_session, {
-            noremap = true,
-         })
+         -- vim.keymap.set("n", "<leader>ls", require("auto-session.session-lens").search_session, {
+         --    noremap = true,
+         -- })
          vim.keymap.set("n", "<leader>sr", "<cmd>SessionRestore<cr>", {
             noremap = true,
          })
