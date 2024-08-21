@@ -101,13 +101,24 @@ hs.hotkey.bind(altCtrl, "H", function()
    hs.window.highlight.ui.overlay = not hs.window.highlight.ui.overlay
 end)
 
--- When focusing a window that is fullscreen or not
+-- Focused window listener for highlighting
 hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window)
    local isFullScreen = window:isFullScreen()
 
+   -- Disable when focusing full screen app
    if isFullScreen and hs.window.highlight.ui.overlay then
       hs.window.highlight.ui.overlay = false
-   elseif not isFullScreen and not hs.window.highlight.ui.overlay then
+   end
+
+   -- force highlighting to fix some bugs when focusing windows in a different screen
+   if not isFullScreen and hs.window.highlight.ui.overlay then
+      hs.timer.doAfter(0.1, function()
+         hs.window.highlight.ui.overlay = true
+      end)
+   end
+
+   -- Enable when leaving full screen app focus
+   if not isFullScreen and not hs.window.highlight.ui.overlay then
       hs.window.highlight.ui.overlay = true
    end
 end)
@@ -131,10 +142,10 @@ ApplicationWatcher = hs.application.watcher
    :start()
 
 -- Toggle on fullscreen toggle
-hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function(window, appName)
+hs.window.filter.default:subscribe(hs.window.filter.windowFullscreened, function(window, _appName)
    hs.window.highlight.ui.overlay = false
 end)
-hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(window, appName)
+hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, function(window, _appName)
    hs.window.highlight.ui.overlay = true
 end)
 
