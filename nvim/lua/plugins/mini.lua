@@ -100,6 +100,11 @@ return {
          -- track and reuse system visits
          require("mini.visits").setup({})
          vim.keymap.set("n", "<leader>fv", ":lua MiniVisits.select_path()<cr>")
+
+         -- extend a/i text objects
+         -- q: ", ', `
+         -- b: {, [, (
+         require('mini.ai').setup()
       end,
    },
 }

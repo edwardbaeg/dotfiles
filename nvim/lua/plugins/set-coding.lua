@@ -49,11 +49,11 @@ return {
       -- adds motions for surrounding, has preview highlight
       "kylechui/nvim-surround",
       config = function()
-         -- add operator maps for [r]ight angle braces and [a]ngle brances
-         vim.keymap.set("o", "ir", "i[")
-         vim.keymap.set("o", "ar", "a[")
-         vim.keymap.set("o", "ia", "i<")
-         vim.keymap.set("o", "aa", "a<")
+         -- add operator maps for [r]ight angle braces and [a]ngle brances -- replaced with mini.ai
+         -- vim.keymap.set("o", "ir", "i[")
+         -- vim.keymap.set("o", "ar", "a[")
+         -- vim.keymap.set("o", "ia", "i<")
+         -- vim.keymap.set("o", "aa", "a<")
 
          require("nvim-surround").setup({
             keymaps = {
@@ -63,7 +63,7 @@ return {
                normal_cur = false,
                normal_line = false,
                normal_cur_line = false,
-               -- visual = "s", -- default is S
+               visual = "s", -- default is S
                -- visual = "a", -- default is S
                visual_line = false,
                -- delete = "sd", -- default is ds
@@ -79,13 +79,14 @@ return {
    {
       -- this adds surround motions, but disable those and just use the ib / ab operators
       "machakann/vim-sandwich",
+      enabled = false, -- replaced with mini.ai
       init = function()
          vim.cmd([[
         let g:sandwich_no_default_key_mappings = 1 " disable vim-sandwich bindings, we just want the textobjects
         omap ib <Plug>(textobj-sandwich-auto-i)
         xmap ib <Plug>(textobj-sandwich-auto-i)
         omap ab <Plug>(textobj-sandwich-auto-a)
-        xmap ab <Plug>(textobj-sandwich-auto-a)
+        xmap ab <Plug>{textobj-sandwich-auto-a}
 
         omap is <Plug>(textobj-sandwich-query-i)
         xmap is <Plug>(textobj-sandwich-query-i)
@@ -154,5 +155,16 @@ return {
       -- multiple cursors mode
       -- use <ctrl-n> to add multiple cursors
       "mg979/vim-visual-multi",
+   },
+
+   {
+      "ggandor/leap.nvim",
+      config = function()
+         require("leap").setup({})
+      end,
+
+      vim.keymap.set({ "n", "o" }, "gs", function()
+         require("leap.remote").action()
+      end),
    },
 }
