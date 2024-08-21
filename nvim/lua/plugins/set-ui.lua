@@ -127,10 +127,20 @@ return {
    },
 
    {
+      -- tree style file explorer
+      -- has / fuzzy search to quickly jump to items
       "nvim-tree/nvim-tree.lua",
-      enabled = false,
+      -- enabled = false,
       config = function()
-         require("nvim-tree").setup({})
+         require("nvim-tree").setup({
+            actions = {
+               open_file = {
+                  window_picker = {
+                     chars = "asdfjkl", -- default:  "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+                  }
+               },
+            }
+         })
       end,
    },
 
