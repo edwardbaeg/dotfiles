@@ -287,4 +287,37 @@ return {
          vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
       end,
    },
+
+   {
+      -- Fix "bad" vim habits
+      -- TODO: remove mode from the cmd line
+      "m4xshen/hardtime.nvim",
+      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+      opts = {
+         disable_mouse = false,
+         restriction_mode = "block", -- block | hint
+         max_count = 7,
+         -- resetting_keys = {
+         --    ["h"] = {},
+         -- },
+         restricted_keys = {
+            -- ["h"] = {},
+            -- ["j"] = {},
+            -- ["k"] = {},
+            -- ["l"] = {},
+         },
+         disabled_keys = {
+            -- -- Allow these keys
+            ["<Up>"] = {},
+            ["<Down>"] = {},
+            ["<Left>"] = {},
+            ["<Right>"] = {},
+         },
+         init = function()
+            -- this doesn't work??
+            vim.opt.cmdheight = 2
+         end
+      },
+   },
+
 }
