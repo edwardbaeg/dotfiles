@@ -320,4 +320,13 @@ return {
       },
    },
 
+   {
+      -- animated pretty notifications
+      "rcarriga/nvim-notify",
+      enabled = false,
+      config = function()
+         require("notify").setup({})
+         vim.notify = require("notify")
+      end,
+   }
 }
