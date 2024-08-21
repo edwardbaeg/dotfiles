@@ -184,13 +184,19 @@ return {
                if filename == "" then
                   filename = "[No Name]"
                end
-               if modified then
-                  filename = "[+] " .. filename
-               end
+               -- if modified then
+               --    filename = "[+] " .. filename
+               -- end
 
-               filename = " " .. filename .. " "
+               -- filename = " " .. filename .. " "
+               filename = filename .. " "
 
                return {
+                  {
+                     modified and "   " or " ",
+                     guifg = "yellow",
+                     guibg = props.focused and frappe.overlay2 or frappe.surface1,
+                  },
                   {
                      filename,
                      -- gui = modified and "bold,italic" or "bold",
