@@ -25,6 +25,7 @@ return {
    {
       -- AI code autocompletion
       -- This is used to show suggestions in the popup menu
+      -- NOTE: this can cause nvim to crash on exit
       "Exafunction/codeium.nvim",
       enabled = not vim.g.vscode,
       event = "VeryLazy",
@@ -34,6 +35,18 @@ return {
       },
       config = function()
          require("codeium").setup({})
+
+         -- TODO: consider having this for all filetypes??
+         vim.api.nvim_create_autocmd("VimLeavePre", {
+         desc = "disable codeium for gitcommit",
+         group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = true }),
+            -- pattern = "gitcommit",
+            callback = function(opts)
+               if vim.bo[opts.buf].filetype == "gitcommit" then
+                  vim.cmd("CodeiumDisable")
+               end
+            end,
+         })
       end,
    },
 }
