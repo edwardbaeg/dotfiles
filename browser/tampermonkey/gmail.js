@@ -14,7 +14,8 @@
 
   let curr = '';
 
-  function filter1440Sponsors() {
+  function main() {
+    // TODO: come up with something more robust
     const EMAIL_SUBJECT_TITLE_SELECTOR = '.hP';
     const title = document.querySelector(EMAIL_SUBJECT_TITLE_SELECTOR)?.textContent;
 
@@ -29,8 +30,15 @@
 
     curr = title;
 
+    filter1440Sponsors();
+    filterMorningBrewSponsors();
+  }
+
+  function filter1440Sponsors() {
+    // if (!isFromSender("1440 Daily Digest")) {
+    //   return;
+    // }
     const spans = document.querySelectorAll("span");
-    console.log(spans)
     spans.forEach((span) => {
       if (span.textContent.includes("In partnership with")) {
         const parent = span.closest("table");
@@ -42,6 +50,28 @@
       }
     });
   }
+ 
+  function filterMorningBrewSponsors() {
+    // if (!isFromSender("crew@morningbrew.com")) {
+    //   return;
+    // }
+    const headers = document.querySelectorAll("h3" );
+    headers.forEach((header) => {
+      if (header.textContent.includes("PRESENTED BY") || header.textContent.includes("TOGETHER WITH")) {
+        const parent = header.closest("table");
+        // parent.style.border = "2px solid red"; // or any other highlight style you prefer
 
-  setInterval(filter1440Sponsors, 1000);
+        const secondParent = parent.parentNode.closest("table");
+        // secondParent.style.border = "2px solid red"; // or any other highlight style you prefer
+        secondParent.style.opacity = 0.1;
+      }
+    });
+  }
+
+  // TODO: update this to only check the email pane
+  function isFromSender(email) {
+    return document.body.textContent.includes(email);
+  }
+
+  setInterval(main, 1000);
 })();
