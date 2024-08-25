@@ -129,6 +129,15 @@ return {
                },
             },
          })
+
+         vim.api.nvim_create_autocmd("VimLeavePre", {
+         desc = "disable copilot",
+         group = vim.api.nvim_create_augroup("copilot_disable_on_leave", { clear = false }),
+            -- pattern = "gitcommit",
+            callback = function(opts)
+                  vim.cmd("Copilot disable")
+            end,
+         })
       end,
    },
 

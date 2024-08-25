@@ -39,7 +39,7 @@ return {
          -- TODO: consider having this for all filetypes??
          vim.api.nvim_create_autocmd("VimLeavePre", {
          desc = "disable codeium for gitcommit",
-         group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = true }),
+         group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = false }),
             -- pattern = "gitcommit",
             callback = function(opts)
                if vim.bo[opts.buf].filetype == "gitcommit" then
