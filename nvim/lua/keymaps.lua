@@ -47,6 +47,7 @@ vim.keymap.set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "[q]uit [a]ll" }) -- q
 vim.keymap.set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
 vim.keymap.set("n", "<leader>gi", ":Inspect<cr>") -- inspect treesitter nodes, helps with highlighting
 vim.keymap.set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
+vim.keymap.set("n", "<cr>", "G", { desc = "jump to line number" })
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
