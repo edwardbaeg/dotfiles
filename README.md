@@ -144,6 +144,21 @@ Configuration: [init.lua](hammerspoon/init.lua)
 
 - window management, sleep toggle, toggle apps
 
+## Keyboard
+
+Keyboard layers (0-index), global keyboard bindings are managed through ZSA Oryx firmware, Hammerspoon
+
+- Symbols, numbers
+  - `Layer 1`
+- System control, arrow keys
+  - `Layer 2` + `,./`: media
+  - `shift` + `ctrl` + `,./`: media
+  - `Layer 2` + `hjkl`: arrow keys
+  - `shift` + `ctrl` + `hjkl`: arrow keys
+- Window movement
+  - `cmd` + `ctrl` + `hjkl mnbv`: move, resize
+  - `cmd` + `ctrl` + `shift` + `hjkl`, change display
+
 ## Configure git for github
 
 - Create ssh key for git (press enter for default file location)
