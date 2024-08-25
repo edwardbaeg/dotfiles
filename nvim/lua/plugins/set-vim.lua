@@ -30,12 +30,12 @@ return {
    {
       -- show search status in virtual text
       "kevinhwang91/nvim-hlslens",
-      event = "VeryLazy",
+      -- event = "VeryLazy",
       config = function()
          require("scrollbar.handlers.search").setup({}) -- integrate with nvim-scrollbar
          require("hlslens").setup({
-            calm_down = true, -- this doesn't work? clear highlights wen cursor leaves
-            nearest_only = true,
+            -- calm_down = true, -- this doesn't work? clear highlights when cursor leaves
+            -- nearest_only = true, -- only add lens to the nearest matched instance
          })
 
          -- change highlight colors for search matches away from nearest
