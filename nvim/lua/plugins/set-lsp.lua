@@ -54,7 +54,8 @@ return {
                height = 0.7,
             },
             diagnostic = {
-               show_code_action = false, -- annoying to preview "move to new file"
+               show_code_action = false, -- annoying to preview "move to new file" -- NOTE: this doesn't seem to work?
+               -- jump_num_shortcut = false,
             },
          })
 
@@ -80,6 +81,7 @@ return {
 
          -- other keymaps
          keymap("n", "ls", ":LspRestart<cr>", { desc = "LspRestart", silent = false })
+
          -- [[ LSP Settings ]]
          --  This function gets run when an LSP connects to a particular buffer.
          -- TODO: remove code action to switch parameters?
@@ -124,11 +126,11 @@ return {
          end
 
          -- Set up LSP servers
-
          -- Options for typescript:
          -- tsserver: official
          -- tsls: vscode wrapper
          -- typescript-tools: drop in lua replacement
+
          require("typescript-tools").setup({
             on_attach = on_attach,
             settings = {
@@ -172,6 +174,15 @@ return {
             cssls = {},
             terraformls = {},
             jsonls = {},
+            -- grammar (not just spell check)
+            -- harper_ls = {
+            --    ["harper-ls"] = {
+            --       linters = {
+            --          spell_check = false,
+            --          sentence_capitalization = false,
+            --       },
+            --    },
+            -- },
             -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
             -- tsserver = {}, -- replaced with typescript-tools
             -- vls = {}, -- vue v2
@@ -186,6 +197,7 @@ return {
          local capabilities = vim.lsp.protocol.make_client_capabilities()
          capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+         -- set up each server
          mason_lspconfig.setup_handlers({
             function(server_name)
                require("lspconfig")[server_name].setup({
@@ -216,27 +228,27 @@ return {
                null_ls.builtins.formatting.stylua,
                null_ls.builtins.formatting.shfmt,
             },
-            on_attach = function(client, bufnr) -- format on save
-               if client.supports_method("textDocument/formatting") then
-                  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                  vim.api.nvim_create_autocmd("BufWritePre", {
-                     group = augroup,
-                     buffer = bufnr,
-                     callback = function()
-                        vim.lsp.buf.format()
-                     end,
-                  })
-               end
-            end,
+            -- on_attach = function(client, bufnr) -- format on save
+            --    if client.supports_method("textDocument/formatting") then
+            --       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            --       vim.api.nvim_create_autocmd("BufWritePre", {
+            --          group = augroup,
+            --          buffer = bufnr,
+            --          callback = function()
+            --             vim.lsp.buf.format()
+            --          end,
+            --       })
+            --    end
+            -- end,
          })
       end,
    },
 
    {
       -- Autocomplete menu, snippets, and AI completion
-      -- NOTE: do NOT lazy load this
       "hrsh7th/nvim-cmp",
-      event = "VeryLazy",
+      -- NOTE: do NOT lazy load this
+      -- event = "VeryLazy",
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
@@ -525,6 +537,7 @@ return {
    {
       -- lua port of 'ts-error-translator' for vscode
       "dmmulroy/ts-error-translator.nvim",
+      -- enabled = false,
       config = function()
          require("ts-error-translator").setup({})
       end,
