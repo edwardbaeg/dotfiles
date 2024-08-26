@@ -131,11 +131,11 @@ return {
          })
 
          vim.api.nvim_create_autocmd("VimLeavePre", {
-         desc = "disable copilot",
-         group = vim.api.nvim_create_augroup("copilot_disable_on_leave", { clear = false }),
+            desc = "disable copilot",
+            group = vim.api.nvim_create_augroup("copilot_disable_on_leave", { clear = false }),
             -- pattern = "gitcommit",
             callback = function(opts)
-                  vim.cmd("Copilot disable")
+               vim.cmd("Copilot disable")
             end,
          })
       end,
@@ -167,13 +167,15 @@ return {
    },
 
    {
+      -- jump to any location
+      -- this is currently only used for its remote operations
       "ggandor/leap.nvim",
       config = function()
          require("leap").setup({})
       end,
 
-      vim.keymap.set({ "n", "o" }, "gs", function()
+      vim.keymap.set({ "n", "o" }, "<leader>gr", function()
          require("leap.remote").action()
-      end),
+      end, { desc = "Leap [r]emote" }),
    },
 }
