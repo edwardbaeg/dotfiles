@@ -6,23 +6,23 @@ return {
       -- NOTE: do not lazy load
       "neovim/nvim-lspconfig",
       dependencies = {
-         "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
+         "williamboman/mason.nvim",           -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
-         "nvimtools/none-ls.nvim", -- set up formatters and linters
-         "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
+         "nvimtools/none-ls.nvim",            -- set up formatters and linters
+         "jay-babu/mason-null-ls.nvim",       -- automatically install linters and formatters
 
-         "pmizio/typescript-tools.nvim", -- native lua typescript support
+         "pmizio/typescript-tools.nvim",      -- native lua typescript support
 
-         "nvimdev/lspsaga.nvim", -- pretty lsp ui
-         "j-hui/fidget.nvim", -- small nvim-lsp progress ui
-         "nvim-tree/nvim-web-devicons", -- adds icons
+         "nvimdev/lspsaga.nvim",              -- pretty lsp ui
+         "j-hui/fidget.nvim",                 -- small nvim-lsp progress ui
+         "nvim-tree/nvim-web-devicons",       -- adds icons
       },
       config = function()
          require("fidget").setup({})
 
          require("lspsaga").setup({
             lightbulb = {
-               sign = false, -- don't show in sign column
+               sign = false,             -- don't show in sign column
                enable_in_insert = false, -- don't show to fix conflict with codeium
             },
             symbol_in_winbar = {
@@ -252,16 +252,16 @@ return {
       dependencies = {
          "hrsh7th/cmp-nvim-lsp",
          "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
-         "hrsh7th/cmp-buffer", -- source for buffer words
+         "hrsh7th/cmp-buffer",  -- source for buffer words
          {
             "L3MON4D3/LuaSnip", -- snippet engine
             build = "make install_jsregexp",
          },
          "saadparwaiz1/cmp_luasnip",
          "rafamadriz/friendly-snippets", -- vscode like snippets
-         "onsails/lspkind.nvim", -- pictograms for completion items
+         "onsails/lspkind.nvim",         -- pictograms for completion items
          {
-            "tzachar/cmp-tabnine", -- AI powered completion
+            "tzachar/cmp-tabnine",       -- AI powered completion
             build = "./install.sh",
          },
          "zbirenbaum/copilot-cmp", -- add copilot as a source
@@ -276,11 +276,11 @@ return {
          })
 
          local sources = {
-            { name = "nvim_lsp", max_item_count = 10, priority = 2 },
-            { name = "codeium", max_item_count = 5, priority = 1  },
-            { name = "copilot", max_item_count = 5, priority = 1  },
-            { name = "luasnip", max_item_count = 2, priority = 1  },
-            { name = "cmp_tabnine", max_item_count = 5, priority = 1 },
+            { name = "nvim_lsp",    max_item_count = 10, priority = 2 },
+            { name = "codeium",     max_item_count = 5,  priority = 1 },
+            { name = "copilot",     max_item_count = 5,  priority = 1 },
+            { name = "luasnip",     max_item_count = 2,  priority = 1 },
+            { name = "cmp_tabnine", max_item_count = 5,  priority = 1 },
             {
                name = "buffer",
                max_item_count = 5,
@@ -517,7 +517,7 @@ return {
       dependencies = {
          "neovim/nvim-lspconfig",
          "SmiteshP/nvim-navic",
-         "MunifTanjim/nui.nvim", -- ui library
+         "MunifTanjim/nui.nvim",          -- ui library
          "nvim-telescope/telescope.nvim", -- Optional
       },
       config = function()
@@ -566,15 +566,23 @@ return {
          },
       },
    },
-   { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-   { -- optional completion source for require statements and module annotations
-      "hrsh7th/nvim-cmp",
-      opts = function(_, opts)
-         opts.sources = opts.sources or {}
-         table.insert(opts.sources, {
-            name = "lazydev",
-            group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-         })
+
+   {
+      -- show lsp signature while typing
+      "ray-x/lsp_signature.nvim",
+      event = "VeryLazy",
+      opts = {},
+      -- TODO: might need to configure on_attach for plugins
+      config = function(_, opts)
+         require("lsp_signature").setup(opts)
       end,
+   },
+
+   {
+      -- lsp garbage collector; stop inactive LSP clients to save RAM
+      "zeioth/garbage-day.nvim",
+      dependencies = "neovim/nvim-lspconfig",
+      event = "VeryLazy",
+      opts = {},
    },
 }
