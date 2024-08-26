@@ -168,8 +168,18 @@ return {
       -- highlight undo and redo changes
       -- NOTE: this doesn't work with `d`
       "tzachar/highlight-undo.nvim",
+      enabled = false, -- replaced with luminate.nvim
       config = function()
          require("highlight-undo").setup({})
+      end,
+   },
+
+   {
+      -- highlight yank, paste, undo, redo
+      "mei28/luminate.nvim",
+      event = { "VeryLazy" },
+      config = function()
+         require("luminate").setup({})
       end,
    },
 
