@@ -13,6 +13,7 @@
   "use strict";
 
   let curr = '';
+  let count = 0;
 
   function main() {
     // TODO: come up with something more robust
@@ -24,11 +25,17 @@
       return;
     }
 
-    if (title == curr) {
-      return;
+    if (title != curr) {
+      count = 0;
     }
 
+    if (title == curr && count > 5) {
+      return;
+    }
+    console.log('title found:' + title)
+
     curr = title;
+    count++;
 
     filter1440Sponsors();
     filterMorningBrewSponsors();
