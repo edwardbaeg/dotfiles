@@ -50,6 +50,10 @@ return {
                "vimdoc",
                -- "rust",
                -- "vue",
+
+               -- for neorg:
+               "norg",
+               "query",
             },
             highlight = {
                enable = true,

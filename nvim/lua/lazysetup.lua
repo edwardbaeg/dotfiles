@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- NOTE: set leader before lazy.nvim so mappings are correct
 vim.g.mapleader = " " -- Set <space> as the leader key
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 vim.o.termguicolors = true -- needs to be set before colorizer plugins
 
 vim.keymap.set("n", "<leader>la", ":Lazy<CR>")
