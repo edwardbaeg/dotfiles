@@ -29,7 +29,7 @@ vim.keymap.set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory
 vim.keymap.set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
 vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<esc>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
-vim.keymap.set("n", "<leader>yy", "ggyG''") -- yank whole file -- can use :%yank instead
+vim.keymap.set("n", "<leader>yy", ":%yank<cr>") -- yank whole file
 -- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<m-o>", "i<cr><esc>") -- split line
 -- TODO: consider making these require double press; <leader>nn and <leader>pp
