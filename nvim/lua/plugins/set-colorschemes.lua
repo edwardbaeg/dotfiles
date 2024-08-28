@@ -14,14 +14,8 @@ return {
                keywords = { "italic" },
                operators = { "italic" },
             },
-            integrations = {
-               cmp = true,
-               gitsigns = true,
-               treesitter = true,
-               mini = {
-                  enalbed = true,
-               },
-            },
+            -- enabled by default: cmp, gitsigns, nvimtree, treesitter, mini
+            integrations = { },
          })
          vim.cmd.colorscheme("catppuccin")
       end,
