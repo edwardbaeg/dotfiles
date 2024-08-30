@@ -1,5 +1,3 @@
----@diagnostic disable: missing-fields
-
 -- plugins that add visual elements to the vim ui
 return {
    {
@@ -137,9 +135,9 @@ return {
                open_file = {
                   window_picker = {
                      chars = "asdfjkl", -- default:  "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-                  }
+                  },
                },
-            }
+            },
          })
       end,
    },
@@ -159,53 +157,6 @@ return {
             filesystem = {
                hijack_netrw_behavior = "disabled",
             },
-         })
-      end,
-   },
-
-   {
-      -- per window floating statusline
-      "b0o/incline.nvim",
-      event = "VeryLazy",
-      config = function()
-         local frappe = require("catppuccin.palettes").get_palette("frappe")
-         require("incline").setup({
-            window = {
-               padding = 0,
-               margin = {
-                  horizontal = 0,
-                  vertical = 0, -- overlap window border
-               },
-            },
-            render = function(props)
-               local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-               local modified = vim.bo[props.buf].modified
-
-               if filename == "" then
-                  filename = "[No Name]"
-               end
-               -- if modified then
-               --    filename = "[+] " .. filename
-               -- end
-
-               -- filename = " " .. filename .. " "
-               filename = filename .. " "
-
-               return {
-                  {
-                     modified and "   " or " ",
-                     guifg = "yellow",
-                     guibg = props.focused and frappe.overlay2 or frappe.surface1,
-                  },
-                  {
-                     filename,
-                     -- gui = modified and "bold,italic" or "bold",
-                     gui = "bold",
-                     guibg = props.focused and frappe.overlay2 or frappe.surface1,
-                     guifg = frappe.crust,
-                  },
-               }
-            end,
          })
       end,
    },
