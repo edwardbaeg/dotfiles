@@ -29,7 +29,15 @@ return {
          },
          render = function(props)
             local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+            local path = vim.api.nvim_buf_get_name(props.buf)
             local modified = vim.bo[props.buf].modified
+
+            -- TODO: abstract this with bufferline
+            if filename:find("^index") then
+               local parentDirName = path:match("(.*)/(.*)$")
+               parentDirName = parentDirName:gsub(".*/", "")
+               filename = parentDirName .. "/" .. filename
+            end
 
             if filename == "" then
                filename = "[No Name]"
