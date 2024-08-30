@@ -10,6 +10,15 @@ return {
 
       require("bufferline").setup({
          options = {
+            -- TODO: if the name is index, include parent directory
+            name_formatter = function(buf)
+               if buf.name:find("^index") then
+                  local parentDirName = buf.path:match("(.*)/(.*)$")
+                  parentDirName = parentDirName:gsub(".*/", "")
+                  return parentDirName .. "/" .. buf.name
+               end
+               return buf.name
+            end,
             numbers = function(opts)
                -- return string.format("%s·%s", opts.raise(opts.ordinal), opts.lower(opts.id))
                return opts.raise(opts.ordinal)
