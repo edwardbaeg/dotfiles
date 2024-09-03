@@ -103,8 +103,13 @@ return {
 
          -- extend a/i text objects
          -- q: ", ', `
-         -- b: {, [, (
-         require('mini.ai').setup()
+         -- b: {, [, (, <
+         require("mini.ai").setup({
+            custom_textobjects = {
+               -- this adds <> to the defaults
+               b = require("mini.ai").gen_spec.argument({ brackets = { "%b()", "%b[]", "%b{}", "%b<>" } }),
+            },
+         })
       end,
    },
 }
