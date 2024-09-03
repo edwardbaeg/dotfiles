@@ -67,11 +67,20 @@ return {
 
    {
       -- live scratchpad
+      -- doesn't seem to work?
       "metakirby5/codi.vim",
       -- enabled = false,
       init = function()
          vim.cmd([[ let g:codi#rightalign=1 ]])
       end,
+   },
+
+   {
+      -- live lua scratchpad
+      'rafcamlet/nvim-luapad',
+      config = function ()
+         require('luapad').setup ({})
+      end
    },
 
    {
