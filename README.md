@@ -52,7 +52,7 @@ Set up [below](#neovim-setup).
 - `neofetch` display system info
 - `qrcp` qr code generator for wifi transfer
 
-#### Dependencies:
+#### Dependencies
 
 - `unar` for yazi, archive preview
 - `poppler` for yazi, pdf preview
@@ -197,6 +197,15 @@ pbcopy < ~/.ssh/id_rsa.pub
 ```
 ln -s ~/dev/dotfiles/.gitconfig ~/.gitconfig
 ```
+## Mods
+
+- Spicetify: theme spotify
+  - install cli tool, install marketplace, restart app
+    ```
+    spicetify --config
+    spicetify backup apply
+    spicetify update
+    ```
 
 # RaspberryPi Setup
 

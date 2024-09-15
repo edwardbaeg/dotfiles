@@ -339,3 +339,5 @@ eval "$(zoxide init zsh)"
 # -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
+
+export PATH=$PATH:/Users/edwardbaeg/.spicetify
