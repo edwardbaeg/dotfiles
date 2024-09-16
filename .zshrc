@@ -164,7 +164,7 @@ alias ev="nvim ~/.config/nvim/init.lua -c \":cd %:h\""
 alias vt="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
 alias vw="nvim ~/.wezterm.lua"
-alias vhi="nvim ~/.zsh_history"
+alias vhist="nvim ~/.zsh_history"
 
 # -- sourcing
 alias st="tmux source-file ~/.tmux.conf"
