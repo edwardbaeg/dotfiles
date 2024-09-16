@@ -91,7 +91,7 @@ return {
                   guifg = frappe.crust,
                },
                {
-                  modified and "  " or " ",
+                  modified and " • " or " ",
                   guifg = "yellow",
                   guibg = props.focused and frappe.overlay2 or frappe.surface1,
                },
