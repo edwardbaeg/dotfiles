@@ -310,15 +310,21 @@ function _G.cyclePositions(options)
          and within(frame.y, option.y, 1)
       then
          local nextOption = options[i + 1] or firstOption
-         -- TODO: three different animation levels: same size, same one dimension, different size
+
+         -- three different animation levels: same size, same one dimension, different size
          local sameSize = within(frame.h, nextOption.h, 1) and within(frame.w, nextOption.w, 1)
-         win:setFrame(nextOption, sameSize and 0.15 or 0.10)
+         local sameHeight = within(frame.h, nextOption.h, 1)
+         local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
+
+         win:setFrame(nextOption, duration)
          return
       end
    end
 
    local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
-   win:setFrame(firstOption, sameSize and 0.15 or 0.10)
+   local sameHeight = within(frame.h, firstOption.h, 1)
+   local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
+   win:setFrame(firstOption, duration)
 end
 
 -- Left positions
