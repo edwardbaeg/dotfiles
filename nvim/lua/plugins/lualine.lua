@@ -9,7 +9,7 @@ return {
 
          require("lualine").setup({
             options = {
-               icons_enabled = false,
+               icons_enabled = false, -- disable icons
                component_separators = "|",
                section_separators = "",
                globalstatus = true,

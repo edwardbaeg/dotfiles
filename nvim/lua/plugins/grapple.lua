@@ -1,13 +1,13 @@
 return {
    -- Quick access marks
+   -- TODO: consider opening PR to add the ability to customize keybinds for floating window, eg to open in splits
    "cbochs/grapple.nvim",
    opts = {
       scope = "git",
       statusline = {
-         icon = "󰛢", -- check lualine options.icons_enabled
+         -- icon = "󰛢", -- lualine options.icons_enabled must be true for this
       },
    },
-   -- TODO: consider opening PR to add the ability to open in splits
    dependencies = { "WolfeCub/harpeek.nvim" },
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
@@ -20,6 +20,7 @@ return {
             row = lines * 0.80,
             col = columns,
          },
+         -- todo include the parent dir for index files
          format = "filename",
       })
 
