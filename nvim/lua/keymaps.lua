@@ -5,8 +5,8 @@ vim.keymap.set("i", "jk", "<Esc>") -- leave insert mode
 vim.keymap.set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 
 vim.keymap.set("n", "_", '"_') -- empty register shortcut
-vim.keymap.set("n", "H", "^") -- go to start of line
-vim.keymap.set("n", "L", "$") -- go to start of line
+vim.keymap.set({"n", "v"}, "H", "^") -- move cursor to start of line
+vim.keymap.set({"n", "v"}, "L", "$") -- move cursor to end of line
 vim.keymap.set("n", "Y", "y$") -- yank to end of line (like C or D)
 vim.keymap.set("n", "gp", "`[v`]") -- visually select previouly selected text
 -- vim.keymap.set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky
@@ -18,6 +18,10 @@ vim.keymap.set("n", "gjk", "gcc", { desc = "comment line", remap = true }) -- co
 -- vim.keymap.set("n", "<leader>j", function() -- show inlay lsp hints
 --    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 -- end)
+vim.keymap.set("n", "<cr>", "G", { desc = "jump to line number" })
+-- vim.keymap.set("n", "]]", "<cmd>call search('[([{<]')<cr>", { desc = "jump to next [{(]" })
+vim.keymap.set("n", "]]", "<cmd>call search('^[{]')<cr>", { desc = "jump to next {" })
+vim.keymap.set("n", "[[", "<cmd>call search('^[}]', 'b')<cr>", { desc = "jump to previous }" })
 
 -- TODO: Disable s command
 vim.keymap.set('n', 's', '<nop>', { noremap = true, silent = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
@@ -47,7 +51,6 @@ vim.keymap.set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "[q]uit [a]ll" }) -- q
 vim.keymap.set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
 vim.keymap.set("n", "<leader>gi", ":Inspect<cr>") -- inspect treesitter nodes, helps with highlighting
 vim.keymap.set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
-vim.keymap.set("n", "<cr>", "G", { desc = "jump to line number" })
 
 -- macros
 vim.keymap.set("n", "Q", "q") -- use Q to start/stop recording a macro
