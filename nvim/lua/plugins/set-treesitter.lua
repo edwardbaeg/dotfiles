@@ -52,7 +52,7 @@ return {
                -- "vue",
 
                -- for neorg:
-               "norg",
+               -- "norg",
                "query",
             },
             highlight = {
