@@ -37,14 +37,15 @@ return {
          require("codeium").setup({})
 
          -- TODO: consider having this for all filetypes??
+         -- this is also an issue for gitrebase
          vim.api.nvim_create_autocmd("VimLeavePre", {
          desc = "disable codeium for gitcommit",
          group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = false }),
             -- pattern = "gitcommit",
             callback = function(opts)
-               if vim.bo[opts.buf].filetype == "gitcommit" then
+               -- if vim.bo[opts.buf].filetype == "gitcommit" then
                   vim.cmd("CodeiumDisable")
-               end
+               -- end
             end,
          })
       end,
