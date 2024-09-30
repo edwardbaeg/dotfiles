@@ -158,12 +158,16 @@ alias leet="nvim leetcode.nvim"
 
 # open files in vim
 alias vz="vim ~/.zshrc"
-alias vv="vim ~/.vimrc"
-alias nv="nvim ~/.config/nvim/init.lua"
+alias ez="vim ~/.zshrc"
+# alias vv="vim ~/.vimrc"
+# alias nv="nvim ~/.config/nvim/init.lua"
 alias ev="nvim ~/.config/nvim/init.lua -c \":cd %:h\""
 alias vt="nvim ~/.tmux.conf"
+alias et="nvim ~/.tmux.conf"
 alias vh="nvim ~/.hammerspoon/init.lua"
+alias eh="nvim ~/.hammerspoon/init.lua"
 alias vw="nvim ~/.wezterm.lua"
+alias ew="nvim ~/.wezterm.lua"
 alias vhist="nvim ~/.zsh_history"
 
 # -- sourcing
