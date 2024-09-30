@@ -90,6 +90,9 @@ export AWS_PROFILE=oa-dev
 export AWS_REGION=us-east-1
 export ECR_AWS_PROFILE=oa-dev
 
+# run this command to add awscli autocompletion
+complete -C aws_completer aws
+
 # -- Plugins -----------------------------------------------------------
 
 # Load zgen
