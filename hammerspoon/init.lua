@@ -438,7 +438,7 @@ end)
 -- TODO: add hotkeys to increase and decrease window size (from raycast)
 -- cmd + ctrl + -/=
 
--- Move to monitor -------------------------------------------------------
+-- Move to display -------------------------------------------------------
 --------------------------------------------------------------------------
 -- Move to the left screen
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
@@ -447,7 +447,7 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
    -- Get screen of focused window
    local screen = win:screen()
    -- move to window
-   win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
+   win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
 end)
 
 -- Move to the right screen
@@ -457,7 +457,7 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
    -- Get screen of focused window
    local screen = win:screen()
    -- move to window
-   win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+   win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
 end)
 
 -- Move cursor between screens -------------------------------------------
