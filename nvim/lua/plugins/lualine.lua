@@ -34,8 +34,9 @@ return {
                lualine_c = {
                   {
                      "filename",
-                     -- path = 1, -- full relative path
-                     path = 4, -- parent path
+                     path = 1, -- full relative path
+                     -- path = 3, -- absolute path
+                     -- path = 4, -- filename with parent path
                   },
                   -- "searchcount",
                   "codeium#GetStatusString",
