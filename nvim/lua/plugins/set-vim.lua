@@ -195,6 +195,7 @@ return {
       -- preview macros and norm commands
       -- for macros, use :Norm 5@a syntax
       "smjonas/live-command.nvim",
+      enabled = false,
       config = function()
          require("live-command").setup({
             commands = {
@@ -226,15 +227,19 @@ return {
          "TmuxNavigateDown",
          "TmuxNavigateUp",
          "TmuxNavigateRight",
-         "TmuxNavigatePrevious",
+         -- "TmuxNavigatePrevious",
       },
       keys = {
          { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
          { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
          { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
          { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-         { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+         -- { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
       },
+      config = function()
+         -- vim.g.tmux_navigator_no_mappings = 1 -- disable default mappings
+         -- vim.g.tmux_navigator_no_wrap = 1 -- disable wrapping at edges -- this also breaks unzoom...
+      end,
    },
 
    {
@@ -288,6 +293,7 @@ return {
             ["<Left>"] = {},
             ["<Right>"] = {},
          },
+         disabled_filetypes = { "grapple" },
          init = function()
             -- this doesn't work??
             vim.opt.cmdheight = 2
