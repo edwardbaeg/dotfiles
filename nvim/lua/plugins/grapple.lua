@@ -2,16 +2,16 @@ return {
    -- Quick access marks
    -- TODO: consider opening PR to add the ability to customize keybinds for floating window, eg to open in splits
    "cbochs/grapple.nvim",
-   opts = {
-      scope = "git",
-      statusline = {
-         -- icon = "󰛢", -- lualine options.icons_enabled must be true for this
-      },
-   },
    dependencies = { "WolfeCub/harpeek.nvim" },
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
    config = function()
+      require("grapple").setup({
+         scope = "git_branch", -- set default scope
+         statusline = {
+            -- icon = "󰛢", -- lualine options.icons_enabled must be true for this
+         },
+      })
       local columns = vim.api.nvim_get_option_value("columns", {})
       local lines = vim.api.nvim_get_option_value("lines", {})
       require("harpeek").setup({
@@ -34,6 +34,7 @@ return {
       vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
    end,
    keys = {
+      -- TODO: print a message for the change that had occurred
       { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
       -- { "<c-m>", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
 
