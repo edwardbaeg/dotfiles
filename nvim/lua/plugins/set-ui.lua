@@ -28,6 +28,7 @@ return {
 
    {
       -- indentation guides and highlight the current indent chunk -- this replaced indent-blankline.nvim
+      -- TODO: replace with mini.indentscope
       "shellRaining/hlchunk.nvim",
       enabled = not vim.g.vscode,
       config = function()
@@ -70,12 +71,13 @@ return {
       enabled = not vim.g.vscode,
       config = function()
          require("scrollbar").setup({
+            show_in_active_only = true, -- only show in active window
             handle = {
                -- color = "#111111",
                color = "grey9",
             },
             handlers = {
-               cursor = false,
+               -- cursor = false,
                gitsigns = true,
                search = true,
             },
@@ -97,23 +99,34 @@ return {
       -- color the line separating windows
       "nvim-zh/colorful-winsep.nvim",
       enabled = not vim.g.vscode,
-      -- branch = "alpha", -- doesn't seem to work for me...
-      -- local frappe = require("catppuccin.palettes").get_palette("frappe")
-      config = function()
-         require("colorful-winsep").setup({
-            hi = {
-               bg = "none",
-               fg = "cyan4",
-            },
+      branch = "alpha",
+      event = "VeryLazy",
+      -- config = true,
 
+      config = function()
+         -- local frappe = require("catppuccin.palettes").get_palette("frappe")
+         require("colorful-winsep").setup({
+            -- events = { "WinEnter", "WinResized" },
+            hi = {
+               --    bg = "none",
+               -- fg = "cyan4",
+            },
+            --
             -- integrations = {
             --    bufferline = true,
             -- },
             -- interval = 1000,
 
-            -- these are curerntly on the alpha branch:
-            -- smooth = true,
-            -- exponential_smoothing = true,
+            -- These aren't working...
+            only_line_seq = false,
+            smooth = true,
+            exponential_smoothing = true,
+            anchor = {
+               left = { height = 1, x = -1, y = -1 },
+               right = { height = 1, x = -1, y = 0 },
+               up = { width = 0, x = -1, y = 0 },
+               bottom = { width = 0, x = 1, y = 0 },
+            },
          })
       end,
    },
@@ -128,6 +141,7 @@ return {
       -- tree style file explorer
       -- has / fuzzy search to quickly jump to items
       "nvim-tree/nvim-tree.lua",
+      event = "VeryLazy",
       -- enabled = false,
       config = function()
          require("nvim-tree").setup({
@@ -144,7 +158,7 @@ return {
 
    {
       "nvim-neo-tree/neo-tree.nvim",
-      -- enabled = false,
+      enabled = false,
       -- branch = "v3.x",
       dependencies = {
          "nvim-lua/plenary.nvim",
@@ -165,6 +179,7 @@ return {
       -- improved markdown view in neovim
       -- :RenderMarkdownToggle
       "MeanderingProgrammer/markdown.nvim",
+      enabled = false,
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
