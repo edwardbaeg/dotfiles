@@ -272,6 +272,7 @@ return {
       -- Fix "bad" vim habits
       -- TODO: remove mode from the cmd line
       "m4xshen/hardtime.nvim",
+      enabled = false, -- this breaks multicursor.nvim
       dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
       opts = {
          disable_mouse = false,
@@ -287,11 +288,12 @@ return {
             -- ["l"] = {},
          },
          disabled_keys = {
-            -- -- Allow these keys
+            -- Allow these keys
             ["<Up>"] = {},
             ["<Down>"] = {},
             ["<Left>"] = {},
             ["<Right>"] = {},
+            ["<c-n>"] = {},
          },
          disabled_filetypes = { "grapple" },
          init = function()
