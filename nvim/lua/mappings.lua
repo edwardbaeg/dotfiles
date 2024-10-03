@@ -32,7 +32,7 @@ vim.keymap.set('n', 's', '<nop>', { noremap = true, silent = true }) -- kinda wo
 vim.keymap.set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
 vim.keymap.set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
 vim.keymap.set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
-vim.keymap.set("n", "<esc>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
+-- vim.keymap.set("n", "<esc>", ":nohlsearch<Bar>:echo<cr><esc>", { desc = "clear search highlights" })
 vim.keymap.set("n", "<leader>yy", ":%yank<cr>") -- yank whole file
 -- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- split line
 vim.keymap.set("n", "<m-o>", "i<cr><esc>") -- split line
