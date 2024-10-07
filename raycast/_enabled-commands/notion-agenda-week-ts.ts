@@ -7,7 +7,7 @@
 //
 // Required parameters:
 // @raycast.schemaVersion 1
-// @raycast.title Notion Agenda Week Typescript
+// @raycast.title Notion Agenda Planning Header Generator (TS)
 // @raycast.mode compact
 // @raycast.packageName Raycast Scripts
 //
@@ -40,7 +40,6 @@ const nextSunday = new Date(
 ).getDate();
 
 const textTocopy = `WEEK \`${weekNumber}\`: \`${monthName}\` \`${lastMonday}\` - \`${nextSunday}\``;
-console.log({ textTocopy });
 
 const message = `Copied to clipboard: ${textTocopy}`;
 console.log(message);
