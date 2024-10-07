@@ -2,14 +2,15 @@
 -- TODO: split up this into modules
 
 local remap = require("mappings")
--- TODO: consider renaming to constants and adding others
-local mod = require("modifiers")
+local mod = require("modifiers") -- TODO: consider renaming to constants and adding others
+
+require("application_launcher")
 require("caffeine")
 require("config_reloader")
+require("wifi")
 require("window_grid")
 require("window_highlight")
 require("window_management")
-require("wifi")
 
 ---@diagnostic disable-next-line: undefined-global
 local hs = hs

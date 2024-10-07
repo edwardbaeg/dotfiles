@@ -17,10 +17,12 @@ function _G.assignAppHotKey(modifiers, key, appName, callback)
 end
 
 function _G.arcProfile(profileNum)
-   hs.eventtap.keyStroke({ "ctrl" }, profileNum)
-   hs.timer.doAfter(0.1, function()
+   return function()
       hs.eventtap.keyStroke({ "ctrl" }, profileNum)
-   end)
+      hs.timer.doAfter(0.1, function()
+         hs.eventtap.keyStroke({ "ctrl" }, profileNum)
+      end)
+   end
 end
 
 assignAppHotKey(mod.hyperkey, "0", "Wezterm")
