@@ -31,9 +31,12 @@ function _G.cyclePositions(options)
          local sameHeight = within(frame.h, nextOption.h, 1)
          local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
 
-         tempDisableAxWrapper(win, function()
+         withAxHotfix(function()
             win:setFrame(nextOption, duration)
-         end)
+         end)()
+         -- tempDisableAxWrapper(win, function()
+         --    win:setFrame(nextOption, duration)
+         -- end)
          return
       end
    end
@@ -41,9 +44,12 @@ function _G.cyclePositions(options)
    local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
    local sameHeight = within(frame.h, firstOption.h, 1)
    local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
-   tempDisableAxWrapper(win, function()
+   withAxHotfix(function()
       win:setFrame(firstOption, duration)
-   end)
+   end)()
+   -- tempDisableAxWrapper(win, function()
+   --    win:setFrame(firstOption, duration)
+   -- end)
 end
 
 -- Left positions
@@ -216,5 +222,38 @@ function _G.tempDisableAxWrapper(win, callback)
    callback(win)
    if wasEnhanced then
       axApp.AXEnhancedUserInterface = true
+   end
+end
+
+local function axHotfix(win)
+   if not win then
+      win = hs.window.frontmostWindow()
+   end
+
+   local axApp = hs.axuielement.applicationElement(win:application())
+   if not axApp then
+      return
+   end
+   local wasEnhanced = axApp.AXEnhancedUserInterface
+   axApp.AXEnhancedUserInterface = false
+
+   return function()
+      hs.timer.doAfter(hs.window.animationDuration * 2, function()
+         axApp.AXEnhancedUserInterface = wasEnhanced
+      end)
+   end
+end
+
+function _G.withAxHotfix(fn, position)
+   if not position then
+      position = 1
+   end
+   return function(...)
+      local revert = axHotfix(select(position, ...))
+      fn(...)
+      hs.alert("in withAxHotfix")
+      if revert then
+         revert()
+      end
    end
 end
