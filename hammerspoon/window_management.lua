@@ -5,18 +5,6 @@ function _G.within(a, b, margin)
    return math.abs(a - b) <= margin
 end
 
-function _G.moveAndResizeFocused(callback)
-   local win = hs.window.focusedWindow()
-   local frame = win:frame()
-   local screenFrame = win:screen():frame()
-   local prevW = frame.w
-   local prevH = frame.h
-
-   callback(frame, screenFrame)
-   local needsResize = not (within(frame.h, prevH, 1) and within(frame.w, prevW, 1))
-   win:setFrame(frame, needsResize and 0 or 0.15)
-end
-
 ---Cycles through a list of rects to set focused window position
 ---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
 --TODO: consider refactor: https://xenodium.com/cycling-through-window-layout-revisited/
@@ -31,10 +19,10 @@ function _G.cyclePositions(options)
    local firstOption = options[1]
    for i, option in ipairs(options) do
       if
-         within(frame.h, option.h, 1)
-         and within(frame.w, option.w, 1)
-         and within(frame.x, option.x, 1)
-         and within(frame.y, option.y, 1)
+          within(frame.h, option.h, 1)
+          and within(frame.w, option.w, 1)
+          and within(frame.x, option.x, 1)
+          and within(frame.y, option.y, 1)
       then
          local nextOption = options[i + 1] or firstOption
 
@@ -43,7 +31,9 @@ function _G.cyclePositions(options)
          local sameHeight = within(frame.h, nextOption.h, 1)
          local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
 
-         win:setFrame(nextOption, duration)
+         tempDisableAxWrapper(win, function()
+            win:setFrame(nextOption, duration)
+         end)
          return
       end
    end
@@ -51,7 +41,9 @@ function _G.cyclePositions(options)
    local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
    local sameHeight = within(frame.h, firstOption.h, 1)
    local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
-   win:setFrame(firstOption, duration)
+   tempDisableAxWrapper(win, function()
+      win:setFrame(firstOption, duration)
+   end)
 end
 
 -- Left positions
@@ -108,6 +100,20 @@ hs.hotkey.bind(mod.hyperkey, "L", function()
    })
 end)
 
+function _G.moveAndResizeFocused(callback)
+   local win = hs.window.focusedWindow()
+   local frame = win:frame()
+   local screenFrame = win:screen():frame()
+   local prevW = frame.w
+   local prevH = frame.h
+
+   callback(frame, screenFrame)
+   local needsResize = not (within(frame.h, prevH, 1) and within(frame.w, prevW, 1))
+   tempDisableAxWrapper(win, function()
+      win:setFrame(frame, needsResize and 0 or 0.15)
+   end)
+end
+
 -- Top half
 hs.hotkey.bind(mod.hyperkey, "K", function()
    moveAndResizeFocused(function(frame, screen)
@@ -139,7 +145,9 @@ function _G.resizeAndCenter(fraction)
    f.h = screenMax.h * fraction
    f.x = screenMax.x + (screenMax.w - f.w) / 2
    f.y = screenMax.y + (screenMax.h - f.h) / 2
-   win:setFrame(f, 0)
+   tempDisableAxWrapper(win, function()
+      win:setFrame(f, 0)
+   end)
 end
 
 -- Maximize window
@@ -173,61 +181,40 @@ end)
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
    local win = hs.window.focusedWindow()
    local screen = win:screen()
-   local app = win:application()
+   -- local app = win:application()
 
-   -- temporarily disable AXEnhancedUserInterface
-   -- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294359070
-   -- TODO: use wrapper: https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
-   if app and app:name() == "Firefox" then
-      local axApp = hs.axuielement.applicationElement(win:application())
-      if not axApp then
-         return
-      end
-      local wasEnhanced = axApp.AXEnhancedUserInterface
-      if wasEnhanced then
-         axApp.AXEnhancedUserInterface = false
-      end
-      -- this is the change
-      -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+   tempDisableAxWrapper(win, function()
       win:moveOneScreenEast(false, nil, 0)
-      if wasEnhanced then
-         axApp.AXEnhancedUserInterface = true
-      end
-      return
-   end
+   end)
 
-   -- win:moveOneScreenEast(false, nil, 0)
-   win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+   -- Another method
+   -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
 end)
 
 -- Move to the left screen
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
    local win = hs.window.focusedWindow()
-   -- local screen = win:screen()
+   local screen = win:screen()
 
-   disableAXHotfix(win, function(window)
-      window:moveOneScreenWest(false, nil, 0)
+   tempDisableAxWrapper(win, function(window)
+      window:move(window:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
    end)
-
-   -- win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
-   -- win:moveOneScreenWest(false, nil, 0)
 end)
 
-function _G.disableAXHotfix(win, callback)
-      local axApp = hs.axuielement.applicationElement(win:application())
-      if not axApp then
-         return
-      end
-      local wasEnhanced = axApp.AXEnhancedUserInterface
-      if wasEnhanced then
-         axApp.AXEnhancedUserInterface = false
-      end
-      -- this is the change
-      -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
-      -- win:moveOneScreenEast(false, nil, 0)
-      callback(win)
-      if wasEnhanced then
-         axApp.AXEnhancedUserInterface = true
-      end
-
+-- temporarily disable AXEnhancedUserInterface
+-- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294359070
+function _G.tempDisableAxWrapper(win, callback)
+   local axApp = hs.axuielement.applicationElement(win:application())
+   if not axApp then
+      return
+   end
+   local wasEnhanced = axApp.AXEnhancedUserInterface
+   if wasEnhanced then
+      -- hs.alert("Disabling AXEnhancedUserInterface")
+      axApp.AXEnhancedUserInterface = false
+   end
+   callback(win)
+   if wasEnhanced then
+      axApp.AXEnhancedUserInterface = true
+   end
 end
