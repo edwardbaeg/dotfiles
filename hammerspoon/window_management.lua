@@ -1,4 +1,5 @@
 local mod = require("modifiers")
+local helpers = require("helpers")
 
 function _G.within(a, b, margin)
    return math.abs(a - b) <= margin
@@ -19,6 +20,7 @@ end
 ---Cycles through a list of rects to set focused window position
 ---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
 --TODO: consider refactor: https://xenodium.com/cycling-through-window-layout-revisited/
+-- TODO: consider refactoring with hs.window:moveToUnit
 function _G.cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
@@ -165,21 +167,67 @@ end)
 
 -- Move to display -------------------------------------------------------
 --------------------------------------------------------------------------
--- Move to the left screen
--- TODO: check if its firefox, and then use raycast instead
+-- Move to the right screen
+-- TODO: maintain relative size after moving
+-- tried refactoring with hs.window:moveToScreen -- this doesn't wrap
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
    local win = hs.window.focusedWindow()
    local screen = win:screen()
+   local app = win:application()
+
+   -- temporarily disable AXEnhancedUserInterface
+   -- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294359070
+   -- TODO: use wrapper: https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
+   if app and app:name() == "Firefox" then
+      local axApp = hs.axuielement.applicationElement(win:application())
+      if not axApp then
+         return
+      end
+      local wasEnhanced = axApp.AXEnhancedUserInterface
+      if wasEnhanced then
+         axApp.AXEnhancedUserInterface = false
+      end
+      -- this is the change
+      -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+      win:moveOneScreenEast(false, nil, 0)
+      if wasEnhanced then
+         axApp.AXEnhancedUserInterface = true
+      end
+      return
+   end
+
+   -- win:moveOneScreenEast(false, nil, 0)
    win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
 end)
 
--- Move to the right screen
+-- Move to the left screen
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
-   -- Get focused window
    local win = hs.window.focusedWindow()
-   -- Get screen of focused window
-   local screen = win:screen()
-   -- move to window
-   win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
+   -- local screen = win:screen()
+
+   disableAXHotfix(win, function(window)
+      window:moveOneScreenWest(false, nil, 0)
+   end)
+
+   -- win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
+   -- win:moveOneScreenWest(false, nil, 0)
 end)
 
+function _G.disableAXHotfix(win, callback)
+      local axApp = hs.axuielement.applicationElement(win:application())
+      if not axApp then
+         return
+      end
+      local wasEnhanced = axApp.AXEnhancedUserInterface
+      if wasEnhanced then
+         axApp.AXEnhancedUserInterface = false
+      end
+      -- this is the change
+      -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+      -- win:moveOneScreenEast(false, nil, 0)
+      callback(win)
+      if wasEnhanced then
+         axApp.AXEnhancedUserInterface = true
+      end
+
+end
