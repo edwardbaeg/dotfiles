@@ -1,20 +1,49 @@
 return {
    {
+      -- for showing virtual text with codeium, faster than codeium.vim
+      "monkoose/neocodeium",
+      enabled = not vim.g.vscode,
+      event = "VeryLazy",
+      config = function()
+         local neocodeium = require("neocodeium")
+         neocodeium.setup()
+         vim.keymap.set("i", "<Right>", neocodeium.accept)
+
+         -- cycle through suggetions
+         vim.keymap.set("i", "<c-j>", function()
+            require("neocodeium").cycle()
+         end)
+         vim.keymap.set("i", "<c-k>", function()
+            require("neocodeium").cycle(-1)
+         end)
+
+         -- Partial accepts
+         vim.keymap.set("i", "<A-w>", function()
+            require("neocodeium").accept_word()
+         end)
+         vim.keymap.set("i", "<A-l>", function()
+            require("neocodeium").accept_line()
+         end)
+      end,
+   },
+
+   {
       -- AI code autocompletion
       -- This is used to show ghost text for suggestions
       -- NOTE: to fix an issue with the macos language server, delete the ~/.codeium dir
       "Exafunction/codeium.vim",
-      enabled = not vim.g.vscode,
+      -- enabled = not vim.g.vscode,
+      enabled = false,
       event = "VeryLazy",
       init = function()
          vim.g.codeium_disable_bindings = 1 -- turn off tab and defaults
          -- vim.g.codeium_enabled = false -- disable by default
          vim.keymap.set("i", "<Right>", function()
-            return vim.fn["codeium#Accept"]()
-         end, { expr = true }) -- there isn't a plug command for this yet
+            return vim.fn["codeium#Accept"]() -- there isn't a plug command for this yet
+         end, { expr = true })
          -- vim.keymap.set("i", "<C-l>", function()
-         --    return vim.fn["codeium#Accept"]()
-         -- end, { expr = true }) -- there isn't a plug command for this yet
+         --    return vim.fn["codeium#Accept"]() -- there isn't a plug command for this yet
+         -- end, { expr = true })
          vim.keymap.set("i", "<C-j>", "<Plug>(codeium-next)")
          vim.keymap.set("i", "<C-k>", "<Plug>(codeium-previous)")
          -- vim.keymap.set({ "i", "n" }, "<c-h>", "<Plug>(codeium-dismiss)")
@@ -39,12 +68,12 @@ return {
          -- TODO: consider having this for all filetypes??
          -- this is also an issue for gitrebase
          vim.api.nvim_create_autocmd("VimLeavePre", {
-         desc = "disable codeium for gitcommit",
-         group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = false }),
+            desc = "disable codeium for gitcommit",
+            group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = false }),
             -- pattern = "gitcommit",
             callback = function(opts)
                -- if vim.bo[opts.buf].filetype == "gitcommit" then
-                  vim.cmd("CodeiumDisable")
+               vim.cmd("CodeiumDisable")
                -- end
             end,
          })
