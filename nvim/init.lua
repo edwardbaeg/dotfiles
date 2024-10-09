@@ -6,7 +6,7 @@ require("lazy").setup("plugins", {
       enabled = false,
    },
 })
-require("keymaps")
+require("mappings")
 require("settings")
 
 -- [[ TODO ]]
