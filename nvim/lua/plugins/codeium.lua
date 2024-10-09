@@ -48,6 +48,17 @@ return {
          vim.keymap.set("i", "<C-k>", "<Plug>(codeium-previous)")
          -- vim.keymap.set({ "i", "n" }, "<c-h>", "<Plug>(codeium-dismiss)")
          vim.keymap.set("i", "<c-h>", "<Plug>(codeium-dismiss)")
+
+         -- codeium can cause vim to crash on exit, particularly for git files
+         -- eg, gitcommit, gitrebase, etc
+         vim.api.nvim_create_autocmd("VimLeavePre", {
+            desc = "disable codeium before exiting",
+            group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = false }),
+            callback = function(opts)
+               -- vim.cmd("CodeiumDisable")
+               -- vim.cmd("Neocodeium disable")
+            end,
+         })
       end,
    },
 
@@ -64,19 +75,6 @@ return {
       },
       config = function()
          require("codeium").setup({})
-
-         -- TODO: consider having this for all filetypes??
-         -- this is also an issue for gitrebase
-         vim.api.nvim_create_autocmd("VimLeavePre", {
-            desc = "disable codeium for gitcommit",
-            group = vim.api.nvim_create_augroup("codeium_disable_gitcommit", { clear = false }),
-            -- pattern = "gitcommit",
-            callback = function(opts)
-               -- if vim.bo[opts.buf].filetype == "gitcommit" then
-               vim.cmd("CodeiumDisable")
-               -- end
-            end,
-         })
       end,
    },
 }
