@@ -19,10 +19,10 @@ function _G.cyclePositions(options)
    local firstOption = options[1]
    for i, option in ipairs(options) do
       if
-          within(frame.h, option.h, 1)
-          and within(frame.w, option.w, 1)
-          and within(frame.x, option.x, 1)
-          and within(frame.y, option.y, 1)
+         within(frame.h, option.h, 1)
+         and within(frame.w, option.w, 1)
+         and within(frame.x, option.x, 1)
+         and within(frame.y, option.y, 1)
       then
          local nextOption = options[i + 1] or firstOption
 
@@ -115,9 +115,12 @@ function _G.moveAndResizeFocused(callback)
 
    callback(frame, screenFrame)
    local needsResize = not (within(frame.h, prevH, 1) and within(frame.w, prevW, 1))
-   tempDisableAxWrapper(win, function()
+   -- tempDisableAxWrapper(win, function()
+   --    win:setFrame(frame, needsResize and 0 or 0.15)
+   -- end)
+   withAxHotfix(function()
       win:setFrame(frame, needsResize and 0 or 0.15)
-   end)
+   end)()
 end
 
 -- Top half
@@ -151,9 +154,12 @@ function _G.resizeAndCenter(fraction)
    f.h = screenMax.h * fraction
    f.x = screenMax.x + (screenMax.w - f.w) / 2
    f.y = screenMax.y + (screenMax.h - f.h) / 2
-   tempDisableAxWrapper(win, function()
+   -- tempDisableAxWrapper(win, function()
+   --    win:setFrame(f, 0)
+   -- end)
+   withAxHotfix(function()
       win:setFrame(f, 0)
-   end)
+   end)()
 end
 
 -- Maximize window
@@ -189,9 +195,13 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
    local screen = win:screen()
    -- local app = win:application()
 
-   tempDisableAxWrapper(win, function()
+   -- tempDisableAxWrapper(win, function()
+   --    win:moveOneScreenEast(false, nil, 0)
+   -- end)
+
+   withAxHotfix(function()
       win:moveOneScreenEast(false, nil, 0)
-   end)
+   end)()
 
    -- Another method
    -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
@@ -202,29 +212,16 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
    local win = hs.window.focusedWindow()
    local screen = win:screen()
 
-   tempDisableAxWrapper(win, function(window)
+   -- tempDisableAxWrapper(win, function(window)
+   --    window:move(window:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
+   -- end)
+
+   withAxHotfix(function(window)
       window:move(window:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
-   end)
+   end)()
 end)
 
--- temporarily disable AXEnhancedUserInterface
--- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294359070
-function _G.tempDisableAxWrapper(win, callback)
-   local axApp = hs.axuielement.applicationElement(win:application())
-   if not axApp then
-      return
-   end
-   local wasEnhanced = axApp.AXEnhancedUserInterface
-   if wasEnhanced then
-      -- hs.alert("Disabling AXEnhancedUserInterface")
-      axApp.AXEnhancedUserInterface = false
-   end
-   callback(win)
-   if wasEnhanced then
-      axApp.AXEnhancedUserInterface = true
-   end
-end
-
+-- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
 local function axHotfix(win)
    if not win then
       win = hs.window.frontmostWindow()
@@ -251,7 +248,6 @@ function _G.withAxHotfix(fn, position)
    return function(...)
       local revert = axHotfix(select(position, ...))
       fn(...)
-      hs.alert("in withAxHotfix")
       if revert then
          revert()
       end
