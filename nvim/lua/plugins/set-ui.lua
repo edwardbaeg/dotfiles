@@ -176,6 +176,17 @@ return {
    },
 
    {
+      -- markdown previewer in neovim
+      -- :Markview
+      "OXY2DEV/markview.nvim",
+      lazy = false, -- Recommended
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter",
+         "nvim-tree/nvim-web-devicons",
+      },
+   },
+
+   {
       -- improved markdown view in neovim
       -- :RenderMarkdownToggle
       "MeanderingProgrammer/markdown.nvim",
