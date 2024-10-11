@@ -192,23 +192,24 @@ return {
    },
 
    {
-      -- preview macros and norm commands
+      -- preview macros and norm commands with :Norm
       -- for macros, use :Norm 5@a syntax
       "smjonas/live-command.nvim",
-      enabled = false,
+      -- enabled = false,
       config = function()
          require("live-command").setup({
             commands = {
                -- create a previewable :Norm command
                Norm = { cmd = "norm" },
-               Reg = {
-                  cmd = "norm",
-                  -- This will transform ":5Reg a" into ":norm 5@a"
-                  args = function(opts)
-                     return (opts.count == -1 and "" or opts.count) .. "@" .. opts.args
-                  end,
-                  range = "",
-               },
+               -- this needs to be migrated for v2
+               -- Reg = {
+               --    cmd = "norm",
+               --    -- This will transform ":5Reg a" into ":norm 5@a"
+               --    args = function(opts)
+               --       return (opts.count == -1 and "" or opts.count) .. "@" .. opts.args
+               --    end,
+               --    range = "",
+               -- },
             },
          })
       end,

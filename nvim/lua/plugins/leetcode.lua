@@ -6,8 +6,6 @@ return {
    "kawre/leetcode.nvim",
    build = ":TSUpdate html",
    lazy = leet_arg ~= vim.fn.argv()[1],
-   -- live-command supports semantic versioning via tags
-   -- tag = "1.*",
    cmd = "Leet",
    dependencies = {
       "nvim-telescope/telescope.nvim",
