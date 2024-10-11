@@ -2,6 +2,7 @@
 return {
    {
       -- Highlight, edit, and navigate code
+      -- Uninstall with :TSUninstall
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
@@ -49,9 +50,6 @@ return {
                "vimdoc",
                -- "rust",
                -- "vue",
-
-               -- for neorg:
-               -- "norg",
                "query",
             },
             highlight = {
