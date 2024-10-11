@@ -33,10 +33,7 @@ function _G.cyclePositions(options)
 
          withAxHotfix(function()
             win:setFrame(nextOption, duration)
-         end)()
-         -- tempDisableAxWrapper(win, function()
-         --    win:setFrame(nextOption, duration)
-         -- end)
+         end)
          return
       end
    end
@@ -46,10 +43,7 @@ function _G.cyclePositions(options)
    local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
    withAxHotfix(function()
       win:setFrame(firstOption, duration)
-   end)()
-   -- tempDisableAxWrapper(win, function()
-   --    win:setFrame(firstOption, duration)
-   -- end)
+   end)
 end
 
 -- Left positions
@@ -115,12 +109,9 @@ function _G.moveAndResizeFocused(callback)
 
    callback(frame, screenFrame)
    local needsResize = not (within(frame.h, prevH, 1) and within(frame.w, prevW, 1))
-   -- tempDisableAxWrapper(win, function()
-   --    win:setFrame(frame, needsResize and 0 or 0.15)
-   -- end)
    withAxHotfix(function()
       win:setFrame(frame, needsResize and 0 or 0.15)
-   end)()
+   end)
 end
 
 -- Top half
@@ -154,12 +145,9 @@ function _G.resizeAndCenter(fraction)
    f.h = screenMax.h * fraction
    f.x = screenMax.x + (screenMax.w - f.w) / 2
    f.y = screenMax.y + (screenMax.h - f.h) / 2
-   -- tempDisableAxWrapper(win, function()
-   --    win:setFrame(f, 0)
-   -- end)
    withAxHotfix(function()
       win:setFrame(f, 0)
-   end)()
+   end)
 end
 
 -- Maximize window
@@ -182,7 +170,7 @@ hs.hotkey.bind(mod.hyperkey, "V", function()
    resizeAndCenter(0.49)
 end)
 
--- TODO: add hotkeys to increase and decrease window size (from raycast)
+-- TODO: add hotkeys to increase and decrease window size (deeplink from raycast)
 -- cmd + ctrl + -/=
 
 -- Move to display -------------------------------------------------------
@@ -195,16 +183,13 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
    local screen = win:screen()
    -- local app = win:application()
 
-   -- tempDisableAxWrapper(win, function()
-   --    win:moveOneScreenEast(false, nil, 0)
-   -- end)
-
    withAxHotfix(function()
+      -- two methods for this
       win:moveOneScreenEast(false, nil, 0)
-   end)()
+      -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+   end)
 
    -- Another method
-   -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
 end)
 
 -- Move to the left screen
@@ -212,13 +197,9 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
    local win = hs.window.focusedWindow()
    local screen = win:screen()
 
-   -- tempDisableAxWrapper(win, function(window)
-   --    window:move(window:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
-   -- end)
-
-   withAxHotfix(function(window)
-      window:move(window:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
-   end)()
+   withAxHotfix(function()
+      win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
+   end)
 end)
 
 -- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
@@ -241,15 +222,14 @@ local function axHotfix(win)
    end
 end
 
+-- TODO?: add branching logic for firefox, for potential performance
 function _G.withAxHotfix(fn, position)
    if not position then
       position = 1
    end
-   return function(...)
-      local revert = axHotfix(select(position, ...))
-      fn(...)
-      if revert then
-         revert()
-      end
+   local revert = axHotfix()
+   fn()
+   if revert then
+      revert()
    end
 end
