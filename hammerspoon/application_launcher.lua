@@ -1,4 +1,5 @@
 local constants = require("constants")
+local hyperkey = constants.hyperkey
 
 -- TODO?: if the application is already focused, then hide it
 function _G.assignAppHotKey(modifiers, key, appName, callback)
@@ -20,14 +21,14 @@ function _G.getSetArcProfileFn(profileNum)
    end
 end
 
-assignAppHotKey(constants.hyperkey, "0", "Wezterm")
-assignAppHotKey(constants.hyperkey, "8", "Slack")
+assignAppHotKey(hyperkey, "0", "Wezterm")
+assignAppHotKey(hyperkey, "8", "Slack")
 
 if constants.isPersonal then
-   assignAppHotKey(constants.hyperkey, "9", "Arc")
+   assignAppHotKey(hyperkey, "9", "Arc")
 else
    assignAppHotKey(constants.allkey, "9", "Arc", getSetArcProfileFn("2")) -- personal
-   assignAppHotKey(constants.hyperkey, "9", "Arc", getSetArcProfileFn("4")) -- work
+   assignAppHotKey(hyperkey, "9", "Arc", getSetArcProfileFn("4")) -- work
 end
 
 -- LEGACY: separate browsers / keymaps for personal and work
@@ -35,12 +36,12 @@ end
 -- local workBrowser = "Arc"
 --
 -- if constants.isPersonal then
---    assignAppHotKey(constants.hyperkey, "9", personalBrowser)
+--    assignAppHotKey(hyperkey, "9", personalBrowser)
 --    assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", workBrowser)
 -- end
 --
 -- if not constants.isPersonal then
---    assignAppHotKey(constants.hyperkey, "9", workBrowser, function()
+--    assignAppHotKey(hyperkey, "9", workBrowser, function()
 --       hs.eventtap.keyStroke({ "ctrl" }, "4")
 --       hs.timer.doAfter(0.1, function()
 --          hs.eventtap.keyStroke({ "ctrl" }, "4")
