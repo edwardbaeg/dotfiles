@@ -41,7 +41,8 @@ return {
       config = function()
          require("grug-far").setup({})
 
-         vim.api.nvim_create_user_command("SearchAndReplaceGrugFar", require("grug-far").grug_far, {})
+         local grugFar = require("grug-far")
+         vim.api.nvim_create_user_command("SearchAndReplaceGrugFar", grugFar.open, {})
       end,
    },
 
