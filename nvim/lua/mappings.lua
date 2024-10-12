@@ -94,7 +94,8 @@ vim.keymap.set("n", "<leader>w", "<c-w>")
 -- Use builtin go to definition/tag
 vim.keymap.set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
 -- open goto definition in vertical split
-vim.keymap.set("n", "g>", "<cmd>vs<cr><c-]>", { desc = "Goto definition in vertical split" })
+vim.keymap.set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
+vim.keymap.set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
 vim.keymap.set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
 
 -- yank and then paste
