@@ -195,8 +195,10 @@ vim.api.nvim_create_autocmd("FileType", {
       "checkhealth",
       "neotest-summary",
       "neotest-output-panel",
+
       "fugitiveblame", -- from vim-fugitive
       "git", -- from vim-fugitive
+      "grug-far", -- from grug-far
    },
    callback = function(event)
       vim.bo[event.buf].buflisted = false

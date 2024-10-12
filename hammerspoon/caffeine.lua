@@ -1,24 +1,27 @@
-local hostname = hs.host.localizedName()
-local isPersonal = hostname == "MacBook Pro14"
+local isPersonal = require("constants").isPersonal
 
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------
 -- Caffeine state can be toggled by clicking on the menu bar
 -- or by linking to `hammerspoon://toggleCaffineState?state={true|false}`
 
+-- Create menubar item for tracking caffeinated state
 -- TODO: persist state using hs.settings
 -- https://www.hammerspoon.org/docs/hs.settings.html
 local caffeineMenuBar = hs.menubar.new()
 function _G.setCaffeineDisplay(state)
-   if state then
-      caffeineMenuBar:setTitle("A") -- for awake
-   else
-      caffeineMenuBar:setTitle("S") -- for sleep
+   if caffeineMenuBar then
+      if state then
+         caffeineMenuBar:setTitle("A") -- for awake
+      else
+         caffeineMenuBar:setTitle("S") -- for sleep
+      end
    end
 end
 
 local sleepType = "displayIdle"
-_G.handleCaffeineUrl = function(_eventName, params)
+---@diagnostic disable-next-line: unused-local _eventName is unused
+local handleCaffeineUrl = function(_eventName, params)
    local state = params["state"]
    if state then
       if state == "true" then
@@ -62,7 +65,7 @@ hs.urlevent.bind("enableCaffeine", enableCaffeine)
 hs.urlevent.bind("disableCaffeine", disableCaffeine)
 
 -- Toggle sleepmode for ryujinx
-local watchRyujinx = function(appName, eventType, appObject)
+local watchRyujinx = function(appName, eventType)
    if eventType == hs.application.watcher.activated then
       if string.sub(appName, 1, #"Ryujinx") == "Ryujinx" then
          hs.alert("Activating caffeine - Ryujinx")
@@ -82,4 +85,3 @@ if isPersonal then
    RyujinxWatcher = hs.application.watcher.new(watchRyujinx)
    RyujinxWatcher:start()
 end
-

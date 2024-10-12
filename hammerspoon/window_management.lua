@@ -1,4 +1,4 @@
-local mod = require("modifiers")
+local constants = require("constants")
 local helpers = require("helpers")
 
 function _G.within(a, b, margin)
@@ -47,7 +47,7 @@ function _G.cyclePositions(options)
 end
 
 -- Left positions
-hs.hotkey.bind(mod.hyperkey, "H", function()
+hs.hotkey.bind(constants.hyperkey, "H", function()
    local win = hs.window.focusedWindow()
    local screenFrame = win:screen():frame()
 
@@ -74,7 +74,7 @@ hs.hotkey.bind(mod.hyperkey, "H", function()
 end)
 
 -- Right positions
-hs.hotkey.bind(mod.hyperkey, "L", function()
+hs.hotkey.bind(constants.hyperkey, "L", function()
    local win = hs.window.focusedWindow()
    local screenFrame = win:screen():frame()
 
@@ -115,7 +115,7 @@ function _G.moveAndResizeFocused(callback)
 end
 
 -- Top half
-hs.hotkey.bind(mod.hyperkey, "K", function()
+hs.hotkey.bind(constants.hyperkey, "K", function()
    moveAndResizeFocused(function(frame, screen)
       frame.x = screen.x
       frame.y = screen.y
@@ -125,7 +125,7 @@ hs.hotkey.bind(mod.hyperkey, "K", function()
 end)
 
 -- Bottom half
-hs.hotkey.bind(mod.hyperkey, "J", function()
+hs.hotkey.bind(constants.hyperkey, "J", function()
    moveAndResizeFocused(function(frame, screen)
       frame.x = screen.x
       frame.y = screen.y + (screen.h / 2)
@@ -151,22 +151,22 @@ function _G.resizeAndCenter(fraction)
 end
 
 -- Maximize window
-hs.hotkey.bind(mod.hyperkey, "M", function()
+hs.hotkey.bind(constants.hyperkey, "M", function()
    resizeAndCenter(0.99)
 end)
 
 -- Resize window 80%
-hs.hotkey.bind(mod.hyperkey, "N", function()
+hs.hotkey.bind(constants.hyperkey, "N", function()
    resizeAndCenter(0.81)
 end)
 
 -- Resize window 64%
-hs.hotkey.bind(mod.hyperkey, "B", function()
+hs.hotkey.bind(constants.hyperkey, "B", function()
    resizeAndCenter(0.64)
 end)
 
 -- Resize window 50%
-hs.hotkey.bind(mod.hyperkey, "V", function()
+hs.hotkey.bind(constants.hyperkey, "V", function()
    resizeAndCenter(0.49)
 end)
 
