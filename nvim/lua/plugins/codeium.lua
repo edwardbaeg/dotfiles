@@ -6,7 +6,18 @@ return {
       event = "VeryLazy",
       config = function()
          local neocodeium = require("neocodeium")
-         neocodeium.setup()
+         neocodeium.setup({
+            silent = true,
+            filetypes = {
+               -- defaults
+               help = false,
+               gitcommit = false,
+               gitrebase = false,
+               ["."] = false,
+
+               sagarename = false, -- the line column label takes up space
+            },
+         })
          vim.keymap.set("i", "<Right>", neocodeium.accept)
 
          -- cycle through suggetions
