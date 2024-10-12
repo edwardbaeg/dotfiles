@@ -22,31 +22,6 @@ return {
    },
 
    {
-      -- project wide search and replace
-      -- NOTE: does not support undo!
-      -- :Spectre
-      -- type `?` to see mappings
-      "nvim-pack/nvim-spectre",
-      enabled = false, -- replaced with grug-far
-      cmd = "Spectre",
-      config = function()
-         require("spectre").setup({})
-      end,
-   },
-
-   {
-      -- search and replace
-      --:GrugFar
-      "MagicDuck/grug-far.nvim",
-      config = function()
-         require("grug-far").setup({})
-
-         local grugFar = require("grug-far")
-         vim.api.nvim_create_user_command("SearchAndReplaceGrugFar", grugFar.open, {})
-      end,
-   },
-
-   {
       -- Highlight TODO, HACK, BUG, FIXME etc
       -- TODO
       -- FIXME
@@ -95,13 +70,6 @@ return {
          keymap({ "n", "v" }, "<leader>gcb", "<cmd>CBccbox<CR>", opts) -- centered box with centered text
          keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts) -- delete
       end,
-   },
-
-   {
-      "NStefan002/screenkey.nvim",
-      cmd = "Screenkey",
-      version = "*",
-      config = true,
    },
 
    {
