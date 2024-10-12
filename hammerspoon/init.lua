@@ -3,6 +3,7 @@
 require("application_launcher")
 require("caffeine")
 require("config_reloader")
+require("remapper")
 require("wifi")
 require("window_grid")
 require("window_highlight")
@@ -11,7 +12,6 @@ require("window_management")
 -- required but doesn't have executed code
 require("constants")
 require("helpers")
-require("remapper") -- TODO: consider moving remapper to helpers)
 
 ---@diagnostic disable-next-line: undefined-global
 local hs = hs

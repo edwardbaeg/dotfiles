@@ -1,27 +1,24 @@
--- functions for remapping key combos with press and hold behavior
-local module = {}
+local helpers = require("helpers")
+local sendKey = helpers.sendKey
+local sendSystemKey = helpers.sendSystemKey
 
-function module.getPressAndHoldFn(sendModifiers, key)
-   return function()
-      hs.eventtap.keyStroke(sendModifiers, key, 1000)
-   end
-end
+local constants = require("constants")
+local cmdShift = constants.cmdShift
+local altShift = constants.altShift
 
-function module.sendKey(modifiers, key, sendModifiers, sendKey)
-   hs.hotkey.bind(
-      modifiers,
-      key,
-      module.getPressAndHoldFn(sendModifiers, sendKey),
-      nil,
-      module.getPressAndHoldFn(sendModifiers, sendKey)
-   )
-end
+-- Arrow keys
+sendKey(cmdShift, "J", {}, "DOWN")
+sendKey(cmdShift, "K", {}, "UP")
+sendKey(cmdShift, "H", {}, "LEFT")
+sendKey(cmdShift, "L", {}, "RIGHT")
 
-function module.sendSystemKey(modifiers, key, sendKey)
-   hs.hotkey.bind(modifiers, key, function()
-      hs.eventtap.event.newSystemKeyEvent(sendKey, true):post()
-      hs.eventtap.event.newSystemKeyEvent(sendKey, false):post()
-   end)
-end
+-- Arrow and option
+sendKey(altShift, "H", { "alt" }, "LEFT")
+sendKey(altShift, "L", { "alt" }, "RIGHT")
 
-return module
+-- Media controls
+sendSystemKey(cmdShift, ".", "NEXT")
+sendSystemKey(cmdShift, ",", "PREVIOUS")
+sendSystemKey(cmdShift, "/", "PLAY")
+sendSystemKey(cmdShift, "o", "SOUND_UP")
+sendSystemKey(cmdShift, "i", "SOUND_DOWN")
