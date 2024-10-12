@@ -1,5 +1,6 @@
 return {
    "stevearc/aerial.nvim",
+   enabled = false, -- not as good compared to navbuddy
    opts = {},
    -- Optional dependencies
    dependencies = {
