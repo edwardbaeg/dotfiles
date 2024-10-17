@@ -23,7 +23,7 @@ vim.keymap.set("n", "<cr>", "G", { desc = "jump to line number" })
 vim.keymap.set("n", "]]", "<cmd>call search('^[{]')<cr>", { desc = "jump to next {" })
 vim.keymap.set("n", "[[", "<cmd>call search('^[}]', 'b')<cr>", { desc = "jump to previous }" })
 
--- TODO: Disable s command
+-- TODO: disable the default s substitute command. This can have issues with keymaps that start with s, such as sx
 vim.keymap.set('n', 's', '<nop>', { noremap = true, silent = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
 -- vim.keymap.del("n", "s") -- disable s -- doesn't work
 -- vim.cmd([[unmap s]]) -- doesn't work

@@ -34,6 +34,8 @@ return {
          require("substitute").setup({})
 
          -- add exchange operator, invoke twice, cancle with <esc>
+         -- NOTE: this needs to be pressed quickly until the s mapping is fixed
+         -- this can be replaced with gX from mini.operators
          vim.keymap.set("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
          vim.keymap.set("n", "sxx", "<cmd>lua require('substitute.exchange').line()<cr>", { noremap = true })
          vim.keymap.set("x", "X", "<cmd>lua require('substitute.exchange').visual()<cr>", { noremap = true })

@@ -178,6 +178,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 -- ]])
 
 -- close/quit some filetypes with <q>
+-- TODO?: add for help files that were added as markdown
 vim.api.nvim_create_autocmd("FileType", {
    group = augroup("close_with_q"),
    pattern = {

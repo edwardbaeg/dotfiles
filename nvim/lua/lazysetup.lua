@@ -12,7 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: set leader before lazy.nvim so mappings are correct
+-- Set leader before lazy.nvim so mappings are correct
 vim.g.mapleader = " " -- Set <space> as the leader key
 vim.g.maplocalleader = ","
 vim.o.termguicolors = true -- needs to be set before colorizer plugins

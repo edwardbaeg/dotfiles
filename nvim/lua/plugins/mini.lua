@@ -66,9 +66,9 @@ return {
          require("mini.operators").setup({
             -- Default mappings:
             -- - g= -> evaluate
-            -- - gx -> exchange
+            -- - gx -> exchange -- default is used for opening
             -- - gm -> multiply/duplicate
-            -- - gr -> replace
+            -- - gr -> replace -- default is used for lspsaga
             -- - gs -> sort
             exchange = {
                prefix = "gX",
