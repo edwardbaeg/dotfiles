@@ -192,10 +192,16 @@ return {
 
    {
       -- adds syntax highlighting for quickfix lists
-      'stevearc/quicker.nvim',
+      "stevearc/quicker.nvim",
       event = "FileType qf",
-      config = function ()
-         require('quicker').setup ({})
-      end
+      config = function()
+         require("quicker").setup({})
+      end,
+   },
+
+   {
+      -- show whitespace characters in visual mode
+      "mcauley-penney/visual-whitespace.nvim",
+      config = true,
    },
 }
