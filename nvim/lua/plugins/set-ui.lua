@@ -189,4 +189,13 @@ return {
          require("tiny-devicons-auto-colors").setup()
       end,
    },
+
+   {
+      -- adds syntax highlighting for quickfix lists
+      'stevearc/quicker.nvim',
+      event = "FileType qf",
+      config = function ()
+         require('quicker').setup ({})
+      end
+   },
 }
