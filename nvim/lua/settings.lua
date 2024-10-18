@@ -226,7 +226,9 @@ vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating 
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" }) -- darker cursorline
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- darker cursorline
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
--- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" }) -- TODO: only highlight trailing whitespace
+
+-- TODO: only highlight trailing whitespace
+-- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" })
 
 vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db" }) -- eg +, =, || -- TODO?: only do for js?
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -- eg +, =, || -- TODO?: only do for js?

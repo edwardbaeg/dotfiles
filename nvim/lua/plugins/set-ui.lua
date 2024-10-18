@@ -202,6 +202,7 @@ return {
    {
       -- show whitespace characters in visual mode
       "mcauley-penney/visual-whitespace.nvim",
+      enabled = false, -- this is pretty distracting
       config = true,
    },
 }

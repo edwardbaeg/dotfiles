@@ -50,5 +50,6 @@ return {
       vim.keymap.set("n", "<leader>fj", "<cmd>lua require('fzf-lua').jumps()<cr>", { silent = true })
       vim.keymap.set("n", "<leader>fl", "<cmd>lua require('fzf-lua').lines()<cr>", { silent = true })
       vim.keymap.set("n", "<leader>fo", "<cmd>lua require('fzf-lua').oldfiles()<cr>", { silent = true })
+      vim.keymap.set("n", "<leader>fg", "<cmd>lua require('fzf-lua').git_status()<cr>", { silent = true })
    end,
 }

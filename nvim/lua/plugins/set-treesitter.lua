@@ -142,6 +142,7 @@ return {
             pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
          })
          -- alternative keymap to toggle comment line; rolling keys is faster
+         -- set("n", "gjk", "gcc", { desc = "comment line", remap = true }) -- comment line
          vim.keymap.set("n", "gjk", "<Plug>(comment_toggle_linewise_current)", { noremap = false, silent = true })
          -- comment line in insert mode
          -- vim.keymap.set(

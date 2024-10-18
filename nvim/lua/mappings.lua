@@ -8,17 +8,15 @@ local set = vim.keymap.set
 set("i", "jk", "<Esc>") -- leave insert mode
 set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 
+-- cursor movement
+set({ "n", "v" }, "H", "^") -- move cursor to start of line
+set({ "n", "v" }, "L", "$") -- move cursor to end of line
+
 set("n", "_", '"_') -- empty register shortcut
-set({"n", "v"}, "H", "^") -- move cursor to start of line
-set({"n", "v"}, "L", "$") -- move cursor to end of line
 set("n", "Y", "y$") -- yank to end of line (like C or D)
 set("n", "gp", "`[v`]") -- visually select previouly selected text
--- set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky
--- set("n", "<c-f>", "za") -- toggle folds
--- set("n", "<bs>", [[ciw]], { noremap = true }) -- ciw -- this is unused
--- set("n", "<cr>", "o<esc>0D") -- add empty line below -- this keymap breaks various things, eg mini-files
-set("n", "<leader><cr>", "o<esc>0D") -- add empty line below
-set("n", "gjk", "gcc", { desc = "comment line", remap = true }) -- comment line
+set("n", "p", "p`[v`]=") -- indent after pasting -- this breaks yanky -- FIXME
+set("n", "<leader>o", "o<esc>0D") -- add empty line below
 -- set("n", "<leader>j", function() -- show inlay lsp hints
 --    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 -- end)
@@ -28,7 +26,7 @@ set("n", "]]", "<cmd>call search('^[{]')<cr>", { desc = "jump to next {" })
 set("n", "[[", "<cmd>call search('^[}]', 'b')<cr>", { desc = "jump to previous }" })
 
 -- TODO: disable the default s substitute command. This can have issues with keymaps that start with s, such as sx
-set('n', 's', '<nop>', { noremap = true, silent = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
+set("n", "s", "<nop>", { noremap = true, silent = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
 -- vim.keymap.del("n", "s") -- disable s -- doesn't work
 -- vim.cmd([[unmap s]]) -- doesn't work
 
@@ -38,14 +36,12 @@ set("n", "<leader>q", "") -- close whichkey / cancel leader without starting mac
 set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 -- set("n", "<esc>", ":nohlsearch<Bar>:echo<cr><esc>", { desc = "clear search highlights" })
 set("n", "<leader>yy", ":%yank<cr>") -- yank whole file
--- set("n", "<leader>o", "i<cr><esc>") -- split line
 set("n", "<m-o>", "i<cr><esc>") -- split line
 -- TODO: consider making these require double press; <leader>nn and <leader>pp
 set("n", "<leader>nn", "<cmd>bnext<cr>") -- next buffer
 set("n", "<leader>pp", "<cmd>bprevious<cr>") -- previous buffer
 set("n", "<leader>+", "<c-a>", { desc = "increment" }) -- increment
 set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
--- TODO: make this do :EslintFixAll in js/ts and :Format in others
 set("n", "<leader>es", ":EslintFixAll<cr>")
 set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
@@ -105,11 +101,6 @@ set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical spli
 set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
 set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
 
--- yank and then paste
--- set("n", "yp", "yyp") -- replaced with mini.operators `gmm`
--- set("n", "yp", "yypkgccj") -- NOTE: this doesn't work, comment the previous one
--- set("n", "yp", "yypp")
-
 -- type console.log with yanked text
 vim.api.nvim_set_keymap("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true })
 
@@ -120,7 +111,6 @@ set("n", "dd", function()
    end
    return "dd"
 end, { expr = true })
-
 
 -- Abbreviations
 -- TODO: refactor to lua first class api when available
