@@ -86,6 +86,7 @@ alias gcm2="git checkout master2 && git reset --hard origin/master"
 alias front="cd ~/dev/oneadvisory/frontend"
 alias work="cd ~/dev/oneadvisory/frontend-worktree"
 alias back="cd ~/dev/oneadvisory/backend"
+alias decrypt="cd ~/dev/oneadvisory/backend/ && ./bin/dispatch crypto decrypt" # TODO?: create a function for this to add quotes and return to previous directory
 export AWS_PROFILE=oa-dev
 export AWS_REGION=us-east-1
 export ECR_AWS_PROFILE=oa-dev
