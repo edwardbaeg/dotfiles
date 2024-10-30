@@ -28,7 +28,7 @@ hs.hotkey.bind({ "cmd" }, "M", function()
    hs.alert("[ cmd + m ] disabled") -- minimizes the current window. Annoying because does not unminimize on focus
 end)
 
--- NOTE: this doesn't seem to work with window-management, "cannot get focused window"
+-- NOTE: This doesn't seem to work with window-management, "cannot get focused window"
 -- openRaycastDeeplink("raycast://extensions/raycast/window-management/move-right")
 -- openRaycastDeeplink("raycast://extensions/raycast/raycast/confetti")
 function module.openDeeplink(deeplink)

@@ -86,9 +86,12 @@ return {
    {
       -- toggle persistent terminal
       "akinsho/toggleterm.nvim",
+      lazy = false, -- don't lazy load to set up the mapping
+      keys = { [[<c-\>]] },
       config = function()
          require("toggleterm").setup({
-            open_mapping = [[<c-\>]],
+            open_mapping = [[<c-\>]], -- FIXME: this only seems to work sometimes
+            -- open_mapping = [[<c-m>]],
             direction = "float",
             float_opts = {
                border = "curved",
@@ -105,7 +108,9 @@ return {
             lazygit:toggle()
          end
 
+         -- TODO: figure out a way to toggle this pane without exiting lazygit, it would need to be a keymap that isn't mapped to anything in lazygit
          vim.keymap.set("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
+         -- vim.keymap.set("n", "<c-\\>", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
 
          -- set up ranger
          -- local ranger = Terminal:new({

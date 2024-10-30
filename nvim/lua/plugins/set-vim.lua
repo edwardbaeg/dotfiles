@@ -228,18 +228,17 @@ return {
          "TmuxNavigateDown",
          "TmuxNavigateUp",
          "TmuxNavigateRight",
-         -- "TmuxNavigatePrevious",
       },
-      keys = {
-         { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-         { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-         { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-         { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-         -- { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-      },
-      config = function()
-         -- vim.g.tmux_navigator_no_mappings = 1 -- disable default mappings
-         -- vim.g.tmux_navigator_no_wrap = 1 -- disable wrapping at edges -- this also breaks unzoom...
+      init = function()
+         vim.g.tmux_navigator_no_mappings = 1 -- disable default mappings, TmuxNavigatePrevious
+         vim.cmd([[
+            nnoremap <silent> <c-h> :<C-U>TmuxNavigateLeft<cr>
+            nnoremap <silent> <c-j> :<C-U>TmuxNavigateDown<cr>
+            nnoremap <silent> <c-k> :<C-U>TmuxNavigateUp<cr>
+            nnoremap <silent> <c-l> :<C-U>TmuxNavigateRight<cr>
+         ]])
+
+         -- vim.g.tmux_navigator_no_wrap = 1 -- disable wrapping at edges -- this breaks tmux unzoom
       end,
    },
 

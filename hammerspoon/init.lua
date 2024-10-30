@@ -37,10 +37,10 @@ Get the name of running apps
   hs.fnutils.each(hs.application.runningApplications(), function(app) print(app:title()) end)
 
 Native notification example
-   hs.hotkey.bind(constants.hyperkey, "W", function()
+Doesn't work anymore?
+   hs.hotkey.bind(mod.hyperkey, "W", function()
      hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
    end)
-
 --]]
 
 -- We want to call this last for it to be accurate
