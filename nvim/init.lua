@@ -20,14 +20,22 @@ require("settings")
 --  - move window: `<c-w>HJKL`
 --  - move buffer to split where # is the buffer id, :buffers: :vert sb#
 --  - open in split with <c-v/x>
+
 -- Find and replace
 --  - when in a visual block, omit the `%`: <'>'/s
+
 -- Files
 --  - do :e to reload a file from external changes
--- commands
+
+-- Commands
 --  - :set showmatch? - add ? to check its setting
+
 --  Telescope - open [help] in new tab -> <c-t>
 --  - :options - interactive view and set all options
+
+--  Formatting
+--  - use `gq` operator to edit text to fit within the textwidth
+
 -- :TSPlaygroundToggle replaced with :Inspect
 -- gv -> select last visual selection
 -- :enew to open an empty buffer
@@ -38,6 +46,7 @@ require("settings")
 -- indent in insert mode with `<c-t>/<c-d>`
 -- use <c-t> instead of <c-o>, tagstack
 -- :copen to open the quickfix window
+-- :e to read external changes to a file
 
 -- [[ KEYMAP GUIDE ]]
 -- Don't add to operator pending for y, d
