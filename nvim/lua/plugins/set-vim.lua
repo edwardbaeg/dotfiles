@@ -298,7 +298,7 @@ return {
          disabled_filetypes = { "grapple" },
          init = function()
             -- this doesn't work??
-            vim.opt.cmdheight = 2
+            -- vim.opt.cmdheight = 2
          end,
       },
    },
