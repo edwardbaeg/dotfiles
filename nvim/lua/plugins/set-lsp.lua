@@ -54,6 +54,13 @@ return {
                height = 0.7,
             },
             diagnostic = {
+               -- max_width = 1, -- default is 0.8
+               -- max_height = 1, -- default is 0.6
+
+               -- settings for floats
+               -- max_show_width = 1, -- default is 0.9
+               max_show_height = 0.9, -- default is 0.6
+
                show_code_action = false, -- annoying to preview "move to new file" -- NOTE: this doesn't seem to work?
                -- jump_num_shortcut = false,
             },
