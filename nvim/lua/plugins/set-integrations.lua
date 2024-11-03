@@ -54,13 +54,16 @@ return {
    },
 
    {
-      -- connect with ghosttext brwoser extension
+      -- connect with ghosttext browser extension
+      -- this defaults to http://localhost:4001
       "subnut/nvim-ghost.nvim",
-      enabled = false,
+      -- enabled = false,
       config = function()
          vim.cmd([[
-            let g:nvim_ghost_use_script = 1
-            let g:nvim_ghost_python_executable = '/usr/bin/python3'
+            " let g:nvim_ghost_use_script = 1
+            " let g:nvim_ghost_python_executable = '/usr/bin/python3'
+
+            " let g:nvim_ghost_autostart = 0 " disable autostart, use :GhostTextStart
          ]])
       end,
    },
