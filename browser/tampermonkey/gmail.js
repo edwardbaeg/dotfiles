@@ -46,14 +46,31 @@
 
 let alertEl = null;
 function createAlertEl(message = '<missing title>') {
-  console.log({ message })
   if (!alertEl) {
     alertEl = document.createElement('div');
     alertEl.style.border = '1px solid red';
     alertEl.style.textAlign = 'center';
+    alertEl.style.fontSize = '1rem';
+    alertEl.style.height = '1.5rem'
   }
   alertEl.textContent = '[GMAIL SCRIPT]: ' + message;
   return alertEl;
+}
+
+function addScriptAlertBanner({
+  emailContentSearchText = 'Copyright',
+  alertText,
+}) {
+  const emailTable = getRootTableContaining(emailContentSearchText);
+  const alertEl = createAlertEl(alertText);
+  if (emailTable) {
+    if (!emailTable.contains(alertEl)) {
+      emailTable.parentNode.prepend(alertEl);
+    }
+  } else {
+    console.warn('Email table not found');
+  }
+
 }
 
 function getEmailSubjectTable() {
@@ -72,10 +89,17 @@ function isFromSender(searchText) {
   return subjectTable?.textContent.includes(searchText);
 }
 
+const _1440_SENDER = '1440';
 function filter1440Sponsors() {
-  // if (!isFromSender("1440 Daily Digest")) {
-  //   return;
-  // }
+  if (!isFromSender(_1440_SENDER)) {
+    return;
+  }
+
+  addScriptAlertBanner({
+    emailContentSearchText: 'hello@join1440',
+    alertText: '1440',
+  })
+
   const spans = document.querySelectorAll('span');
   spans.forEach(span => {
     if (span.textContent.includes('In partnership with')) {
@@ -97,13 +121,10 @@ function filterMorningBrewSponsors() {
   if (!isFromSender(MORNINGBREW_SENDER)) {
     return;
   }
-  const emailTable = getRootTableContaining(MORNINGBREW_EMAIL_CONTENT);
-  const alertEl = createAlertEl('Morning Brew');
-  if (emailTable) {
-    if (!emailTable.contains(alertEl)) {
-      emailTable.prepend(alertEl);
-    }
-  }
+  addScriptAlertBanner({
+    emailContentSearchText: MORNINGBREW_EMAIL_CONTENT,
+    alertText: 'Morning Brew',
+  })
 
   const headers = document.querySelectorAll('h3');
   headers.forEach(header => {
