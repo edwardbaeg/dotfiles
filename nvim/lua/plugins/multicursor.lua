@@ -1,6 +1,7 @@
 return {
+   -- Multicursor support
+   -- TODO: see if there is a way to add status to the statusline
    "jake-stewart/multicursor.nvim",
-   -- branch = "1.0",
    config = function()
       local mc = require("multicursor-nvim")
 
@@ -9,10 +10,12 @@ return {
       local set = vim.keymap.set
 
       -- Add or skip adding a new cursor by matching word/selection
-      set({ "n", "v" }, "<leader>nc", function()
+      -- set({ "n", "v" }, "<leader>n", function()
+      -- FIXME: this doesn't work? it is skipping some.
+      set({ "n", "v" }, "<c-n>", function()
          mc.matchAddCursor(1)
       end)
-      set({ "n", "v" }, "<c-n>", function()
+      set({ "n", "v" }, "<leader>nc", function()
          mc.matchAddCursor(1)
       end)
       set({ "n", "v" }, "<leader>s", function()
@@ -23,20 +26,6 @@ return {
       end)
       set({ "n", "v" }, "<leader>S", function()
          mc.matchSkipCursor(-1)
-      end)
-
-      -- Add or skip cursor above/below the main cursor.
-      set({ "n", "v" }, "<up>", function()
-         mc.lineAddCursor(-1)
-      end)
-      set({ "n", "v" }, "<down>", function()
-         mc.lineAddCursor(1)
-      end)
-      set({ "n", "v" }, "<leader><up>", function()
-         mc.lineSkipCursor(-1)
-      end)
-      set({ "n", "v" }, "<leader><down>", function()
-         mc.lineSkipCursor(1)
       end)
 
       -- You can also add cursors with any motion you prefer:
