@@ -37,7 +37,8 @@ vim.o.spellsuggest = "best,9"
 vim.o.splitright = true -- open splits on the right
 vim.o.splitbelow = true -- open splits on the bottom
 
-vim.o.cmdheight = 2 -- number of screen lines for command-line
+-- vim.o.cmdheight = 2 -- number of screen lines for command-line
+vim.o.cmdheight = 1 -- number of screen lines for command-line
 vim.o.showmode = false --whether to show -- INSERT -- in command-line
 
 -- vim.o.showmatch = true -- briefly flash matching bracket -- replaced with vim-matchup
