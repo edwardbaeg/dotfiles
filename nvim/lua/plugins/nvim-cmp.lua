@@ -1,6 +1,5 @@
 return {
    -- Autocomplete menu, snippets, and AI completion
-   -- magazine.nvim is a fork of nvim-cmp with performance improvement.
    -- breaking changes are tracked in https://github.com/hrsh7th/nvim-cmp/issues/231
    "iguanacucumber/magazine.nvim",
    name = "nvim-cmp",
@@ -163,7 +162,7 @@ return {
             -- TODO: disable <c-n/p> when nothing is selected
             ["<C-l>"] = cmp.mapping.abort(), -- this doesn't work, it autocompletes
             ["<c-p>"] = cmp.mapping.close(),
-            ["<c-n>"] = cmp.mapping.close(),
+            -- ["<c-n>"] = cmp.mapping.close(),
          }),
          sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline", max_item_count = 15 } }),
       })
