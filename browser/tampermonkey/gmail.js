@@ -10,19 +10,20 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+  'use strict';
 
   let curr = '';
   let count = 0;
 
   function main() {
-    // TODO: come up with something more robust
-    const EMAIL_SUBJECT_TITLE_SELECTOR = '.hP';
-    const title = document.querySelector(EMAIL_SUBJECT_TITLE_SELECTOR)?.textContent;
+    const title = getEmailSubjectTitle();
 
+    // TODO: encapsulate into a function, detectTitleChanges
     if (!title) {
-      console.log('no title')
+      log('no title');
       return;
+    } else {
+      log('title: ' + title);
     }
 
     if (title != curr) {
@@ -32,7 +33,6 @@
     if (title == curr && count > 5) {
       return;
     }
-    console.log('title found:' + title)
 
     curr = title;
     count++;
@@ -41,44 +41,118 @@
     filterMorningBrewSponsors();
   }
 
-  function filter1440Sponsors() {
-    // if (!isFromSender("1440 Daily Digest")) {
-    //   return;
-    // }
-    const spans = document.querySelectorAll("span");
-    spans.forEach((span) => {
-      if (span.textContent.includes("In partnership with")) {
-        const parent = span.closest("table");
-        // parent.style.border = "2px solid red"; // or any other highlight style you prefer
-
-        const secondParent = parent.parentNode.closest("table");
-        // secondParent.style.border = "2px solid red"; // or any other highlight style you prefer
-        secondParent.style.opacity = 0.1;
-      }
-    });
-  }
- 
-  function filterMorningBrewSponsors() {
-    // if (!isFromSender("crew@morningbrew.com")) {
-    //   return;
-    // }
-    const headers = document.querySelectorAll("h3" );
-    headers.forEach((header) => {
-      if (header.textContent.includes("PRESENTED BY") || header.textContent.includes("TOGETHER WITH")) {
-        const parent = header.closest("table");
-        // parent.style.border = "2px solid red"; // or any other highlight style you prefer
-
-        const secondParent = parent.parentNode.closest("table");
-        // secondParent.style.border = "2px solid red"; // or any other highlight style you prefer
-        secondParent.style.opacity = 0.1;
-      }
-    });
-  }
-
-  // TODO: update this to only check the email pane
-  function isFromSender(email) {
-    return document.body.textContent.includes(email);
-  }
-
   setInterval(main, 1000);
 })();
+
+let alertEl = null;
+function createAlertEl(message = '<missing title>') {
+  console.log({ message })
+  if (!alertEl) {
+    alertEl = document.createElement('div');
+    alertEl.style.border = '1px solid red';
+    alertEl.style.textAlign = 'center';
+  }
+  alertEl.textContent = '[GMAIL SCRIPT]: ' + message;
+  return alertEl;
+}
+
+function getEmailSubjectTable() {
+  const tables = document.querySelectorAll('table');
+  for (let table of tables) {
+    const spans = table.querySelectorAll('span[email]');
+    if (spans.length === 1) {
+      return table;
+    }
+  }
+  return null;
+}
+
+function isFromSender(searchText) {
+  const subjectTable = getEmailSubjectTable();
+  return subjectTable?.textContent.includes(searchText);
+}
+
+function filter1440Sponsors() {
+  // if (!isFromSender("1440 Daily Digest")) {
+  //   return;
+  // }
+  const spans = document.querySelectorAll('span');
+  spans.forEach(span => {
+    if (span.textContent.includes('In partnership with')) {
+      const parent = span.closest('table');
+      // parent.style.border = "2px solid red"; // or any other highlight style you prefer
+
+      const secondParent = parent.parentNode.closest('table');
+      if (secondParent) {
+        // secondParent.style.border = "2px solid red"; // or any other highlight style you prefer
+        secondParent.style.opacity = 0.1;
+      }
+    }
+  });
+}
+
+const MORNINGBREW_SENDER = 'Morning Brew';
+const MORNINGBREW_EMAIL_CONTENT = 'Copyright';
+function filterMorningBrewSponsors() {
+  if (!isFromSender(MORNINGBREW_SENDER)) {
+    return;
+  }
+  const emailTable = getRootTableContaining(MORNINGBREW_EMAIL_CONTENT);
+  const alertEl = createAlertEl('Morning Brew');
+  if (emailTable) {
+    if (!emailTable.contains(alertEl)) {
+      emailTable.prepend(alertEl);
+    }
+  }
+
+  const headers = document.querySelectorAll('h3');
+  headers.forEach(header => {
+    if (
+      header.textContent.toLocaleLowerCase().includes('presented by') ||
+      header.textContent.toLocaleLowerCase().includes('together with')
+    ) {
+      const parent = header.closest('table');
+      // parent.style.border = "2px solid red"; // or any other highlight style you prefer
+
+      const secondParent = parent.parentNode.closest('table');
+      if (secondParent) {
+        // secondParent.style.border = "2px solid red"; // or any other highlight style you prefer
+        secondParent.style.opacity = 0.1;
+      }
+    }
+  });
+}
+
+function log(message) {
+  console.log('[GMAIL SCRIPT]: ' + message);
+}
+
+// TODO: come up with something more robust
+function getEmailSubjectTitle() {
+  const EMAIL_SUBJECT_TITLE_SELECTOR = '.hP';
+  return document.querySelector(EMAIL_SUBJECT_TITLE_SELECTOR)?.textContent;
+}
+
+function getRootTableContaining(text) {
+  const tds = document.querySelectorAll('td');
+  let target = null;
+  tds.forEach(td => {
+    if (td.textContent.includes(text)) {
+      target = td.closest('table');
+      return;
+    }
+  });
+
+  let count = 0;
+  while (target && count < 10) {
+    count++;
+    const parent = target.parentNode.closest('table');
+    if (parent) {
+      target = parent;
+    } else {
+      break;
+    }
+  }
+
+  return target;
+}
