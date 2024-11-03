@@ -20,7 +20,7 @@ set("n", "<leader>o", "o<esc>0D") -- add empty line below
 -- set("n", "<leader>j", function() -- show inlay lsp hints
 --    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 -- end)
-set("n", "<cr>", "G", { desc = "jump to line number" })
+-- set("n", "<cr>", "G", { desc = "jump to line number" })
 -- set("n", "]]", "<cmd>call search('[([{<]')<cr>", { desc = "jump to next [{(]" })
 set("n", "]]", "<cmd>call search('^[{]')<cr>", { desc = "jump to next {" })
 set("n", "[[", "<cmd>call search('^[}]', 'b')<cr>", { desc = "jump to previous }" })
@@ -33,16 +33,16 @@ set("n", "s", "<nop>", { noremap = true, silent = true }) -- kinda works, but bl
 -- various leader keymaps
 set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
 set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
-set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
+set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights", silent = true })
 -- set("n", "<esc>", ":nohlsearch<Bar>:echo<cr><esc>", { desc = "clear search highlights" })
 set("n", "<leader>yy", ":%yank<cr>") -- yank whole file
 set("n", "<m-o>", "i<cr><esc>") -- split line
--- TODO: consider making these require double press; <leader>nn and <leader>pp
+-- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- new blank line
 set("n", "<leader>nn", "<cmd>bnext<cr>") -- next buffer
 set("n", "<leader>pp", "<cmd>bprevious<cr>") -- previous buffer
 set("n", "<leader>+", "<c-a>", { desc = "increment" }) -- increment
 set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
-set("n", "<leader>es", ":EslintFixAll<cr>")
+set("n", "<leader>es", ":EslintFixAll<cr>", { silent = true })
 set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
 set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) -- save
@@ -87,16 +87,10 @@ set("n", "<leader>w", "<c-w>")
 -- set("n", "<leader>wh", "<cmd>wincmd h<cr>")
 -- set("n", "<leader>wl", "<cmd>wincmd l<cr>")
 
--- Move to window using the arrow keys
--- replaced with vim-tmux-navigator
--- set("n", "<left>", "<C-w>h")
--- set("n", "<down>", "<C-w>j")
--- set("n", "<up>", "<C-w>k")
--- set("n", "<right>", "<C-w>l")
-
 -- Use builtin go to definition/tag
 set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
 -- open goto definition in vertical split
+set("n", "g>>", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
 set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
