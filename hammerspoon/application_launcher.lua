@@ -26,6 +26,7 @@ assignAppHotKey(hyperkey, "8", "Slack")
 
 if constants.isPersonal then
    assignAppHotKey(hyperkey, "9", "Arc")
+   assignAppHotKey(constants.allkey, "9", "Arc")
 else
    assignAppHotKey(constants.allkey, "9", "Arc", getSetArcProfileFn("2")) -- personal
    assignAppHotKey(hyperkey, "9", "Arc", getSetArcProfileFn("4")) -- work
