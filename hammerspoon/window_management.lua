@@ -185,8 +185,8 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
 
    withAxHotfix(function()
       -- two methods for this
-      win:moveOneScreenEast(false, nil, 0)
-      -- win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
+      -- win:moveOneScreenEast(false, nil, 0) -- does not wrap
+      win:move(win:frame():toUnitRect(screen:frame()), screen:previous(), true, 0)
    end)
 
    -- Another method
