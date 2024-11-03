@@ -20,7 +20,7 @@ return {
          -- TODO: figure out a way to allow searching in the pathname direction
          -- eg matching "hooks/init" by searching "hooks init" instead of "init hooks"
          files = {
-            formatter = "path.filename_first",
+            -- formatter = "path.filename_first",
          },
          grep = {
             -- split results into multiple lines for narrow widths
