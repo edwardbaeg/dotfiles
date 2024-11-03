@@ -29,6 +29,9 @@ return {
          end)
 
          -- Partial accepts
+         vim.keymap.set("i", "<c-w>", function()
+            require("neocodeium").accept_word()
+         end)
          vim.keymap.set("i", "<A-w>", function()
             require("neocodeium").accept_word()
          end)
