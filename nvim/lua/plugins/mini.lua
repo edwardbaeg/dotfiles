@@ -31,6 +31,7 @@ return {
          vim.api.nvim_create_user_command("MiniFiles", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
          vim.api.nvim_create_user_command("Files", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
          vim.api.nvim_create_user_command("MF", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
+         vim.keymap.set("n", "<leader>ra", "<cmd>MiniFiles<cr>", {}) -- trying out with Mini.Files
 
          -- FIXME: this doesn't work, just makes a split of the current buffer
          -- Sourced from minifiles helpfile, create keyamp `L` to open file in a vertical split

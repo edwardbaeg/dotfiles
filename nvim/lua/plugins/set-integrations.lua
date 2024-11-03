@@ -46,10 +46,10 @@ return {
       -- ranger integration, opens files in current nvim instance
       -- NOTE: have to install ranger with pip (not brew)
       "kevinhwang91/rnvimr",
-      -- enabled = false, -- have to install ranger with python
+      -- enabled = false,
       config = function()
          vim.api.nvim_create_user_command("RangerToggle", ":RnvimrToggle", {})
-         vim.keymap.set("n", "<leader>ra", ":RnvimrToggle<cr>", {})
+         -- vim.keymap.set("n", "<leader>ra", ":RnvimrToggle<cr>", {}) -- trying out with Mini.Files
       end,
    },
 
