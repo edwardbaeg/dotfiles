@@ -150,9 +150,8 @@ alias vim="nvim"
 alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
-# alias vp="nvim -c \"Telescope find_files\""
-alias vp="nvim -c \"lua require('fzf-lua').files()\""
-alias vg="nvim -c \"lua require('fzf-lua').grep_project()\""
+# alias vp="nvim -c \"lua require('fzf-lua').files()\"" -- replaced with fzf function
+alias vg="nvim -c \"lua require('fzf-lua').grep_project()\"" # TODO: replace with fzf function
 alias vsr="nvim -c \"SessionRestore\""
 alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
@@ -274,8 +273,9 @@ function gcof () {
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
-function fe() {
-    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+function vp() {
+    # IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
     [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
@@ -340,6 +340,9 @@ export FZF_DEFAULT_OPTS='
 
 # setup zoxide completions. must be called after compinit
 eval "$(zoxide init zsh)"
+
+# setup thefuck
+eval $(thefuck --alias)
 
 # -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
