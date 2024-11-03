@@ -36,7 +36,8 @@ return {
             if filename:find("^index") then
                local parentDirName = path:match("(.*)/(.*)$")
                parentDirName = parentDirName:gsub(".*/", "")
-               filename = parentDirName .. "/" .. filename
+               -- filename = parentDirName .. "/" .. filename
+               filename = parentDirName .. "/i"
             end
 
             if filename == "" then
