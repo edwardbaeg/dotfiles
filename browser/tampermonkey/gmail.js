@@ -9,6 +9,7 @@
 // @grant        none
 // ==/UserScript==
 
+// TODO?: use TS source file
 (function () {
   'use strict';
 
@@ -18,7 +19,7 @@
   function main() {
     const title = getEmailSubjectTitle();
 
-    // TODO: encapsulate into a function, detectTitleChanges
+    // TODO?: encapsulate into a function, detectTitleChanges
     if (!title) {
       log('no title');
       return;
@@ -49,9 +50,11 @@ function createAlertEl(message = '<missing title>') {
   if (!alertEl) {
     alertEl = document.createElement('div');
     alertEl.style.border = '1px solid red';
+    alertEl.style.borderRadius = '4px';
     alertEl.style.textAlign = 'center';
     alertEl.style.fontSize = '1rem';
-    alertEl.style.height = '1.5rem'
+    alertEl.style.height = '1.5rem';
+    alertEl.style.backgroundColor = 'white';
   }
   alertEl.textContent = '[GMAIL SCRIPT]: ' + message;
   return alertEl;
@@ -70,7 +73,6 @@ function addScriptAlertBanner({
   } else {
     console.warn('Email table not found');
   }
-
 }
 
 function getEmailSubjectTable() {
@@ -98,7 +100,7 @@ function filter1440Sponsors() {
   addScriptAlertBanner({
     emailContentSearchText: 'hello@join1440',
     alertText: '1440',
-  })
+  });
 
   const spans = document.querySelectorAll('span');
   spans.forEach(span => {
@@ -124,13 +126,16 @@ function filterMorningBrewSponsors() {
   addScriptAlertBanner({
     emailContentSearchText: MORNINGBREW_EMAIL_CONTENT,
     alertText: 'Morning Brew',
-  })
+  });
 
   const headers = document.querySelectorAll('h3');
   headers.forEach(header => {
     if (
       header.textContent.toLocaleLowerCase().includes('presented by') ||
-      header.textContent.toLocaleLowerCase().includes('together with')
+      header.textContent.toLocaleLowerCase().includes('together with') ||
+      header.textContent.toLocaleLowerCase().includes('games') ||
+      header.textContent.toLocaleLowerCase().includes('answer') ||
+      header.textContent.toLocaleLowerCase().includes('share the brew')
     ) {
       const parent = header.closest('table');
       // parent.style.border = "2px solid red"; // or any other highlight style you prefer
@@ -149,6 +154,7 @@ function log(message) {
 }
 
 // TODO: come up with something more robust
+// maybe search for a specific table?
 function getEmailSubjectTitle() {
   const EMAIL_SUBJECT_TITLE_SELECTOR = '.hP';
   return document.querySelector(EMAIL_SUBJECT_TITLE_SELECTOR)?.textContent;
