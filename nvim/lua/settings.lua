@@ -3,10 +3,12 @@
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
 
+-- Wrapping
 -- vim.o.wrap = false -- Don't wrap lines
 vim.o.linebreak = true -- wrap at spaces instead of the middle of a word
 vim.o.breakindent = true -- wrapped lines will have consistent indents
-vim.o.showbreak = "… " -- string added to the start of wrapped lines
+vim.o.showbreak = "… " -- string added to the start of wrapped lines, ellipsis, this is highlighted with NonText
+vim.api.nvim_set_hl(0, "NonText", { fg = "grey30" }) -- highlights showbreak characters, slightly different than comment text
 
 vim.o.updatetime = 250 -- Decrease update time
 vim.o.signcolumn = "yes" -- always show sign column
