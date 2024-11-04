@@ -37,7 +37,8 @@ config.macos_window_background_blur = 75
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 
-config.line_height = 1
+-- config.line_height = 1
+config.line_height = 1.05
 
 config.font = wezterm.font("Operator Mono", { weight = "Book" })
 -- config.font = wezterm.font("Operator Mono", { weight = "Medium" })
