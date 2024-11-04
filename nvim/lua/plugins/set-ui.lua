@@ -144,6 +144,7 @@ return {
       -- markdown previewer in neovim
       -- :Markview
       "OXY2DEV/markview.nvim",
+      enabled = false,
       lazy = false, -- Recommended
       dependencies = {
          "nvim-treesitter/nvim-treesitter",
