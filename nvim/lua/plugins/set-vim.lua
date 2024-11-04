@@ -314,9 +314,20 @@ return {
    },
 
    {
-      -- show which keys are not used mapped
-      -- :KeyAnalyzer
+      -- show keys that are and are not mapped in a keyboard visual
+      -- :KeyAnalyzer <prefix>
       "meznaric/key-analyzer.nvim",
       opts = {},
+   },
+
+   {
+      -- jumplist but just buffers
+      "kwkarlwang/bufjump.nvim",
+      config = function()
+         require("bufjump").setup({
+            forward_key = "<leader><c-i>",
+            backward_key = "<leader><c-o>",
+         })
+      end,
    },
 }
