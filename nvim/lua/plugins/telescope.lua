@@ -1,6 +1,6 @@
 return {
-
    -- Fuzzy Finder (files, lsp, etc)
+   -- TODO?: completely migrate to fzflua. Don't see undo history one
    "nvim-telescope/telescope.nvim",
    cmd = "Telescope",
    dependencies = {
@@ -11,7 +11,6 @@ return {
          "nvim-telescope/telescope-fzf-native.nvim",
          build = "make",
       },
-      "tsakirist/telescope-lazy.nvim", -- for navigating plugins installed by lazy.nvim
    },
    init = function()
       -- vim.keymap.set("n", "<c-p>", "<cmd>Telescope find_files<cr>") -- replaced with fzflua
@@ -21,15 +20,14 @@ return {
 
       vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
       -- vim.keymap.set("n", "<leader>fl", "<cmd>Telescope current_buffer_fuzzy_find<cr>") -- replace with fzflua
-      vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })
-      vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "[f]uzzy [k]eymaps" })
-      vim.keymap.set("n", "<leader>fc", "<cmd>Telescope commands<cr>", { desc = "[f]uzzy [c]ommands" })
-      vim.keymap.set("n", "<leader>fi", "<cmd>Telescope highlights<cr>", { desc = "[f]uzzy h[i]ghlights" })
+      -- vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })
+      -- vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "[f]uzzy [k]eymaps" })
+      -- vim.keymap.set("n", "<leader>fc", "<cmd>Telescope commands<cr>", { desc = "[f]uzzy [c]ommands" })
+      -- vim.keymap.set("n", "<leader>fi", "<cmd>Telescope highlights<cr>", { desc = "[f]uzzy h[i]ghlights" })
       -- vim.keymap.set("n", "<leader>fo", "<cmd>Telescope oldfiles<cr>", { desc = "[f]uzzy [o]ldfiles" })
-      vim.keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<cr>", { desc = "[f]uzzy [s]pell_suggest" })
-      vim.keymap.set("n", "<leader>ss", "<cmd>Telescope spell_suggest<cr>", { desc = "fuzzy [s]pell_[s]uggest" })
+      -- vim.keymap.set("n", "<leader>fs", "<cmd>Telescope spell_suggest<cr>", { desc = "[f]uzzy [s]pell_suggest" })
       -- vim.keymap.set("n", "<leader>fj", "<cmd>Telescope jumplist<cr>", { desc = "[f]uzzy [j]umplist" }) -- replaced with fzflua
-      vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
+      -- vim.keymap.set("n", "<leader>bi", "<cmd>Telescope buffers<cr>")
       -- vim.keymap.set("n", "<leader>fg", "<cmd>Telescope git_bcommits<cr>", { desc = "[f]uzzy [g]ic bcommits" })
 
       -- NOTE: use <c-r> to revert to selected commit
@@ -93,7 +91,6 @@ return {
       require("telescope").load_extension("fzf")
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("undo")
-      require("telescope").load_extension("lazy")
       -- require("telescope").load_extension("session-lens") -- this breaks lazy loading
 
       -- custom picker that greps the word under the cursor (cword)

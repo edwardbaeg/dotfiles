@@ -50,16 +50,20 @@ return {
       vim.keymap.set("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<cr>", { silent = true })
       vim.keymap.set("n", "<c-b>", "<cmd>lua require('fzf-lua').buffers()<cr>", { silent = true })
       vim.keymap.set("n", "<leader>i", "<cmd>lua require('fzf-lua').buffers()<cr>", { silent = true })
-      vim.keymap.set("n", "<leader>fo", "<cmd>lua require('fzf-lua').oldfiles()<cr>", { silent = true })
 
       -- git
       vim.keymap.set("n", "<leader>fb", "<cmd>lua require('fzf-lua').git_bcommits()<cr>", { silent = true })
       vim.keymap.set("n", "<leader>fg", "<cmd>lua require('fzf-lua').git_status()<cr>", { silent = true })
 
-      -- history
+      -- history (lists)
       vim.keymap.set("n", "<leader>fj", "<cmd>lua require('fzf-lua').jumps()<cr>", { silent = true })
+      vim.keymap.set("n", "<leader>fo", "<cmd>lua require('fzf-lua').oldfiles()<cr>", { silent = true })
 
-      -- other
+      -- vim
+      vim.keymap.set("n", "<leader>fh", "<cmd>lua require('fzf-lua').helptags()<cr>", { desc = "[f]uzzy [h]help" })
+      vim.keymap.set("n", "<leader>fs", "<cmd>lua require('fzf-lua').spell_suggest()<cr>", { silent = true })
+
+      -- fzflua
       vim.keymap.set("n", "<leader>ff", "<cmd>lua require('fzf-lua').builtin()<cr>", { silent = true })
    end,
 }
