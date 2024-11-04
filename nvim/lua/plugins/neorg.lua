@@ -25,8 +25,9 @@ return {
             },
          })
 
-         vim.wo.foldlevel = 99
-         vim.wo.conceallevel = 2
+         -- TODO: only set this for neog files
+         -- vim.wo.foldlevel = 99
+         -- vim.wo.conceallevel = 2
       end,
    },
 }
