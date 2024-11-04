@@ -125,24 +125,24 @@ vim.api.nvim_create_user_command("Bda", "bufdo bd", { desc = "Close all buffers"
 -- show cursor line only in active window
 -- this doesn't work with <c-c>, only with <esc>
 -- https://github.com/folke/dot/blob/master/nvim/lua/config/autocmds.lua
-vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
-   callback = function()
-      local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
-      if ok and cl then
-         vim.wo.cursorline = true
-         vim.api.nvim_win_del_var(0, "auto-cursorline")
-      end
-   end,
-})
-vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
-   callback = function()
-      local cl = vim.wo.cursorline
-      if cl then
-         vim.api.nvim_win_set_var(0, "auto-cursorline", cl)
-         vim.wo.cursorline = false
-      end
-   end,
-})
+-- vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+--    callback = function()
+--       local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
+--       if ok and cl then
+--          vim.wo.cursorline = true
+--          vim.api.nvim_win_del_var(0, "auto-cursorline")
+--       end
+--    end,
+-- })
+-- vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+--    callback = function()
+--       local cl = vim.wo.cursorline
+--       if cl then
+--          vim.api.nvim_win_set_var(0, "auto-cursorline", cl)
+--          vim.wo.cursorline = false
+--       end
+--    end,
+-- })
 
 -- From lazyvim
 local function augroup(name)
@@ -208,16 +208,6 @@ vim.api.nvim_create_autocmd("FileType", {
    end,
 })
 
--- fix issue with opening files in telescope entering insert mode with `reactive.nvim`
--- https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
-vim.api.nvim_create_autocmd("WinLeave", {
-   callback = function()
-      if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
-         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
-      end
-   end,
-})
-
 -- [[ Highlights ]]
 -- local frappe = require("catppuccin.palettes").get_palette("frappe")
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
@@ -225,7 +215,7 @@ vim.api.nvim_create_autocmd("WinLeave", {
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" }) -- darker cursorline
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- darker cursorline
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- darker cursorline -- set with reactive.nvim
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
 
 -- TODO: only highlight trailing whitespace

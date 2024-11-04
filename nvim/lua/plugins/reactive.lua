@@ -1,18 +1,32 @@
 return {
    -- Hook into mode changes and change cursor, colors
-   -- TODO: use catpuccin colors
-   -- NOTE: this plugin seems to cause telescope to open files in insert mode. Workaround is to set a winleave autocmd. https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
+   -- TODO?: use catpuccin colors
    "rasulomaroff/reactive.nvim",
    enabled = not vim.g.vscode,
    event = "VeryLazy",
    config = function()
+      -- fix issue with opening files in telescope entering insert mode with `reactive.nvim`
+      -- https://github.com/nvim-telescope/telescope.nvim/issues/2027#issuecomment-1561836585
+      vim.api.nvim_create_autocmd("WinLeave", {
+         callback = function()
+            if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
+               vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "i", false)
+            end
+         end,
+      })
       require("reactive").add_preset({
          name = "custom",
          modes = {
             n = {
-               -- highlight CursorLine only in current window
+               -- this is only for the current window
                winhl = {
-                  CursorLineNr = { bg = "gray4" },
+                  CursorLineNr = { bg = "gray1" },
+                  CursorLine = { bg = "gray7" },
+               },
+               -- this doesn't seem to work... maybe its overwritten by in settings file?
+               hl = {
+                  -- CursorLine = { bg = "gray15" },
+                  -- CursorLine = { bg = "#93c5fd" },
                },
             },
             no = {
