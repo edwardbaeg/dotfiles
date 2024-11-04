@@ -39,6 +39,7 @@ return {
                "go",
                "html",
                "javascript",
+               "kdl", -- config files
                "lua",
                "markdown",
                "markdown_inline",
