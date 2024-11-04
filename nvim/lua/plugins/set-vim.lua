@@ -312,4 +312,11 @@ return {
          vim.notify = require("notify")
       end,
    },
+
+   {
+      -- show which keys are not used mapped
+      -- :KeyAnalyzer
+      "meznaric/key-analyzer.nvim",
+      opts = {},
+   },
 }
