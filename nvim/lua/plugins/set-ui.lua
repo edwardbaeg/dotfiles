@@ -201,8 +201,14 @@ return {
    },
 
    {
+      -- automatically centers and buffers window(s) if the screen is wide automatically centers and buffers window(s) if the screen is wide automatically centers and buffers window(s) if the screen is wide automatically centers and buffers window(s) if the screen is wide
       -- automatically centers and buffers window(s) if the screen is wide
       -- :NoNeckPain
       "shortcuts/no-neck-pain.nvim",
+      opts = {
+         -- autocmds = {
+         --    enableOnVimEnter = true,
+         -- },
+      },
    },
 }
