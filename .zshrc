@@ -220,6 +220,7 @@ alias lg="lazygit"
 alias ..="cd .."
 alias ll="ls -al"
 alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
+alias cl="clear"
 
 #-- Jumping
 alias dot="cd ~/dev/dotfiles"
