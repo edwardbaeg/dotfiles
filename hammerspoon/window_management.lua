@@ -114,24 +114,58 @@ function _G.moveAndResizeFocused(callback)
    end)
 end
 
--- Top half
+-- Top positions
 hs.hotkey.bind(hyperkey, "K", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y
-      frame.w = screen.w
-      frame.h = screen.h / 2
-   end)
+   local win = hs.window.focusedWindow()
+   local screenFrame = win:screen():frame()
+
+   cyclePositions({
+      {
+         x = screenFrame.x,
+         y = screenFrame.y,
+         w = screenFrame.w,
+         h = screenFrame.h / 2,
+      },
+      {
+         x = screenFrame.x,
+         y = screenFrame.y,
+         w = screenFrame.w,
+         h = screenFrame.h / 3,
+      },
+      {
+         x = screenFrame.x,
+         y = screenFrame.y,
+         w = screenFrame.w,
+         h = screenFrame.h * 2 / 3,
+      },
+   })
 end)
 
--- Bottom half
+-- Bottom positions
 hs.hotkey.bind(hyperkey, "J", function()
-   moveAndResizeFocused(function(frame, screen)
-      frame.x = screen.x
-      frame.y = screen.y + (screen.h / 2)
-      frame.w = screen.w
-      frame.h = screen.h / 2
-   end)
+   local win = hs.window.focusedWindow()
+   local screenFrame = win:screen():frame()
+
+   cyclePositions({
+      {
+         x = screenFrame.x,
+         y = screenFrame.y + (screenFrame.h / 2),
+         w = screenFrame.w,
+         h = screenFrame.h / 2,
+      },
+      {
+         x = screenFrame.x,
+         y = screenFrame.y + (screenFrame.h * 2 / 3),
+         w = screenFrame.w,
+         h = screenFrame.h / 3,
+      },
+      {
+         x = screenFrame.x,
+         y = screenFrame.y + (screenFrame.h / 3),
+         w = screenFrame.w,
+         h = screenFrame.h * 2 / 3,
+      },
+   })
 end)
 
 -- Resize and center windows ---------------------------------------------
