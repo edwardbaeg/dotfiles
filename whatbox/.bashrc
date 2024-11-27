@@ -18,18 +18,17 @@ fi
 # Enables ^s and ^q in rTorrent, when running in screen
 stty -ixon -ixoff
 
-# Add custom programs
+# Add custom programs to path
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/bin/nvim-linux64/bin
 
-# use nvim as default
+# use nvim as default editor
 export VISUAL=nvim
 export EDITOR=$VISUAL
 
 alias v=nvim
-alias vim=nvim
 alias vb='nvim ~/.bashrc'
 alias sb='source ~/.bashrc'
 alias ranger='~/bin/ranger/ranger.py'
-alias ra='~/bin/ranger/ranger.py'
+alias ra=yazi
 alias ..='cd ..'

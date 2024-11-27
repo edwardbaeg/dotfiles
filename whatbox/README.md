@@ -1,14 +1,17 @@
+# Whatbox
+
+Usage guide.
+
 ## Install programs manually
 
-### List
 - ranger/yazi
 - ncdu
 - lazygit
 - nvim
 
-### To install programs
+### How to install programs
 
-Download the linux64 binary (check system arch with uname -m)
+Download the linux arch64 binary (check system arch with `uname -m` or `arch`)
 ```
 wget <url>
 ```
@@ -18,15 +21,19 @@ Unpack the .tar.gz:
 tar -xzf
 ```
 
-Move executable to a directory in $PATH.
+Move executable to a directory in $PATH, eg, `/bin`
+```
+export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/nvim-linux64/bin
+```
 
-## Unpack files
+## Unpack rar files
 
 ```
 unrar x <file>.rar
 ```
 
-## FTP CLI
+## CLI FTP tool
 
 Use `lftp`. Article [here](https://whatbox.ca/wiki/lftp).
 
@@ -50,3 +57,7 @@ pget, mirror <dir>
 put, mirror <dir>
 
 ```
+
+## Set up nginx web server to serve files over HTTP
+
+Follow the nginx guide [here](https://whatbox.ca/wiki/Userland_Nginx).
