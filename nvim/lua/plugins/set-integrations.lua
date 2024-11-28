@@ -103,7 +103,7 @@ return {
 
          local Terminal = require("toggleterm.terminal").Terminal
 
-         -- Set up lazygit
+         -- Set up lazygit --NOTE replaced with snacks.lazy_git
          local lazygit = Terminal:new({
             cmd = "lazygit", --[[ hidden = true ]]
          }) -- hidden terminals won't resize
@@ -113,7 +113,7 @@ return {
 
          -- TODO: figure out a way to toggle this pane without exiting lazygit, it would need to be a keymap that isn't mapped to anything in lazygit
          vim.keymap.set("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
-         -- vim.keymap.set("n", "<c-\\>", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
+         vim.keymap.set("n", "<c-\\>", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
 
          -- set up ranger
          -- local ranger = Terminal:new({
