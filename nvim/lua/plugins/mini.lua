@@ -33,19 +33,17 @@ return {
          vim.api.nvim_create_user_command("MF", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
          vim.keymap.set("n", "<leader>ra", "<cmd>MiniFiles<cr>", {}) -- trying out with Mini.Files
 
-         -- FIXME: this doesn't work, just makes a split of the current buffer
-         -- Sourced from minifiles helpfile, create keyamp `L` to open file in a vertical split
-         local MiniFiles = require("mini.files")
+         -- FIXME: this doesn't work...
          local map_split = function(buf_id, lhs, direction)
             local rhs = function()
                -- Make new window and set it as target
-               local new_target_window
-               vim.api.nvim_win_call(MiniFiles.get_target_window(), function()
+               local cur_target = MiniFiles.get_explorer_state().target_window
+               local new_target = vim.api.nvim_win_call(cur_target, function()
                   vim.cmd(direction .. " split")
-                  new_target_window = vim.api.nvim_get_current_win()
+                  return vim.api.nvim_get_current_win()
                end)
 
-               MiniFiles.set_target_window(new_target_window)
+               MiniFiles.set_target_window(new_target)
             end
 
             -- Adding `desc` will result into `show_help` entries
@@ -58,10 +56,11 @@ return {
             callback = function(args)
                local buf_id = args.data.buf_id
                -- Tweak keys to your liking
-               -- map_split(buf_id, "gs", "belowright horizontal")
-               map_split(buf_id, "L", "belowright vertical")
+               map_split(buf_id, "<C-s>", "belowright horizontal")
+               map_split(buf_id, "<C-v>", "belowright vertical")
             end,
          })
+         -- END mini.files
 
          -- Add various operators
          require("mini.operators").setup({
