@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO: replace with stow
 
 # Get the dir of this file (NOT necessarily the current working dir)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -110,3 +111,8 @@ symlink_file_or_folder \
     $DIR/.wezterm.lua \
     $HOME/.wezterm.lua \
     wezterm
+
+symlink_file_or_folder \
+    $DIR/zellij/config.kdl \
+    $HOME/.config/zellij/config.kdl \
+    zellij
