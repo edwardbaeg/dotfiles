@@ -91,6 +91,9 @@ export AWS_PROFILE=oa-dev
 export AWS_REGION=us-east-1
 export ECR_AWS_PROFILE=oa-dev
 
+# run dc locally
+# AWS_PROFILE=dispatch-dev01 CHAMBER_TENANT=develop/ npx yarn dev:services
+
 # -- Plugins -----------------------------------------------------------
 
 # Load zgen
@@ -271,14 +274,20 @@ function gcof () {
     # git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
-# fe [FUZZY PATTERN] - Open the selected file with the default editor
+# [FUZZY PATTERN] - Open the selected file with the default editor
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
+#   https://github.com/junegunn/fzf/wiki/Examples#opening-files
 function vp() {
-    # IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
     IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
     [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
+
+# WIP: fuzzy search file contents and open in editor
+# function vg() {
+#     IFS=$'\n' files=($(rg --no-messages "$1" | fzf --preview 'bat --color=always {}' --preview-window '~3'))
+#     [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+# }
 
 # alias for npm leaves to list globally installed packages
 function npm () {
@@ -344,6 +353,7 @@ eval "$(zoxide init zsh)"
 
 # setup thefuck
 eval $(thefuck --alias)
+alias f=fuck
 
 # -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
