@@ -5,6 +5,7 @@ return {
       -- LSP, formatter, and linter config and plugins
       -- NOTE: do not lazy load
       "neovim/nvim-lspconfig",
+      enabled = not vim.g.vscode,
       dependencies = {
          "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
