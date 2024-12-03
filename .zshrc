@@ -157,7 +157,7 @@ alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 # alias vp="nvim -c \"lua require('fzf-lua').files()\"" -- replaced with fzf function
-alias vg="nvim -c \"lua require('fzf-lua').grep_project()\"" # TODO: replace with fzf function
+# alias vg="nvim -c \"lua require('fzf-lua').grep_project()\"" # TODO: replace with fzf function
 alias vsr="nvim -c \"SessionRestore\""
 alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
@@ -286,11 +286,17 @@ function vp() {
     [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
-# WIP: fuzzy search file contents and open in editor
-# function vg() {
-#     IFS=$'\n' files=($(rg --no-messages "$1" | fzf --preview 'bat --color=always {}' --preview-window '~3'))
-#     [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
-# }
+# TODO: use fzf-tmux?
+# NOTE: this doesn't support <tab> selection
+# https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
+function vg {
+  command rg --color=always --line-number --no-heading --smart-case "${*:-}" \
+  | command fzf -d':' --ansi \
+    --preview "command bat -p --color=always {1} --highlight-line {2}" \
+    --preview-window ~8,+{2}-5 \
+  | awk -F':' '{print $1}' \
+  | xargs -r ${EDITOR:-nvim}
+}
 
 # alias for npm leaves to list globally installed packages
 function npm () {
