@@ -88,7 +88,8 @@ alias work="cd ~/dev/oneadvisory/frontend-worktree"
 alias back="cd ~/dev/oneadvisory/backend"
 alias decrypt="cd ~/dev/oneadvisory/backend/ && ./bin/dispatch crypto decrypt" # TODO?: create a function for this to add quotes and return to previous directory
 
-export AWS_PROFILE=dispatch-dev01
+export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
+# export AWS_PROFILE=dispatch-dev01
 # export AWS_PROFILE=oa-dev
 # export AWS_PROFILE=duplo
 export AWS_REGION=us-east-1
