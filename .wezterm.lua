@@ -24,6 +24,15 @@ config.colors = {
    visual_bell = "#202020",
 }
 
+config.window_background_gradient = {
+   orientation = "Vertical",
+   colors = {
+      "#021818",
+      -- "#1e1e1e",
+      "#141414",
+   },
+}
+
 -- Makes the background flash/opaque for visual bell
 config.visual_bell = {
    fade_in_function = "EaseIn",
@@ -56,7 +65,7 @@ end
 
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- disable ligatures
 
-config.max_fps = 120 -- default is 60
+config.max_fps = 144 -- default is 60
 
 return config
 
