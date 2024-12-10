@@ -102,15 +102,16 @@ function filter1440Sponsors() {
     alertText: '1440',
   });
 
+  // Fade out sections containing ad messaging
   const spans = document.querySelectorAll('span');
   spans.forEach(span => {
     if (span.textContent.includes('In partnership with')) {
       const parent = span.closest('table');
-      // parent.style.border = "2px solid red"; // or any other highlight style you prefer
+      // parent.style.border = "2px solid red";
 
       const secondParent = parent.parentNode.closest('table');
       if (secondParent) {
-        // secondParent.style.border = "2px solid red"; // or any other highlight style you prefer
+        // secondParent.style.border = "2px solid red";
         secondParent.style.opacity = 0.1;
       }
     }
@@ -123,11 +124,13 @@ function filterMorningBrewSponsors() {
   if (!isFromSender(MORNINGBREW_SENDER)) {
     return;
   }
+
   addScriptAlertBanner({
     emailContentSearchText: MORNINGBREW_EMAIL_CONTENT,
     alertText: 'Morning Brew',
   });
 
+  // Fade out sections containing ad messaging
   const headers = document.querySelectorAll('h3');
   headers.forEach(header => {
     if (
@@ -138,13 +141,15 @@ function filterMorningBrewSponsors() {
       header.textContent.toLocaleLowerCase().includes('share the brew')
     ) {
       const parent = header.closest('table');
-      // parent.style.border = "2px solid red"; // or any other highlight style you prefer
+      // parent.style.border = "2px solid red";
+      parent.style.opacity = 0.1;
 
-      const secondParent = parent.parentNode.closest('table');
-      if (secondParent) {
-        // secondParent.style.border = "2px solid red"; // or any other highlight style you prefer
-        secondParent.style.opacity = 0.1;
-      }
+      // This highlights the whole email table
+      // const secondParent = parent.parentNode.closest('table');
+      // if (secondParent) {
+      //   secondParent.style.border = "2px solid red";
+      //   secondParent.style.opacity = 0.1;
+      // }
     }
   });
 }
