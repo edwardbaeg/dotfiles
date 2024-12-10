@@ -15,11 +15,10 @@ return {
          "pmizio/typescript-tools.nvim", -- native lua typescript support
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
-         "j-hui/fidget.nvim", -- small nvim-lsp progress ui
+         -- "j-hui/fidget.nvim", -- small nvim-lsp progress ui -- replaced with noice.lsp
          "nvim-tree/nvim-web-devicons", -- adds icons
       },
       config = function()
-         require("fidget").setup({})
 
          require("lspsaga").setup({
             lightbulb = {
@@ -382,7 +381,9 @@ return {
 
    {
       -- lsp garbage collector; stop inactive LSP clients to save RAM
+      -- This might be breaking copilot?
       "zeioth/garbage-day.nvim",
+      enabled = false,
       dependencies = "neovim/nvim-lspconfig",
       event = "VeryLazy",
       opts = {},

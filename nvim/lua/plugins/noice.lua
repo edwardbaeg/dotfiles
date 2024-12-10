@@ -1,4 +1,6 @@
 return {
+   -- configurable UI views
+   -- cmdline, lsp progress
    "folke/noice.nvim",
    event = "VeryLazy",
    opts = {
@@ -17,6 +19,10 @@ return {
          cmdline = {
             -- view = "cmdline" -- classic view
          },
+         messages = {
+            -- enabled = false,
+         },
+         -- show lsp progress messages
          lsp = {
             signature = {
                enabled = false,
