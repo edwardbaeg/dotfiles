@@ -74,9 +74,9 @@ set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "edit [h]am
 
 -- Buffers
 -- emacs style buffer movement
-set("n", "<leader>bn", ":bn<cr>")
-set("n", "<leader>bp", ":bp<cr>")
-set("n", "<leader>bd", ":bd<cr>")
+set("n", "<leader>bn", ":bn<cr>", { silent = true })
+set("n", "<leader>bp", ":bp<cr>", { silent = true })
+set("n", "<leader>bd", ":bd<cr>", { silent = true })
 
 set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
 
