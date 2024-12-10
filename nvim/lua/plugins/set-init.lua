@@ -1,5 +1,4 @@
 -- misc plugins
-
 return {
    {
       -- persist cursor location
