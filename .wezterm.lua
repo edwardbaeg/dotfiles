@@ -27,8 +27,11 @@ config.colors = {
 config.window_background_gradient = {
    orientation = "Vertical",
    colors = {
+      -- "#1e1e1e", -- old background color
+
+      "#141414",
       "#021818",
-      -- "#1e1e1e",
+      "#021818",
       "#141414",
    },
 }
@@ -46,7 +49,7 @@ config.macos_window_background_blur = 75
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 
--- config.line_height = 1
+-- Decrease line density
 config.line_height = 1.1
 
 config.font = wezterm.font("Operator Mono", { weight = "Book" })
