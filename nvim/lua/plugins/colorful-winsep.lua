@@ -6,6 +6,7 @@ return {
    event = "VeryLazy",
    -- config = true,
 
+   -- TODO: decrease border width
    config = function()
       -- local frappe = require("catppuccin.palettes").get_palette("frappe")
       require("colorful-winsep").setup({

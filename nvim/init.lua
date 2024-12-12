@@ -14,6 +14,7 @@ require("settings")
 -- fix showing git stuff (lua line and vim fugitive) for lua line (but it works for gitsigns?)
 -- determine a way to open *.stories or *.test for the given file
 -- update virtual text priority -> codeium > eslint, or move eslint to the right side of the window?
+-- move legacy/inactive settings to a separate file that is not loaded?
 
 -- [[ Usability Notes ]]
 -- Buffers/Splits/Windows

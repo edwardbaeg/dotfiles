@@ -288,6 +288,7 @@ function vp() {
 }
 
 # TODO: use fzf-tmux?
+# TODO: fix opening the selected line in nvim
 # NOTE: this doesn't support <tab> selection
 # https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
 function vg {

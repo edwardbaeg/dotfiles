@@ -57,7 +57,10 @@ return {
                enable = true,
                additional_vim_regex_highlighting = true, -- regex highlighting helps with jsx indenting, but otherwise its bad
             },
-            indent = { enable = true, disable = { "python" } },
+            indent = {
+               enable = true,
+               disable = { "python" }, -- there are issues with python https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
+            },
             textobjects = {
                select = {
                   enable = true,
@@ -169,6 +172,7 @@ return {
 
    {
       -- split or join blocks of code using treesitter
+      -- note: the treesitter integration works well with jsx compared to mini.splitjoin
       "Wansmer/treesj",
       cmd = "TSJToggle",
       config = function()
@@ -223,5 +227,13 @@ return {
             },
          })
       end,
+   },
+
+   {
+      -- TODO: add keymapping for this
+      "aaronik/treewalker.nvim",
+      opts = {
+         highlight = true, -- default is false
+      },
    },
 }

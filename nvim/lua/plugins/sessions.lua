@@ -1,7 +1,7 @@
 return {
-
    {
       -- automatic sessions management
+      -- TODO: consider folke/persistence.nvim
       "rmagatti/auto-session",
       config = function()
          require("auto-session").setup({
@@ -11,6 +11,9 @@ return {
          -- vim.keymap.set("n", "<leader>ls", require("auto-session.session-lens").search_session, {
          --    noremap = true,
          -- })
+         vim.keymap.set("n", "<leader>ss", "<cmd>SessionSave<cr>", {
+            noremap = true,
+         })
          vim.keymap.set("n", "<leader>sr", "<cmd>SessionRestore<cr>", {
             noremap = true,
          })
@@ -19,6 +22,7 @@ return {
          vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
       end,
    },
+
    {
       -- wrapper for session commands
       "Shatur/neovim-session-manager",

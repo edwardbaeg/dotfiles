@@ -20,7 +20,7 @@ return {
             row = lines * 0.80,
             col = columns,
          },
-         -- todo include the parent dir for index files
+         -- TODO: include the parent dir for index files
          format = "filename",
       })
 

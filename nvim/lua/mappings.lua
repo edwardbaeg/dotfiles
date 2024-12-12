@@ -1,14 +1,15 @@
 -- [[ Keymaps ]]
 
 -- TODO: break up into modules or something with more structure
+-- also consider better organization for legibility
 
 local set = vim.keymap.set
 
--- escaping
+-- Escaping
 set("i", "jk", "<Esc>") -- leave insert mode
 set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 
--- cursor movement
+-- Cursor movement
 set({ "n", "v" }, "H", "^") -- move cursor to start of line
 set({ "n", "v" }, "L", "$") -- move cursor to end of line
 
@@ -30,7 +31,7 @@ set("n", "s", "<nop>", { noremap = true, silent = true }) -- kinda works, but bl
 -- vim.keymap.del("n", "s") -- disable s -- doesn't work
 -- vim.cmd([[unmap s]]) -- doesn't work
 
--- various leader keymaps
+-- Leader keymaps
 set("n", "<leader>ex", ":ex .<cr>", { desc = "open netrw in directory :ex ." }) -- open netrw
 set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
 set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights", silent = true })
@@ -52,7 +53,7 @@ set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
 set("n", "<leader>gi", ":Inspect<cr>") -- inspect treesitter nodes, helps with highlighting
 set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
 
--- macros
+-- Macros
 set("n", "Q", "q") -- use Q to start/stop recording a macro
 set("n", "q", "<nop>") -- disable q for macros as it interferes with completions
 
@@ -72,15 +73,14 @@ set("n", "<leader>et", ":edit ~/.tmux.conf<cr>", { desc = "edit [t]mux.conf" })
 set("n", "<leader>ez", ":edit ~/.zshrc<cr>", { desc = "edit [z]shrc" })
 set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "edit [h]ammerspoon" })
 
--- Buffers
--- emacs style buffer movement
+-- Buffers (emacs style)
 set("n", "<leader>bn", ":bn<cr>", { silent = true })
 set("n", "<leader>bp", ":bp<cr>", { silent = true })
 set("n", "<leader>bd", ":bd<cr>", { silent = true })
 
 set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
 
--- emacs style window movement
+-- Window movement (emacs style)
 set("n", "<leader>w", "<c-w>")
 -- set("n", "<leader>wj", "<cmd>wincmd j<cr>")
 -- set("n", "<leader>wk", "<cmd>wincmd k<cr>")
@@ -95,7 +95,7 @@ set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical spli
 set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
 set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
 
--- type console.log with yanked text
+-- Type console.log with yanked text
 vim.api.nvim_set_keymap("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true })
 
 -- Don't copy empty lines to the register

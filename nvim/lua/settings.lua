@@ -4,7 +4,7 @@ vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
 
 -- Wrapping
--- vim.o.wrap = false -- Don't wrap lines
+-- vim.o.wrap = false -- set visual wrapping of long lines
 vim.o.linebreak = true -- wrap at spaces instead of the middle of a word
 vim.o.breakindent = true -- wrapped lines will have consistent indents
 vim.o.showbreak = "… " -- string added to the start of wrapped lines, ellipsis, this is highlighted with NonText
@@ -16,7 +16,7 @@ vim.o.completeopt = "menuone,noselect" -- better completion experience
 vim.o.mouse = "a" -- Enable mouse moedwardbaeg9@gmail.com@de
 vim.o.cursorline = true -- highlight line with cursor
 vim.o.hidden = true -- allow switching buffers without saving
-vim.o.scrolloff = 24 -- number of lines to keep above/below the cursor
+vim.o.scrolloff = 20 -- number of lines to keep above/below the cursor -- FIXME: this sometimes get unset?
 -- vim.o.winblend = 10 -- floating window transparency -- disable for transparent mode
 
 vim.o.ignorecase = true -- case insensitive searching
@@ -162,6 +162,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 })
 
 -- resize splits if window got resized
+-- TODO: this might be a little slow?
 vim.api.nvim_create_autocmd({ "VimResized" }, {
    group = augroup("resize_splits"),
    callback = function()
@@ -215,10 +216,12 @@ vim.api.nvim_create_autocmd("FileType", {
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows
--- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" }) -- darker cursorline
--- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" }) -- darker cursorline
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- darker cursorline -- set with reactive.nvim
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" })
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" })
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- set with reactive.nvim
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#0A2222" }) -- set with reactive.nvim
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
+
 
 -- TODO: only highlight trailing whitespace
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" })

@@ -49,6 +49,7 @@ Set up [below](#neovim-setup).
 #### Less common
 
 - `hyperfine` commandline benchmarking
+<!-- TODO: replace with fastfetch -->
 - `neofetch` display system info
 - `qrcp` qr code generator for wifi transfer
 
