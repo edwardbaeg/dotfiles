@@ -15,6 +15,7 @@ return {
 
    {
       -- lists of diagnostics, references, telescopes, quickfix, and location lists
+      -- TODO: group together quickfix plugins
       "folke/trouble.nvim",
       dependencies = "nvim-tree/nvim-web-devicons",
       event = "VeryLazy",
@@ -193,6 +194,7 @@ return {
 
    {
       -- adds syntax highlighting for quickfix lists
+      -- TODO: group together quickfix plugins
       "stevearc/quicker.nvim",
       event = "FileType qf",
       config = function()
@@ -201,7 +203,6 @@ return {
    },
 
    {
-      -- automatically centers and buffers window(s) if the screen is wide automatically centers and buffers window(s) if the screen is wide automatically centers and buffers window(s) if the screen is wide automatically centers and buffers window(s) if the screen is wide
       -- automatically centers and buffers window(s) if the screen is wide
       -- :NoNeckPain
       "shortcuts/no-neck-pain.nvim",
@@ -210,6 +211,9 @@ return {
          --    enableOnVimEnter = true,
          -- },
       },
+      init = function()
+         vim.keymap.set("n", "<leader>np", ":NoNeckPain<cr>")
+      end,
    },
 
    {
