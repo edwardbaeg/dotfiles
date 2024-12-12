@@ -177,6 +177,7 @@ return {
 
    {
       -- highlight yank, paste, undo, redo
+      -- TODO: sometimes has some issues after exiting floating windows, like for navbuddy?
       "mei28/luminate.nvim",
       event = { "VeryLazy" },
       config = function()
@@ -186,6 +187,7 @@ return {
 
    {
       -- improve interacting with quickfix and location list
+      -- TODO: group together quickfix plugins
       "kevinhwang91/nvim-bqf",
       config = function()
          require("bqf").setup()
@@ -330,5 +332,12 @@ return {
             backward_key = "<leader><c-o>",
          })
       end,
+   },
+
+   {
+      -- Improve marks experience
+      "chentoast/marks.nvim",
+      event = "VeryLazy",
+      opts = {},
    },
 }
