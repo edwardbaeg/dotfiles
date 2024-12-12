@@ -4,7 +4,9 @@ return {
       -- NOTE: requires luarocks to be installed
       -- TODO: add `q` to quit
       "nvim-neorg/neorg",
-      lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+      enabed = false,
+      event = "VeryLazy",
+      -- lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
       version = "*", -- Pin Neorg to the latest stable release
       config = function()
          require("neorg").setup({
