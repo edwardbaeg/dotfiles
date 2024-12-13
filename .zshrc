@@ -288,7 +288,6 @@ function vp() {
 }
 
 # TODO: use fzf-tmux?
-# TODO: fix opening the selected line in nvim
 # NOTE: this doesn't support <tab> selection
 # https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
 function vg {
@@ -296,7 +295,7 @@ function vg {
   | command fzf -d':' --ansi \
     --preview "command bat -p --color=always {1} --highlight-line {2}" \
     --preview-window ~8,+{2}-5 \
-  | awk -F':' '{print $1}' \
+  | awk -F':' '{print $1 " +" $2}' \
   | xargs -r ${EDITOR:-nvim}
 }
 
