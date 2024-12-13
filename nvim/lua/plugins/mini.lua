@@ -79,23 +79,23 @@ return {
          })
 
          -- smooth scrolling
-         -- local animate = require("mini.animate")
-         -- animate.setup({
-         --    scroll = {
-         --       enable = not vim.g.vscode,
-         --       timing = animate.gen_timing.linear({
-         --          easing = "out",
-         --          -- duration = 100,
-         --          -- duration = 50,
-         --          duration = 75,
-         --          unit = "total",
-         --       }),
-         --    },
-         --    cursor = { enable = false }, -- cursor path
-         --    resize = { enable = false }, -- window resize
-         --    open = { enable = false }, -- window opening
-         --    close = { enable = false }, -- window closing
-         -- })
+         local animate = require("mini.animate")
+         animate.setup({
+            scroll = {
+               enable = not vim.g.vscode,
+               timing = animate.gen_timing.linear({
+                  easing = "out",
+                  -- duration = 100,
+                  -- duration = 50,
+                  duration = 75,
+                  unit = "total",
+               }),
+            },
+            cursor = { enable = false }, -- cursor path
+            resize = { enable = false }, -- window resize
+            open = { enable = false }, -- window opening
+            close = { enable = false }, -- window closing
+         })
 
          -- track and reuse system visits
          require("mini.visits").setup({})
