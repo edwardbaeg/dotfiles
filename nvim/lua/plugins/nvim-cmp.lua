@@ -1,24 +1,25 @@
 return {
    -- Autocomplete menu, snippets, and AI completion
    -- breaking changes are tracked in https://github.com/hrsh7th/nvim-cmp/issues/231
+   -- TODO: consider replacing with blink.nvim
    "iguanacucumber/magazine.nvim",
-   name = "nvim-cmp",
-   -- "hrsh7th/nvim-cmp",
+   name = "nvim-cmp", -- drop in replacement for "hrsh7th/nvim-cmp", so set name
    -- NOTE: do NOT lazy load this
    -- event = "VeryLazy",
    dependencies = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-cmdline", -- cmdline menu fuzzy
-      "hrsh7th/cmp-buffer",  -- source for buffer words
+      "hrsh7th/cmp-buffer", -- source for buffer words
+      "hrsh7th/cmp-nvim-lsp-signature-help", -- source for lsp signature definitions
       {
          "L3MON4D3/LuaSnip", -- snippet engine
          build = "make install_jsregexp",
       },
       "saadparwaiz1/cmp_luasnip",
       "rafamadriz/friendly-snippets", -- vscode like snippets
-      "onsails/lspkind.nvim",         -- pictograms for completion items
+      "onsails/lspkind.nvim", -- pictograms for completion items
       {
-         "tzachar/cmp-tabnine",       -- AI powered completion
+         "tzachar/cmp-tabnine", -- AI powered completion
          build = "./install.sh",
       },
       "zbirenbaum/copilot-cmp", -- add copilot as a source
@@ -33,11 +34,12 @@ return {
       })
 
       local sources = {
-         { name = "nvim_lsp",    max_item_count = 10, priority = 2 },
-         { name = "codeium",     max_item_count = 5,  priority = 1 },
-         { name = "copilot",     max_item_count = 5,  priority = 1 },
-         { name = "luasnip",     max_item_count = 2,  priority = 1 },
-         { name = "cmp_tabnine", max_item_count = 5,  priority = 1 },
+         { name = "nvim_lsp", max_item_count = 10, priority = 2 },
+         { name = "codeium", max_item_count = 5, priority = 1 },
+         { name = "copilot", max_item_count = 5, priority = 1 },
+         { name = "luasnip", max_item_count = 2, priority = 1 },
+         { name = "cmp_tabnine", max_item_count = 5, priority = 1 },
+         -- { name = "nvim_lsp_signature_help" }, -- replaced with lsp_signature
          {
             name = "buffer",
             max_item_count = 5,
@@ -54,7 +56,6 @@ return {
                end,
             },
          },
-         -- { name = "cmdline" },
       }
 
       local format_source_mapping = {
@@ -67,6 +68,7 @@ return {
          cmdline = "[Cmd]",
          copilot = "[Copilot]",
          codeium = "[Codeium]", -- requires codeium.nvim
+         -- nvim_lsp_signature_help = "[Signature]",
       }
 
       -- Don't hide copilot suggestions when nvim-cmp is shown
