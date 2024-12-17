@@ -111,12 +111,17 @@ return {
       -- quick navigation, extends search, extends char motions, remote operations
       "folke/flash.nvim",
       event = "VeryLazy",
+      ---@type Flash.Config
       opts = {
          labels = "asdfqwertgjklh",
          search = {
             mode = function(str)
                return "\\<" .. str
             end,
+         },
+         prompt = {
+            enabled = true,
+            prefix = { { "⚡Flash", "FlashPromptIcon" } },
          },
          modes = {
             search = {
@@ -141,6 +146,7 @@ return {
             desc = "Flash",
          },
          {
+            -- Visual select treesitter node
             "S",
             mode = { "n", "o" },
             function()
@@ -149,6 +155,8 @@ return {
             desc = "Flash Treesitter",
          },
          {
+            -- Operator on remote location
+            -- Ex: yank some remote word with yr<flash>iw
             "r",
             mode = "o",
             function()

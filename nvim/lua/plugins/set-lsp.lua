@@ -9,7 +9,7 @@ return {
       dependencies = {
          "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
-         "nvimtools/none-ls.nvim", -- set up formatters and linters
+         "nvimtools/none-ls.nvim", -- set up formatters and linters (null-ls replacement)
          "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
 
          "pmizio/typescript-tools.nvim", -- native lua typescript support
@@ -360,7 +360,7 @@ return {
    },
 
    {
-      -- show lsp signature while typing
+      -- show lsp signature while typing in 1) floating window and 2) virtual text
       "ray-x/lsp_signature.nvim",
       event = "VeryLazy",
       opts = {
@@ -369,11 +369,10 @@ return {
             current = "← ", -- when the hint is on the same line
             below = "↖ ", -- when the hint is on the line below the current line
          },
-         transpancy = 50,
          hi_parameter = "LspSignatureActiveParameter",
          hint_scheme = "Comment", -- TODO: see what other schemes are there
       },
-      -- TODO: might need to configure on_attach for plugins
+      -- TODO?: might need to configure on_attach for plugins? or might be automatically attached
       config = function(_, opts)
          require("lsp_signature").setup(opts)
       end,
@@ -381,9 +380,8 @@ return {
 
    {
       -- lsp garbage collector; stop inactive LSP clients to save RAM
-      -- This might be breaking copilot?
       "zeioth/garbage-day.nvim",
-      enabled = false,
+      enabled = false, -- this might be breaking copilot?
       dependencies = "neovim/nvim-lspconfig",
       event = "VeryLazy",
       opts = {},
