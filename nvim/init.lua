@@ -1,13 +1,17 @@
 -- [[ NEOVIM CONFIG ROOT ]]
 
-require("lazysetup")
+require("config.lazy")
+require("config.mappings")
+require("config.settings")
 require("lazy").setup("plugins", {
+   -- automatically change for config file changes and reload ui
    change_detection = {
-      enabled = false,
+      enabled = true,
+      notify = true, -- show notification when changes are found
    },
+   -- automatically check for plugin updates
+   checker = { enabled = true },
 })
-require("mappings")
-require("settings")
 
 --[[ TODO
 - rewrite all vimscript stuff to lua
