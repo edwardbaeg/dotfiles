@@ -1,4 +1,4 @@
--- [[ NEOVIM CONFIG ROOT ]]
+--[[ NEOVIM CONFIG ROOT ]]--
 
 require("config.lazy")
 require("config.mappings")
@@ -12,6 +12,7 @@ require("lazy").setup("plugins", {
    -- automatically check for plugin updates
    checker = { enabled = true },
 })
+require("config.post-plugins")
 
 --[[ TODO
 - rewrite all vimscript stuff to lua

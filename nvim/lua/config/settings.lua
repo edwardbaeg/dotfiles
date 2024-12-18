@@ -1,4 +1,4 @@
--- [[Vim Options]]
+--[[ Vim Options ]]--
 
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
