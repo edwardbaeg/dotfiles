@@ -162,6 +162,7 @@ alias ovim="oldvim"
 alias vsr="nvim -c \"SessionRestore\""
 alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
+alias vlazy='NVIM_APPNAME=nvim-lazyvim nvim' # LazyVim
 
 # open files in vim
 alias vz="vim ~/.zshrc"
@@ -333,6 +334,19 @@ function wttr() {
         local location=$(echo "$@" | tr ' ' '+')
         curl -s "v2d.wttr.in/$location"
     fi
+}
+
+## fuzzy finder for launching nvim configs
+# https://michaeluloth.com/neovim-switch-configs/
+function vv() {
+  # Assumes all configs exist in directories named ~/.config/nvim-*
+  local config=$(fd --max-depth 1 --glob 'nvim*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
+ 
+  # If I exit fzf without selecting a config, don't open nvim
+  [[ -z $config ]] && echo "No config selected" && return
+ 
+  # Open Neovim with the selected config
+  NVIM_APPNAME=$(basename $config) nvim $@
 }
 
 # -- Post install --------------------------------------------------------------
