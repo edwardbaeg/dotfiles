@@ -156,8 +156,8 @@ return {
          },
          {
             -- Operator on remote location
-            -- Ex: yank some remote word with yr<flash>iw
-            "r",
+            -- Ex: yank remote word with yR<flash>iw or delete remote line with dR<flash>d
+            "R",
             mode = "o",
             function()
                require("flash").remote()
