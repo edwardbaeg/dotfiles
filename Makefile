@@ -1,5 +1,5 @@
 all:
-	stow --verbose --restow -t ~ nvim
+	stow-nvim
 
-nvim:
+stow-nvim:
 	stow --verbose --restow -t ~ nvim
