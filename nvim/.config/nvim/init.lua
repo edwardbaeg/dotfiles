@@ -1,7 +1,7 @@
 --[[ NEOVIM CONFIG ROOT ]]--
 
 require("config.lazy")
-require("config.mappings")
+require("config.keymaps")
 require("config.settings")
 require("lazy").setup("plugins", {
    -- automatically change for config file changes and reload ui
