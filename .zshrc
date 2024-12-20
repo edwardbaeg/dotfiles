@@ -352,7 +352,7 @@ export FZF_DEFAULT_OPTS='
 eval "$(zoxide init zsh)"
 
 # setup thefuck
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
 alias f=fuck
 
 # -- NOTES ---------------------------------------------------------------
