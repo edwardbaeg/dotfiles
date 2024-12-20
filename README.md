@@ -35,6 +35,7 @@ Set up [below](#neovim-setup).
 - `ripgrep` better grep (and faster than ag)
 - `zoxide` directory jumper
 - `ncdu` ncurses disk usage viewer
+- `stow` symlink manager
 - `tldr` community written short man pages
 
 #### TUI
@@ -57,7 +58,7 @@ Set up [below](#neovim-setup).
 
 - `unar` for yazi, archive preview
 - `poppler` for yazi, pdf preview
-- `gnu-sed` for vim-spectre
+- `gnu-sed` for nvim, vim-spectre
 - `zsh-completions` for zsh, command line autocompletions
 
 **Terminal Multiplexer**: `tmux`
@@ -89,19 +90,19 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 ## Applications:
 
-- `Raycast`: launcher, see ./raycast
+- `Arc`: brower
+- `Bartender`: keep menubar tidier
+- `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
+- `Choosy`: browser launcher
+- `Dato`: menubar calendar and meetings
+- `Hammerspoon`: mac scripting
 - `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
-- `Shortcat`: keyboard shortcuts everywhere
-- `Bartender`: keep menubar tidier
-- `Choosy`: browser launcher
-- `Shottr`: screenshot tool
-- `Arc`: brower
-- `Hammerspoon`: mac scripting
-- `Stats`: menubar system monitoring
-- `Dato`: menubar calendar and meetings
 - `Monitor Control`: menubar monitor brightness
-- `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
+- `Raycast`: launcher, see ./raycast
+- `Shortcat`: keyboard shortcuts everywhere
+- `Shottr`: screenshot tool
+- `Stats`: menubar system monitoring
 
 ## oh-my-zsh
 
