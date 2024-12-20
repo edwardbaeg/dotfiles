@@ -67,10 +67,27 @@ vim.api.nvim_create_autocmd("FileType", {
 -- augroup END
 -- ]])
 
--- set clipboard per os
+-- set clipboard for wsl
+if vim.fn.has('wsl') == 1 then
+  -- print("is wsl")
+  vim.cmd[[set clipboard=unnamedplus]]
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+      ['+'] = 'clip.exe',
+      ['*'] = 'clip.exe',
+    },
+    paste = {
+      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+  }
+end
+
 vim.cmd([[
   if has("win32")
-    " echo "is this windows?"
+    echo "is this windows?"
     set clipboard=unnamed " integrate with windows
   else
     if has("unix")
