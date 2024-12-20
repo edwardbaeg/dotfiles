@@ -85,20 +85,17 @@ if vim.fn.has('wsl') == 1 then
   }
 end
 
-vim.cmd([[
-  if has("win32")
-    echo "is this windows?"
-    set clipboard=unnamed " integrate with windows
-  else
-    if has("unix")
-      let s:uname = system("uname")
-      if s:uname == "Darwin\n"
-        " echo "is mac"
-        set clipboard=unnamedplus " integrate with mac
-      endif
-    endif
-  endif
-]])
+-- integrate with system clipboards
+if vim.fn.has("win32") == 1 then
+  -- print("is windows?")
+  vim.opt.clipboard = "unnamed"
+elseif vim.fn.has("unix") == 1 then
+  local uname = vim.fn.system("uname")
+  if uname == "Darwin\n" then
+    -- print("is mac")
+    vim.opt.clipboard = "unnamedplus"
+  end
+end
 
 -- View output from running in terminal
 vim.cmd([[
