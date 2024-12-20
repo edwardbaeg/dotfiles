@@ -29,23 +29,23 @@ Set up [below](#neovim-setup).
 
 - `bat` better cat (syntax highlighting and pager)
 - `eza` better ls
-- `fd` better find
+- `fd` better find (fd-find for `apt`)
 - `fzf` fuzzy finder
 - `git-delta` better diff
-- `ripgrep` better grep (and faster than ag)
-- `zoxide` directory jumper
 - `ncdu` ncurses disk usage viewer
+- `ripgrep` better grep (and faster than ag)
 - `stow` symlink manager
 - `tldr` community written short man pages
+- `zoxide` directory jumper
 
 #### TUI
 
 - `lazygit` git interface
+- `nchat` telegram
 - `neovim` better vim (async, community developed)
 - `ranger` file manager (install with `pip install ranger-fm`)
 - `tmux` terminal multiplexer
 - `yazi` file manager, seemingly faster than ranger
-- `nchat` telegram
 
 #### Less common
 
@@ -56,9 +56,9 @@ Set up [below](#neovim-setup).
 
 #### Dependencies
 
-- `unar` for yazi, archive preview
-- `poppler` for yazi, pdf preview
 - `gnu-sed` for nvim, vim-spectre
+- `poppler` for yazi, pdf preview
+- `unar` for yazi, archive preview
 - `zsh-completions` for zsh, command line autocompletions
 
 **Terminal Multiplexer**: `tmux`
