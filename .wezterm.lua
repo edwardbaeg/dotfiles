@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 local config = {}
 
@@ -69,6 +70,14 @@ end
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- disable ligatures
 
 config.max_fps = 144 -- default is 60
+
+-- Windows specific config
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+   -- Paste with CTRL+SHIFT+V
+   config.keys = {
+      { key = 'V', mods = 'CTRL|SHIFT', action = act.PasteFrom 'Clipboard' },
+   }
+end
 
 return config
 
