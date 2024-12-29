@@ -1,4 +1,4 @@
---[[ NEOVIM CONFIG ROOT ]]--
+--[[ NEOVIM CONFIG ROOT ]]
 
 require("config.lazy")
 require("config.keymaps")
@@ -19,7 +19,6 @@ require("config.post-plugins")
 - determine a way to open *.stories or *.test for the given file
 - move legacy/inactive settings to a separate file that is not loaded?
 ]]
---
 
 --[[ Usability Notes
 - Buffers/Splits/Windows
@@ -54,7 +53,6 @@ require("config.post-plugins")
 - :copen to open the quickfix window
 - :e to read external changes to a file
 ]]
---
 
 --[[ KEYMAP GUIDE
 - Don't add to operator pending for y, d
@@ -64,4 +62,3 @@ require("config.post-plugins")
 - <leader>s: sessions
 - <leader>t: tab or toggle
 ]]
---
