@@ -1,6 +1,7 @@
 {
   "extras": [
-
+    "lazyvim.plugins.extras.ai.copilot",
+    "lazyvim.plugins.extras.ui.smear-cursor"
   ],
   "news": {
     "NEWS.md": "10960"
