@@ -10,7 +10,7 @@ require("lazy").setup("plugins", {
       notify = true, -- show notification when changes are found
    },
    -- check for plugin updates and notify on launch
-   checker = { enabled = true },
+   checker = { enabled = false },
 })
 require("config.post-plugins")
 
