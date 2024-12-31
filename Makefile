@@ -8,3 +8,6 @@ stow-tmux:
 
 stow-zsh:
 	stow --verbose --restow -t ~ zsh
+
+stow-hammerspoon:
+	stow --verbose --restow -t ~ hammerspoon
