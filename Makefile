@@ -1,4 +1,4 @@
-all: stow-nvim stow-tmux stow-zsh
+all: stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm
 
 stow-nvim:
 	stow --verbose --restow -t ~ nvim
@@ -11,3 +11,6 @@ stow-zsh:
 
 stow-hammerspoon:
 	stow --verbose --restow -t ~ hammerspoon
+
+stow-wezterm:
+	stow --verbose --restow -t ~ wezterm
