@@ -1,8 +1,10 @@
 # ~/.zshrc
 
 # setup direnv
-emulate zsh -c "$(direnv export zsh)"
-eval "$(direnv hook zsh)"
+if command -v direnv >/dev/null 2>&1; then
+    emulate zsh -c "$(direnv export zsh)"
+    eval "$(direnv hook zsh)"
+fi
 
 # -- Instant prompt ------------------------------------------------------------
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -238,18 +240,15 @@ alias dots="cd ~/dev/dotfiles"
 alias whatbox="ssh dwrdbg@proteus.whatbox.ca"
 
 # conditional command aliases
-if command -v eza &> /dev/null
-then
+if command -v eza &> /dev/null; then
     alias ls="eza --group-directories-first"
 fi
 
-if command -v bat &> /dev/null
-then
+if command -v bat &> /dev/null; then
     alias cat="bat"
 fi
 
-# if command -v zoxide &> /dev/null
-# then
+# if command -v zoxide &> /dev/null; then
 #     alias cd="z"
 # fi
 
