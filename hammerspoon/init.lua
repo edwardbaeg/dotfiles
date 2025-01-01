@@ -25,7 +25,6 @@ hs.ipc.cliInstall()
 hs.loadSpoon("EmmyLua")
 
 --[[
-
 Created ojects should be captured in gloal variables.
 Otherwise, they will be garbage collected.
 https://www.hammerspoon.org/go/ "A quick aside about variable lifecycles"

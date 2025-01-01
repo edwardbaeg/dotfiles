@@ -12,46 +12,49 @@ function _G.assignAppHotKey(modifiers, key, appName, callback)
    end)
 end
 
-function _G.getSetArcProfileFn(profileNum)
+---@param profileIndex string
+function _G.setArcProfile(profileIndex)
+   hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
+   hs.timer.doAfter(0.1, function()
+      hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
+   end)
+end
+
+---@param profileIndex string
+---@return function
+function _G.getArcProfileSetter(profileIndex)
    return function()
-      hs.eventtap.keyStroke({ "ctrl" }, profileNum)
-      hs.timer.doAfter(0.1, function()
-         hs.eventtap.keyStroke({ "ctrl" }, profileNum)
-      end)
+      setArcProfile(profileIndex)
    end
 end
 
-assignAppHotKey(hyperkey, "0", "Wezterm")
-assignAppHotKey(hyperkey, "8", "Slack")
+function Main()
+   assignAppHotKey(hyperkey, "0", "Wezterm")
+   assignAppHotKey(hyperkey, "8", "Slack")
 
-if constants.isPersonal then
-   assignAppHotKey(hyperkey, "9", "Arc")
-   assignAppHotKey(constants.allkey, "9", "Arc")
-else
-   assignAppHotKey(constants.allkey, "9", "Arc", getSetArcProfileFn("2")) -- personal
-   assignAppHotKey(hyperkey, "9", "Arc", getSetArcProfileFn("4")) -- work
+   if constants.isPersonal then
+      assignAppHotKey(hyperkey, "9", "Arc")
+      assignAppHotKey(constants.allkey, "9", "Arc")
+   else
+      assignAppHotKey(constants.allkey, "9", "Arc", getArcProfileSetter("2")) -- personal
+      assignAppHotKey(hyperkey, "9", "Arc", getArcProfileSetter("4")) -- work
+   end
+
+   -- usage: hammerspoon://arcPersonal
+   hs.urlevent.bind("arcPersonal", function()
+      local success = hs.application.launchOrFocus("Arc")
+      if success then
+         setArcProfile("2")
+      end
+   end)
+
+   -- usage: hammerspoon://arcWork
+   hs.urlevent.bind("arcWork", function()
+      local success = hs.application.launchOrFocus("Arc")
+      if success then
+         setArcProfile("4")
+      end
+   end)
 end
 
--- LEGACY: separate browsers / keymaps for personal and work
--- local personalBrowser = "Arc"
--- local workBrowser = "Arc"
---
--- if constants.isPersonal then
---    assignAppHotKey(hyperkey, "9", personalBrowser)
---    assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", workBrowser)
--- end
---
--- if not constants.isPersonal then
---    assignAppHotKey(hyperkey, "9", workBrowser, function()
---       hs.eventtap.keyStroke({ "ctrl" }, "4")
---       hs.timer.doAfter(0.1, function()
---          hs.eventtap.keyStroke({ "ctrl" }, "4")
---       end)
---    end)
---    assignAppHotKey({ "cmd", "shift", "ctrl" }, "9", personalBrowser, function()
---       hs.eventtap.keyStroke({ "ctrl" }, "2")
---       hs.timer.doAfter(0.1, function()
---          hs.eventtap.keyStroke({ "ctrl" }, "2")
---       end)
---    end)
--- end
+Main()
