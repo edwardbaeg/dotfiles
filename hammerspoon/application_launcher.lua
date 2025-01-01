@@ -2,6 +2,10 @@ local constants = require("constants")
 local hyperkey = constants.hyperkey
 
 -- TODO?: if the application is already focused, then hide it
+---@param modifiers table
+---@param key string
+---@param appName string
+---@param callback? function
 function _G.assignAppHotKey(modifiers, key, appName, callback)
    hs.hotkey.bind(modifiers, key, function()
       local success = hs.application.launchOrFocus(appName)
