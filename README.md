@@ -1,16 +1,17 @@
-# dotfiles
+# Dotfiles
 
-This is my neovim and terminal based development setup: Neovim in Tmux in Wezterm in MacOSX. Always a work progress!
+My neovim and terminal (Tmux in Wezterm) based development setup. Always a work progress!
 
 ![screenshot](assets/main.png)
 
 # Neovim
 
-Configuration: [init.lua](nvim/init.lua)
+Configuration: [init.lua](nvim/.config/nvim/init.lua)
 
+Key plugins:
 - **Plugin Manager**: lazy.nvim
 - **Colorscheme**: onedark/catppuccin
-- **Smart stuff**: Treesitter, LSP, completion, snippets, fuzzy finder
+- **Smarts**: Treesitter, LSP, completion, snippets, fuzzy finder
 - **Visuals**: statusline, tabline, scrollbar, whichkey, startpage
 - **Motions/operators/jump**: textobjects, comments, surrounds, sorting
 - **Terminal Integrations**: lazygit, ranger
@@ -19,11 +20,13 @@ Set up [below](#neovim-setup).
 
 # Terminal
 
+Application: [Wezterm](https://github.com/wez/wezterm)
+
 **Shell + Framework**: `zsh` + `oh-my-zsh`
 
 - autocompletions, vi-mode, syntax highlighting, fzf, z jumping
 
-## Terminal Apps
+## Packages
 
 #### Tools
 
@@ -66,9 +69,17 @@ Set up [below](#neovim-setup).
 - Configuration: [tmux.conf](.tmux.conf)
   - keymaps, session keybing toggle
 
-# MacOSX Setup
+# Setup
 
-Install brew (this will also install x-code command line tools if you don't have them yet)
+Copy over configuration files (using `stow`)
+
+```
+make all
+```
+
+## MacOS
+
+Install brew
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -88,7 +99,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 - Settings -> Keyboard -> Key repeat rate & Delay until repeat
 
-## Applications:
+### Applications:
 
 - `Arc`: brower
 - `Bartender`: keep menubar tidier
@@ -99,7 +110,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
 - `Monitor Control`: menubar monitor brightness
-- `Raycast`: launcher, see ./raycast
+- `Raycast`: launcher
 - `Shortcat`: keyboard shortcuts everywhere
 - `Shottr`: screenshot tool
 - `Stats`: menubar system monitoring
@@ -133,7 +144,7 @@ brew install neovim
 pip3 install --upgrade pynvim
 ```
 
-Ensure python is working with :checkhealth
+Ensure python is working with `:checkhealth`
 
 ### Dependencies
 
@@ -150,7 +161,7 @@ Configuration: [init.lua](hammerspoon/init.lua)
 
 Remap Capslock to Control under MacOs settings: Keyboard -> Keyboard Shortcuts -> Modifier Keys
 
-Keyboard layers (0-index), global keyboard bindings are managed through ZSA Oryx firmware, Hammerspoon
+Keyboard layers (0-index), global keyboard bindings are managed through ZSA Oryx firmware, Hammerspoon, and Karabiner Elements
 
 - Symbols, numbers
   - `Layer 1`
