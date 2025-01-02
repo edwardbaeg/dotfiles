@@ -19,6 +19,9 @@ end
 ---@param profileIndex string
 function _G.setArcProfile(profileIndex)
    hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
+   hs.timer.doAfter(0.05, function()
+      hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
+   end)
    hs.timer.doAfter(0.1, function()
       hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
    end)
