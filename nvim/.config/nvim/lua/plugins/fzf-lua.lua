@@ -21,7 +21,7 @@ return {
             builtin = {
                ["<c-p>"] = "preview-page-up",
                ["<c-n>"] = "preview-page-down",
-            }
+            },
          },
          -- TODO: figure out a way to allow searching in the pathname direction
          -- eg matching "hooks/init" by searching "hooks init" instead of "init hooks"
@@ -32,7 +32,9 @@ return {
             -- split results into multiple lines for narrow widths
             -- this requires fzf-lua >= 0.53
             multiline = 1,
-            -- rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e", -- this is the default
+
+            -- rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e", -- default
+            rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e", -- add hidden (for */.config/*)
             -- rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -g '!{.git,node_modules,firms}/*'", -- try to ignore some dirs
          },
          buffers = {

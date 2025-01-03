@@ -291,7 +291,7 @@ function vp() {
 # NOTE: this doesn't support <tab> selection
 # https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
 function vg {
-  command rg --color=always --line-number --no-heading --smart-case "${*:-}" \
+  command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" \
   | command fzf -d':' --ansi \
     --preview "command bat -p --color=always {1} --highlight-line {2}" \
     --preview-window ~8,+{2}-5 \
