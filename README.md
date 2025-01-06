@@ -148,6 +148,8 @@ Configuration: [init.lua](hammerspoon/init.lua)
 
 ## Keyboard
 
+Remap Capslock to Control under MacOs settings: Keyboard -> Keyboard Shortcuts -> Modifier Keys
+
 Keyboard layers (0-index), global keyboard bindings are managed through ZSA Oryx firmware, Hammerspoon
 
 - Symbols, numbers
@@ -194,11 +196,6 @@ echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa
 pbcopy < ~/.ssh/id_rsa.pub
 ```
 
-- Copy over or symlink `.gitconfig`. Example:
-
-```
-ln -s ~/dev/dotfiles/.gitconfig ~/.gitconfig
-```
 ## Mods
 
 - Spicetify: theme spotify
