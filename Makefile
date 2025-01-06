@@ -14,3 +14,7 @@ stow-hammerspoon:
 
 stow-wezterm:
 	stow --verbose --restow -t ~ wezterm
+
+stow-git:
+	stow --verbose --restow -t ~ gitconfig
+	stow --verbose --restow -t ~ gitignore
