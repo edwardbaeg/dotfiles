@@ -52,15 +52,15 @@ symlink_file_or_folder \
     $HOME/.config/yazi \
     yazi
 
-symlink_file_or_folder \
-    $DIR/nvim \
-    $HOME/.config/nvim \
-    nvim
+# symlink_file_or_folder \
+#     $DIR/nvim \
+#     $HOME/.config/nvim \
+#     nvim
 
-symlink_file_or_folder \
-    $DIR/hammerspoon \
-    $HOME/.hammerspoon \
-    Hammerspoon
+# symlink_file_or_folder \
+#     $DIR/hammerspoon \
+#     $HOME/.hammerspoon \
+#     Hammerspoon
 
 symlink_file_or_folder \
     "$DIR/neofetch/config.conf" \
@@ -77,26 +77,26 @@ symlink_file_or_folder \
     $HOME/.config/ranger \
     ranger
 
-symlink_file_or_folder \
-    $DIR/.p10k.zsh \
-    $HOME/.p10k.zsh \
-    powerlevel10k.zsh
+# symlink_file_or_folder \
+#     $DIR/.p10k.zsh \
+#     $HOME/.p10k.zsh \
+#     powerlevel10k.zsh
 
-symlink_file_or_folder \
-    $DIR/.zshrc \
-    $HOME/.zshrc \
-    zsh
+# symlink_file_or_folder \
+#     $DIR/.zshrc \
+#     $HOME/.zshrc \
+#     zsh
 
 symlink_file_or_folder \
     $DIR/.gitconfig \
     $HOME/.gitconfig \
     git
 
-symlink_file_or_folder \
-    $DIR/.tmux.conf \
-    $HOME/.tmux.conf \
-    tmux
-
+# symlink_file_or_folder \
+#     $DIR/.tmux.conf \
+#     $HOME/.tmux.conf \
+#     tmux
+#
 symlink_file_or_folder \
     $DIR/stylua.toml \
     $HOME/stylua.toml \
@@ -107,10 +107,10 @@ symlink_file_or_folder \
     $HOME/.config/lazygit/config.yml \
     lazygit
 
-symlink_file_or_folder \
-    $DIR/.wezterm.lua \
-    $HOME/.wezterm.lua \
-    wezterm
+# symlink_file_or_folder \
+#     $DIR/.wezterm.lua \
+#     $HOME/.wezterm.lua \
+#     wezterm
 
 symlink_file_or_folder \
     $DIR/zellij/config.kdl \
