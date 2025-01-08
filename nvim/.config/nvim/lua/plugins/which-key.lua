@@ -32,12 +32,8 @@ return {
          })
       end)
 
-      -- Treewalker
-      vim.keymap.set("n", "<leader>tj", ":Treewalker Down<cr>", { silent = true })
-      vim.keymap.set("n", "<leader>tk", ":Treewalker Up<cr>", { silent = true })
-      vim.keymap.set("n", "<leader>th", ":Treewalker Left<cr>", { silent = true })
-      vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true })
-
+      -- Hydra: Treewalker
+      -- TODO: add user command for this :TreeHydra
       vim.keymap.set("n", "<leader>t<space>", function()
          ---@type wk.Filter
          require("which-key").show({

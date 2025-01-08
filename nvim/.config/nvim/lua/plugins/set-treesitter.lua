@@ -230,10 +230,16 @@ return {
    },
 
    {
-      -- TODO: add keymapping for this
       "aaronik/treewalker.nvim",
       opts = {
          highlight = true, -- default is false
       },
+      config = function(_, opts)
+         require("treewalker").setup(opts)
+         vim.keymap.set("n", "<leader>tj", ":Treewalker Down<cr>", { silent = true })
+         vim.keymap.set("n", "<leader>tk", ":Treewalker Up<cr>", { silent = true })
+         vim.keymap.set("n", "<leader>th", ":Treewalker Left<cr>", { silent = true })
+         vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true })
+      end,
    },
 }
