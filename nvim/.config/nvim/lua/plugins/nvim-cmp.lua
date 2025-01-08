@@ -1,8 +1,12 @@
 return {
    -- Autocomplete menu, snippets, and AI completion
    -- breaking changes are tracked in https://github.com/hrsh7th/nvim-cmp/issues/231
+   -- Usage:
+   -- - <Tab> to select next, <S-Tab> to select previous
+   -- - <CR> to accept
    -- TODO: consider replacing with blink.nvim
    "iguanacucumber/magazine.nvim",
+   enabled = false,
    name = "nvim-cmp", -- drop in replacement for "hrsh7th/nvim-cmp", so set name
    -- NOTE: do NOT lazy load this
    -- event = "VeryLazy",

@@ -111,6 +111,9 @@ return {
             },
          })
 
+         -- icon provider
+         require("mini.icons").setup()
+
          -- local miniclue = require("mini.clue")
          -- miniclue.setup({
          --    window = {

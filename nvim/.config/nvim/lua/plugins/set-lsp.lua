@@ -17,6 +17,7 @@ return {
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
          -- "j-hui/fidget.nvim", -- small nvim-lsp progress ui -- replaced with noice.lsp
          "nvim-tree/nvim-web-devicons", -- adds icons
+         "saghen/blink.cmp", -- completion engine
       },
       config = function()
 
@@ -200,11 +201,8 @@ return {
             ensure_installed = vim.tbl_keys(language_servers),
          })
 
-         -- broadcast nvim-cmp copletion capabilities to servers
-         local capabilities = vim.lsp.protocol.make_client_capabilities()
-         capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
-         -- set up each server
+         -- set up each server, add cmp
+         local capabilities = require('blink.cmp').get_lsp_capabilities()
          mason_lspconfig.setup_handlers({
             function(server_name)
                require("lspconfig")[server_name].setup({
@@ -361,9 +359,12 @@ return {
 
    {
       -- show lsp signature while typing in 1) floating window and 2) virtual text
+      -- NOTE: this might be covered by the completion plugin
       "ray-x/lsp_signature.nvim",
       event = "VeryLazy",
       opts = {
+         -- floating_window = false, -- disable floating window, replaced with blink.cmp
+         hint_enable = true,
          hint_prefix = {
             above = "↙ ", -- when the hint is on the line above the current line
             current = "← ", -- when the hint is on the same line
@@ -372,10 +373,6 @@ return {
          hi_parameter = "LspSignatureActiveParameter",
          hint_scheme = "Comment", -- TODO: see what other schemes are there
       },
-      -- TODO?: might need to configure on_attach for plugins? or might be automatically attached
-      config = function(_, opts)
-         require("lsp_signature").setup(opts)
-      end,
    },
 
    {
@@ -387,3 +384,4 @@ return {
       opts = {},
    },
 }
+
