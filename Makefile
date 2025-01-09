@@ -1,4 +1,4 @@
-all: stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm
+all: stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git
 
 stow-nvim:
 	stow --verbose --restow -t ~ nvim
@@ -17,4 +17,3 @@ stow-wezterm:
 
 stow-git:
 	stow --verbose --restow -t ~ gitconfig
-	stow --verbose --restow -t ~ gitignore
