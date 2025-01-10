@@ -14,6 +14,22 @@ return {
    ---@type blink.cmp.Config
    opts = {
       completion = {
+         list = {
+            selection = {
+               -- preselect = function(ctx)
+               --    return ctx.mode == "cmdline"
+               -- end,
+               -- auto_insert = function(ctx)
+               --    return ctx.mode == "cmdline"
+               -- end
+            }
+         },
+         documentation = {
+            auto_show = true,
+            window = {
+               border = "single",
+            },
+         },
          menu = {
             border = "single",
             -- use mini.icons
@@ -32,12 +48,6 @@ return {
                      end,
                   },
                },
-            },
-         },
-         documentation = {
-            auto_show = true,
-            window = {
-               border = "single",
             },
          },
       },

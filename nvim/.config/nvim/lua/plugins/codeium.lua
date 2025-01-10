@@ -81,7 +81,8 @@ return {
       -- This is used to show suggestions in the popup menu
       -- NOTE: this can cause nvim to crash on exit
       "Exafunction/codeium.nvim",
-      enabled = not vim.g.vscode,
+      -- enabled = not vim.g.vscode,
+      enabled = false,
       event = "VeryLazy",
       dependencies = {
          "nvim-lua/plenary.nvim",
