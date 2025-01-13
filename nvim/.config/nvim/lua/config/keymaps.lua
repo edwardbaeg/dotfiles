@@ -88,7 +88,6 @@ set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>", { desc = "edit [v]imrc"
 set("n", "<leader>et", ":edit ~/.tmux.conf<cr>", { desc = "edit [t]mux.conf" })
 set("n", "<leader>ez", ":edit ~/.zshrc<cr>", { desc = "edit [z]shrc" })
 set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "edit [h]ammerspoon" })
-set("n", "<leader>ew", ":edit ~/.wezterm.lua<cr>", { desc = "edit [w]ezterm" })
 
 -- Windows
 set("n", "<leader>w", "<c-w>")
