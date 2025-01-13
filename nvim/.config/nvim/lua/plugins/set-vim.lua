@@ -189,8 +189,28 @@ return {
       "mei28/luminate.nvim",
       event = { "VeryLazy" },
       config = function()
-         require("luminate").setup({})
+         require("luminate").setup({
+            yank = {
+               enabled = false -- replaced with tiny-glimmer
+            }
+         })
       end,
+   },
+
+   {
+      "rachartier/tiny-glimmer.nvim",
+      event = "TextYankPost",
+      opts = {
+         refresh_interval_ms = 10,
+         transparency_color = "#021818",
+
+         animations = {
+            fade = {
+               max_duration = 750,
+               from_color = "#2d4f67",
+            }
+         }
+      },
    },
 
    {
