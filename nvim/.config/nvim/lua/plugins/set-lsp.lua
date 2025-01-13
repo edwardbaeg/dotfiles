@@ -20,7 +20,6 @@ return {
          "saghen/blink.cmp", -- completion engine
       },
       config = function()
-
          require("lspsaga").setup({
             lightbulb = {
                sign = false, -- don't show in sign column
@@ -202,7 +201,7 @@ return {
          })
 
          -- set up each server, add cmp
-         local capabilities = require('blink.cmp').get_lsp_capabilities()
+         local capabilities = require("blink.cmp").get_lsp_capabilities()
          mason_lspconfig.setup_handlers({
             function(server_name)
                require("lspconfig")[server_name].setup({
@@ -342,17 +341,17 @@ return {
    -- },
 
    {
-      -- configure lua-ls for neocim config
+      -- Configures lua-ls for nvim config by lazily updating workspace libraries, replaced lazydev
       "folke/lazydev.nvim",
+      dependencies = {
+         -- add wezterm types
+         { "gonstoll/wezterm-types", lazy = true },
+      },
       ft = "lua", -- only load on lua files
       opts = {
          library = {
-            -- Library items can be absolute paths
-            -- "~/projects/my-awesome-lib",
-            -- Or relative, which means they will be resolved as a plugin
-            -- "LazyVim",
-            -- When relative, you can also provide a path to the library in the plugin dir
-            "luvit-meta/library", -- see below
+            "luvit-meta/library",
+            { path = "wezterm-types", mods = { "wezterm" } },
          },
       },
    },
@@ -384,4 +383,3 @@ return {
       opts = {},
    },
 }
-
