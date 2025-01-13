@@ -348,4 +348,10 @@ return {
       event = "VeryLazy",
       opts = {},
    },
+
+   {
+      -- highlights visual select matches
+      "wurli/visimatch.nvim",
+      opts = {},
+   },
 }
