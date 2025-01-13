@@ -108,42 +108,6 @@ return {
    },
 
    {
-      "zbirenbaum/copilot.lua",
-      cmd = "Copilot",
-      event = "VeryLazy",
-      config = function()
-         require("copilot").setup({
-            panel = {
-               enabled = false, -- this can interfere with nvim-cmp
-               auto_refresh = true,
-            },
-            suggestion = {
-               enabled = false, -- this can interfere with nvim-cmp
-               auto_trigger = true, -- automatically show suggestions in insert mode
-               keymap = {
-                  -- accept = "<C-l>", -- accept suggestion
-                  accept = "<Right>", -- accept suggestion
-
-                  -- these don't interfere with vim-tmux c-j/k keymaps because these are in insert mode
-                  next = "<C-j>", -- next suggestion
-                  prev = "<C-k>", -- previous suggestion
-                  -- dismiss = 'FIXME'
-               },
-            },
-         })
-
-         vim.api.nvim_create_autocmd("VimLeavePre", {
-            desc = "disable copilot",
-            group = vim.api.nvim_create_augroup("copilot_disable_on_leave", { clear = false }),
-            -- pattern = "gitcommit",
-            callback = function(opts)
-               vim.cmd("Copilot disable")
-            end,
-         })
-      end,
-   },
-
-   {
       -- align text by delimiters
       "junegunn/vim-easy-align",
       init = function()
