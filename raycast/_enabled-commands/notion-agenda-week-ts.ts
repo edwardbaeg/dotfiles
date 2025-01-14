@@ -24,7 +24,7 @@ const { exec, spawn } = require('child_process');
 const today = new Date();
 const onejan = new Date(today.getFullYear(), 0, 1);
 const weekNumber = Math.ceil(
-  ((today - onejan) / 86400000 + onejan.getDay() + 1) / 7,
+  ((Number(today) - Number(onejan)) / 86400000 + onejan.getDay() + 1) / 7,
 );
 
 const monthName = today.toLocaleString('default', { month: 'long' });
