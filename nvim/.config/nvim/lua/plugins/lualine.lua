@@ -17,7 +17,7 @@ return {
 
          require("lualine").setup({
             options = {
-               icons_enabled = false, -- disable icons
+               icons_enabled = false, -- disable icons, save space
                component_separators = "|",
                section_separators = "",
                globalstatus = true,

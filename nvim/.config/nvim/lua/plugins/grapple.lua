@@ -2,7 +2,9 @@ return {
    -- Quick access marks
    -- TODO: consider opening PR to add the ability to customize keybinds for floating window, eg to open in splits
    "cbochs/grapple.nvim",
-   dependencies = { "WolfeCub/harpeek.nvim" },
+   dependencies = {
+      "WolfeCub/harpeek.nvim", -- show options in persistent window
+   },
    event = { "BufReadPost", "BufNewFile" },
    cmd = "Grapple",
    config = function()
@@ -12,8 +14,11 @@ return {
             -- icon = "󰛢", -- lualine options.icons_enabled must be true for this
          },
       })
+
       local columns = vim.api.nvim_get_option_value("columns", {})
       local lines = vim.api.nvim_get_option_value("lines", {})
+
+      -- TODO: open automatically if there are marks
       require("harpeek").setup({
          -- move to borrom right
          winopts = {
@@ -34,17 +39,14 @@ return {
       vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
    end,
    keys = {
-
       -- Toggle tag
-      -- TODO?: print a message for the change that had occurred
-      { "<leader>m", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
-      { "<c-m>", "<cmd>Grapple toggle<cr>", desc = "Grapple toggle tag" },
+      { "<c-m>", function ()
+         print("Grapple toggled buffer")
+         require("grapple").toggle()
+      end, desc = "Grapple toggle tag" },
 
       -- Show tags
       { "<leader>k", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
-
-      -- { "<leader>L", "<cmd>Grapple cycle forward<cr>", desc = "Grapple cycle forward" },
-      -- { "<leader>H", "<cmd>Grapple cycle backward<cr>", desc = "Grapple cycle backward" },
 
       -- Quick jump to tag
       -- this is not really used
