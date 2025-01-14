@@ -2,6 +2,9 @@ return {
    {
       -- a collection of mini 'submodules'
       "echasnovski/mini.nvim",
+      dependencies = {
+         "folke/snacks.nvim" -- for mini.files lsp rename
+      },
       enabled = not vim.g.vscode,
       config = function()
          -- adds ability to move text around with <m-h/j/k/l>
@@ -32,6 +35,7 @@ return {
          vim.api.nvim_create_user_command("Files", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
          vim.api.nvim_create_user_command("MF", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
          vim.keymap.set("n", "<leader>ra", "<cmd>MiniFiles<cr>", {}) -- trying out with Mini.Files
+         vim.keymap.set("n", "<leader>mf", "<cmd>MiniFiles<cr>", {}) -- trying out with Mini.Files
 
          -- FIXME: this doesn't work...
          local map_split = function(buf_id, lhs, direction)
@@ -58,6 +62,15 @@ return {
                -- Tweak keys to your liking
                map_split(buf_id, "<C-s>", "belowright horizontal")
                map_split(buf_id, "<C-v>", "belowright vertical")
+            end,
+         })
+
+         -- LSP support for file renames
+         local Snacks = require("snacks")
+         vim.api.nvim_create_autocmd("User", {
+            pattern = "MiniFilesActionRename",
+            callback = function(event)
+               Snacks.rename.on_rename_file(event.data.from, event.data.to)
             end,
          })
          -- END mini.files
