@@ -7,7 +7,7 @@ return {
       "rafamadriz/friendly-snippets", -- snippet source
       "giuxtaposition/blink-cmp-copilot", -- copilot source
       "echasnovski/mini.nvim", -- for icons
-
+      "xzbdmw/colorful-menu.nvim", -- for syntax highlighting in menu with treesitter
    },
    version = "*", -- use a release tag to download pre-built binaries
    ---@module 'blink.cmp'
@@ -22,7 +22,7 @@ return {
                -- auto_insert = function(ctx)
                --    return ctx.mode == "cmdline"
                -- end
-            }
+            },
          },
          documentation = {
             auto_show = true,
@@ -32,23 +32,39 @@ return {
          },
          menu = {
             border = "single",
-            -- use mini.icons
+            -- with colorful-menu
             draw = {
+               -- We don't need label_description now because label and label_description are already
+               -- conbined together in label by colorful-menu.nvim.
+               columns = { { "kind_icon" }, { "label", gap = 1 } },
                components = {
-                  kind_icon = {
-                     ellipsis = false,
+                  label = {
                      text = function(ctx)
-                        local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-                        return kind_icon
+                        return require("colorful-menu").blink_components_text(ctx)
                      end,
-                     -- Optionally, you may also use the highlights from mini.icons
                      highlight = function(ctx)
-                        local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-                        return hl
+                        return require("colorful-menu").blink_components_highlight(ctx)
                      end,
                   },
                },
             },
+            -- mini.icons
+            -- draw = {
+            --    components = {
+            --       kind_icon = {
+            --          ellipsis = false,
+            --          text = function(ctx)
+            --             local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+            --             return kind_icon
+            --          end,
+            --          -- Optionally, you may also use the highlights from mini.icons
+            --          highlight = function(ctx)
+            --             local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+            --             return hl
+            --          end,
+            --       },
+            --    },
+            -- },
          },
       },
 
