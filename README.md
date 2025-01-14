@@ -56,6 +56,7 @@ Application: [Wezterm](https://github.com/wez/wezterm)
 <!-- TODO: replace with fastfetch -->
 - `neofetch` display system info
 - `qrcp` qr code generator for wifi transfer
+- `scrcpy` android screen mirror/recorder (requires adb)
 
 #### Dependencies
 
