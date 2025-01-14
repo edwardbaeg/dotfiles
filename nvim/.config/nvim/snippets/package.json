@@ -3,7 +3,7 @@
   "contributes": {
     "snippets": [
       { "language": "lua", "path": "./lua.json" },
-      { "language": ["javascript", "typescript"], "path": "./js.json" }
+      { "language": ["javascript", "typescript", "javascriptreact", "typescriptreact"], "path": "./js.json" }
     ]
   }
 }
