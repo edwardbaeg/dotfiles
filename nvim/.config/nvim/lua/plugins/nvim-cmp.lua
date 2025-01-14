@@ -4,9 +4,8 @@ return {
    -- Usage:
    -- - <Tab> to select next, <S-Tab> to select previous
    -- - <CR> to accept
-   -- TODO: consider replacing with blink.nvim
    "iguanacucumber/magazine.nvim",
-   enabled = false,
+   enabled = false, -- replaced with blink.nvim
    name = "nvim-cmp", -- drop in replacement for "hrsh7th/nvim-cmp", so set name
    -- NOTE: do NOT lazy load this
    -- event = "VeryLazy",
