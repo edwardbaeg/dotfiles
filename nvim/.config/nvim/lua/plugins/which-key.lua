@@ -40,6 +40,6 @@ return {
             keys = "<leader>t",
             loop = true,
          })
-      end)
+      end, { desc = "HYDRA: TreeWalker" })
    end,
 }

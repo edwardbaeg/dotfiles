@@ -9,5 +9,4 @@ return {
          vim.keymap.set("n", "<leader>yb", "<cmd>YankBank<CR>", { noremap = true })
       end,
    },
-
 }
