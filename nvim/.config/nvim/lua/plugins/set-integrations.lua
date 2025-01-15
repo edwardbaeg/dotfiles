@@ -80,10 +80,10 @@ return {
 
    {
       -- live lua scratchpad
-      'rafcamlet/nvim-luapad',
-      config = function ()
-         require('luapad').setup ({})
-      end
+      "rafcamlet/nvim-luapad",
+      config = function()
+         require("luapad").setup({})
+      end,
    },
 
    {
@@ -136,6 +136,48 @@ return {
             browser = "safari",
             args = false,
          })
+      end,
+   },
+
+   {
+      -- Run tests from within neovim
+      -- TODO: set up consumers for status and diagnostics
+      "nvim-neotest/neotest",
+      dependencies = {
+         "nvim-neotest/nvim-nio", -- async library
+         "nvim-lua/plenary.nvim", -- utility functions
+         "antoinemadec/FixCursorHold.nvim", -- recommended, "allows detaching updatetime from the frequency of the CursorHold event"
+         "nvim-treesitter/nvim-treesitter",
+
+         -- adapters
+         "marilari88/neotest-vitest", -- vitest
+      },
+      config = function()
+         ---@diagnostic disable-next-line: missing-fields required fields are not required
+         require("neotest").setup({
+            status = {
+               enabled = true,
+               virtual_text = true,
+               signs = true
+            },
+            adapters = {
+               require("neotest-vitest")({ -- note: this cannot use the opts syntax
+                  -- Filter directories when searching for test files. Useful in large projects (see Filter directories notes).
+                  filter_dir = function(name, rel_path, root)
+                     return name ~= "node_modules"
+                  end,
+               }),
+            },
+         })
+
+         vim.api.nvim_create_user_command("NeoTestSummaryToggle", require("neotest").summary.toggle, {})
+         vim.api.nvim_create_user_command("NeoTestOutputToggle", require("neotest").output_panel.toggle, {})
+
+         vim.api.nvim_create_user_command("NeoTestToggle", function()
+            local Neotest = require("neotest")
+            Neotest.summary.toggle()
+            Neotest.output_panel.toggle()
+         end, {})
       end,
    },
 }
