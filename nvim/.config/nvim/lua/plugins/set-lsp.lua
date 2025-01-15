@@ -362,7 +362,7 @@ return {
       "ray-x/lsp_signature.nvim",
       event = "VeryLazy",
       opts = {
-         -- floating_window = false, -- disable floating window, replaced with blink.cmp
+         floating_window = false, -- disable floating window, replaced with blink.cmp
          hint_enable = true,
          hint_prefix = {
             above = "↙ ", -- when the hint is on the line above the current line
