@@ -1,8 +1,8 @@
 return {
-   -- Completion
+   -- Completion engine
+   -- NOTE: this uses native nvim snippets, which are loaded from /snippets
    -- TODO: change keymaps for lspsaga rename or use a different plugin for that
    "saghen/blink.cmp",
-   -- enabled = false,
    dependencies = {
       "rafamadriz/friendly-snippets", -- snippet source
       "giuxtaposition/blink-cmp-copilot", -- copilot source
