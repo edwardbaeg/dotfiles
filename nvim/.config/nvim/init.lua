@@ -3,6 +3,8 @@
 require("config.lazy")
 require("config.keymaps")
 require("config.settings")
+require("config.autocommands")
+
 require("lazy").setup("plugins", {
    -- automatically change for config file changes and reload ui
    change_detection = {
