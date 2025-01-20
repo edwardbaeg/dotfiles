@@ -242,4 +242,12 @@ return {
          vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true })
       end,
    },
+
+   {
+      -- context aware indentation
+      -- NOTE: this is only active if treesitter indentation is disabled, so might not need this
+      "wurli/contextindent.nvim",
+      opts = { pattern = "*" },
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+   }
 }
