@@ -300,7 +300,7 @@ return {
    },
 
    {
-      -- popup with interactive breadcrumb navigation
+      -- Popup with quick, interactive lsp navigation
       "SmiteshP/nvim-navbuddy",
       event = "VeryLazy",
       dependencies = {
@@ -341,17 +341,20 @@ return {
    -- },
 
    {
-      -- Configures lua-ls for nvim config by lazily updating workspace libraries, replaced lazydev
+      -- Configures lua-ls for nvim config by lazily updating workspace libraries, replaced neodev.nvim
       "folke/lazydev.nvim",
       dependencies = {
-         -- add wezterm types
-         { "gonstoll/wezterm-types", lazy = true },
+         { "gonstoll/wezterm-types", lazy = true }, -- adds wezterm types
       },
       ft = "lua", -- only load on lua files
       opts = {
          library = {
             "luvit-meta/library",
             { path = "wezterm-types", mods = { "wezterm" } },
+
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            { path = "snacks.nvim", words = { "Snacks" } }, -- add Snacks global
+            { path = "lazy.nvim", words = { "LazyVim" } }, -- add LazyVim global
          },
       },
    },

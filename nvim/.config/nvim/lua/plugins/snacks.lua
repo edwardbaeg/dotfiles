@@ -1,4 +1,4 @@
----@diagnostic disable: undefined-global the plugin adds Snacks as a global variable
+---@module "snacks"
 return {
    -- TODO consider using bigfile, gitbrowse, notify, notifier, rename
    -- Lazygit opens files as buffers but doesn't support hiding terminal during async functions
