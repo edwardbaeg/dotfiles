@@ -107,6 +107,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
 - `Choosy`: browser launcher
 - `Dato`: menubar calendar and meetings
+- `Dropover`: drag & drop temporary file shelf
 - `Hammerspoon`: mac scripting
 - `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
