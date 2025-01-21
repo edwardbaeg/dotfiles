@@ -142,6 +142,7 @@ return {
    {
       -- Run tests from within neovim
       -- TODO: set up consumers for status and diagnostics
+      -- FIXME: watch mode doesn't seem to work?
       "nvim-neotest/neotest",
       dependencies = {
          "nvim-neotest/nvim-nio", -- async library
