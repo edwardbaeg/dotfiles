@@ -7,8 +7,8 @@ vim.api.nvim_create_autocmd("filetype", {
          vim.keymap.set("n", lhs, rhs, { remap = true, buffer = true })
       end
 
-      bind("n", "%") -- edit new file
-      bind("r", "R") -- rename file
+      bind("n", "%")     -- edit new file
+      bind("r", "R")     -- rename file
       bind("R", "<c-I>") -- refresh
       -- bind('h', '-^') -- go up directory -- this breaks netrw...
       -- bind('l', '<cr>') -- enter -- this breaks netrw...
@@ -71,12 +71,33 @@ vim.api.nvim_create_autocmd("FileType", {
       "neotest-output-panel",
 
       "fugitiveblame", -- from vim-fugitive
-      "git", -- from vim-fugitive
-      "grug-far", -- from grug-far
+      "git",           -- from vim-fugitive
+      "grug-far",      -- from grug-far
    },
    callback = function(event)
       vim.bo[event.buf].buflisted = false
       vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+   end,
+})
+
+-- keep curosor position after yanking
+-- https://nanotipsforvim.prose.sh/sticky-yank
+local cursorPreYank
+vim.keymap.set({ "n", "x" }, "y", function()
+   cursorPreYank = vim.api.nvim_win_get_cursor(0)
+   return "y"
+end, { expr = true })
+
+vim.keymap.set("n", "Y", function()
+   cursorPreYank = vim.api.nvim_win_get_cursor(0)
+   return "y$"
+end, { expr = true })
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+   callback = function()
+      if vim.v.event.operator == "y" and cursorPreYank then
+         vim.api.nvim_win_set_cursor(0, cursorPreYank)
+      end
    end,
 })
 
