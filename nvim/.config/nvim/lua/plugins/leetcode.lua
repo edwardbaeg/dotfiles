@@ -1,8 +1,8 @@
 local leet_arg = "leetcode.nvim"
 
 return {
-   -- leetcode in nvim
-   -- launch with nvim leetcode.nvim or :Leet
+   -- leetcode in nvim 
+   -- launch with `nvim leetcode.nvim`
    "kawre/leetcode.nvim",
    build = ":TSUpdate html",
    lazy = leet_arg ~= vim.fn.argv()[1],
@@ -21,7 +21,7 @@ return {
       require("leetcode").setup({
          arg = leet_arg,
          lang = "typescript",
-         keys8 = {
+         keys = {
             toggle = { "q", "<Esc>" }, ---@type string|string[]
             confirm = { "<CR>" }, ---@type string|string[]
 
