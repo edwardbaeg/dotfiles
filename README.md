@@ -2,6 +2,7 @@
 
 My neovim and terminal (Tmux in Wezterm) based development setup. Always a work progress!
 
+<!-- TODO: replace with urls instead of assets -->
 ![screenshot](assets/main.png)
 
 # Neovim

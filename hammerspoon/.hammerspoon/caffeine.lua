@@ -36,6 +36,7 @@ local handleCaffeineUrl = function(_eventName, params)
    end
 end
 
+-- TODO: add some way to automatically disable awake after some time
 _G.enableCaffeine = function()
    hs.caffeinate.set(sleepType, true)
    setCaffeineDisplay(true)
@@ -59,7 +60,7 @@ if caffeineMenuBar then
    setCaffeineDisplay(hs.caffeinate.get(sleepType))
 end
 
--- hammerspoon://toggleCaffeineState?state={true|false}
+-- Usage: hammerspoon://toggleCaffeineState?state={true|false}
 hs.urlevent.bind("toggleCaffeineState", handleCaffeineUrl)
 hs.urlevent.bind("enableCaffeine", enableCaffeine)
 hs.urlevent.bind("disableCaffeine", disableCaffeine)

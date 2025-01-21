@@ -97,6 +97,7 @@ return {
 
       keymap = {
          preset = "none",
+         -- TODO: set this up so that the first option is not automatically selected. Pressing tab will then selecdt the first option and type it in.
          cmdline = {
             preset = "super-tab",
          },
