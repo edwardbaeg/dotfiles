@@ -6,9 +6,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
-         "windwp/nvim-ts-autotag", -- autoclose and autorename html tags using treesitter
-         "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua, vimscript, ruby, etc
-         "andymass/vim-matchup", -- extend % matching
+         "windwp/nvim-ts-autotag",                      -- autoclose and autorename html tags using treesitter
+         "RRethy/nvim-treesitter-endwise",              -- wisely add "end" in lua, vimscript, ruby, etc
+         "andymass/vim-matchup",                        -- extend % matching
       },
       -- NOTE: Don't lazy load treesitter
       -- Run :TSInstall tsx after initial install
@@ -110,8 +110,8 @@ return {
 
          require("nvim-ts-autotag").setup({
             opts = {
-               enable_close = true, -- Auto close tags
-               enable_rename = true, -- Auto rename pairs of tags
+               enable_close = true,           -- Auto close tags
+               enable_rename = true,          -- Auto rename pairs of tags
                enable_close_on_slash = false, -- Auto close on trailing </
             },
          })
@@ -129,10 +129,22 @@ return {
    },
 
    {
+      -- Enhance nvim native commenting
+      -- this replaced "numToStr/Comment.nvim" and "JoosepAlviste/nvim-ts-context-commentstring"
+      "folke/ts-comments.nvim",
+      opts = {},
+      event = "VeryLazy",
+      enabled = vim.fn.has("nvim-0.10.0") == 1,
+      init = function ()
+         vim.keymap.set('n', 'gjk', 'gcc', { remap = true })
+      end
+   },
+
+   {
       -- comment
       -- this is now part of nvim 0.10, but doesn't seem to be context aware...
       "numToStr/Comment.nvim",
-      -- enabled = false,
+      enabled = false,
       lazy = false,
       dependencies = {
          "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
