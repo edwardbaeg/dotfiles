@@ -261,5 +261,13 @@ return {
       "wurli/contextindent.nvim",
       opts = { pattern = "*" },
       dependencies = { "nvim-treesitter/nvim-treesitter" },
+   },
+
+   {
+      -- Swap sibling nodes with treesitter
+      -- Usage: <leader>. and <leader>,
+      "Wansmer/sibling-swap.nvim",
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+      config = true,
    }
 }
