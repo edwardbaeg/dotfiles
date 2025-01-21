@@ -103,20 +103,24 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 ### Applications:
 
-- `Arc`: brower
-- `Bartender`: keep menubar tidier
+#### Menubar
+
+- `Bartender`: menubar management
+- `Dato`: menubar calendar and meetings
+- `Monitor Control`: menubar monitor brightness
+- `Stats`: menubar system monitoring
+
+#### Utilities
+
 - `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
 - `Choosy`: browser launcher
-- `Dato`: menubar calendar and meetings
 - `Dropover`: drag & drop temporary file shelf
 - `Hammerspoon`: mac scripting
 - `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
-- `Monitor Control`: menubar monitor brightness
-- `Raycast`: launcher
 - `Shortcat`: keyboard shortcuts everywhere
 - `Shottr`: screenshot tool
-- `Stats`: menubar system monitoring
+- `Raycast`: launcher
 
 ## oh-my-zsh
 
