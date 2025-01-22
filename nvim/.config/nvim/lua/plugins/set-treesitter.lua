@@ -39,6 +39,7 @@ return {
                "go",
                "html",
                "javascript",
+               "json",
                "kdl", -- config files
                "lua",
                "markdown",
@@ -244,6 +245,7 @@ return {
    {
       "aaronik/treewalker.nvim",
       opts = {
+         -- FIXME: this doesn't seem to work?
          highlight = true, -- default is false
       },
       config = function(_, opts)
