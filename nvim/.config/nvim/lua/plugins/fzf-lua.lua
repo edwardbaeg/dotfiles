@@ -23,6 +23,8 @@ return {
                ["<c-n>"] = "preview-page-down",
             },
          },
+
+         -- Command/picker options
          -- TODO: figure out a way to allow searching in the pathname direction
          -- eg matching "hooks/init" by searching "hooks init" instead of "init hooks"
          files = {
@@ -54,7 +56,7 @@ return {
       vim.keymap.set("n", "<leader>*", "<cmd>lua require('fzf-lua').grep_cword()<cr>", { silent = true })
       vim.keymap.set("v", "<leader>*", "<cmd>lua require('fzf-lua').grep_visual()<cr>", { silent = true })
       vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
-      vim.keymap.set("n", "<leader>fl", "<cmd>lua require('fzf-lua').lines()<cr>", { silent = true })
+      vim.keymap.set("n", "<leader>fl", "<cmd>lua require('fzf-lua').blines()<cr>", { silent = true })
 
       -- buffers/files
       vim.keymap.set("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<cr>", { silent = true })
