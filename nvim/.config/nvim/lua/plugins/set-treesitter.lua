@@ -6,9 +6,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
-         "windwp/nvim-ts-autotag",                      -- autoclose and autorename html tags using treesitter
-         "RRethy/nvim-treesitter-endwise",              -- wisely add "end" in lua, vimscript, ruby, etc
-         "andymass/vim-matchup",                        -- extend % matching
+         "windwp/nvim-ts-autotag", -- autoclose and autorename html tags using treesitter
+         "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua, vimscript, ruby, etc
+         "andymass/vim-matchup", -- extend % matching
       },
       -- NOTE: Don't lazy load treesitter
       -- Run :TSInstall tsx after initial install
@@ -111,8 +111,8 @@ return {
 
          require("nvim-ts-autotag").setup({
             opts = {
-               enable_close = true,           -- Auto close tags
-               enable_rename = true,          -- Auto rename pairs of tags
+               enable_close = true, -- Auto close tags
+               enable_rename = true, -- Auto rename pairs of tags
                enable_close_on_slash = false, -- Auto close on trailing </
             },
          })
@@ -136,9 +136,9 @@ return {
       opts = {},
       event = "VeryLazy",
       enabled = vim.fn.has("nvim-0.10.0") == 1,
-      init = function ()
-         vim.keymap.set('n', 'gjk', 'gcc', { remap = true })
-      end
+      init = function()
+         vim.keymap.set("n", "gjk", "gcc", { remap = true })
+      end,
    },
 
    {
@@ -268,8 +268,17 @@ return {
    {
       -- Swap sibling nodes with treesitter
       -- Usage: <leader>. and <leader>,
+      -- NOTE: setting this with lazy.opts/keys doesnt work well - cannot disable default keymaps and use lazy.keys at the same time
       "Wansmer/sibling-swap.nvim",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
-      config = true,
-   }
+      config = function()
+         ---@diagnostic disable-next-line: missing-fields they are not required
+         require("sibling-swap").setup({
+            use_default_keymaps = false, -- this needs to be true to use the `keymaps` field?
+         })
+
+         vim.keymap.set('n', '<space>,', require('sibling-swap').swap_with_left)
+         vim.keymap.set('n', '<space>.', require('sibling-swap').swap_with_right)
+      end,
+   },
 }

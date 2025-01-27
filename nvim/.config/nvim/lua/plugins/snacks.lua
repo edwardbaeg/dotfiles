@@ -20,13 +20,13 @@ return {
       --    end,
       --    desc = "lazygit",
       -- },
-      {
-         "<leader>.",
-         function()
-            Snacks.scratch()
-         end,
-         desc = "Toggle Scratch Buffer",
-      },
+      -- {
+      --    "<leader>.",
+      --    function()
+      --       Snacks.scratch()
+      --    end,
+      --    desc = "Toggle Scratch Buffer",
+      -- },
    },
    config = function(_, opts)
       Snacks.setup(opts)
