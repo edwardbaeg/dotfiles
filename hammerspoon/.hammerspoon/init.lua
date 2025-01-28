@@ -1,6 +1,7 @@
 -- ~/.hammerspoon/init.lua
 
 require("application_launcher")
+require("application_shortcuts")
 require("caffeine")
 require("config_reloader")
 require("remapper")
