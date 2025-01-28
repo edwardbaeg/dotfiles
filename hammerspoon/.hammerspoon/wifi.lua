@@ -3,7 +3,7 @@
 local homeSSID = "!wifi"
 local lastSSID = hs.wifi.currentNetwork()
 
-function _G.ssidChangedCallback()
+local function ssidChangedCallback()
    local newSSID = hs.wifi.currentNetwork()
 
    if newSSID == homeSSID and lastSSID ~= homeSSID then
@@ -19,6 +19,5 @@ function _G.ssidChangedCallback()
    lastSSID = newSSID
 end
 
--- WifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
--- WifiWatcher:start()
-
+WifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
+WifiWatcher:start()
