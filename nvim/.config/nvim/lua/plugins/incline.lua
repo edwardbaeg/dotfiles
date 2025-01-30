@@ -1,17 +1,3 @@
--- TODO: create a module for this?
-local Utils = {}
---- Combine two associate tables
----@param t1 table
----@param t2 table
----@return table
-function Utils.object_assign(t1, t2)
-   for key, value in pairs(t2) do
-      t1[key] = value
-   end
-
-   return t1
-end
-
 return {
    -- per window floating statusline
    "b0o/incline.nvim",
@@ -73,6 +59,8 @@ return {
                guifg = props.focused and frappe.overlay2 or frappe.surface1,
                guibg = frappe.crust,
             }
+
+            local Utils = require('../utils')
 
             -- example: █▓   incline-nvim.lua ▓█
             return {
