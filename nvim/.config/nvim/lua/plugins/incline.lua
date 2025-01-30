@@ -5,6 +5,7 @@ return {
    event = "VeryLazy",
    config = function()
       local frappe = require("catppuccin.palettes").get_palette("frappe")
+      local utils = require("../utils")
       require("incline").setup({
          window = {
             padding = 0,
@@ -18,14 +19,7 @@ return {
             local path = vim.api.nvim_buf_get_name(props.buf)
             local modified = vim.bo[props.buf].modified
 
-            -- TODO: abstract this with bufferline
-            if filename:find("^index") then
-               local parentDirName = path:match("(.*)/(.*)$")
-               parentDirName = parentDirName:gsub(".*/", "")
-               -- filename = parentDirName .. "/" .. filename
-               filename = parentDirName .. "/i"
-            end
-
+            filename = utils.getDisplayFileName(filename, path, false)
             if filename == "" then
                filename = "[No Name]"
             end
