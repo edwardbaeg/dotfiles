@@ -237,9 +237,6 @@ hs.hotkey.bind(hyperkey, "V", function()
    resizeAndCenter(0.49)
 end)
 
--- TODO: add hotkeys to increase and decrease window size (deeplink from raycast)
--- cmd + ctrl + -/=
-
 -- Move to display -------------------------------------------------------
 --------------------------------------------------------------------------
 -- Move to the right screen
