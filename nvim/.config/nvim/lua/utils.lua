@@ -17,6 +17,12 @@ function M.isIndexFile(name)
    return name:find("^index.")
 end
 
+---@param path string
+function M.getFilenameFromPath(path)
+   return path:gsub(".*/", "")
+end
+
+---This could be refactored to just use the path of the file...
 ---@param filename string file name
 ---@param path string file path
 ---@param short? boolean whether to display index filename as "index" or "i"

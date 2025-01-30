@@ -18,6 +18,8 @@ return {
       local columns = vim.api.nvim_get_option_value("columns", {})
       local lines = vim.api.nvim_get_option_value("lines", {})
 
+      local utils = require("utils")
+
       -- TODO: open automatically if there are marks
       require("harpeek").setup({
          -- move to borrom right
@@ -25,8 +27,10 @@ return {
             row = lines * 0.80,
             col = columns,
          },
-         -- TODO: include the parent dir for index files
-         format = "filename",
+         format = function (path)
+            local filename = utils.getFilenameFromPath(path)
+            return utils.getDisplayFileName(filename, path)
+         end,
       })
 
       local function harpeek_toggle()
