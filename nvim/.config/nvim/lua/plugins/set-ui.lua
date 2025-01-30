@@ -14,21 +14,6 @@ return {
    },
 
    {
-      -- lists of diagnostics, references, telescopes, quickfix, and location lists
-      -- TODO: group together quickfix plugins
-      "folke/trouble.nvim",
-      dependencies = "nvim-tree/nvim-web-devicons",
-      event = "VeryLazy",
-      -- cmd = "Trouble", -- lazy load
-      config = function()
-         require("trouble").setup()
-         vim.keymap.set("n", "<leader>tt", function()
-            require("trouble").toggle()
-         end, { silent = true, noremap = true, desc = "[T]oggle [T]rouble" })
-      end,
-   },
-
-   {
       -- indentation guides and highlight the current indent chunk -- this replaced indent-blankline.nvim
       -- TODO: replace with mini.indentscope
       "shellRaining/hlchunk.nvim",
@@ -189,16 +174,6 @@ return {
       event = "VeryLazy",
       config = function()
          require("tiny-devicons-auto-colors").setup()
-      end,
-   },
-
-   {
-      -- adds syntax highlighting for quickfix lists
-      -- TODO: group together quickfix plugins
-      "stevearc/quicker.nvim",
-      event = "FileType qf",
-      config = function()
-         require("quicker").setup({})
       end,
    },
 

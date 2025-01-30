@@ -214,15 +214,6 @@ return {
    },
 
    {
-      -- improve interacting with quickfix and location list
-      -- TODO: group together quickfix plugins
-      "kevinhwang91/nvim-bqf",
-      config = function()
-         require("bqf").setup()
-      end,
-   },
-
-   {
       -- preview macros and norm commands with :Norm
       -- for macros, use :Norm 5@a syntax
       "smjonas/live-command.nvim",

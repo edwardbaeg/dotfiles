@@ -5,7 +5,6 @@ return {
    config = function()
       require("diffview").setup()
 
-      -- TODO: add g to each keymap
       vim.keymap.set("n", "<leader>do", "<cmd>DiffviewOpen<cr>", { noremap = true })
       vim.keymap.set("n", "<leader>dc", "<cmd>DiffviewClose<cr>", { noremap = true })
       vim.keymap.set("n", "<leader>dq", "<cmd>DiffviewClose<cr>", { noremap = true })
