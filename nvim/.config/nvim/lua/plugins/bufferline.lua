@@ -11,15 +11,13 @@ return {
 
       local white = "white" -- #ffffff
 
+      local utils = require("../utils")
+
       require("bufferline").setup({
          options = {
             name_formatter = function(buf)
-               if buf.name:find("^index") then
-                  local parentDirName = buf.path:match("(.*)/(.*)$")
-                  parentDirName = parentDirName:gsub(".*/", "")
-                  return parentDirName .. "/" .. buf.name
-               end
-               return buf.name
+               ---@diagnostic disable-next-line: undefined-field buf type is incorrect
+               return utils.getDisplayFileName(buf.name, buf.path, true)
             end,
             -- numbers = function(opts)
             --    return string.format("%s·%s", opts.raise(opts.ordinal), opts.lower(opts.id))
