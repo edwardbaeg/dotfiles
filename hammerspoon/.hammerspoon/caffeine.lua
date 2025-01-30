@@ -9,7 +9,7 @@ local isPersonal = require("constants").isPersonal
 -- TODO: persist state using hs.settings
 -- https://www.hammerspoon.org/docs/hs.settings.html
 local caffeineMenuBar = hs.menubar.new()
-function _G.setCaffeineDisplay(state)
+local function setCaffeineDisplay(state)
    if caffeineMenuBar then
       if state then
          caffeineMenuBar:setTitle("A") -- for awake
@@ -20,6 +20,21 @@ function _G.setCaffeineDisplay(state)
 end
 
 local sleepType = "displayIdle"
+local enableCaffeine = function()
+   hs.caffeinate.set(sleepType, true)
+   setCaffeineDisplay(true)
+end
+
+local disableCaffeine = function()
+   hs.caffeinate.set(sleepType, false)
+   setCaffeineDisplay(false)
+end
+
+-- TODO: add some way to automatically disable awake after some time
+local toggleCaffeine = function()
+   setCaffeineDisplay(hs.caffeinate.toggle(sleepType))
+end
+
 ---@diagnostic disable-next-line: unused-local _eventName is unused
 local handleCaffeineUrl = function(_eventName, params)
    local state = params["state"]
@@ -36,22 +51,7 @@ local handleCaffeineUrl = function(_eventName, params)
    end
 end
 
--- TODO: add some way to automatically disable awake after some time
-_G.enableCaffeine = function()
-   hs.caffeinate.set(sleepType, true)
-   setCaffeineDisplay(true)
-end
-
-_G.disableCaffeine = function()
-   hs.caffeinate.set(sleepType, false)
-   setCaffeineDisplay(false)
-end
-
-_G.toggleCaffeine = function()
-   setCaffeineDisplay(hs.caffeinate.toggle(sleepType))
-end
-
-function _G.caffeineClicked()
+local function caffeineClicked()
    toggleCaffeine()
 end
 

@@ -6,7 +6,7 @@ local hyperkey = constants.hyperkey
 ---@param key string
 ---@param appName string
 ---@param callback? function
-function _G.assignAppHotKey(modifiers, key, appName, callback)
+local function assignAppHotKey(modifiers, key, appName, callback)
    hs.hotkey.bind(modifiers, key, function()
       local success = hs.application.launchOrFocus(appName)
       callback = callback or function() end
@@ -17,7 +17,7 @@ function _G.assignAppHotKey(modifiers, key, appName, callback)
 end
 
 ---@param profileIndex string
-function _G.setArcProfile(profileIndex)
+local function setArcProfile(profileIndex)
    hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
    hs.timer.doAfter(0.05, function()
       hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
@@ -29,7 +29,7 @@ end
 
 ---@param profileIndex string
 ---@return function
-function _G.getArcProfileSetter(profileIndex)
+local function getArcProfileSetter(profileIndex)
    return function()
       setArcProfile(profileIndex)
    end

@@ -1,9 +1,7 @@
 -- App specific keybindings
 
-local M = {}
-
 function Linear()
-   function M.linearCopyUrl()
+   local function linearCopyUrl()
       local linearApp = hs.application.find("Linear")
       if linearApp then
          linearApp:activate()
@@ -13,10 +11,10 @@ function Linear()
 
    -- usage: hammerspoon://linearCopyUrl
    hs.urlevent.bind("linearCopyUrl", function()
-      M.linearCopyUrl()
+      linearCopyUrl()
    end)
 
-   local mapLinearCopyUrl = hs.hotkey.new({ " ctrl " }, "c", M.linearCopyUrl)
+   local mapLinearCopyUrl = hs.hotkey.new({ " ctrl " }, "c", linearCopyUrl)
    hs.window.filter
       .new("Linear")
       :subscribe(hs.window.filter.windowFocused, function()
