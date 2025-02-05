@@ -153,6 +153,7 @@ return {
          -- adapters
          "marilari88/neotest-vitest", -- vitest
       },
+      cmd = { "NeoTestSummaryToggle", "NeoTestOutputToggle", "NeoTestToggle" },
       config = function()
          ---@diagnostic disable-next-line: missing-fields required fields are not required
          require("neotest").setup({

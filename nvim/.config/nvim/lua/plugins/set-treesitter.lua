@@ -2,6 +2,7 @@
 return {
    {
       -- Highlight, edit, and navigate code
+      -- NOTE: Don't lazy load treesitter
       -- Uninstall with :TSUninstall
       "nvim-treesitter/nvim-treesitter",
       dependencies = {
@@ -10,7 +11,6 @@ return {
          "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua, vimscript, ruby, etc
          "andymass/vim-matchup", -- extend % matching
       },
-      -- NOTE: Don't lazy load treesitter
       -- Run :TSInstall tsx after initial install
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
@@ -270,6 +270,7 @@ return {
       -- Usage: <leader>. and <leader>,
       -- NOTE: setting this with lazy.opts/keys doesnt work well - cannot disable default keymaps and use lazy.keys at the same time
       "Wansmer/sibling-swap.nvim",
+      event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
          ---@diagnostic disable-next-line: missing-fields they are not required

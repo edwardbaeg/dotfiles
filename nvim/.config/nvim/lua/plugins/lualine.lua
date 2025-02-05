@@ -2,7 +2,7 @@ return {
    {
       -- statusline
       "nvim-lualine/lualine.nvim",
-      event = "VeryLazy",
+      -- event = "VeryLazy",
       config = function()
          local git_blame = require("gitblame")
          vim.g.gitblame_display_virtual_text = 0 -- don't show virtual text

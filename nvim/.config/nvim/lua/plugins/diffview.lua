@@ -2,6 +2,7 @@ return {
    -- add tabpage interface for cycling through diffs
    -- :DiffView*
    "sindrets/diffview.nvim",
+   event = "VeryLazy",
    config = function()
       require("diffview").setup()
 

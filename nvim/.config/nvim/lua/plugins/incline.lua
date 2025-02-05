@@ -2,7 +2,7 @@ return {
    -- per window floating statusline
    "b0o/incline.nvim",
    dependencies = "nvim-tree/nvim-web-devicons",
-   event = "VeryLazy",
+   -- event = "VeryLazy",
    config = function()
       local frappe = require("catppuccin.palettes").get_palette("frappe")
       local utils = require("../utils")

@@ -2,6 +2,7 @@ return {
    -- Multicursor support
    -- TODO: see if there is a way to add status to the statusline
    "jake-stewart/multicursor.nvim",
+   event = "VeryLazy",
    config = function()
       local mc = require("multicursor-nvim")
 

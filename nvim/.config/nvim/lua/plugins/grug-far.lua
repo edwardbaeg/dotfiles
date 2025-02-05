@@ -2,6 +2,7 @@ return {
    -- global search and replace
    --:GrugFar
    "MagicDuck/grug-far.nvim",
+   cmd = { "SearchAndReplaceGrugFar", "GrugFar" },
    config = function()
       require("grug-far").setup({})
 

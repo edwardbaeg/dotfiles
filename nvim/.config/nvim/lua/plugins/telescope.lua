@@ -1,9 +1,9 @@
 return {
    -- Fuzzy Finder (files, lsp, etc)
    -- :Telescope
-   -- TODO?: completely migrate to fzflua
    "nvim-telescope/telescope.nvim",
    cmd = "Telescope",
+   event = "VeryLazy",
    dependencies = {
       "nvim-lua/plenary.nvim", -- library of async functons
       "nvim-telescope/telescope-ui-select.nvim", -- replace nvim's ui select with telescope

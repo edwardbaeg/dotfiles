@@ -40,7 +40,7 @@ return {
       -- show search status in virtual text
       "kevinhwang91/nvim-hlslens",
       enabled = not vim.g.vscode,
-      -- event = "VeryLazy",
+      event = "VeryLazy",
       config = function()
          require("scrollbar.handlers.search").setup({}) -- integrate with nvim-scrollbar
          require("hlslens").setup({
