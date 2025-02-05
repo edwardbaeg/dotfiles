@@ -5,8 +5,8 @@ return {
    lazy = false,
    priority = 1000,
    ---@type snacks.Config
-   ---@class snacks.picker.Config
    opts = {
+      -- NOTE: use <c-q> to add files to quickfix (default for grep)
       picker = {
          sources = {
             files = {
@@ -14,6 +14,41 @@ return {
             },
             grep = {
                hidden = true, -- include .dotfiles
+            },
+            buffers = {
+               on_show = function()
+                  vim.cmd.stopinsert()
+               end,
+            },
+            command_history = {
+               on_show = function()
+                  vim.cmd.stopinsert()
+               end,
+            },
+            recents = {
+               on_show = function()
+                  vim.cmd.stopinsert()
+               end,
+            },
+            jumps = {
+               on_show = function()
+                  vim.cmd.stopinsert()
+               end,
+            },
+            git_status = {
+               on_show = function()
+                  vim.cmd.stopinsert()
+               end,
+            },
+            git_log_file = {
+               on_show = function()
+                  vim.cmd.stopinsert()
+               end,
+            },
+            undo = {
+               on_show = function()
+                  vim.cmd.stopinsert()
+               end,
             },
          },
       },
@@ -126,14 +161,6 @@ return {
          end,
          desc = "Undo History",
       },
-      {
-         "<leader>fu",
-         function()
-            Snacks.picker.undo()
-         end,
-         desc = "Undo History",
-      },
-
       {
          "<leader>fgs",
          function()
