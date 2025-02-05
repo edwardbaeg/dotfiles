@@ -187,6 +187,7 @@ return {
       -- highlight yank, paste, undo, redo
       -- TODO: sometimes has some issues after exiting floating windows, like for navbuddy?
       "mei28/luminate.nvim",
+      enabled = false, -- replaced by tiny-glimmer
       event = { "VeryLazy" },
       config = function()
          require("luminate").setup({
@@ -198,6 +199,7 @@ return {
    },
 
    {
+      -- animated highlighting for yank, paste
       "rachartier/tiny-glimmer.nvim",
       event = "TextYankPost",
       opts = {
