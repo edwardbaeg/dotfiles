@@ -16,6 +16,7 @@ return {
                ["."] = false,
 
                sagarename = false, -- the line column label takes up space
+               snacks_picker_input = false,
             },
          })
          vim.keymap.set("i", "<Right>", neocodeium.accept)

@@ -1,6 +1,7 @@
 return {
    -- Fuzzy Finder (files, lsp, etc)
-   -- TODO?: completely migrate to fzflua. Don't see undo history one
+   -- :Telescope
+   -- TODO?: completely migrate to fzflua
    "nvim-telescope/telescope.nvim",
    cmd = "Telescope",
    dependencies = {
@@ -18,7 +19,7 @@ return {
       -- vim.keymap.set("n", "<c-l>", "<cmd>Telescope current_buffer_fuzzy_find<cr>") -- replace with tmux navigator keymap
       -- vim.keymap.set("n", "<c-g>", '<cmd>Telescope grep_string search=""<cr>') -- set search="" to prevent searching the word under the cursor -- replaced with fzflua
 
-      vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
+      -- vim.keymap.set("n", "<leader>ft", "<cmd>Telescope<cr>", { desc = "[f]uzzy [T]elescope" })
       -- vim.keymap.set("n", "<leader>fl", "<cmd>Telescope current_buffer_fuzzy_find<cr>") -- replace with fzflua
       -- vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "[f]uzzy [h]help" })
       -- vim.keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<cr>", { desc = "[f]uzzy [k]eymaps" })
@@ -31,7 +32,7 @@ return {
       -- vim.keymap.set("n", "<leader>fg", "<cmd>Telescope git_bcommits<cr>", { desc = "[f]uzzy [g]ic bcommits" })
 
       -- NOTE: use <c-r> to revert to selected commit
-      vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>", { desc = "[f]uzzy [u]ndo" })
+      -- vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>", { desc = "[f]uzzy [u]ndo" })
    end,
    config = function()
       local actions = require("telescope.actions")

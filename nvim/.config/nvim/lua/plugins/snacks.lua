@@ -1,11 +1,167 @@
 ---@module "snacks"
 return {
-   -- TODO consider using bigfile, gitbrowse, notify, notifier, rename
-   -- Lazygit opens files as buffers but doesn't support hiding terminal during async functions
+   -- TODO: consider using bigfile, gitbrowse, notify, notifier, rename
    "folke/snacks.nvim",
    lazy = false,
    priority = 1000,
+   ---@type snacks.Config
+   ---@class snacks.picker.Config
+   opts = {
+      picker = {
+         sources = {
+            files = {
+               hidden = true, -- include .dotfiles
+            },
+            grep = {
+               hidden = true, -- include .dotfiles
+            },
+         },
+      },
+      win = {
+         input = {
+            keys = {
+               ["<Esc>"] = { "close", mode = { "n", "i" } }, -- this doesn't seem to work...
+            },
+         },
+      },
+   },
    keys = {
+      -- Pickers
+      {
+         "<leader>f<space>",
+         function()
+            Snacks.picker()
+         end,
+         desc = "[F]uzzy Snacks...",
+      },
+      {
+         "<leader>ff",
+         function()
+            Snacks.picker.files()
+         end,
+         desc = "[f]iles",
+      },
+      {
+         "<c-p>",
+         function()
+            Snacks.picker.files()
+         end,
+         desc = "[f]iles",
+      },
+      {
+         "<leader>f,",
+         function()
+            Snacks.picker.buffers()
+         end,
+         desc = "Buffers",
+      },
+      -- doesn't support fuzzy?
+      -- {
+      --    "<leader>/",
+      --    function()
+      --       Snacks.picker.grep()
+      --    end,
+      --    desc = "Grep",
+      -- },
+      -- {
+      --    "<c-g>",
+      --    function()
+      --       Snacks.picker.grep()
+      --    end,
+      --    desc = "Grep",
+      -- },
+      {
+         "<leader>:",
+         function()
+            Snacks.picker.command_history()
+         end,
+         desc = "Command History",
+      },
+      {
+         "<leader>fn",
+         function()
+            Snacks.picker.notifications()
+         end,
+         desc = "Notification History",
+      },
+      {
+         "<leader>fe",
+         function()
+            Snacks.explorer()
+         end,
+         desc = "File Explorer",
+      },
+      {
+         "<leader>fh",
+         function()
+            Snacks.picker.help()
+         end,
+         desc = "Buffers",
+      },
+      {
+         "<leader>i",
+         function()
+            Snacks.picker.buffers()
+         end,
+         desc = "Buffers",
+      },
+      {
+         "<leader>fr",
+         function()
+            Snacks.picker.recent()
+         end,
+         desc = "Recent",
+      },
+      {
+         "<leader>fj",
+         function()
+            Snacks.picker.jumps()
+         end,
+         desc = "Jumps",
+      },
+      {
+         "<leader>fu",
+         function()
+            Snacks.picker.undo()
+         end,
+         desc = "Undo History",
+      },
+      {
+         "<leader>fu",
+         function()
+            Snacks.picker.undo()
+         end,
+         desc = "Undo History",
+      },
+
+      {
+         "<leader>fgs",
+         function()
+            Snacks.picker.git_status()
+         end,
+         desc = "Git Status",
+      },
+      {
+         "<leader>fgh",
+         function()
+            Snacks.picker.git_log_file()
+         end,
+         desc = "Git Log File",
+      },
+      -- still using fzf-lua for the preview
+      -- {
+      --    "<leader>fl",
+      --    function()
+      --       Snacks.picker.lines({
+      --          layout = {
+      --             preset = "telescope",
+      --          },
+      --       })
+      --    end,
+      --    desc = "Buffer Lines",
+      -- },
+
+      -- Lazygit opens files as buffers but doesn't support hiding terminal during async functions...
       -- {
       --    "<c-\\>",
       --    function()
@@ -19,13 +175,6 @@ return {
       --       Snacks.lazygit()
       --    end,
       --    desc = "lazygit",
-      -- },
-      -- {
-      --    "<leader>.",
-      --    function()
-      --       Snacks.scratch()
-      --    end,
-      --    desc = "Toggle Scratch Buffer",
       -- },
    },
    config = function(_, opts)
