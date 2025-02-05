@@ -7,12 +7,21 @@ return {
    {
       -- visual undotree
       "simnalamburt/vim-mundo",
-      -- enabled = false,
+      enabled = false, -- needs python, replaced with undotree
       config = function()
          vim.g.mundo_width = 40
          vim.g.mundo_preview_bottom = 1
          vim.keymap.set("n", "<leader>u", ":MundoToggle<cr>")
       end,
+   },
+
+   {
+      "jiaoshijie/undotree",
+      dependencies = "nvim-lua/plenary.nvim",
+      config = true,
+      keys = {
+         { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
+      },
    },
 
    {

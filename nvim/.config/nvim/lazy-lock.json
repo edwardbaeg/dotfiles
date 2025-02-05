@@ -114,6 +114,7 @@
   "typescript-tools.nvim": { "branch": "master", "commit": "35e397ce467bedbbbb5bfcd0aa79727b59a08d4a" },
   "ultimate-autopair.nvim": { "branch": "v0.6", "commit": "cc04970748384918e8334407d366cc998d34988d" },
   "undofile_warn.vim": { "branch": "master", "commit": "b52f957c1213b29f72f44844c0e24f8d2188dc8f" },
+  "undotree": { "branch": "main", "commit": "eab459ab87dd249617b5f7187bb69e614a083047" },
   "vim-easy-align": { "branch": "master", "commit": "9815a55dbcd817784458df7a18acacc6f82b1241" },
   "vim-fugitive": { "branch": "master", "commit": "b068eaf1e6cbe35d1ac100d435cd7f7b74a5c87d" },
   "vim-github-link-opener": { "branch": "main", "commit": "c26908a8b0cbeccb50d23a89ff4eb85f3239a9f4" },
