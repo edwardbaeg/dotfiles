@@ -17,8 +17,20 @@ return {
             -- enabled by default: cmp, gitsigns, nvimtree, treesitter, mini
             integrations = { },
          })
-         vim.cmd.colorscheme("catppuccin")
+         -- vim.cmd.colorscheme("catppuccin")
       end,
+   },
+
+   {
+      'jesseleite/nvim-noirbuddy',
+      dependencies = {
+         { 'tjdevries/colorbuddy.nvim' }
+      },
+      lazy = false,
+      priority = 1000,
+      opts = {
+         preset = "miami-nights"
+      },
    },
 
    {
@@ -50,6 +62,7 @@ return {
       "folke/tokyonight.nvim",
       -- lazy = true,
       config = function()
+         ---@diagnostic disable-next-line: missing-fields
          require("tokyonight").setup({
             transparent = true, -- don't set a background color
          })
