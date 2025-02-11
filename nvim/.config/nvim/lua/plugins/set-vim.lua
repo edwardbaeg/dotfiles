@@ -376,4 +376,10 @@ return {
       "wurli/visimatch.nvim",
       opts = {},
    },
+
+   {
+      -- better helpview
+      "OXY2DEV/helpview.nvim",
+      lazy = false -- plugin lazy loads by default
+   },
 }
