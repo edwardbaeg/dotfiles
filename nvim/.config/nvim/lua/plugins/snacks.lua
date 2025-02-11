@@ -1,6 +1,7 @@
 ---@module "snacks"
 return {
-   -- TODO: consider using bigfile, gitbrowse, notify, notifier, rename
+   -- TODO: add keymap for scrolling the preview window
+   -- NOTE: [buffer] lines picker doesn't have preview, so using fzf-lua for now
    "folke/snacks.nvim",
    lazy = false,
    priority = 1000,
@@ -9,12 +10,9 @@ return {
       -- NOTE: use <c-q> to add files to quickfix (default for grep)
       picker = {
          sources = {
-            files = {
-               hidden = true, -- include .dotfiles
-            },
-            grep = {
-               hidden = true, -- include .dotfiles
-            },
+            explorer = { hidden = true },
+            files = { hidden = true },
+            grep = { hidden = true },
             buffers = {
                on_show = function()
                   vim.cmd.stopinsert()
@@ -53,10 +51,17 @@ return {
          },
       },
       win = {
+         -- input window
          input = {
             keys = {
-               ["<Esc>"] = { "close", mode = { "n", "i" } }, -- this doesn't seem to work...
+               -- close from insert mode -- this doesn't seem to work...
+               ["<Esc>"] = { "close", mode = { "n", "i" } },
             },
+         },
+
+         -- result list window
+         list = {
+            keys = {},
          },
       },
    },
@@ -90,21 +95,6 @@ return {
          end,
          desc = "Buffers",
       },
-      -- doesn't support fuzzy?
-      -- {
-      --    "<leader>/",
-      --    function()
-      --       Snacks.picker.grep()
-      --    end,
-      --    desc = "Grep",
-      -- },
-      -- {
-      --    "<c-g>",
-      --    function()
-      --       Snacks.picker.grep()
-      --    end,
-      --    desc = "Grep",
-      -- },
       {
          "<leader>:",
          function()
@@ -131,7 +121,7 @@ return {
          function()
             Snacks.picker.help()
          end,
-         desc = "Buffers",
+         desc = "Help",
       },
       {
          "<leader>i",
@@ -175,6 +165,23 @@ return {
          end,
          desc = "Git Log File",
       },
+      {
+         "<leader>fs",
+         function()
+            Snacks.picker.spelling()
+         end,
+         desc = "Spelling",
+      },
+
+      -- doesn't support fuzzy?
+      -- {
+      --    "<c-g>",
+      --    function()
+      --       Snacks.picker.grep()
+      --    end,
+      --    desc = "Grep",
+      -- },
+
       -- still using fzf-lua for the preview
       -- {
       --    "<leader>fl",
