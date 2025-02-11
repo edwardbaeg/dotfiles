@@ -17,7 +17,7 @@ return {
             -- enabled by default: cmp, gitsigns, nvimtree, treesitter, mini
             integrations = { },
          })
-         -- vim.cmd.colorscheme("catppuccin")
+         vim.cmd.colorscheme("catppuccin")
       end,
    },
 
