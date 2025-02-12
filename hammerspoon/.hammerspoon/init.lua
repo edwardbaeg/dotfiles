@@ -14,10 +14,7 @@ require("window_management")
 require("constants")
 require("helpers")
 
----@diagnostic disable-next-line: undefined-global
-local hs = hs
-
--- Install command line interface as `hs`
+-- Install command line interface `hs`
 hs.ipc.cliInstall()
 
 -- Builds annotations for Hammerspoon and install Spoons for lua lsp in ${configDir}/annotations
