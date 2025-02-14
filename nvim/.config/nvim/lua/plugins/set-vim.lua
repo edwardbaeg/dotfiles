@@ -220,7 +220,18 @@ return {
                max_duration = 750,
                from_color = "#2d4f67",
             }
-         }
+         },
+         overwrite = {
+            paste = {
+               enabled = true,
+            },
+            undo = {
+               enabled = true,
+            },
+            redo = {
+               enabled = true,
+            },
+         },
       },
    },
 
