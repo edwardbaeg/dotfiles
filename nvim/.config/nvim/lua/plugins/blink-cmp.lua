@@ -98,10 +98,6 @@ return {
 
       keymap = {
          preset = "none",
-         -- TODO: set this up so that the first option is not automatically selected. Pressing tab will then selecdt the first option and type it in.
-         cmdline = {
-            preset = "super-tab",
-         },
          ["<C-y>"] = { "show", "show_documentation", "hide_documentation" }, -- this is made default with completion.documentation.auto_show
          ["<C-l>"] = { "hide", "fallback" },
          ["<CR>"] = { "accept", "fallback" },
@@ -125,6 +121,13 @@ return {
          ["<C-b>"] = { "scroll_documentation_up", "fallback" },
          ["<C-f>"] = { "scroll_documentation_down", "fallback" },
       },
+
+      cmdline = {
+         keymap = {
+            -- TODO: set this up so that the first option is not automatically selected. Pressing tab will then select the first option and type it in.
+            preset = "super-tab",
+         }
+      }
    },
    opts_extend = { "sources.default" },
 }
