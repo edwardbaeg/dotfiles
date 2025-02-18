@@ -99,6 +99,7 @@ return {
    {
       -- file explorer as nvim buffer
       "stevearc/oil.nvim",
+      enabled = false,
       config = function()
          require("oil").setup({
             default_file_explorer = false, -- this disabled netrw, which is needed for GBrowse, use :Oil

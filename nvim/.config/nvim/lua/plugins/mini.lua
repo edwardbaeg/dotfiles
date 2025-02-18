@@ -125,7 +125,7 @@ return {
          })
 
          -- icon provider
-         require("mini.icons").setup()
+         -- require("mini.icons").setup() -- seems little buggy
 
          -- local miniclue = require("mini.clue")
          -- miniclue.setup({

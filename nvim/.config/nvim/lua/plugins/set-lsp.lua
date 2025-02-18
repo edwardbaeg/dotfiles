@@ -25,10 +25,13 @@ return {
                sign = false, -- don't show in sign column
                enable_in_insert = false, -- don't show to fix conflict with codeium
             },
+            -- LSP breadcrumb view
             symbol_in_winbar = {
+               -- enable = true,
                enable = false,
-               color_mode = false,
                separator = "  ",
+               -- show_file = false, -- don't show filename before symbols
+               color_mode = true, -- symbol name and icon have the same color
             },
             ui = {
                -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",

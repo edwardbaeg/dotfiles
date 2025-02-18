@@ -93,7 +93,7 @@ return {
       -- has / fuzzy search to quickly jump to items
       "nvim-tree/nvim-tree.lua",
       event = "VeryLazy",
-      -- enabled = false,
+      enabled = false,
       config = function()
          require("nvim-tree").setup({
             actions = {

@@ -2,6 +2,7 @@ return {
    -- Fuzzy Finder (files, lsp, etc)
    -- :Telescope
    "nvim-telescope/telescope.nvim",
+   enabled = false,
    cmd = "Telescope",
    event = "VeryLazy",
    dependencies = {
