@@ -5,14 +5,9 @@ require("application_shortcuts")
 require("caffeine")
 require("config_reloader")
 require("remapper")
--- require("wifi")
 require("window_grid")
 require("window_highlight")
 require("window_management")
-
--- required but doesn't have executed code
-require("constants")
-require("helpers")
 
 -- Install command line interface `hs`
 hs.ipc.cliInstall()

@@ -1,8 +1,8 @@
-local helpers = require("helpers")
+local helpers = require("common/helpers")
 local sendKey = helpers.sendKey
 local sendSystemKey = helpers.sendSystemKey
 
-local constants = require("constants")
+local constants = require("common/constants")
 local cmdShift = constants.cmdShift
 local altShift = constants.altShift
 

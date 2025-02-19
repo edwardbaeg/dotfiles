@@ -1,4 +1,4 @@
-local constants = require("constants")
+local constants = require("common/constants")
 local hyperkey = constants.hyperkey
 
 -- TODO?: if the application is already focused, then hide it

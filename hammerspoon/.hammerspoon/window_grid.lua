@@ -1,6 +1,6 @@
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
-local constants = require("constants")
+local constants = require("common/constants")
 
 hs.grid.MARGINX = 0
 hs.grid.MARGINY = 0
