@@ -40,15 +40,6 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
    end,
 })
 
--- Highlight portions of lines that are too long
--- TODO: exclude some filetypes
--- vim.cmd([[
---    augroup vimrc_autocmds
---       autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#331111
---       autocmd BufEnter * match OverLength /\%100v.*/
---    augroup END
--- ]])
-
 -- close/quit some filetypes with <q>
 -- TODO?: add for help files that were added as markdown
 vim.api.nvim_create_autocmd("FileType", {

@@ -21,9 +21,11 @@ return {
    },
 
    {
-      -- Highlight TODO, HACK, BUG, FIXME etc
+      -- Highlight comments, examples:
       -- TODO
       -- FIXME
+      -- HACK
+      -- BUG
       "folke/todo-comments.nvim",
       config = function()
          require("todo-comments").setup({

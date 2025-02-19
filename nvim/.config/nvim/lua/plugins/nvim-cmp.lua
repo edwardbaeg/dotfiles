@@ -27,7 +27,6 @@ return {
       },
       "zbirenbaum/copilot-cmp", -- add copilot as a source
    },
-   -- TODO: add a comparator?
    config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
@@ -118,7 +117,7 @@ return {
                if entry.source.name == "codeium" then
                   vim_item.kind = ""
                end
-               local maxwidth = 80 -- TODO: consider changing this for copilot...
+               local maxwidth = 80
                vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
 
                vim_item.kind = "  " .. vim_item.kind -- add some padding after the word

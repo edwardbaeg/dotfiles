@@ -15,7 +15,7 @@ return {
 
    {
       -- indentation guides and highlight the current indent chunk -- this replaced indent-blankline.nvim
-      -- TODO: replace with mini.indentscope
+      -- TODO?: replace with mini.indentscope
       "shellRaining/hlchunk.nvim",
       enabled = not vim.g.vscode,
       config = function()
