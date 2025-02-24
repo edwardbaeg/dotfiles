@@ -14,9 +14,9 @@ return {
             files = { hidden = true },
             grep = { hidden = true },
             buffers = {
-               on_show = function()
-                  vim.cmd.stopinsert()
-               end,
+               -- on_show = function()
+               --    vim.cmd.stopinsert()
+               -- end,
             },
             command_history = {
                on_show = function()
@@ -171,6 +171,13 @@ return {
             Snacks.picker.spelling()
          end,
          desc = "Spelling",
+      },
+      {
+         "<leader>fp",
+         function()
+            Snacks.picker.lazy()
+         end,
+         desc = "[P]lugins",
       },
 
       -- doesn't support fuzzy?
