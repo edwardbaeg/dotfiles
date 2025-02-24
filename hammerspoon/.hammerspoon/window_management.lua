@@ -6,6 +6,8 @@ local function within(a, b, margin)
 end
 
 -- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
+-- Some applications (eg Firefox) animate resize instead of moving, due to AXEnhancedUserInterface
+-- So, temporarily disable it while moving the window
 local function axHotfix(win)
    if not win then
       win = hs.window.frontmostWindow()
