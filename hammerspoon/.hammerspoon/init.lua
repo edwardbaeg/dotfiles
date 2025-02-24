@@ -17,6 +17,9 @@ hs.ipc.cliInstall()
 -- https://github.com/Hammerspoon/Spoons/pull/240
 hs.loadSpoon("EmmyLua")
 
+-- Use Spotlight to find alternative application names for hs.application.find (and similar)
+hs.application.enableSpotlightForNameSearches(true)
+
 --[[
 Created ojects should be captured in gloal variables.
 Otherwise, they will be garbage collected.
