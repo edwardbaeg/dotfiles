@@ -19,7 +19,9 @@ return {
                snacks_picker_input = false,
             },
          })
+         -- FIXME: this doesn't seem to work at all times.
          vim.keymap.set("i", "<Right>", neocodeium.accept)
+         vim.keymap.set("i", "<a-l>", neocodeium.accept)
 
          -- cycle through suggetions
          vim.keymap.set("i", "<c-j>", function()
@@ -30,13 +32,13 @@ return {
          end)
 
          -- Partial accepts
-         vim.keymap.set("i", "<c-w>", function()
-            require("neocodeium").accept_word()
-         end)
+         -- vim.keymap.set("i", "<c-w>", function()
+         --    require("neocodeium").accept_word()
+         -- end)
          vim.keymap.set("i", "<A-w>", function()
             require("neocodeium").accept_word()
          end)
-         vim.keymap.set("i", "<A-l>", function()
+         vim.keymap.set("i", "<A-f>", function()
             require("neocodeium").accept_line()
          end)
       end,
