@@ -17,6 +17,7 @@ config.window_padding = {
 config.color_scheme = "tokyonight"
 -- config.color_scheme = "nord"
 -- config.color_scheme = "Catppuccin Mocha"
+
 config.colors = {
    -- cursor_bg = "#008080",
    cursor_bg = "teal",
@@ -50,26 +51,31 @@ config.macos_window_background_blur = 75
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 
+-- Font settings --
+-------------------
+
 -- Decrease line density
 config.line_height = 1.1
 
-config.font = wezterm.font("Operator Mono", { weight = "Book" })
+config.font = wezterm.font("0xProto")
+-- config.font = wezterm.font("Operator Mono", { weight = "Book" })
 -- config.font = wezterm.font("Operator Mono", { weight = "Medium" })
 -- config.font = wezterm.font("JetBrains Mono", { weight = "Medium" })
 -- config.font = wezterm.font("Nerd Font Symbols", { weight = "Medium" })
 
--- offset for rendering underline
-config.underline_position = -4
-
 if wezterm.hostname() == "OA.local" then
    config.font_size = 16
 else
-   config.font_size = 17
+   config.font_size = 16
 end
 
-config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" } -- disable ligatures
+-- Disable ligatures:
+-- config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 config.max_fps = 144 -- default is 60
+
+-- offset for rendering underline
+config.underline_position = -4
 
 -- Windows specific config
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
