@@ -36,6 +36,7 @@ return {
    },
 
    {
+      -- Github Copilot Chat functionality in nvim
       "CopilotC-Nvim/CopilotChat.nvim",
       dependencies = {
          { "zbirenbaum/copilot.lua" },
@@ -43,7 +44,15 @@ return {
       },
       build = "make tiktoken", -- Only on MacOS or Linux
       opts = {},
+      cmd = "CopilotChat",
       keys = {
+         {
+            "<leader>cct",
+            function()
+               require("CopilotChat").open()
+            end,
+            desc = "CopilotChat",
+         },
          {
             "<leader>ccp",
             function()
