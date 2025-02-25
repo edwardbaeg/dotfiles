@@ -6,12 +6,18 @@ return {
    "peitalin/vim-jsx-typescript", -- better support for react?
 
    {
-      -- automatically add closing brackets
+      -- Automatically add, pad closing brackets
+      -- Fastwarp: <A-e> and <A-E>
       "altermo/ultimate-autopair.nvim",
       event = { "InsertEnter", "CmdlineEnter" },
-      branch = "v0.6",
+      branch = "v0.6", -- plugin is currently in maintenance mode
       opts = {
-         --Config goes here
+         -- move closing bracket
+         -- TODO: see if we can add normal mode mapping?
+         fastwarp = {
+            enable = true,
+            faster = true, -- skip over pairs
+         },
       },
    },
 
