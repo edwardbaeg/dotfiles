@@ -26,12 +26,11 @@ return {
    },
 
    {
-      -- highight colors
-      -- NOTE: lazy loading this breaks automatic highlighting
+      -- color highlighter
+      -- :ColorizerToggle
+      -- #FFF, #FFF000
       "NvChad/nvim-colorizer.lua",
-      config = function()
-         require("colorizer").setup({})
-      end,
+      opts = {},
    },
 
    {
