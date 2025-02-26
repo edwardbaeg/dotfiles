@@ -70,7 +70,7 @@ vim.api.nvim_create_autocmd("FileType", {
    end,
 })
 
--- keep curosor position after yanking
+-- keep cursor position after yanking
 -- https://nanotipsforvim.prose.sh/sticky-yank
 local cursorPreYank
 vim.keymap.set({ "n", "x" }, "y", function()
