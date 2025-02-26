@@ -64,4 +64,10 @@ return {
          require("leap.remote").action()
       end, { desc = "Leap [r]emote" }),
    },
+
+   {
+      -- automatically indent from the first column to the current indent level
+      'vidocqh/auto-indent.nvim',
+      opts = {},
+   },
 }
