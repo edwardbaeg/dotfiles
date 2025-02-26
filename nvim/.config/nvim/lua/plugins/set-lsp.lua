@@ -20,74 +20,11 @@ return {
          "saghen/blink.cmp", -- completion engine
       },
       config = function()
-         require("lspsaga").setup({
-            lightbulb = {
-               sign = false, -- don't show in sign column
-               enable_in_insert = false, -- don't show to fix conflict with codeium
-            },
-            -- LSP breadcrumb view
-            symbol_in_winbar = {
-               -- enable = true,
-               enable = false,
-               separator = "  ",
-               -- show_file = false, -- don't show filename before symbols
-               color_mode = true, -- symbol name and icon have the same color
-            },
-            ui = {
-               -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",
-               preview = " ",
-               code_action = "",
-               -- code_action = "⚡", -- "💡",
-               hover = " ",
-            },
-            finder = {
-               keys = {
-                  vsplit = "v", -- open in vertical split
-               },
-            },
-            callhierarchy = {
-               keys = {
-                  -- toggle_or_req = "<cr>",
-                  toggle_or_req = "<cr>",
-                  edit = "o", -- open file
-               },
-            },
-            definition = {
-               width = 0.7,
-               height = 0.7,
-            },
-            diagnostic = {
-               -- max_width = 1, -- default is 0.8
-               -- max_height = 1, -- default is 0.6
-
-               -- settings for floats
-               -- max_show_width = 1, -- default is 0.9
-               max_show_height = 0.9, -- default is 0.6
-
-               show_code_action = false, -- annoying to preview "move to new file" -- NOTE: this doesn't seem to work?
-               -- jump_num_shortcut = false,
-            },
-         })
 
          local keymap = vim.keymap.set
 
-         -- lsp saga keymaps
-         keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>")
-         keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
-         keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
-         -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
-         keymap("n", "gr", "<cmd>Lspsaga finder<cr>")
-         -- keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
-         keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
-         keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
-         keymap("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
-         keymap("n", "ge", "<cmd>Lspsaga diagnostic_jump_next<cr>")
-         keymap("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
-         -- keymap('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
-         keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" })
-
          -- backup keymaps
-         keymap("n", "gk", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+         keymap("n", "gK", vim.lsp.buf.hover, { desc = "Hover Documentation" })
 
          -- other keymaps
          keymap("n", "ls", ":LspRestart<cr>", { desc = "LspRestart", silent = false })
@@ -249,6 +186,79 @@ return {
             -- end,
          })
       end,
+   },
+
+   {
+      -- pretty lsp ui
+      "nvimdev/lspsaga.nvim",
+      enabled = false,
+      config = function()
+         require("lspsaga").setup({
+            lightbulb = {
+               sign = false, -- don't show in sign column
+               enable_in_insert = false, -- don't show to fix conflict with codeium
+            },
+            -- LSP breadcrumb view
+            symbol_in_winbar = {
+               -- enable = true,
+               enable = false,
+               separator = "  ",
+               -- show_file = false, -- don't show filename before symbols
+               color_mode = true, -- symbol name and icon have the same color
+            },
+            ui = {
+               -- expand = "", collapse = "", diagnostic = "🐞", incoming = " ", outgoing = " ",
+               preview = " ",
+               code_action = "",
+               -- code_action = "⚡", -- "💡",
+               hover = " ",
+            },
+            finder = {
+               keys = {
+                  vsplit = "v", -- open in vertical split
+               },
+            },
+            callhierarchy = {
+               keys = {
+                  -- toggle_or_req = "<cr>",
+                  toggle_or_req = "<cr>",
+                  edit = "o", -- open file
+               },
+            },
+            definition = {
+               width = 0.7,
+               height = 0.7,
+            },
+            diagnostic = {
+               -- max_width = 1, -- default is 0.8
+               -- max_height = 1, -- default is 0.6
+
+               -- settings for floats
+               -- max_show_width = 1, -- default is 0.9
+               max_show_height = 0.9, -- default is 0.6
+
+               show_code_action = false, -- annoying to preview "move to new file" -- NOTE: this doesn't seem to work?
+               -- jump_num_shortcut = false,
+            },
+         })
+         local keymap = vim.keymap.set
+
+         -- lsp saga keymaps
+         keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>")
+         keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
+         keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
+         -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
+         keymap("n", "gr", "<cmd>Lspsaga finder<cr>")
+         -- keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
+         keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
+         keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
+         keymap("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
+         keymap("n", "ge", "<cmd>Lspsaga diagnostic_jump_next<cr>")
+         keymap("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
+         -- keymap('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
+         keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" })
+
+      end
    },
 
    {
