@@ -1,8 +1,12 @@
 gui:
   showIcons: true # enable nerd fonts
   theme:
+    activeBorderColor:
+      - yellow
+      - bold
     selectedLineBgColor:
-      - '#000000' # use hex instead of 'black' for nvim terminal coloring
+      # NOTE: use hex instead of 'black' for nvim terminal coloring
+      - '#444444'
     selectedRangeBgColor:
       - reverse
 git:
