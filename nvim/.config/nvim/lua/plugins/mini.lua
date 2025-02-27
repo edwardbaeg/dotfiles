@@ -92,6 +92,7 @@ return {
          })
 
          -- smooth scrolling
+         -- NOTE: this breaks `gi`
          local animate = require("mini.animate")
          animate.setup({
             scroll = {
