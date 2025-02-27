@@ -58,7 +58,7 @@ config.hide_tab_bar_if_only_one_tab = true
 config.line_height = 1.1
 
 config.font = wezterm.font("0xProto")
--- config.font = wezterm.font("Operator Mono", { weight = "Book" })
+config.font = wezterm.font("Operator Mono", { weight = "Book" })
 -- config.font = wezterm.font("Operator Mono", { weight = "Medium" })
 -- config.font = wezterm.font("JetBrains Mono", { weight = "Medium" })
 -- config.font = wezterm.font("Nerd Font Symbols", { weight = "Medium" })
