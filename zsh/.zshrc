@@ -83,6 +83,8 @@ export LESS="$LESS -FRXK"
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
+source ~/.env
+
 # -- OneAdvisory, Dispatch -------------------------------------------------------
 alias gcm2="git checkout master2 && git reset --hard origin/master"
 alias front="cd ~/dev/oneadvisory/frontend"
@@ -239,7 +241,7 @@ alias dot="cd ~/dev/dotfiles"
 alias dots="cd ~/dev/dotfiles"
 
 #-- SSH
-alias whatbox="ssh dwrdbg@proteus.whatbox.ca"
+alias whatbox='ssh "$WHATBOX_USER"@"$WHATBOX_HOST"'
 
 # conditional command aliases
 if command -v eza &> /dev/null; then
