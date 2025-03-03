@@ -275,17 +275,18 @@ return {
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
+         local sibling_swap = require("sibling-swap")
          ---@diagnostic disable-next-line: missing-fields they are not required
-         require("sibling-swap").setup({
+         sibling_swap.setup({
             use_default_keymaps = true, -- this needs to be true to use the `keymaps` field?
             keymaps = {
-               swap_next = "<leader>.",
-               swap_previous = "<leader>,",
+               ["<leader>."] = "swap_with_right",
+               ["<leader>,"] = "swap_with_left",
             },
          })
 
-         vim.keymap.set('n', '<leader>,', require('sibling-swap').swap_with_left)
-         vim.keymap.set('n', '<leader>.', require('sibling-swap').swap_with_right)
+         vim.keymap.set('n', '<leader>,', sibling_swap.swap_with_left)
+         vim.keymap.set('n', '<leader>.', sibling_swap.swap_with_right)
       end,
    },
 }
