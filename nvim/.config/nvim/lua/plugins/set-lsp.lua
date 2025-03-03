@@ -191,7 +191,10 @@ return {
    {
       -- pretty lsp ui
       "nvimdev/lspsaga.nvim",
-      enabled = false,
+      dependencies = {
+         "neovim/nvim-lspconfig",
+         "nvim-tree/nvim-web-devicons", -- adds icons
+      },
       config = function()
          require("lspsaga").setup({
             lightbulb = {
