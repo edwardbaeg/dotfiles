@@ -122,10 +122,17 @@ return {
          ["<C-f>"] = { "scroll_documentation_down", "fallback" },
       },
 
+      -- https://cmp.saghen.dev/modes/cmdline.html
       cmdline = {
          keymap = {
-            -- TODO: set this up so that the first option is not automatically selected. Pressing tab will then select the first option and type it in.
             preset = "super-tab",
+            ['<CR>'] = { 'accept_and_enter', 'fallback' },
+            ["<C-l>"] = { "hide", "fallback" },
+         },
+         completion = {
+            menu = {
+               auto_show = true,
+            }
          }
       }
    },
