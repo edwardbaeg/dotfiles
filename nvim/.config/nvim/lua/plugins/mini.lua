@@ -93,6 +93,7 @@ return {
 
          -- smooth scrolling
          -- NOTE: this breaks `gi`
+         -- vim.g.minianimate_disable = true
          local animate = require("mini.animate")
          animate.setup({
             scroll = {
