@@ -58,6 +58,7 @@ return {
                enable = true,
                additional_vim_regex_highlighting = true, -- regex highlighting helps with jsx indenting, but otherwise its bad
             },
+            -- FIXME: indentation not always working with js files. May need to try something like nvim-yati
             indent = {
                enable = true,
                disable = { "python" }, -- there are issues with python https://github.com/nvim-treesitter/nvim-treesitter/issues/1136
@@ -269,17 +270,22 @@ return {
       -- Swap sibling nodes with treesitter
       -- Usage: <leader>. and <leader>,
       -- NOTE: setting this with lazy.opts/keys doesnt work well - cannot disable default keymaps and use lazy.keys at the same time
+      -- FIXME: disable its keymaps for <a-j/k>
       "Wansmer/sibling-swap.nvim",
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
          ---@diagnostic disable-next-line: missing-fields they are not required
          require("sibling-swap").setup({
-            use_default_keymaps = false, -- this needs to be true to use the `keymaps` field?
+            use_default_keymaps = true, -- this needs to be true to use the `keymaps` field?
+            keymaps = {
+               swap_next = "<leader>.",
+               swap_previous = "<leader>,",
+            },
          })
 
-         vim.keymap.set('n', '<space>,', require('sibling-swap').swap_with_left)
-         vim.keymap.set('n', '<space>.', require('sibling-swap').swap_with_right)
+         vim.keymap.set('n', '<leader>,', require('sibling-swap').swap_with_left)
+         vim.keymap.set('n', '<leader>.', require('sibling-swap').swap_with_right)
       end,
    },
 }
