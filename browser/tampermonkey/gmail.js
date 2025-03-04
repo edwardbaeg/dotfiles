@@ -143,7 +143,7 @@ function filterMorningBrewSponsors() {
   headers.forEach((header) => {
     if (
       MORNINGBREW_AD_PREFIXES.some((prefix) =>
-        header.textContent.includes(prefix),
+        header.textContent.toLocaleLowerCase().includes(prefix),
       )
     ) {
       const parent = header.closest("table");
