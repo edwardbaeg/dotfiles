@@ -120,6 +120,14 @@ function filter1440Sponsors() {
 
 const MORNINGBREW_SENDER = 'Morning Brew';
 const MORNINGBREW_EMAIL_CONTENT = 'Copyright';
+const MORNINGBREW_AD_PREFIXES = [
+  'presented by',
+  'together with',
+  'brought to you by',
+  'games',
+  'answer',
+  'share the brew',
+]
 function filterMorningBrewSponsors() {
   if (!isFromSender(MORNINGBREW_SENDER)) {
     return;
@@ -134,11 +142,7 @@ function filterMorningBrewSponsors() {
   const headers = document.querySelectorAll('h3');
   headers.forEach(header => {
     if (
-      header.textContent.toLocaleLowerCase().includes('presented by') ||
-      header.textContent.toLocaleLowerCase().includes('together with') ||
-      header.textContent.toLocaleLowerCase().includes('games') ||
-      header.textContent.toLocaleLowerCase().includes('answer') ||
-      header.textContent.toLocaleLowerCase().includes('share the brew')
+      MORNINGBREW_AD_PREFIXES.some(prefix => header.textContent.includes(prefix))
     ) {
       const parent = header.closest('table');
       // parent.style.border = "2px solid red";
