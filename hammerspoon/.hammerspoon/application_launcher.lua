@@ -1,5 +1,6 @@
 local constants = require("common/constants")
 local hyperkey = constants.hyperkey
+local allkey = constants.allkey
 
 -- TODO?: if the application is already focused, then hide it
 ---@param modifiers table
@@ -35,15 +36,21 @@ local function getArcProfileSetter(profileIndex)
    end
 end
 
+local mappings = {
+   { "0", "Wezterm" },
+   { "8", "Slack" },
+}
+
 function Main()
-   assignAppHotKey(hyperkey, "0", "Wezterm")
-   assignAppHotKey(hyperkey, "8", "Slack")
+   for _, pair in pairs(mappings) do
+      assignAppHotKey(hyperkey, pair[1], pair[2])
+   end
 
    if constants.isPersonal then
       assignAppHotKey(hyperkey, "9", "Arc")
-      assignAppHotKey(constants.allkey, "9", "Arc")
+      assignAppHotKey(allkey, "9", "Arc")
    else
-      assignAppHotKey(constants.allkey, "9", "Arc", getArcProfileSetter("2")) -- personal
+      assignAppHotKey(allkey, "9", "Arc", getArcProfileSetter("2")) -- personal
       assignAppHotKey(hyperkey, "9", "Arc", getArcProfileSetter("4")) -- work
    end
 
