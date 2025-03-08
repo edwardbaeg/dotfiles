@@ -37,7 +37,7 @@ local function getArcProfileSetter(profileIndex)
 end
 
 local mappings = {
-   { "0", "Wezterm" },
+   { "0", "Kitty" },
    { "8", "Slack" },
 }
 
