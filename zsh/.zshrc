@@ -182,6 +182,8 @@ alias vh="nvim ~/.hammerspoon/init.lua -c \":cd %:h\""
 alias eh="nvim ~/.hammerspoon/init.lua -c \":cd %:h\""
 alias vw="nvim ~/.wezterm.lua"
 alias ew="nvim ~/.wezterm.lua"
+alias vk="nvim ~/.config/kitty/kitty.conf"
+alias ek="nvim ~/.config/kitty/kitty.conf"
 alias vhist="nvim ~/.zsh_history"
 
 # -- sourcing
