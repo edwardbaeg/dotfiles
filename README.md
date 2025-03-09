@@ -1,6 +1,6 @@
 # Dotfiles
 
-My neovim and terminal (Tmux in Wezterm) based development setup. Always a work progress!
+My neovim and terminal (Tmux in Kitty) based development setup. Always a work progress!
 
 <!-- TODO: replace with urls instead of assets -->
 ![screenshot](assets/main.png)
@@ -21,7 +21,7 @@ Set up [below](#neovim-setup).
 
 # Terminal
 
-Application: [Wezterm](https://github.com/wez/wezterm)
+Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 
 **Shell + Framework**: `zsh` + `oh-my-zsh`
 
