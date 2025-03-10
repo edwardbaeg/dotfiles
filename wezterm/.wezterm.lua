@@ -61,6 +61,7 @@ config.font = wezterm.font_with_fallback {
    "0xProto",
    "Operator Mono"
 }
+-- config.font = wezterm.font("0xProto")
 -- config.font = wezterm.font("Operator Mono", { weight = "Book" })
 -- config.font = wezterm.font("Operator Mono", { weight = "Medium" })
 -- config.font = wezterm.font("JetBrains Mono", { weight = "Medium" })
