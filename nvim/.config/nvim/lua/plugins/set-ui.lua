@@ -60,8 +60,9 @@ return {
          require("scrollbar").setup({
             show_in_active_only = true, -- only show in active window
             handle = {
+               color = "#444444",
                -- color = "#111111",
-               color = "grey9",
+               -- color = "grey9",
             },
             handlers = {
                -- cursor = false,
