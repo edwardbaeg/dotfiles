@@ -29,8 +29,11 @@ return {
          end)
       end
 
-      -- ignore changes in the amount of whitespace
-      vim.o.diffopt = "iwhite"
+      -- internal: use internal diff library
+      -- fillter: add filler lines for side by side diffs
+      -- linematch: try to match same lines
+      -- iwhite: ignore changes in the amount of whitespace
+      vim.o.diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram,iwhite"
 
       require("which-key").add({
          {
