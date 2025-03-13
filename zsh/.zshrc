@@ -83,7 +83,8 @@ export LESS="$LESS -FRXK"
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
-source ~/.env
+# source ~/.env if it exists
+[ -f "$HOME/.env" ] && source "$HOME/.env"
 
 # -- OneAdvisory, Dispatch -------------------------------------------------------
 alias gcm2="git checkout master2 && git reset --hard origin/master"
