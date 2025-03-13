@@ -44,13 +44,13 @@ return {
    end,
    keys = {
       -- Toggle tag
-      { "<leader>kk", function ()
+      { "<leader>kl", function ()
          print("Grapple toggled buffer")
          require("grapple").toggle()
       end, desc = "Grapple toggle tag" },
 
-      -- Show tags
-      { "<leader>kl", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
+      -- Show grapple tags
+      { "<leader>kk", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },
 
       -- Quick jump to tag
       -- this is not really used
