@@ -30,6 +30,8 @@ require("config.post-plugins")
 
 - Find and replace
  - when in a visual block, omit the `%`: <'>'/s
+ - to skip typing the text to replace, use * and then start search and skip the argument
+   - example: :s//foo
 
 - Files
  - do :e to reload a file from external changes
