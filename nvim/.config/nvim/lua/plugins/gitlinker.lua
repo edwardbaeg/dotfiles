@@ -15,7 +15,7 @@ return {
          "v",
          "<leader>gl",
          '<cmd>lua require"gitlinker".get_buf_range_url("v", {action_callback = require"gitlinker.actions".open_in_browser})<cr>',
-         {}
+         { silent = true }
       )
       vim.api.nvim_create_user_command(
          "Glink",
