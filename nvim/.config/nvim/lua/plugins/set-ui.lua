@@ -1,4 +1,5 @@
 -- plugins that add visual elements to the vim ui
+-- TODO: split off "UI components" with coding visual stuffs
 return {
    {
       -- show outline of symbols
@@ -29,6 +30,9 @@ return {
                },
                duration = 150, -- default 200
                delay = 200, -- default 300
+               exclude_filetypes = {
+                  snacks_picker_list = true,
+               },
             },
             -- highlight the line numbers for the current text chunk
             line_num = {
@@ -42,6 +46,9 @@ return {
                -- chars = { "╎" },
                style = {
                   { fg = frappe.surface0 },
+               },
+               exclude_filetypes = {
+                  snacks_picker_list = true,
                },
             },
             blank = {
@@ -196,7 +203,7 @@ return {
    {
       -- animated cursor smear effect
       "sphamba/smear-cursor.nvim",
-      enabled = false,
+      enabled = false, -- replaced with kitty cli effect
       opts = {
          stiffness = 0.8, -- 0.6      [0, 1]
          trailing_stiffness = 0.6, -- 0.3      [0, 1], tail length?
