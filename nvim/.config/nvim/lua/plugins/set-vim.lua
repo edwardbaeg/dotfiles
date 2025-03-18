@@ -1,7 +1,6 @@
 -- plugins that extend built in vim functionality
 return {
    "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-   "gabebw/vim-github-link-opener", -- opens 'foo/bar' in github
 
    "arp242/undofile_warn.vim", -- warn when access undofile before current open
    {
@@ -74,6 +73,7 @@ return {
 
    {
       -- adds some visuals to folds
+      -- TODO: add to status column
       "anuvyklack/pretty-fold.nvim",
       enabled = false, -- idk folds
       config = function()
@@ -99,7 +99,7 @@ return {
    {
       -- file explorer as nvim buffer
       "stevearc/oil.nvim",
-      enabled = false,
+      -- enabled = false,
       config = function()
          require("oil").setup({
             default_file_explorer = false, -- this disabled netrw, which is needed for GBrowse, use :Oil
