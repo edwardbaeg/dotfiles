@@ -20,6 +20,8 @@ return {
                -- preselect = function(ctx)
                --    return ctx.mode == "cmdline"
                -- end,
+               -- preselect = false,
+               -- auto_insert = false,
                -- auto_insert = function(ctx)
                --    return ctx.mode == "cmdline"
                -- end
@@ -126,15 +128,24 @@ return {
       cmdline = {
          keymap = {
             preset = "super-tab",
-            ['<CR>'] = { 'accept_and_enter', 'fallback' },
+            ["<CR>"] = { "accept_and_enter", "fallback" },
             ["<C-l>"] = { "hide", "fallback" },
          },
          completion = {
             menu = {
                auto_show = true,
-            }
-         }
-      }
+            },
+            list = {
+               selection = {
+                  -- preselect for commands but not other modes (eg, search)
+                  preselect = function(ctx)
+                     return vim.fn.getcmdtype() == ":"
+                  end,
+                  auto_insert = true,
+               },
+            },
+         },
+      },
    },
    opts_extend = { "sources.default" },
 }
