@@ -178,8 +178,10 @@ return {
       -- enabled = false,
       config = function()
          require("treesitter-context").setup({
+            multiwindow = true, -- default is false
             max_lines = 3,
             separator = "-",
+            zindex = 1, -- default is 20, lower to show under floating windows
          })
       end,
    },
