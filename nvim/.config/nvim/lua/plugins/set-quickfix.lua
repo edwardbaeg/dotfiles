@@ -7,9 +7,9 @@ return {
       -- cmd = "Trouble", -- lazy load
       config = function()
          require("trouble").setup()
-         vim.keymap.set("n", "<leader>tt", function()
-            require("trouble").toggle()
-         end, { silent = true, noremap = true, desc = "[T]oggle [T]rouble" })
+         -- vim.keymap.set("n", "<leader>tt", function()
+         --    require("trouble").toggle()
+         -- end, { silent = true, noremap = true, desc = "[T]oggle [T]rouble" })
       end,
    },
 
