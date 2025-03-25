@@ -17,48 +17,48 @@ require("lazy").setup("plugins", {
 require("config.post-plugins")
 
 --[[ TODO
+
 - rewrite all vimscript stuff to lua
 - determine a way to open *.stories or *.test for the given file
 - move legacy/inactive settings to a separate file that is not loaded?
 ]]
 
 --[[ Usability Notes
-- Buffers/Splits/Windows
- - move window: `<c-w>HJKL`
- - move buffer to split where # is the buffer id, :buffers: :vert sb#
- - open in split with <c-v/x>
 
+- Buffers/Splits/Windows/Tabs
+   - move window -> `<c-w>HJKL`
+   - move buffer to split where # is the buffer id -> :buffers :vert sb#
+   - open in split with <c-v/x>
+   - open given buffer in a new tab (to "maximize it temporarilty") -> :tab split
+   - :enew to open an empty buffer
+      - empty buffer in split -> :vert[ical] e[dit] -- doesn't work?
 - Find and replace
- - when in a visual block, omit the `%`: <'>'/s
- - to skip typing the text to replace, use * and then start search and skip the argument
-   - example: :s//foo
-
+   - when in a visual block, omit the `%`: <'>'/s
+   - to skip typing the text to replace, use * and then start search and skip the argument
+      - example: :s//foo
 - Files
- - do :e to reload a file from external changes
-
-- Commands
- - :set showmatch? - add ? to check its setting
-
-- Telescope - open [help] in new tab -> <c-t>
- - :options - interactive view and set all options
-
+   - do :e to reload a file from external changes
+- Settings
+   - :set showmatch? - add ? to check its setting
+   - :options - interactive view and set all options
 - Formatting
- - use `gq` operator to edit text to fit within the textwidth
-
-- :TSPlaygroundToggle replaced with :Inspect
-- gv -> select last visual selection
-- :enew to open an empty buffer
-- after :recover a swapfile, do :e to delete the older one
-- :vert[ical] e[dit]
-- instead of using `dd` for an empty line, use `J`
-- ...and to add an empty line: `<cr>`
-- indent in insert mode with `<c-t>/<c-d>`
-- use <c-t> instead of <c-o>, tagstack
-- :copen to open the quickfix window
-- :e to read external changes to a file
+   - use `gq` operator to edit text to fit within the textwidth
+- Selecting
+   - gv to select last visual selection
+- Swapfiles
+   - after :recover a swapfile, do :e to delete the older one
+- Editing
+   - instead of using `dd` for an empty line, use `J`
+   - indent in insert mode with `<c-t>/<c-d>`
+- Quickfix
+   - use `:copen` to open the quickfix window
+- Builtin commands
+   - :TSPlaygroundToggle replaced with :Inspect
+   - <c-t> to use tag stack to jump
 ]]
 
 --[[ KEYMAP GUIDE
+
 - Don't add to operator pending for y, d
 -  - and maybe c?
 - catchalls: g,
