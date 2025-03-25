@@ -166,7 +166,7 @@ alias ovim="oldvim"
 alias vpp="nvim -c \"lua require('snacks').picker.files()\""
 # alias vg="nvim -c \"lua require('fzf-lua').grep_project()\"" # TODO: replace with fzf function
 alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
-alias vsr="nvim -c \"SessionRestore\""
+alias vsr="nvim -c \"lua require('persistence').load()\""
 alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
 alias vlazy='NVIM_APPNAME=nvim-lazyvim nvim' # LazyVim

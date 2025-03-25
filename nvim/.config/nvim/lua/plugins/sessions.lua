@@ -1,8 +1,21 @@
 return {
    {
+      -- automatically save sessions
+      "folke/persistence.nvim",
+      event = "BufReadPre",
+      config = true,
+      init = function()
+         vim.keymap.set("n", "<leader>sl", function()
+            require("persistence").load()
+         end, { desc = "[s]ession [l]oad", silent = true })
+      end,
+   },
+
+   {
       -- automatic sessions management
       -- TODO: consider folke/persistence.nvim
       "rmagatti/auto-session",
+      enabled = false,
       config = function()
          require("auto-session").setup({
             auto_restore_enabled = false,
