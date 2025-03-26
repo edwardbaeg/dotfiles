@@ -51,6 +51,10 @@ return {
                   },
                },
             },
+            -- don't show for lsp saga rename
+            auto_show = function(ctx)
+               return vim.bo.filetype ~= "sagarename"
+            end,
             -- mini.icons
             -- draw = {
             --    components = {
@@ -128,6 +132,7 @@ return {
       cmdline = {
          keymap = {
             preset = "super-tab",
+            ["<C-y>"] = { "show", "show_documentation", "hide_documentation" }, -- this is made default with completion.documentation.auto_show
             ["<CR>"] = { "accept_and_enter", "fallback" },
             ["<C-l>"] = { "hide", "fallback" },
             ["<Tab>"] = { "select_next", "fallback" },
@@ -139,11 +144,12 @@ return {
             },
             list = {
                selection = {
+                  preselect = false,
                   -- preselect for commands but not other modes (eg, search)
-                  preselect = function(ctx)
-                     return vim.fn.getcmdtype() == ":"
-                  end,
-                  auto_insert = true,
+                  -- preselect = function(ctx)
+                  --    return vim.fn.getcmdtype() == ":"
+                  -- end,
+                  -- auto_insert = true,
                },
             },
          },

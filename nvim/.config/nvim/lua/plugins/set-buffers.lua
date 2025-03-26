@@ -8,12 +8,12 @@ return {
 
          buvvers.setup({
             -- `config` param of vim.api.nvim_open_win
-            buvvers_win = {
-               width = math.max(
-                  math.ceil(vim.o.columns / 8),
-                  10
-               )
-            }
+            -- buvvers_win = {
+            --    width = math.max(
+            --       math.ceil(vim.o.columns / 8),
+            --       10
+            --    )
+            -- }
          })
 
          vim.keymap.set("n", "<leader>bl", buvvers.toggle)

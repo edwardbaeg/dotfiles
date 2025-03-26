@@ -14,6 +14,9 @@ return {
             files = { hidden = true },
             grep = { hidden = true },
             buffers = {
+               layout = {
+                  preset = "dropdown",
+               }
                -- on_show = function()
                --    vim.cmd.stopinsert()
                -- end,
