@@ -15,7 +15,7 @@ return {
       -- connect with ghosttext browser extension
       -- this defaults to http://localhost:4001
       "subnut/nvim-ghost.nvim",
-      -- enabled = false,
+      enabled = false, -- this sets NVIM_LISTEN_ADDRESS, which errors on 0.11
       config = function()
          vim.cmd([[
             " let g:nvim_ghost_use_script = 1
