@@ -12,6 +12,15 @@ return {
             enable = true,
             faster = true, -- skip over pairs
          },
+         -- nft is "not file type"
+         config_internal_pairs = {
+            { "(", ")",  nft = { "snacks_picker_input" } },
+            { "[", "]",  nft = { "snacks_picker_input" } },
+            { "{", "}",  nft = { "snacks_picker_input" } },
+            { "'", "'",  nft = { "snacks_picker_input" } },
+            { '"', '"',  nft = { "snacks_picker_input" } },
+            { "`", "`",  nft = { "snacks_picker_input" } },
+         },
       },
    },
 
