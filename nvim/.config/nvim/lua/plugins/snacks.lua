@@ -16,7 +16,7 @@ return {
             buffers = {
                layout = {
                   preset = "dropdown",
-               }
+               },
                -- on_show = function()
                --    vim.cmd.stopinsert()
                -- end,
@@ -184,14 +184,26 @@ return {
          desc = "[P]lugins",
       },
 
-      -- doesn't support fuzzy?
-      -- {
-      --    "<c-g>",
-      --    function()
-      --       Snacks.picker.grep()
-      --    end,
-      --    desc = "Grep",
-      -- },
+      -- doesn't support fuzzy, stil use fzf-lua
+      {
+         "<c-g>",
+         function()
+            Snacks.picker.grep({
+               hidden = true, -- annoyingly have to set these...
+            })
+         end,
+         desc = "Grep",
+      },
+      {
+         "<leader>*",
+         function()
+            Snacks.picker.grep_word({
+               hidden = true, -- annoyingly have to set these...
+            })
+         end,
+         desc = "Grep cword",
+         mode = { "n", "v" },
+      },
 
       -- still using fzf-lua for the preview
       -- {

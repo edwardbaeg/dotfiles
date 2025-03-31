@@ -60,9 +60,9 @@ return {
          end, {})
 
          -- -- grep
-         vim.keymap.set("n", "<leader>*", "<cmd>lua require('fzf-lua').grep_cword()<cr>", { silent = true })
-         vim.keymap.set("v", "<leader>*", "<cmd>lua require('fzf-lua').grep_visual()<cr>", { silent = true })
-         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
+         -- vim.keymap.set("n", "<leader>*", "<cmd>lua require('fzf-lua').grep_cword()<cr>", { silent = true })
+         -- vim.keymap.set("v", "<leader>*", "<cmd>lua require('fzf-lua').grep_visual()<cr>", { silent = true })
+         -- vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
          vim.keymap.set("n", "<leader>fl", "<cmd>lua require('fzf-lua').blines()<cr>", { silent = true })
          --
          -- -- buffers/files
