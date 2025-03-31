@@ -31,7 +31,7 @@ require("config.post-plugins")
    - open in split with <c-v/x>
    - open given buffer in a new tab (to "maximize it temporarilty") -> :tab split
    - :enew to open an empty buffer
-      - empty buffer in split -> :vert[ical] e[dit] -- doesn't work?
+      - vnew to open an empty buffer in a vertical split
 - Find and replace
    - when in a visual block, omit the `%`: <'>'/s
    - to skip typing the text to replace, use * and then start search and skip the argument

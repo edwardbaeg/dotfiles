@@ -177,6 +177,7 @@ return {
       },
       {
          "<leader>fp",
+         -- NOTE: this links to the actual configuration file, not the symlink
          function()
             Snacks.picker.lazy()
          end,

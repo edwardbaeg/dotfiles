@@ -49,6 +49,7 @@ return {
    {
       -- Adds git commands
       -- This is mostly used for :Git blame, TODO find replacement for it
+      -- NOTE: would be nice if `q` for the blame window would focus the previous buffer...
       "tpope/vim-fugitive",
       -- dependencies = { "tpope/vim-rhubarb" }, -- this is required for :Gbrowse
       init = function()

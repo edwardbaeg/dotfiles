@@ -190,6 +190,8 @@ return {
 
    {
       -- pretty lsp ui
+      -- TODO: replace some with builtins. See :help lsp-defaults
+      --   - for example, grn for lsp.buf.rename()
       "nvimdev/lspsaga.nvim",
       dependencies = {
          "neovim/nvim-lspconfig",
