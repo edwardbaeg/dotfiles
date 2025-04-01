@@ -185,13 +185,15 @@ return {
       },
 
       -- doesn't support fuzzy?
-      -- {
-      --    "<c-g>",
-      --    function()
-      --       Snacks.picker.grep()
-      --    end,
-      --    desc = "Grep",
-      -- },
+      -- but can do <c-g> to fuzzy search results, including filenames
+      {
+         -- "<c-g>",
+         "<leader>sg",
+         function()
+            Snacks.picker.grep()
+         end,
+         desc = "Grep",
+      },
 
       -- still using fzf-lua for the preview
       -- {

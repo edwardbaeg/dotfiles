@@ -39,7 +39,6 @@ return {
 
                -- rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e", -- default
                rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e", -- add hidden (for */.config/*)
-               -- rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -g '!{.git,node_modules,firms}/*'", -- try to ignore some dirs
             },
             buffers = {
                winopts = {
