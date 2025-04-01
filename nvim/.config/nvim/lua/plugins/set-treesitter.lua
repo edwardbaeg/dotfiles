@@ -45,6 +45,7 @@ return {
                "markdown",
                "markdown_inline",
                "python",
+               "regex",
                "terraform",
                "tsx",
                "typescript",
@@ -53,6 +54,7 @@ return {
                -- "rust",
                -- "vue",
                "query",
+               "yaml",
             },
             highlight = {
                enable = true,

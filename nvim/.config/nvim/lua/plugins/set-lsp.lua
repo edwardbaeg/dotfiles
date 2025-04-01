@@ -121,6 +121,7 @@ return {
             cssls = {},
             terraformls = {},
             jsonls = {},
+            yamlls = {},
             -- grammar (not just spell check)
             -- harper_ls = {
             --    ["harper-ls"] = {
