@@ -54,8 +54,10 @@ vim.api.nvim_create_autocmd("FileType", {
    end,
 })
 
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- Folding
+
+-- vim.o.foldmethod = "expr"
+-- vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 -- vim.o.foldcolumn = '2' -- show fold nesting
 -- vim.cmd([[set foldopen-=block]]) -- don't open folds with block {} motions
 
@@ -88,7 +90,7 @@ end
 -- integrate with system clipboards
 if vim.fn.has("win32") == 1 then
   -- print("is windows?")
-  vim.opt.clipboard = "unnamed"
+  vim.o.clipboard = "unnamed"
 elseif vim.fn.has("unix") == 1 then
   local uname = vim.fn.system("uname")
   if uname == "Darwin\n" then

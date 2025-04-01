@@ -7,8 +7,8 @@ vim.api.nvim_create_autocmd("filetype", {
          vim.keymap.set("n", lhs, rhs, { remap = true, buffer = true })
       end
 
-      bind("n", "%")     -- edit new file
-      bind("r", "R")     -- rename file
+      bind("n", "%") -- edit new file
+      bind("r", "R") -- rename file
       bind("R", "<c-I>") -- refresh
       -- bind('h', '-^') -- go up directory -- this breaks netrw...
       -- bind('l', '<cr>') -- enter -- this breaks netrw...
@@ -61,8 +61,8 @@ vim.api.nvim_create_autocmd("FileType", {
       "neotest-output-panel",
 
       "fugitiveblame", -- from vim-fugitive
-      "git",           -- from vim-fugitive
-      "grug-far",      -- from grug-far
+      "git", -- from vim-fugitive
+      "grug-far", -- from grug-far
    },
    callback = function(event)
       vim.bo[event.buf].buflisted = false

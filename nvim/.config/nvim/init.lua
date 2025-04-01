@@ -6,7 +6,7 @@ require("config.settings")
 require("config.autocommands")
 
 require("lazy").setup("plugins", {
-   -- automatically change for config file changes and reload ui
+   -- automatically watch for config file changes and reload ui
    change_detection = {
       enabled = true,
       notify = true, -- show notification when changes are found
