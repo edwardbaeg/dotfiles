@@ -188,6 +188,30 @@ hs.hotkey.bind(hyperkey, "J", function()
    })
 end)
 
+local function centerThin()
+   local win = hs.window.focusedWindow()
+   if not win then
+      hs.alert("No focused window")
+      return
+   end
+   local screenFrame = win:screen():frame()
+   local widthFraction = 0.2
+
+   cyclePositions({
+      {
+         x = screenFrame.x + (screenFrame.w * (1 - widthFraction) / 2),
+         y = screenFrame.y,
+         w = screenFrame.w * widthFraction,
+         h = screenFrame.h,
+      },
+   })
+end
+
+-- FIXME: calling this form raycast results in win being nil
+hs.urlevent.bind("centerThin", function()
+   hs.timer.doAfter(1, centerThin)
+end)
+
 ---@deprecated replaced with cyclePositions
 local function moveAndResizeFocused(callback)
    local win = hs.window.focusedWindow()
@@ -267,4 +291,3 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
       win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
    end)
 end)
-
