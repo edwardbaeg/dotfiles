@@ -93,8 +93,8 @@ alias work="cd ~/dev/oneadvisory/frontend-worktree"
 alias back="cd ~/dev/oneadvisory/backend"
 alias decrypt="cd ~/dev/oneadvisory/backend/ && ./bin/dispatch crypto decrypt" # TODO?: create a function for this to add quotes and return to previous directory
 
-export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
-# export AWS_PROFILE=dispatch-dev01  # use this for development?
+# export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
+export AWS_PROFILE=dispatch-dev01  # use this for development?
 # export AWS_PROFILE=oa-dev
 # export AWS_PROFILE=duplo
 export AWS_REGION=us-east-1
@@ -157,35 +157,27 @@ fi
 
 # -- Aliases -------------------------------------------------------------------
 
-# -- vim
+# -- [neo]vim
 alias vim="nvim"
 alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
-# alias vp="nvim -c \"lua require('fzf-lua').files()\"" -- replaced with fzf function
-alias vpp="nvim -c \"lua require('snacks').picker.files()\""
-# alias vg="nvim -c \"lua require('fzf-lua').grep_project()\"" # TODO: replace with fzf function
-alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
-alias vsr="nvim -c \"lua require('persistence').load()\""
-alias ve="nvim -c \"enew\"" # open empty buffer
-alias leet="nvim leetcode.nvim"
-alias vlazy='NVIM_APPNAME=nvim-lazyvim nvim' # LazyVim
 
 # open files in vim
+# TODO: choose one pattern and maintain
 alias vz="vim ~/.zshrc"
 alias ez="vim ~/.zshrc"
 # alias vv="vim ~/.vimrc"
-# alias nv="nvim ~/.config/nvim/init.lua"
-alias ev="nvim ~/.config/nvim/init.lua -c \":cd %:h\""
-alias vt="nvim ~/.tmux.conf"
-alias et="nvim ~/.tmux.conf"
-alias vh="nvim ~/.hammerspoon/init.lua -c \":cd %:h\""
-alias eh="nvim ~/.hammerspoon/init.lua -c \":cd %:h\""
-alias vw="nvim ~/.wezterm.lua"
-alias ew="nvim ~/.wezterm.lua"
-alias vk="nvim ~/.config/kitty/kitty.conf"
-alias ek="nvim ~/.config/kitty/kitty.conf"
-alias vhist="nvim ~/.zsh_history"
+alias ev="vim ~/.config/nvim/init.lua -c \":cd %:h\""
+alias vt="vim ~/.tmux.conf"
+alias et="vim ~/.tmux.conf"
+alias vh="vim ~/.hammerspoon/init.lua -c \":cd %:h\""
+alias eh="vim ~/.hammerspoon/init.lua -c \":cd %:h\""
+alias vw="vim ~/.wezterm.lua"
+alias ew="vim ~/.wezterm.lua"
+alias vk="vim ~/.config/kitty/kitty.conf"
+alias ek="vim ~/.config/kitty/kitty.conf"
+alias vhist="vim ~/.zsh_history"
 
 # -- sourcing
 alias st="tmux source-file ~/.tmux.conf"
@@ -236,7 +228,6 @@ alias oldls="/bin/ls"
 alias lg="lazygit"
 alias ..="cd .."
 alias ll="ls -al"
-alias nvpostinstall='python3 -m pip install --user --upgrade pynvim'
 alias cl="clear"
 
 #-- Jumping
@@ -291,7 +282,7 @@ function gcof () {
 #   https://github.com/junegunn/fzf/wiki/Examples#opening-files
 function vp() {
     IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
-    [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+    [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
 }
 
 # TODO: use fzf-tmux?
@@ -342,17 +333,31 @@ function wttr() {
     fi
 }
 
-## fuzzy finder for launching nvim configs
+# -- Neovim stuffs -------------------------------------------------
+
+# -- aliases
+# alias vp="nvim -c \"lua require('fzf-lua').files()\"" -- replaced with fzf function
+alias vpp="nvim -c \"lua require('snacks').picker.files()\""
+# alias vg="nvim -c \"lua require('fzf-lua').grep_project()\"" # TODO: replace with fzf function
+alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
+alias vsr="nvim -c \"lua require('persistence').load()\""
+alias ve="nvim -c \"enew\"" # open empty buffer
+alias leet="nvim leetcode.nvim"
+
+# -- Alternate nvim configurations
 # https://michaeluloth.com/neovim-switch-configs/
+alias vlazy='NVIM_APPNAME=nvim-lazyvim nvim' # LazyVim
+
+## fuzzy finder for launching nvim configs
 function vv() {
-  # Assumes all configs exist in directories named ~/.config/nvim-*
-  local config=$(fd --max-depth 1 --glob 'nvim*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
- 
-  # If I exit fzf without selecting a config, don't open nvim
-  [[ -z $config ]] && echo "No config selected" && return
- 
-  # Open Neovim with the selected config
-  NVIM_APPNAME=$(basename $config) nvim $@
+    # Assumes all configs exist in directories named ~/.config/nvim-*
+    local config=$(fd --max-depth 1 --glob 'nvim*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
+
+    # If I exit fzf without selecting a config, don't open nvim
+    [[ -z $config ]] && echo "No config selected" && return
+
+    # Open Neovim with the selected config
+    NVIM_APPNAME=$(basename $config) nvim $@
 }
 
 # -- Post install --------------------------------------------------------------
