@@ -212,8 +212,8 @@ return {
       config = function()
          require("luminate").setup({
             yank = {
-               enabled = false -- replaced with tiny-glimmer
-            }
+               enabled = false, -- replaced with tiny-glimmer
+            },
          })
       end,
    },
@@ -230,7 +230,7 @@ return {
             fade = {
                max_duration = 750,
                from_color = "#2d4f67",
-            }
+            },
          },
          overwrite = {
             paste = {
@@ -402,6 +402,13 @@ return {
    {
       -- better helpview
       "OXY2DEV/helpview.nvim",
-      lazy = false -- plugin lazy loads by default
+      lazy = false, -- plugin lazy loads by default
+   },
+
+   {
+      -- automatically set cmdheight, prevent needing to press enter
+      "jake-stewart/auto-cmdheight.nvim",
+      enabled = false, -- might not be needed with noice
+      lazy = false,
    },
 }

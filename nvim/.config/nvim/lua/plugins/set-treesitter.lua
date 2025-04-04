@@ -40,7 +40,7 @@ return {
                "html",
                "javascript",
                "json",
-               "kdl", -- config files
+               "kdl", -- zellij config file
                "lua",
                "markdown",
                "markdown_inline",
