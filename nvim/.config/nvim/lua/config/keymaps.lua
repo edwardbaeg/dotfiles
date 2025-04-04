@@ -9,6 +9,14 @@ local set = vim.keymap.set
 set("i", "jk", "<Esc>") -- leave insert mode
 set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 
+-- Experimental; move these after settled
+-- set("n", ":", ";") -- no shift for command line
+-- set("n", ";", ":")
+set("n", "<tab>", "<cmd>bnext<cr>") -- navigate tabs with tab
+set("n", "<s-tab>", "<cmd>bprevious<cr>")
+-- set("n", "<tab>", "<cmd>tabnext<cr>") -- navigate buffers with <tab>
+-- set("n", "<s-tab>", "<cmd>tabprevious<cr>")
+
 -- Cursor movement
 set({ "n", "v" }, "H", "^") -- move cursor to start of line
 set({ "n", "v" }, "L", "$") -- move cursor to end of line
