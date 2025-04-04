@@ -20,7 +20,6 @@ return {
          "saghen/blink.cmp", -- completion engine
       },
       config = function()
-
          local keymap = vim.keymap.set
 
          -- backup keymaps
@@ -163,7 +162,7 @@ return {
          })
 
          local null_ls = require("null-ls")
-         local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+         -- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
          -- TODO: check why it seems that there are multiple formatters running for :Format
          -- example: long chain of multiline foo && bar && baz
          -- TODO: add a spell checker, function, functino
@@ -186,6 +185,45 @@ return {
             --    end
             -- end,
          })
+
+         -- Show warnings as virtual text, errors as virtual lines
+         -- https://www.reddit.com/r/neovim/comments/1jo9oe9/i_set_up_my_config_to_use_virtual_lines_for/
+         -- TODO: consider conditionally showing virtual_lines (https://www.reddit.com/r/neovim/comments/1jpbc7s/disable_virtual_text_if_there_is_diagnostic_in/)
+         local diagnostic_config = {
+            virtual_text = {
+               severity = {
+                  max = vim.diagnostic.severity.WARN,
+               },
+            },
+            virtual_lines = {
+               current_line = true,
+               severity = {
+                  min = vim.diagnostic.severity.ERROR,
+               },
+            },
+         }
+
+         vim.diagnostic.config(diagnostic_config)
+
+         -- -- Display diagnostics only if not in insert mode
+         -- vim.api.nvim_create_autocmd("InsertEnter", {
+         --    pattern = "*",
+         --    callback = function()
+         --       vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+         --    end,
+         -- })
+         -- vim.api.nvim_create_autocmd("InsertLeave", {
+         --    pattern = "*",
+         --    callback = function()
+         --       vim.diagnostic.config(diagnostic_config)
+         --    end,
+         -- })
+
+         -- toggle virtual lines
+         vim.keymap.set("n", "<leader>gK", function()
+            local new_config = not vim.diagnostic.config().virtual_lines
+            vim.diagnostic.config({ virtual_lines = new_config and diagnostic_config.virtual_lines or false })
+         end, { desc = "Toggle diagnostic virtual_lines" })
       end,
    },
 
@@ -263,8 +301,7 @@ return {
          keymap("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
          -- keymap('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
          keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" })
-
-      end
+      end,
    },
 
    {
