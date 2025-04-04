@@ -164,6 +164,7 @@ return {
    {
       -- dim inactive windows
       "levouh/tint.nvim",
+      enabled = false, -- seems to have some performance impact
       config = function()
          require("tint").setup({
             tint = -20, -- default is -45, positive numbers will brighten
