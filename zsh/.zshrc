@@ -333,6 +333,28 @@ function wttr() {
     fi
 }
 
+# TODO: add the ability to create a session if there is no match in fzf
+alias ta="tmux_attach"
+function tmux_attach() {
+    if [[ -n "$TMUX" ]]; then
+        echo "Already in tmux session"
+        return
+    fi
+
+    # List tmux sessions, filter with fzf, and attach to the selected session
+    selected_session=$(tmux ls | fzf --height 40% --reverse --border --header "Select a tmux session")
+
+    # Check if a session was selected
+    if [[ -n "$selected_session" ]]; then
+        # Extract the session name (the first part of the line)
+        session_name=$(echo "$selected_session" | cut -d: -f1)
+        # Attach to the selected session
+        tmux attach-session -t "$session_name"
+    else
+        echo "No session selected."
+    fi
+}
+
 # -- Neovim stuffs -------------------------------------------------
 
 # -- aliases
