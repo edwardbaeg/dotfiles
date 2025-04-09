@@ -260,15 +260,19 @@ alias sshpizw="ssh pi@192.168.1.103"
 alias hsr="hs -c \"hs.reload()\""
 
 # -- Functions -----------------------------------------------------------------
+# TODO: determine whether to use fzf or fzf-tmux for everything
+#   - fzf-tmux is a drop in for fzf that fallsback if tmux is not detected
 
 # fuzzy search git branches
 # checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 # https://github.com/junegunn/fzf/wiki/examples#git
-function gcof () {
+alias gcof="git_checkout_fuzzy"
+function git_checkout_fuzzy () {
     local branches branch
     branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
     branch=$(echo "$branches" |
-    fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
+    # fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
+    fzf -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
     # local branches branch
     # branches=$(git --no-pager branch -vv) &&
@@ -280,15 +284,17 @@ function gcof () {
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
 #   https://github.com/junegunn/fzf/wiki/Examples#opening-files
-function vp() {
-    IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
+alias vp="vim_files"
+function vim_files() {
+    IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
+    # IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
     [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
 }
 
-# TODO: use fzf-tmux?
 # NOTE: this doesn't support <tab> selection
 # https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
-function vg {
+alias vg="vim_grep"
+function vim_grep {
   command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" \
   | command fzf -d':' --ansi \
     --preview "command bat -p --color=always {1} --highlight-line {2}" \
@@ -358,9 +364,7 @@ function tmux_attach() {
 # -- Neovim stuffs -------------------------------------------------
 
 # -- aliases
-# alias vp="nvim -c \"lua require('fzf-lua').files()\"" -- replaced with fzf function
 alias vpp="nvim -c \"lua require('snacks').picker.files()\""
-# alias vg="nvim -c \"lua require('fzf-lua').grep_project()\"" # TODO: replace with fzf function
 alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsr="nvim -c \"lua require('persistence').load()\""
 alias ve="nvim -c \"enew\"" # open empty buffer
