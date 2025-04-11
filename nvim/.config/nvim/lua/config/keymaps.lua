@@ -63,7 +63,7 @@ set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "[q]uit [a]ll" }) -- quit
 set("n", "<leader>+", "<c-a>", { desc = "increment" }) -- increment
 set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
 set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
-set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
+-- set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
 set("n", "<leader>es", ":EslintFixAll<cr>", { silent = true })
 
 -- LSP
@@ -92,10 +92,12 @@ set("n", "q", "<nop>") -- disable q for macros as it interferes with completions
 -- set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- Edit configuration files
-set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>", { desc = "edit [v]imrc" }) -- also set as working directory
-set("n", "<leader>et", ":edit ~/.tmux.conf<cr>", { desc = "edit [t]mux.conf" })
-set("n", "<leader>ez", ":edit ~/.zshrc<cr>", { desc = "edit [z]shrc" })
-set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "edit [h]ammerspoon" })
+-- TODO: consider opening the file in the dotfiles dir? to try to fix session storage stuffs
+set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>", { desc = "[e]dit [v]imrc" }) -- also set as working directory
+set("n", "<leader>et", ":edit ~/.tmux.conf<cr>", { desc = "[e]dit [t]mux.conf" })
+set("n", "<leader>ez", ":edit ~/.zshrc<cr>", { desc = "[e]dit [z]shrc" })
+set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "[e]dit [h]ammerspoon" })
+set("n", "<leader>ek", ":edit ~/.config/kitty/kitty.conf<cr>", { desc = "[e]dit [k]itty.conf" })
 
 -- Windows
 set("n", "<leader>w", "<c-w>")
