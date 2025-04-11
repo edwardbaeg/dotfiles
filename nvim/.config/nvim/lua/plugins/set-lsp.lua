@@ -205,19 +205,19 @@ return {
 
          vim.diagnostic.config(diagnostic_config)
 
-         -- -- Display diagnostics only if not in insert mode
-         -- vim.api.nvim_create_autocmd("InsertEnter", {
-         --    pattern = "*",
-         --    callback = function()
-         --       vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-         --    end,
-         -- })
-         -- vim.api.nvim_create_autocmd("InsertLeave", {
-         --    pattern = "*",
-         --    callback = function()
-         --       vim.diagnostic.config(diagnostic_config)
-         --    end,
-         -- })
+         -- -- Hide diagnostics when in insert mode
+         vim.api.nvim_create_autocmd("InsertEnter", {
+            pattern = "*",
+            callback = function()
+               vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+            end,
+         })
+         vim.api.nvim_create_autocmd("InsertLeave", {
+            pattern = "*",
+            callback = function()
+               vim.diagnostic.config(diagnostic_config)
+            end,
+         })
 
          -- toggle virtual lines
          vim.keymap.set("n", "<leader>gK", function()
@@ -292,7 +292,7 @@ return {
          keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
          -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
-         keymap("n", "gr", "<cmd>Lspsaga finder<cr>")
+         -- keymap("n", "gr", "<cmd>Lspsaga finder<cr>") -- conflicts with builtin gr* mappings
          -- keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
          keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
          keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
