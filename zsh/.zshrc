@@ -207,7 +207,6 @@ alias gop="git open"
 
 #-- commands
 alias py="python3"
-alias nf="neofetch"
 alias vtop="vtop --theme brew"
 # alias ra="ranger"
 alias ra="yazi"
@@ -359,6 +358,24 @@ function tmux_attach() {
         tmux attach-session -t "$session_name"
     else
         echo "No session selected."
+    fi
+}
+
+alias nf="npm_run_fuzzy"
+function npm_run_fuzzy() {
+    if cat package.json > /dev/null 2>&1; then
+        scripts=$(cat package.json | jq .scripts | sed '1d;$d' | fzf --height 40%)
+
+        if [[ -n $scripts ]]; then
+            # Extract script name and remove all whitespace and quotes
+            script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
+            print -s "npm run "$script_name;
+            npm run $script_name
+        else
+            echo "Exit: You haven't selected any script"
+        fi
+    else
+        echo "Error: There's no package.json"
     fi
 }
 
