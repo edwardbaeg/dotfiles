@@ -1,6 +1,5 @@
 return {
    -- Quick access marks
-   -- TODO: consider opening PR to add the ability to customize keybinds for floating window, eg to open in splits
    "cbochs/grapple.nvim",
    dependencies = {
       "WolfeCub/harpeek.nvim", -- show options in persistent window

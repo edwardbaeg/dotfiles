@@ -1,5 +1,4 @@
 -- plugins that add visual elements to the vim ui
--- TODO: split off "UI components" with coding visual stuffs
 return {
    {
       -- show outline of symbols

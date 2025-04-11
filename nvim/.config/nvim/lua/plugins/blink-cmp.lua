@@ -2,7 +2,6 @@ return {
    -- Completion engine
    -- NOTE: this uses native nvim snippets, which are loaded from /snippets
    -- NOTE: this is a dependency for nvim-lsp
-   -- TODO: change keymaps for lspsaga rename or use a different plugin for that
    "saghen/blink.cmp",
    dependencies = {
       "rafamadriz/friendly-snippets", -- snippet source

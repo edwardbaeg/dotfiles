@@ -16,7 +16,7 @@ return {
             -- }
          })
 
-         vim.keymap.set("n", "<leader>bl", buvvers.toggle)
+         vim.keymap.set("n", "<leader>bl", buvvers.toggle, { desc = "[b]uffers [l]ist (buvvers)" })
 
          local add_buffer_keybindings = function()
             print("add_buffer_keybindings")
