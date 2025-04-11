@@ -260,8 +260,8 @@ alias sshpizw="ssh pi@192.168.1.103"
 alias hsr="hs -c \"hs.reload()\""
 
 # -- Functions -----------------------------------------------------------------
-# TODO: determine whether to use fzf or fzf-tmux for everything
-#   - fzf-tmux is a drop in for fzf that fallsback if tmux is not detected
+
+# -- fzf functions
 
 # fuzzy search git branches
 # checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
@@ -303,42 +303,6 @@ function vim_grep {
   | xargs -r ${EDITOR:-nvim}
 }
 
-# alias for npm leaves to list globally installed packages
-function npm () {
-    if [[ $@ == "leaves" ]] || [[ $@ == "ls" ]]; then
-        command npm -g ls --depth=0
-    else
-        command npm "$@"
-    fi
-}
-
-# to create cht.sh curl commands
-function cht() {
-    local query
-
-    if [[ $# -eq 1 ]]; then
-        query=$1
-
-        echo "cht.sh/${query}"
-        curl "cht.sh/${query}"
-    else
-        local token=$(echo "$1" | cut -d' ' -f1)
-        query=$(echo "$*" | cut -d' ' -f2- | sed 's/ /+/g')
-
-        echo "cht.sh/$token/$query"
-        curl "cht.sh/$token/$query"
-    fi
-}
-
-function wttr() {
-    if [[ $# -eq 0 ]]; then
-        curl "v2d.wttr.in/"
-    else
-        local location=$(echo "$@" | tr ' ' '+')
-        curl -s "v2d.wttr.in/$location"
-    fi
-}
-
 # TODO: add the ability to create a session if there is no match in fzf
 alias ta="tmux_attach"
 function tmux_attach() {
@@ -376,6 +340,44 @@ function npm_run_fuzzy() {
         fi
     else
         echo "Error: There's no package.json"
+    fi
+}
+
+# -- other functions
+
+# alias for npm leaves to list globally installed packages
+function npm () {
+    if [[ $@ == "leaves" ]] || [[ $@ == "ls" ]]; then
+        command npm -g ls --depth=0
+    else
+        command npm "$@"
+    fi
+}
+
+# to create cht.sh curl commands
+function cht() {
+    local query
+
+    if [[ $# -eq 1 ]]; then
+        query=$1
+
+        echo "cht.sh/${query}"
+        curl "cht.sh/${query}"
+    else
+        local token=$(echo "$1" | cut -d' ' -f1)
+        query=$(echo "$*" | cut -d' ' -f2- | sed 's/ /+/g')
+
+        echo "cht.sh/$token/$query"
+        curl "cht.sh/$token/$query"
+    fi
+}
+
+function wttr() {
+    if [[ $# -eq 0 ]]; then
+        curl "v2d.wttr.in/"
+    else
+        local location=$(echo "$@" | tr ' ' '+')
+        curl -s "v2d.wttr.in/$location"
     fi
 }
 
