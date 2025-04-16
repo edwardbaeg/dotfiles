@@ -47,9 +47,7 @@ local function cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
 
-   -- check if the window matches any of the options
-   -- if so, then move to the next option
-   -- otherwise set the first option.
+   -- if the window matches any of the options, set to the next one
    local firstOption = options[1]
    for i, option in ipairs(options) do
       if
@@ -63,7 +61,11 @@ local function cyclePositions(options)
          -- three different animation levels: same size, same one dimension, different size
          local sameSize = within(frame.h, nextOption.h, 1) and within(frame.w, nextOption.w, 1)
          local sameHeight = within(frame.h, nextOption.h, 1)
-         local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
+
+         -- TODO: add an ignore list of apps
+         ---@diagnostic disable-next-line: undefined-field name is a valid field of application
+         local duration = win:application():name() == "Acrobat Reader" and 0
+            or (sameSize and 0.15 or sameHeight and 0.1 or 0)
 
          withAxHotfix(function()
             win:setFrame(nextOption, duration)
@@ -72,6 +74,7 @@ local function cyclePositions(options)
       end
    end
 
+   -- otherwise, set to the first option
    local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
    local sameHeight = within(frame.h, firstOption.h, 1)
    local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
