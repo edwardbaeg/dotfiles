@@ -12,7 +12,7 @@ return {
          "nvimtools/none-ls.nvim", -- set up formatters and linters (null-ls replacement)
          "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
 
-         "pmizio/typescript-tools.nvim", -- native lua typescript support
+         -- "pmizio/typescript-tools.nvim", -- native lua typescript support
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
          -- "j-hui/fidget.nvim", -- small nvim-lsp progress ui -- replaced with noice.lsp
@@ -30,7 +30,6 @@ return {
 
          -- [[ LSP Settings ]]
          --  This function gets run when an LSP connects to a particular buffer.
-         -- TODO: remove code action to switch parameters?
          -- TODO: remove hunk / blame code actions, from gitsigns?
          local on_attach = function(_, bufnr)
             -- Create a command `:Format` local to the LSP buffer
@@ -77,20 +76,20 @@ return {
          -- tsls: vscode wrapper
          -- typescript-tools: drop in lua replacement
 
-         require("typescript-tools").setup({
-            on_attach = on_attach,
-            settings = {
-               tsserver_file_preferences = {
-                  -- enable inlay hints (vim.lsp.inlay_hint.enable())
-                  includeInlayParameterNameHints = "all",
-                  includeInlayEnumMemberValueHints = true,
-                  includeInlayFunctionLikeReturnTypeHints = true,
-                  includeInlayFunctionParameterTypeHints = true,
-                  includeInlayPropertyDeclarationTypeHints = true,
-                  includeInlayVariableTypeHints = true,
-               },
-            },
-         })
+         -- require("typescript-tools").setup({
+         --    on_attach = on_attach,
+         --    settings = {
+         --       tsserver_file_preferences = {
+         --          -- enable inlay hints (vim.lsp.inlay_hint.enable())
+         --          includeInlayParameterNameHints = "all",
+         --          includeInlayEnumMemberValueHints = true,
+         --          includeInlayFunctionLikeReturnTypeHints = true,
+         --          includeInlayFunctionParameterTypeHints = true,
+         --          includeInlayPropertyDeclarationTypeHints = true,
+         --          includeInlayVariableTypeHints = true,
+         --       },
+         --    },
+         -- })
          -- FIXME
          -- vim.api.nvim_create_user_command(
          --    "TSToolsLSP",
@@ -105,7 +104,15 @@ return {
 
          -- these will be automatically installed
          local language_servers = {
+            -- javascript
             eslint = {},
+            -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
+            -- ts_ls = {}, -- replaced with typescript-tools
+            -- vls = {}, -- vue v2
+            vtsls = {}, -- wrapper for vscode lsp
+            cssls = {},
+
+            -- lua
             lua_ls = { -- aka lua-language-server
                Lua = {
                   workspace = {
@@ -117,7 +124,12 @@ return {
                   telemetry = { enable = false },
                },
             },
-            cssls = {},
+
+            -- shell
+            bashls = {
+               filetypes = { "sh", "zsh" }, -- this doesn't seem to work for zsh files?
+            },
+
             terraformls = {},
             jsonls = {},
             yamlls = {},
@@ -130,10 +142,6 @@ return {
             --       },
             --    },
             -- },
-            -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
-            -- tsserver = {}, -- replaced with typescript-tools
-            -- vls = {}, -- vue v2
-            -- vtsls = {}, -- wrapper for vscode lsp
          }
 
          mason_lspconfig.setup({
