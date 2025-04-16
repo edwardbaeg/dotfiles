@@ -169,11 +169,11 @@ return {
          desc = "Git Log File",
       },
       {
-         "<leader>fs",
+         "<leader>fsp",
          function()
             Snacks.picker.spelling()
          end,
-         desc = "Spelling",
+         desc = "[sp]elling",
       },
       {
          "<leader>fp",
@@ -193,6 +193,21 @@ return {
             Snacks.picker.grep()
          end,
          desc = "Grep",
+      },
+
+      {
+         "<leader>fsw",
+         function()
+            Snacks.picker.lsp_workspace_symbols()
+         end,
+         desc = "workspace symbols",
+      },
+      {
+         "<leader>fss",
+         function()
+            Snacks.picker.lsp_symbols()
+         end,
+         desc = "document symbols",
       },
 
       -- still using fzf-lua for the preview
