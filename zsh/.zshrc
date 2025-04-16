@@ -274,10 +274,6 @@ function git_checkout_fuzzy () {
     # fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
     fzf -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
     git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
-    # local branches branch
-    # branches=$(git --no-pager branch -vv) &&
-    # branch=$(echo "$branches" | fzf +m) &&
-    # git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
 # [FUZZY PATTERN] - Open the selected file with the default editor
@@ -303,15 +299,15 @@ function vim_grep {
   | xargs -r ${EDITOR:-nvim}
 }
 
+# List tmux sessions, filter with fzf, and attach to the selected session
 # TODO: add the ability to create a session if there is no match in fzf
 alias ta="tmux_attach"
 function tmux_attach() {
     if [[ -n "$TMUX" ]]; then
-        echo "Already in tmux session"
+        echo "Error: Already in tmux session."
         return
     fi
 
-    # List tmux sessions, filter with fzf, and attach to the selected session
     selected_session=$(tmux ls | fzf --height 40% --reverse --border --header "Select a tmux session")
 
     # Check if a session was selected
@@ -321,11 +317,12 @@ function tmux_attach() {
         # Attach to the selected session
         tmux attach-session -t "$session_name"
     else
-        echo "No session selected."
+        echo "Exit: No session selected."
     fi
 }
 
 alias nf="npm_run_fuzzy"
+alias npmf="npm_run_fuzzy"
 function npm_run_fuzzy() {
     if cat package.json > /dev/null 2>&1; then
         scripts=$(cat package.json | jq .scripts | sed '1d;$d' | fzf --height 40%)
@@ -333,13 +330,13 @@ function npm_run_fuzzy() {
         if [[ -n $scripts ]]; then
             # Extract script name and remove all whitespace and quotes
             script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
-            print -s "npm run "$script_name;
+            print "npm run "$script_name;
             npm run $script_name
         else
-            echo "Exit: You haven't selected any script"
+            echo "Exit: No script selected."
         fi
     else
-        echo "Error: There's no package.json"
+        echo "Error: No package.json."
     fi
 }
 

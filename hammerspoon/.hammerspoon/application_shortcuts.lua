@@ -1,5 +1,7 @@
 -- App specific keybindings
 
+-- TODO: consider migrating to karabiner elements?
+-- TODO: consider updating callback so that it checks for the active window instead of conditional subscribing
 function Main()
    local function linearCopyUrl()
       local linearApp = hs.application.find("Linear")

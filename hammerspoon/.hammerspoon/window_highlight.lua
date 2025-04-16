@@ -66,8 +66,7 @@ hs.window.filter.default:subscribe(hs.window.filter.windowUnfullscreened, functi
    hs.window.highlight.ui.overlay = true
 end)
 
-hs.window.filter.default:subscribe(hs.window.filter.hasNoWindows, function(window, appName)
-   -- hs.alert("hasNoWindows")
-   -- hs.window.highlight.ui.overlay = false
-end)
-
+-- hs.window.filter.default:subscribe(hs.window.filter.hasNoWindows, function(window, appName)
+--    hs.alert("hasNoWindows")
+--    hs.window.highlight.ui.overlay = false
+-- end)
