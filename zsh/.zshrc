@@ -433,6 +433,12 @@ eval "$(zoxide init zsh)"
 eval $(thefuck --alias)
 alias f=fuck
 
+# To install shell completions, add this to your profile:
+if command -v ngrok &>/dev/null; then
+    eval "$(ngrok completion)"
+fi
+
+
 # -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
