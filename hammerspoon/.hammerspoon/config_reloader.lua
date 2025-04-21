@@ -21,19 +21,20 @@ ReloadWatcher = hs.pathwatcher
    end)
    :start()
 
--- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
-hs.hotkey.bind(hyperkey, "R", function()
+function reloadConfig()
+   -- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
    hs.alert("Reloading config...")
    hs.timer.doAfter(0.1, function() -- put reload async so alert executes
       hs.reload()
    end)
+end
+
+hs.hotkey.bind(hyperkey, "R", function()
+   reloadConfig()
 end)
 
 -- hammerspoon://reloadConfig
 hs.urlevent.bind("reloadConfig", function()
-   hs.alert("Reloading config...")
-   hs.timer.doAfter(0.1, function() -- put reload async so alert executes
-      hs.reload()
-   end)
+   reloadConfig()
 end)
 
