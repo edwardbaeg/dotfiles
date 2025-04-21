@@ -28,31 +28,71 @@ local function setArcProfile(profileIndex)
    end)
 end
 
----@param profileIndex string
----@return function
-local function getArcProfileSetter(profileIndex)
-   return function()
-      setArcProfile(profileIndex)
-   end
-end
-
 local mappings = {
    { "0", "Kitty" },
    { "8", "Slack" },
 }
+
+local isPersonalOverride = false
+
+-- Function to set up Arc hotkeys based on current state
+-- TODO: move out to module
+local function setupArcHotkeys()
+   -- Clear existing Arc hotkeys
+   hs.hotkey.disableAll(hyperkey, "9")
+   hs.hotkey.disableAll(allkey, "9")
+
+   local setPersonal = function()
+      setArcProfile("2")
+   end
+   local setWork = function()
+      setArcProfile("4")
+   end
+
+   if isPersonalOverride then
+      assignAppHotKey(hyperkey, "9", "Arc", setPersonal)
+      assignAppHotKey(allkey, "9", "Arc", setWork)
+   elseif constants.isPersonal then
+      assignAppHotKey(hyperkey, "9", "Arc")
+      assignAppHotKey(allkey, "9", "Arc")
+   else
+      assignAppHotKey(hyperkey, "9", "Arc", setWork)
+      assignAppHotKey(allkey, "9", "Arc", setPersonal)
+   end
+end
+
+local personalOverrideMenuBar = hs.menubar.new()
+
+function enablePersonalOverride()
+   if personalOverrideMenuBar then
+      personalOverrideMenuBar:setTitle("P")
+   end
+   isPersonalOverride = true
+   setupArcHotkeys()
+end
+
+hs.urlevent.bind("enablePersonalOverride", function()
+   enablePersonalOverride()
+end)
+
+function disablePersonalOverride()
+   if personalOverrideMenuBar then
+      personalOverrideMenuBar:setTitle("-")
+   end
+   isPersonalOverride = false
+   setupArcHotkeys()
+end
+
+hs.urlevent.bind("disablePersonalOverride", function()
+   disablePersonalOverride()
+end)
 
 function Main()
    for _, pair in pairs(mappings) do
       assignAppHotKey(hyperkey, pair[1], pair[2])
    end
 
-   if constants.isPersonal then
-      assignAppHotKey(hyperkey, "9", "Arc")
-      assignAppHotKey(allkey, "9", "Arc")
-   else
-      assignAppHotKey(allkey, "9", "Arc", getArcProfileSetter("2")) -- personal
-      assignAppHotKey(hyperkey, "9", "Arc", getArcProfileSetter("4")) -- work
-   end
+   setupArcHotkeys()
 
    -- usage: hammerspoon://arcPersonal
    hs.urlevent.bind("arcPersonal", function()
