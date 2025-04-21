@@ -1,12 +1,12 @@
 -- ~/.hammerspoon/init.lua
 
 require("application_launcher")
-require("application_shortcuts") -- this seems to be very slow
+-- require("application_shortcuts") -- this is very slow
 require("caffeine")
 require("config_reloader")
 require("remapper")
 require("window_grid")
-require("window_highlight") -- this is very slow
+-- require("window_highlight") -- this is very slow
 require("window_management")
 
 -- Install command line interface `hs`
