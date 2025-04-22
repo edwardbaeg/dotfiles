@@ -93,7 +93,7 @@ set("n", "q", "<nop>") -- disable q for macros as it interferes with completions
 
 -- Edit configuration files
 -- TODO: consider opening the file in the dotfiles dir? to try to fix session storage stuffs
-set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd %:h<cr>", { desc = "[e]dit [v]imrc" }) -- also set as working directory
+set("n", "<leader>ev", ":edit $MYVIMRC<cr> :cd ~/dev/dotfiles/nvim/.config/nvim<cr>", { desc = "[e]dit [v]imrc" }) -- also set as working directory
 set("n", "<leader>et", ":edit ~/.tmux.conf<cr>", { desc = "[e]dit [t]mux.conf" })
 set("n", "<leader>ez", ":edit ~/.zshrc<cr>", { desc = "[e]dit [z]shrc" })
 set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "[e]dit [h]ammerspoon" })
