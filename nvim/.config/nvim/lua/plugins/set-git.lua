@@ -1,5 +1,13 @@
 return {
-   "gabebw/vim-github-link-opener", -- opens 'foo/bar' in github with gx
+   {
+      -- opens 'foo/bar' in github with gx
+      "gabebw/vim-github-link-opener",
+      init = function()
+         -- this remaps the default mapping with silent flag
+         vim.g.github_link_opener_no_mappings = 1
+         vim.keymap.set("n", "gx", ":OpenGitHubLink<cr>", { silent = true })
+      end,
+   },
 
    {
       -- open current line in github permalink
