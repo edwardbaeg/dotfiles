@@ -73,7 +73,6 @@ return {
 
    {
       -- adds some visuals to folds
-      -- TODO: add to status column
       "anuvyklack/pretty-fold.nvim",
       enabled = false, -- idk folds
       config = function()
@@ -109,7 +108,7 @@ return {
 
    {
       -- color f/t targets
-      -- NOTE: consier removing this for `flash.nvim`
+      -- NOTE: consider removing this for `flash.nvim`
       "unblevable/quick-scope",
       enabled = true,
       init = function()
@@ -205,7 +204,6 @@ return {
 
    {
       -- highlight yank, paste, undo, redo
-      -- TODO: sometimes has some issues after exiting floating windows, like for navbuddy?
       "mei28/luminate.nvim",
       enabled = false, -- replaced by tiny-glimmer
       event = { "VeryLazy" },
@@ -221,7 +219,7 @@ return {
    {
       -- animated highlighting for yank, paste
       "rachartier/tiny-glimmer.nvim",
-      event = "TextYankPost",
+      -- event = "TextYankPost",
       opts = {
          refresh_interval_ms = 10,
          transparency_color = "#021818",
@@ -242,6 +240,9 @@ return {
             redo = {
                enabled = true,
             },
+            search = {
+               enabled = true,
+            }
          },
       },
    },
@@ -321,41 +322,6 @@ return {
          vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
          vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
       end,
-   },
-
-   {
-      -- Fix "bad" vim habits
-      -- TODO: remove mode from the cmd line
-      "m4xshen/hardtime.nvim",
-      enabled = false, -- this breaks multicursor.nvim
-      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-      opts = {
-         disable_mouse = false,
-         restriction_mode = "block", -- block | hint
-         max_count = 7,
-         -- resetting_keys = {
-         --    ["h"] = {},
-         -- },
-         restricted_keys = {
-            -- ["h"] = {},
-            -- ["j"] = {},
-            -- ["k"] = {},
-            -- ["l"] = {},
-         },
-         disabled_keys = {
-            -- Allow these keys
-            ["<Up>"] = {},
-            ["<Down>"] = {},
-            ["<Left>"] = {},
-            ["<Right>"] = {},
-            ["<c-n>"] = {},
-         },
-         disabled_filetypes = { "grapple" },
-         init = function()
-            -- this doesn't work??
-            -- vim.opt.cmdheight = 2
-         end,
-      },
    },
 
    {

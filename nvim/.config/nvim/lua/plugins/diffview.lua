@@ -23,7 +23,7 @@ return {
 
       local function diffOpenWithInput()
          -- local user_input = vim.fn.input("Revision to Open: ")
-         -- todo replace with some ui plugin like dressing.nvim or nui
+         -- TODO replace with some ui plugin like snacks
          vim.ui.input({ prompt = "Revision to Open: " }, function(input)
             vim.cmd("DiffviewOpen " .. input)
          end)

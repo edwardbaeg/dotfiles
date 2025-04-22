@@ -19,6 +19,8 @@
 // @raycast.author Ed
 // @raycast.authorURL An URL for one of your social medias
 
+// TODO: update to get an argument for current or next week
+
 const { exec, spawn } = require('child_process');
 
 const today = new Date();

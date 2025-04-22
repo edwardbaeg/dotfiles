@@ -11,7 +11,6 @@ return {
          require("mini.move").setup({})
 
          -- highlights/underlines the word under the cursor
-         -- TODO: consider separate highlight for the current word, MiniCursorwordCurrent
          require("mini.cursorword").setup({
             delay = 200, -- in ms
          })
@@ -92,7 +91,7 @@ return {
          })
 
          -- smooth scrolling
-         -- NOTE: this breaks `gi`
+         -- FIXME: this breaks `gi`
          -- vim.g.minianimate_disable = true
          local animate = require("mini.animate")
          animate.setup({
@@ -100,9 +99,7 @@ return {
                enable = not vim.g.vscode,
                timing = animate.gen_timing.linear({
                   easing = "out",
-                  -- duration = 100,
-                  -- duration = 50,
-                  duration = 75,
+                  duration = 60,
                   unit = "total",
                }),
             },

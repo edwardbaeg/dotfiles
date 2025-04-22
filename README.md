@@ -29,6 +29,8 @@ Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 
 ## Packages
 
+<!-- TODO: add a brewfile to run with brew bundle -->
+
 #### Tools
 
 - `bat` better cat (syntax highlighting and pager)
@@ -54,14 +56,14 @@ Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 #### Less common
 
 - `hyperfine` commandline benchmarking
-<!-- TODO: replace with fastfetch -->
-- `neofetch` display system info
+- `fastfetch` display system info
 - `qrcp` qr code generator for wifi transfer
 - `scrcpy` android screen mirror/recorder (requires adb)
 
 #### Dependencies
 
 - `gnu-sed` for nvim, vim-spectre
+- `imagemagick` for image rendering with kitty
 - `poppler` for yazi, pdf preview
 - `unar` for yazi, archive preview
 - `zsh-completions` for zsh, command line autocompletions
@@ -116,11 +118,12 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Choosy`: browser launcher
 - `Dropover`: drag & drop temporary file shelf
 - `Hammerspoon`: mac scripting
+- `JankyBorders`: visually highlight focused window
 - `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
+- `Raycast`: launcher
 - `Shortcat`: keyboard shortcuts everywhere
 - `Shottr`: screenshot tool
-- `Raycast`: launcher
 
 ## oh-my-zsh
 
