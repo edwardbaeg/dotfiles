@@ -240,9 +240,9 @@ return {
             redo = {
                enabled = true,
             },
-            search = {
-               enabled = true,
-            }
+            -- search = {
+            --    enabled = true,
+            -- }
          },
       },
    },
