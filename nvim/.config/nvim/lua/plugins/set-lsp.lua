@@ -25,90 +25,29 @@ return {
          -- backup keymaps
          keymap("n", "gK", vim.lsp.buf.hover, { desc = "Hover Documentation" })
 
-         -- other keymaps
-         keymap("n", "ls", ":LspRestart<cr>", { desc = "LspRestart", silent = false })
-
-         -- [[ LSP Settings ]]
+         -- START LSP CONFIG
+         -------------------
          --  This function gets run when an LSP connects to a particular buffer.
          local on_attach = function(_, bufnr)
             -- Create a command `:Format` local to the LSP buffer
             vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
                vim.lsp.buf.format()
             end, { desc = "Format current buffer with LSP" })
-
-            -- These are built in LSP commands. They have been replaced with lsp-saga
-            -- local nmap = function(keys, func, desc)
-            --    if desc then
-            --       desc = "LSP: " .. desc
-            --    end
-            --
-            --    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-            -- end
-
-            -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-            -- nmap('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
-            -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-            -- nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-            -- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-            -- nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-            -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-            -- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-            -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-            -- See `:help K` for why this keymap
-            -- nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-            -- nmap("<c-s>", vim.lsp.buf.signature_help, "Signature Documentation")
-
-            -- Lesser used LSP functionality
-            -- nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-            -- nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
-            -- nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-            -- nmap("<leader>wl", function()
-            --    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            -- end, "[W]orkspace [L]ist Folders")
          end
 
-         -- Set up LSP servers
-         -- Options for typescript:
-         -- tsserver: official
-         -- tsls: vscode wrapper
-         -- typescript-tools: drop in lua replacement
+         -- Automatically install these servers
+         local default_language_servers = {
+            -- START TYPESCRIPT
+            -- ----------------
+            -- Options for typescript:
+            -- - ts_ls: tsserver wrapper
+            -- - typescript-tools: (plugin) drop in lua replacement
+            -- - vtsls: wrapper for vscode extension for typescript
 
-         -- require("typescript-tools").setup({
-         --    on_attach = on_attach,
-         --    settings = {
-         --       tsserver_file_preferences = {
-         --          -- enable inlay hints (vim.lsp.inlay_hint.enable())
-         --          includeInlayParameterNameHints = "all",
-         --          includeInlayEnumMemberValueHints = true,
-         --          includeInlayFunctionLikeReturnTypeHints = true,
-         --          includeInlayFunctionParameterTypeHints = true,
-         --          includeInlayPropertyDeclarationTypeHints = true,
-         --          includeInlayVariableTypeHints = true,
-         --       },
-         --    },
-         -- })
-         -- FIXME
-         -- vim.api.nvim_create_user_command(
-         --    "TSToolsLSP",
-         --    ":TSToolsAddMissingImports <bar> TSToolsSortImports",
-         --    { desc = "" }
-         -- )
-         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>")
-         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>")
-
-         require("mason").setup()
-         local mason_lspconfig = require("mason-lspconfig")
-
-         -- these will be automatically installed
-         local language_servers = {
-            -- javascript
-            -- need to choose one of these typescript lsp servers: ts_ls, vtsls, typescript-tools (plugin)
-            -- TODO: add descriptions
-            -- (typescript-tools) -- not a server, but a plugin
-            -- ts_ls = {}, -- replaced with typescript-tools
-            vtsls = {}, -- wrapper for vscode lsp
+            -- ts_ls = {},
+            vtsls = {},
+            -- END TYPESCRIPT
+            -- ----------------
 
             -- other web stuff
             cssls = {},
@@ -146,9 +85,37 @@ return {
             -- },
          }
 
+         require("mason").setup()
+         local mason_lspconfig = require("mason-lspconfig")
+
          mason_lspconfig.setup({
-            ensure_installed = vim.tbl_keys(language_servers),
+            ensure_installed = vim.tbl_keys(default_language_servers),
          })
+
+         -- require("typescript-tools").setup({
+         --    on_attach = on_attach,
+         --    settings = {
+         --       tsserver_file_preferences = {
+         --          -- enable inlay hints (vim.lsp.inlay_hint.enable())
+         --          includeInlayParameterNameHints = "all",
+         --          includeInlayEnumMemberValueHints = true,
+         --          includeInlayFunctionLikeReturnTypeHints = true,
+         --          includeInlayFunctionParameterTypeHints = true,
+         --          includeInlayPropertyDeclarationTypeHints = true,
+         --          includeInlayVariableTypeHints = true,
+         --       },
+         --    },
+         -- })
+
+         -- NOTE: these are specific to typescript-tools
+         -- FIXME: this doesn't work
+         -- vim.api.nvim_create_user_command(
+         --    "TSToolsLSP",
+         --    ":TSToolsAddMissingImports <bar> TSToolsSortImports",
+         --    { desc = "" }
+         -- )
+         -- vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>")
+         -- vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>")
 
          -- set up each server, add cmp
          local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -157,10 +124,12 @@ return {
                require("lspconfig")[server_name].setup({
                   capabilities = capabilities,
                   on_attach = on_attach,
-                  settings = language_servers[server_name],
+                  settings = default_language_servers[server_name],
                })
             end,
          })
+         -- END LSP CONFIG
+         -----------------
 
          -- Set up formatting
          require("mason-null-ls").setup({
