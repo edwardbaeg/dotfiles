@@ -201,15 +201,16 @@ return {
          local diagnostic_config = {
             virtual_text = {
                severity = {
-                  max = vim.diagnostic.severity.WARN,
-               },
-            },
-            virtual_lines = {
-               current_line = true,
-               severity = {
+                  -- max = vim.diagnostic.severity.WARN,
                   min = vim.diagnostic.severity.ERROR,
                },
             },
+            -- virtual_lines = {
+            --    current_line = true,
+            --    severity = {
+            --       min = vim.diagnostic.severity.ERROR,
+            --    },
+            -- },
          }
 
          vim.diagnostic.config(diagnostic_config)
