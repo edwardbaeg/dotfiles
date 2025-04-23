@@ -268,6 +268,7 @@ alias hsr="hs -c \"hs.reload()\""
 # checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 # https://github.com/junegunn/fzf/wiki/examples#git
 alias gcof="git_checkout_fuzzy"
+alias bf="git_checkout_fuzzy"
 function git_checkout_fuzzy () {
     local branches branch
     branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
