@@ -30,7 +30,6 @@ return {
 
          -- [[ LSP Settings ]]
          --  This function gets run when an LSP connects to a particular buffer.
-         -- TODO: remove hunk / blame code actions, from gitsigns?
          local on_attach = function(_, bufnr)
             -- Create a command `:Format` local to the LSP buffer
             vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
@@ -173,7 +172,6 @@ return {
          -- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
          -- TODO: check why it seems that there are multiple formatters running for :Format
          -- example: long chain of multiline foo && bar && baz
-         -- TODO: add a spell checker, function, functino
          require("null-ls").setup({
             sources = {
                null_ls.builtins.formatting.prettier,
@@ -289,7 +287,6 @@ return {
                -- max_show_width = 1, -- default is 0.9
                max_show_height = 0.9, -- default is 0.6
 
-               show_code_action = false, -- annoying to preview "move to new file" -- NOTE: this doesn't seem to work?
                -- jump_num_shortcut = false,
             },
          })
@@ -336,9 +333,8 @@ return {
 
    {
       -- debug with AI
-      -- NOTE: this requires env var OPENAI_API_KEY (paid)
       "piersolenski/wtf.nvim",
-      enabled = false,
+      enabled = false, -- this requires env var OPENAI_API_KEY (paid)
       dependencies = {
          "MunifTanjim/nui.nvim",
       },
