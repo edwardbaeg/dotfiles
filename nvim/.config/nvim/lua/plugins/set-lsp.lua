@@ -104,12 +104,15 @@ return {
          -- these will be automatically installed
          local language_servers = {
             -- javascript
-            eslint = {},
-            -- volar = {}, -- vue v3, NOTE: this causes the cursor to move when saving due to conflicts with prettier...
+            -- need to choose one of these typescript lsp servers: ts_ls, vtsls, typescript-tools (plugin)
+            -- TODO: add descriptions
+            -- (typescript-tools) -- not a server, but a plugin
             -- ts_ls = {}, -- replaced with typescript-tools
-            -- vls = {}, -- vue v2
             vtsls = {}, -- wrapper for vscode lsp
+
+            -- other web stuff
             cssls = {},
+            eslint = {},
 
             -- lua
             lua_ls = { -- aka lua-language-server
