@@ -149,7 +149,7 @@ return {
       -- improved markdown view in neovim
       -- :RenderMarkdownToggle
       "MeanderingProgrammer/markdown.nvim",
-      enabled = false,
+      -- enabled = false,
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
