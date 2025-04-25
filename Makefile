@@ -1,4 +1,4 @@
-all: stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty
+all: stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders
 
 stow-nvim:
 	stow --verbose --restow -t ~ nvim
@@ -23,3 +23,6 @@ stow-gh-dash:
 
 stow-kitty:
 	stow --verbose --restow -t ~ kitty
+
+stow-borders:
+	stow --verbose --restow -t ~ borders
