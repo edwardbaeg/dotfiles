@@ -12,7 +12,7 @@ return {
          "nvimtools/none-ls.nvim", -- set up formatters and linters (null-ls replacement)
          "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
 
-         -- "pmizio/typescript-tools.nvim", -- native lua typescript support
+         "pmizio/typescript-tools.nvim", -- native lua typescript support
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
          -- "j-hui/fidget.nvim", -- small nvim-lsp progress ui -- replaced with noice.lsp
@@ -45,7 +45,7 @@ return {
             -- - vtsls: wrapper for vscode extension for typescript
 
             -- ts_ls = {},
-            vtsls = {},
+            -- vtsls = {},
             -- END TYPESCRIPT
             -- ----------------
 
@@ -92,30 +92,32 @@ return {
             ensure_installed = vim.tbl_keys(default_language_servers),
          })
 
-         -- require("typescript-tools").setup({
-         --    on_attach = on_attach,
-         --    settings = {
-         --       tsserver_file_preferences = {
-         --          -- enable inlay hints (vim.lsp.inlay_hint.enable())
-         --          includeInlayParameterNameHints = "all",
-         --          includeInlayEnumMemberValueHints = true,
-         --          includeInlayFunctionLikeReturnTypeHints = true,
-         --          includeInlayFunctionParameterTypeHints = true,
-         --          includeInlayPropertyDeclarationTypeHints = true,
-         --          includeInlayVariableTypeHints = true,
-         --       },
-         --    },
-         -- })
+         -- START TYPESCRIPT TOOLS
+         require("typescript-tools").setup({
+            on_attach = on_attach,
+            settings = {
+               tsserver_file_preferences = {
+                  -- enable inlay hints (vim.lsp.inlay_hint.enable())
+                  includeInlayParameterNameHints = "all",
+                  includeInlayEnumMemberValueHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayVariableTypeHints = true,
+               },
+            },
+         })
 
          -- NOTE: these are specific to typescript-tools
+         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>")
+         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>")
          -- FIXME: this doesn't work
          -- vim.api.nvim_create_user_command(
          --    "TSToolsLSP",
          --    ":TSToolsAddMissingImports <bar> TSToolsSortImports",
          --    { desc = "" }
          -- )
-         -- vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>")
-         -- vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>")
+         -- END TYPESCRIPT TOOLS
 
          -- set up each server, add cmp
          local capabilities = require("blink.cmp").get_lsp_capabilities()
