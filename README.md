@@ -29,6 +29,8 @@ Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 
 ## Packages
 
+These are mostly brew packages.
+
 <!-- TODO: add a brewfile to run with brew bundle -->
 
 #### Tools
@@ -37,7 +39,6 @@ Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 - `eza` better ls
 - `fd` better find (fd-find for `apt`)
 - `fzf` fuzzy finder
-- `git-delta` better diff
 - `ncdu` ncurses disk usage viewer
 - `ripgrep` better grep (and faster than ag)
 - `stow` symlink manager
@@ -53,20 +54,27 @@ Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 - `tmux` terminal multiplexer
 - `yazi` file manager, seemingly faster than ranger
 
-#### Less common
+#### Phone/Android
 
-- `hyperfine` commandline benchmarking
-- `fastfetch` display system info
+- `android-platform-tools` (cask)
 - `qrcp` qr code generator for wifi transfer
 - `scrcpy` android screen mirror/recorder (requires adb)
 
+#### Fun
+- `fastfetch` display system info
+
 #### Dependencies
 
+- `git-delta` for git and lazygit, better diff
 - `gnu-sed` for nvim, vim-spectre
 - `imagemagick` for image rendering with kitty
 - `poppler` for yazi, pdf preview
 - `unar` for yazi, archive preview
 - `zsh-completions` for zsh, command line autocompletions
+
+#### GUI
+- `kitty` (cask) terminal emulator
+- `emacs` (cask) text editor / environment / operating system
 
 **Terminal Multiplexer**: `tmux`
 
@@ -118,7 +126,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Choosy`: browser launcher
 - `Dropover`: drag & drop temporary file shelf
 - `Hammerspoon`: mac scripting
-- `JankyBorders`: visually highlight focused window
+- `JankyBorders`: visually highlight focused window (need to start brew service)
 - `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
 - `Raycast`: launcher
