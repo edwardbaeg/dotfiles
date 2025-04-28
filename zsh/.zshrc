@@ -158,13 +158,13 @@ fi
 
 # -- Aliases -------------------------------------------------------------------
 
-# -- [neo]vim
+# -- [neo]vim aliases
 alias vim="nvim"
 alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 
-# open files in vim
+# -- configuration files
 # TODO: choose one pattern and maintain
 alias vz="vim ~/.zshrc"
 alias ez="vim ~/.zshrc"
@@ -179,6 +179,8 @@ alias vw="vim ~/.wezterm.lua"
 alias ew="vim ~/.wezterm.lua"
 alias vk="vim ~/.config/kitty/kitty.conf"
 alias ek="vim ~/.config/kitty/kitty.conf"
+
+# -- other files
 alias vhist="vim ~/.zsh_history"
 
 # -- sourcing
@@ -382,12 +384,13 @@ function wttr() {
 
 # -- Neovim stuffs -------------------------------------------------
 
-# -- aliases
+# -- Aliases to immediately run commands
 alias vpp="nvim -c \"lua require('snacks').picker.files()\""
 alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsr="nvim -c \"lua require('persistence').load()\""
 alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
+# alias vl="nvim -c \"Lazy\"" # this doesnt work, maybe its before the command is loaded?
 
 # -- Alternate nvim configurations
 # https://michaeluloth.com/neovim-switch-configs/
