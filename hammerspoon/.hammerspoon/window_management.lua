@@ -39,6 +39,15 @@ local function withAxHotfix(fn, position)
    end
 end
 
+---@param win hs.window
+---@param rect hs.geometry
+---@param duration number
+local function setFrame(win, rect, duration)
+   withAxHotfix(function()
+      win:setFrame(rect, duration)
+   end)
+end
+
 ---Cycles through a list of rects to set focused window position
 ---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
 -- TODO: consider refactor: https://xenodium.com/cycling-through-window-layout-revisited/
@@ -68,9 +77,7 @@ local function cyclePositions(options)
          local duration = win:application():name() == "Acrobat Reader" and 0
             or (sameSize and 0.15 or sameHeight and 0.1 or 0)
 
-         withAxHotfix(function()
-            win:setFrame(nextOption, duration)
-         end)
+         setFrame(win, nextOption, duration)
          return
       end
    end
@@ -79,9 +86,7 @@ local function cyclePositions(options)
    local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
    local sameHeight = within(frame.h, firstOption.h, 1)
    local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
-   withAxHotfix(function()
-      win:setFrame(firstOption, duration)
-   end)
+   setFrame(win, firstOption, duration)
 end
 
 -- Left positions
@@ -216,21 +221,6 @@ hs.urlevent.bind("centerThin", function()
    hs.timer.doAfter(1, centerThin)
 end)
 
----@deprecated replaced with cyclePositions
-local function moveAndResizeFocused(callback)
-   local win = hs.window.focusedWindow()
-   local frame = win:frame()
-   local screenFrame = win:screen():frame()
-   local prevW = frame.w
-   local prevH = frame.h
-
-   callback(frame, screenFrame)
-   local needsResize = not (within(frame.h, prevH, 1) and within(frame.w, prevW, 1))
-   withAxHotfix(function()
-      win:setFrame(frame, needsResize and 0 or 0.15)
-   end)
-end
-
 -- Resize and center windows ---------------------------------------------
 --------------------------------------------------------------------------
 local function resizeAndCenter(fraction)
@@ -242,9 +232,8 @@ local function resizeAndCenter(fraction)
    f.h = screenMax.h * fraction
    f.x = screenMax.x + (screenMax.w - f.w) / 2
    f.y = screenMax.y + (screenMax.h - f.h) / 2
-   withAxHotfix(function()
-      win:setFrame(f, 0)
-   end)
+
+   setFrame(win, f, 0)
 end
 
 -- Maximize window
