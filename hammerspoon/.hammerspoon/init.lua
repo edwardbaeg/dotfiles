@@ -1,13 +1,15 @@
 -- ~/.hammerspoon/init.lua
+require("config_reloader") -- config watcher and reloader
 
-require("application_launcher")
--- require("application_shortcuts") -- this is very slow
-require("caffeine")
-require("config_reloader")
-require("remapper")
-require("window_grid")
--- require("window_highlight") -- this is very slow, replaced with janky borders
-require("window_management")
+require("application_launcher") -- app launcher and switcher
+require("caffeine") -- force awake menubar
+require("remapper") -- simple system keymaps
+require("window_grid") -- grid window positions
+require("window_management") -- window sizing and positions
+
+-- NOTE: these are very slow
+-- require("application_shortcuts") -- app specific keymaps
+-- require("window_highlight") -- replaced with janky borders
 
 -- Install command line interface `hs`
 hs.ipc.cliInstall()

@@ -43,6 +43,7 @@ end
 ---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
 -- TODO: consider refactor: https://xenodium.com/cycling-through-window-layout-revisited/
 -- TODO: consider refactoring with hs.window:moveToUnit
+-- TODO: add some buffer margin to make space for the colored border
 local function cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()

@@ -2,9 +2,7 @@
 --------------------------------------------------------------------------
 local constants = require("common/constants")
 
--- TODO: replace with hs.grid.setMargins
-hs.grid.MARGINX = 0
-hs.grid.MARGINY = 0
+hs.grid.setMargins({ x = 0, y = 0 }) -- margins betwen windows. doesn't set from bottom or right
 
 -- show interactive modal interface for resizing
 hs.hotkey.bind(constants.hyperkey, "G", function()
