@@ -1,10 +1,6 @@
 local constants = require("common/constants")
 local hyperkey = constants.hyperkey
 
-local function within(a, b, margin)
-   return math.abs(a - b) <= margin
-end
-
 -- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
 -- Some applications (eg Firefox) animate resize instead of moving, due to AXEnhancedUserInterface
 -- So, temporarily disable it while moving the window
@@ -39,12 +35,42 @@ local function withAxHotfix(fn, position)
    end
 end
 
+local MARGIN = 5
+-- Buffer margin space around screen edges
+local function applyScreenEdgeMargins(window, screen)
+   local x, y, width, height = window.x, window.y, window.w, window.h
+   -- left edge
+   if x - screen.x < MARGIN then
+      width = width - MARGIN
+      x = screen.x + MARGIN
+   end
+   -- right edge
+   if screen.w - (x + width) < MARGIN then
+      width = width - MARGIN
+   end
+   -- top edge
+   if y - screen.y < MARGIN then
+      height = height - MARGIN
+      y = screen.y + MARGIN
+   end
+   -- bottom edge
+   if screen.h - (y + height) < MARGIN then
+      height = height - MARGIN
+   end
+   return { x = x, y = y, w = width, h = height }
+end
+
+local function withinMargin(a, b)
+   return math.abs(a - b) <= MARGIN * 2
+end
+
 ---@param win hs.window
 ---@param rect hs.geometry
 ---@param duration number
 local function setFrame(win, rect, duration)
+   local newRect = applyScreenEdgeMargins(rect, win:screen():frame())
    withAxHotfix(function()
-      win:setFrame(rect, duration)
+      win:setFrame(newRect, duration)
    end)
 end
 
@@ -61,16 +87,16 @@ local function cyclePositions(options)
    local firstOption = options[1]
    for i, option in ipairs(options) do
       if
-         within(frame.h, option.h, 1)
-         and within(frame.w, option.w, 1)
-         and within(frame.x, option.x, 1)
-         and within(frame.y, option.y, 1)
+         withinMargin(frame.h, option.h)
+         and withinMargin(frame.w, option.w)
+         and withinMargin(frame.x, option.x)
+         and withinMargin(frame.y, option.y)
       then
          local nextOption = options[i + 1] or firstOption
 
          -- three different animation levels: same size, same one dimension, different size
-         local sameSize = within(frame.h, nextOption.h, 1) and within(frame.w, nextOption.w, 1)
-         local sameHeight = within(frame.h, nextOption.h, 1)
+         local sameSize = withinMargin(frame.h, nextOption.h) and withinMargin(frame.w, nextOption.w)
+         local sameHeight = withinMargin(frame.h, nextOption.h)
 
          -- TODO: add an ignore list of apps
          ---@diagnostic disable-next-line: undefined-field name is a valid field of application
@@ -83,8 +109,8 @@ local function cyclePositions(options)
    end
 
    -- otherwise, set to the first option
-   local sameSize = within(frame.h, firstOption.h, 1) and within(frame.w, firstOption.w, 1)
-   local sameHeight = within(frame.h, firstOption.h, 1)
+   local sameSize = withinMargin(frame.h, firstOption.h) and withinMargin(frame.w, firstOption.w)
+   local sameHeight = withinMargin(frame.h, firstOption.h)
    local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
    setFrame(win, firstOption, duration)
 end
