@@ -118,6 +118,5 @@ set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Defin
 -- TODO: refactor to lua first class api when available
 vim.cmd([[
    ab functino function
-   ab fn function
    ab exfn export function
 ]])
