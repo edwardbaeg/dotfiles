@@ -94,8 +94,8 @@ alias back="cd ~/dev/oneadvisory/backend"
 alias decrypt="cd ~/dev/oneadvisory/backend/ && ./bin/dispatch crypto decrypt" # TODO?: create a function for this to add quotes and return to previous directory
 
 # -- TODO: migrate to .env
-export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
-# export AWS_PROFILE=dispatch-dev01  # use this for development
+# export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
+export AWS_PROFILE=dispatch-dev01  # use this for development
 # export AWS_PROFILE=oa-dev
 # export AWS_PROFILE=duplo
 export AWS_REGION=us-east-1
@@ -120,6 +120,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/git
     # zgen oh-my-zsh plugins/vi-mode
     zgen oh-my-zsh plugins/colored-man-pages
+    zgen oh-my-zsh plugins/alias-finder # suggests aliases for command
     # zgen oh-my-zsh plugins/tmux
 
     # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
@@ -142,6 +143,12 @@ fi
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_USER_DEFAULT
 ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK # show blinking cursor in normal mode
 ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # always start in insert mode (default is ZVM_MODE_LAST)
+
+# Configure alias-finder
+zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
+zstyle ':omz:plugins:alias-finder' longer yes # disabled by default
+zstyle ':omz:plugins:alias-finder' exact yes # disabled by default
+zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
 
 # fix setting fzf keymaps after zsh-vi-mode
 # https://github.com/jeffreytse/zsh-vi-mode/issues/4#issuecomment-757234569
@@ -443,12 +450,11 @@ if command -v ngrok &>/dev/null; then
     eval "$(ngrok completion)"
 fi
 
+# run this command to add awscli autocompletion
+# complete -C aws_completer aws
 
 # -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
 
 export PATH=$PATH:/Users/edwardbaeg/.spicetify
-
-# run this command to add awscli autocompletion
-complete -C aws_completer aws
