@@ -35,7 +35,7 @@ local function withAxHotfix(fn, position)
    end
 end
 
-local MARGIN = 5
+local MARGIN = 4
 -- Buffer margin space around screen edges
 local function applyScreenEdgeMargins(window, screen)
    local x, y, width, height = window.x, window.y, window.w, window.h
@@ -219,6 +219,33 @@ hs.hotkey.bind(hyperkey, "J", function()
          y = screenFrame.y + (screenFrame.h / 3),
          w = screenFrame.w,
          h = screenFrame.h * 2 / 3,
+      },
+   })
+end)
+
+-- Center, full height positions
+hs.hotkey.bind(hyperkey, "C", function()
+   local win = hs.window.focusedWindow()
+   local screenFrame = win:screen():frame()
+
+   cyclePositions({
+      {
+         x = screenFrame.x + (screenFrame.w / 2) / 2,
+         y = screenFrame.y,
+         w = screenFrame.w / 2,
+         h = screenFrame.h,
+      },
+      {
+         x = screenFrame.x + (screenFrame.w * 1 / 3) / 2,
+         y = screenFrame.y,
+         w = screenFrame.w * 2 / 3,
+         h = screenFrame.h,
+      },
+      {
+         x = screenFrame.x + (screenFrame.w * 2 / 3) / 2,
+         y = screenFrame.y,
+         w = screenFrame.w / 3,
+         h = screenFrame.h,
       },
    })
 end)
