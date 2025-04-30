@@ -78,7 +78,6 @@ end
 ---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
 -- TODO: consider refactor: https://xenodium.com/cycling-through-window-layout-revisited/
 -- TODO: consider refactoring with hs.window:moveToUnit
--- TODO: add some buffer margin to make space for the colored border
 local function cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
@@ -289,24 +288,24 @@ local function resizeAndCenter(fraction)
    setFrame(win, f, 0)
 end
 
--- Maximize window
+-- Cycle through window sizes based on current position
 hs.hotkey.bind(hyperkey, "M", function()
-   resizeAndCenter(0.99)
-end)
+   local sizes = { 0.99, 0.81, 0.64, 0.49 }
+   local win = hs.window.focusedWindow()
+   local f = win:frame()
+   local screenMax = win:screen():frame()
 
--- Resize window 80%
-hs.hotkey.bind(hyperkey, "N", function()
-   resizeAndCenter(0.81)
-end)
+   local currentFraction = f.w / screenMax.w
+   local nextSizeIndex = 1
 
--- Resize window 64%
-hs.hotkey.bind(hyperkey, "B", function()
-   resizeAndCenter(0.64)
-end)
+   for i, size in ipairs(sizes) do
+      if math.abs(size - currentFraction) < 0.01 then
+         nextSizeIndex = (i % #sizes) + 1
+         break
+      end
+   end
 
--- Resize window 50%
-hs.hotkey.bind(hyperkey, "V", function()
-   resizeAndCenter(0.49)
+   resizeAndCenter(sizes[nextSizeIndex])
 end)
 
 -- Move to display -------------------------------------------------------
