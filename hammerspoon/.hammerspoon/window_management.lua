@@ -111,140 +111,73 @@ local function cyclePositions(options)
    setFrame(win, nextOption, duration)
 end
 
--- Left positions
--- TODO: refactor to define as unitRect and then convert with fromUnitRect
-hs.hotkey.bind(hyperkey, "H", function()
+---Converts a list of unit rects to screen rects
+---@param unitRects {x: number, y: number, w: number, h: number}[]
+---@return hs.geometry
+local function mapScreenUnitRects(unitRects)
    local win = hs.window.focusedWindow()
    local screenFrame = win:screen():frame()
 
-   cyclePositions({
-      {
-         x = screenFrame.x,
-         y = screenFrame.y,
-         w = screenFrame.w / 2,
-         h = screenFrame.h,
-      },
-      {
-         x = screenFrame.x,
-         y = screenFrame.y,
-         w = screenFrame.w / 3,
-         h = screenFrame.h,
-      },
-      {
-         x = screenFrame.x,
-         y = screenFrame.y,
-         w = screenFrame.w * 2 / 3,
-         h = screenFrame.h,
-      },
-   })
+   ---@diagnostic disable-next-line: return-type-mismatch it's correct
+   return hs.fnutils.imap(unitRects, function(unitRect)
+      return hs.geometry.fromUnitRect(unitRect, screenFrame)
+   end)
+end
+
+-- Left positions
+hs.hotkey.bind(hyperkey, "H", function()
+   local unitRects = {
+      { x = 0, y = 0, w = 0.5, h = 1 },
+      { x = 0, y = 0, w = 1 / 3, h = 1 },
+      { x = 0, y = 0, w = 2 / 3, h = 1 },
+   }
+
+   cyclePositions(mapScreenUnitRects(unitRects))
 end)
 
 -- Right positions
 hs.hotkey.bind(hyperkey, "L", function()
-   local win = hs.window.focusedWindow()
-   local screenFrame = win:screen():frame()
+   local unitRects = {
+      { x = 0.5, y = 0, w = 0.5, h = 1 },
+      { x = 2 / 3, y = 0, w = 1 / 3, h = 1 },
+      { x = 1 / 3, y = 0, w = 2 / 3, h = 1 },
+   }
 
-   cyclePositions({
-      {
-         x = screenFrame.x + (screenFrame.w / 2),
-         y = screenFrame.y,
-         w = screenFrame.w / 2,
-         h = screenFrame.h,
-      },
-      {
-         x = screenFrame.x + (screenFrame.w * 2 / 3),
-         y = screenFrame.y,
-         w = screenFrame.w / 3,
-         h = screenFrame.h,
-      },
-      {
-         x = screenFrame.x + (screenFrame.w * 1 / 3),
-         y = screenFrame.y,
-         w = screenFrame.w * 2 / 3,
-         h = screenFrame.h,
-      },
-   })
+   cyclePositions(mapScreenUnitRects(unitRects))
 end)
 
 -- Top positions
 hs.hotkey.bind(hyperkey, "K", function()
-   local win = hs.window.focusedWindow()
-   local screenFrame = win:screen():frame()
+   local unitRects = {
+      { x = 0, y = 0, w = 1, h = 0.5 },
+      { x = 0, y = 0, w = 1, h = 1 / 3 },
+      { x = 0, y = 0, w = 1, h = 2 / 3 },
+   }
 
-   cyclePositions({
-      {
-         x = screenFrame.x,
-         y = screenFrame.y,
-         w = screenFrame.w,
-         h = screenFrame.h / 2,
-      },
-      {
-         x = screenFrame.x,
-         y = screenFrame.y,
-         w = screenFrame.w,
-         h = screenFrame.h / 3,
-      },
-      {
-         x = screenFrame.x,
-         y = screenFrame.y,
-         w = screenFrame.w,
-         h = screenFrame.h * 2 / 3,
-      },
-   })
+   cyclePositions(mapScreenUnitRects(unitRects))
 end)
 
 -- Bottom positions
 hs.hotkey.bind(hyperkey, "J", function()
-   local win = hs.window.focusedWindow()
-   local screenFrame = win:screen():frame()
+   local unitRects = {
+      { x = 0, y = 0.5, w = 1, h = 0.5 },
+      { x = 0, y = 2 / 3, w = 1, h = 1 / 3 },
+      { x = 0, y = 1 / 3, w = 1, h = 2 / 3 },
+   }
 
-   cyclePositions({
-      {
-         x = screenFrame.x,
-         y = screenFrame.y + (screenFrame.h / 2),
-         w = screenFrame.w,
-         h = screenFrame.h / 2,
-      },
-      {
-         x = screenFrame.x,
-         y = screenFrame.y + (screenFrame.h * 2 / 3),
-         w = screenFrame.w,
-         h = screenFrame.h / 3,
-      },
-      {
-         x = screenFrame.x,
-         y = screenFrame.y + (screenFrame.h / 3),
-         w = screenFrame.w,
-         h = screenFrame.h * 2 / 3,
-      },
-   })
+   cyclePositions(mapScreenUnitRects(unitRects))
 end)
 
 -- Center, full height positions
 hs.hotkey.bind(hyperkey, "C", function()
-   local win = hs.window.focusedWindow()
-   local screenFrame = win:screen():frame()
+    -- Cycle through center positions
+    local unitRects = {
+        { x = 0.25, y = 0, w = 0.5, h = 1 },
+        { x = 1 / 6, y = 0, w = 2 / 3, h = 1 },
+        { x = 1 / 3, y = 0, w = 1 / 3, h = 1 },
+    }
 
-   cyclePositions({
-      {
-         x = screenFrame.x + (screenFrame.w / 2) / 2,
-         y = screenFrame.y,
-         w = screenFrame.w / 2,
-         h = screenFrame.h,
-      },
-      {
-         x = screenFrame.x + (screenFrame.w * 1 / 3) / 2,
-         y = screenFrame.y,
-         w = screenFrame.w * 2 / 3,
-         h = screenFrame.h,
-      },
-      {
-         x = screenFrame.x + (screenFrame.w * 2 / 3) / 2,
-         y = screenFrame.y,
-         w = screenFrame.w / 3,
-         h = screenFrame.h,
-      },
-   })
+    cyclePositions(mapScreenUnitRects(unitRects))
 end)
 
 local function centerThin()
