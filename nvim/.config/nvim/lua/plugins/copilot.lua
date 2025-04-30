@@ -47,6 +47,7 @@ return {
       cmd = "CopilotChat",
       keys = {
          {
+            mode = { "n", "v" },
             "<leader>cct",
             function()
                require("CopilotChat").open()
@@ -54,6 +55,7 @@ return {
             desc = "CopilotChat",
          },
          {
+            mode = { "n", "v" },
             "<leader>ccp",
             function()
                local actions = require("CopilotChat.actions")
