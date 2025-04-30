@@ -76,45 +76,43 @@ end
 
 ---Cycles through a list of rects to set focused window position
 ---@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
--- TODO: consider refactor: https://xenodium.com/cycling-through-window-layout-revisited/
--- TODO: consider refactoring with hs.window:moveToUnit
 local function cyclePositions(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
 
-   -- if the window matches any of the options, set to the next one
+   local function calculateDuration(appName, sameSize, sameHeight)
+      if appName == "Acrobat Reader" then
+         return 0
+      end
+      return sameSize and 0.15 or sameHeight and 0.1 or 0
+   end
+
+   local function matchesOption(rect, option)
+      return withinMargin(rect.h, option.h)
+         and withinMargin(rect.w, option.w)
+         and withinMargin(rect.x, option.x)
+         and withinMargin(rect.y, option.y)
+   end
+
    local firstOption = options[1]
+   local nextOption = firstOption
+
    for i, option in ipairs(options) do
-      if
-         withinMargin(frame.h, option.h)
-         and withinMargin(frame.w, option.w)
-         and withinMargin(frame.x, option.x)
-         and withinMargin(frame.y, option.y)
-      then
-         local nextOption = options[i + 1] or firstOption
-
-         -- three different animation levels: same size, same one dimension, different size
-         local sameSize = withinMargin(frame.h, nextOption.h) and withinMargin(frame.w, nextOption.w)
-         local sameHeight = withinMargin(frame.h, nextOption.h)
-
-         -- TODO: add an ignore list of apps
-         ---@diagnostic disable-next-line: undefined-field name is a valid field of application
-         local duration = win:application():name() == "Acrobat Reader" and 0
-            or (sameSize and 0.15 or sameHeight and 0.1 or 0)
-
-         setFrame(win, nextOption, duration)
-         return
+      if matchesOption(frame, option) then
+         nextOption = options[i + 1] or firstOption
+         break
       end
    end
 
-   -- otherwise, set to the first option
-   local sameSize = withinMargin(frame.h, firstOption.h) and withinMargin(frame.w, firstOption.w)
-   local sameHeight = withinMargin(frame.h, firstOption.h)
-   local duration = sameSize and 0.15 or sameHeight and 0.1 or 0
-   setFrame(win, firstOption, duration)
+   local sameSize = withinMargin(frame.h, nextOption.h) and withinMargin(frame.w, nextOption.w)
+   local sameHeight = withinMargin(frame.h, nextOption.h)
+   local duration = calculateDuration(win:application():name(), sameSize, sameHeight)
+
+   setFrame(win, nextOption, duration)
 end
 
 -- Left positions
+-- TODO: refactor to define as unitRect and then convert with fromUnitRect
 hs.hotkey.bind(hyperkey, "H", function()
    local win = hs.window.focusedWindow()
    local screenFrame = win:screen():frame()
