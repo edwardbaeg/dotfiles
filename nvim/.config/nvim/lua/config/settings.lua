@@ -147,3 +147,13 @@ vim.api.nvim_set_hl(0, "Exception", { italic = true }) -- eg try, catch, TODO: s
 vim.api.nvim_set_hl(0, "LspInlayHint", { italic = true, bg = "#333333" }) -- highlight codeium suggestions
 
 vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#bbbbbb" }) -- highlight codeium suggestions
+
+-- Disable line wrapping for csv
+vim.api.nvim_create_augroup("csv_settings", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = "csv_settings",
+  pattern = "csv",
+  callback = function()
+    vim.opt_local.wrap = false
+  end,
+})
