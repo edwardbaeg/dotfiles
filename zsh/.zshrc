@@ -1,4 +1,7 @@
 # ~/.zshrc
+#
+# TODO: modularize this file
+# https://medium.com/codex/how-and-why-you-should-split-your-bashrc-or-zshrc-files-285e5cc3c843
 
 # setup direnv
 if command -v direnv >/dev/null 2>&1; then
@@ -94,8 +97,8 @@ alias back="cd ~/dev/oneadvisory/backend"
 alias decrypt="cd ~/dev/oneadvisory/backend/ && ./bin/dispatch crypto decrypt" # TODO?: create a function for this to add quotes and return to previous directory
 
 # -- TODO: migrate to .env
-# export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
-export AWS_PROFILE=dispatch-dev01  # use this for development
+export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
+# export AWS_PROFILE=dispatch-dev01  # use this for development
 # export AWS_PROFILE=oa-dev
 # export AWS_PROFILE=duplo
 export AWS_REGION=us-east-1
@@ -282,9 +285,12 @@ function git_checkout_fuzzy () {
     local branches branch
     branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
     branch=$(echo "$branches" |
-    # fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
     fzf -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
-    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+    local target_branch=$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+    local command="git checkout $target_branch"
+    print "$command"
+    print -s "$command"
+    eval $command
 }
 
 # [FUZZY PATTERN] - Open the selected file with the default editor
@@ -294,20 +300,30 @@ function git_checkout_fuzzy () {
 alias vp="vim_files"
 function vim_files() {
     IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
-    # IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
-    [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
+    [[ -n "$files" ]] && {
+        local command="${EDITOR:-nvim} ${files[@]}"
+        print "$command"
+        print -s "$command"
+        eval $command
+    }
 }
 
 # NOTE: this doesn't support <tab> selection
 # https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
 alias vg="vim_grep"
 function vim_grep {
-  command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" \
+  local results=$(command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" \
   | command fzf -d':' --ansi \
     --preview "command bat -p --color=always {1} --highlight-line {2}" \
     --preview-window ~8,+{2}-5 \
-  | awk -F':' '{print $1 " +" $2}' \
-  | xargs -r ${EDITOR:-nvim}
+  | awk -F':' '{print $1 " +" $2}')
+  
+  if [[ -n "$results" ]]; then
+    local command="${EDITOR:-nvim} $results"
+    print "$command"
+    print -s "$command"
+    eval $command
+  fi
 }
 
 # List tmux sessions, filter with fzf, and attach to the selected session
@@ -325,8 +341,11 @@ function tmux_attach() {
     if [[ -n "$selected_session" ]]; then
         # Extract the session name (the first part of the line)
         session_name=$(echo "$selected_session" | cut -d: -f1)
-        # Attach to the selected session
-        tmux attach-session -t "$session_name"
+        # Create and execute the command
+        local command="tmux attach-session -t $session_name"
+        print "$command"
+        print -s "$command"
+        eval $command
     else
         echo "Exit: No session selected."
     fi
@@ -341,8 +360,11 @@ function npm_run_fuzzy() {
         if [[ -n $scripts ]]; then
             # Extract script name and remove all whitespace and quotes
             script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
-            print "npm run "$script_name;
-            npm run $script_name
+            command="npm run $script_name"
+            print "$command"
+            # Add command to history and execute it
+            print -s "$command"
+            eval $command
         else
             echo "Exit: No script selected."
         fi
