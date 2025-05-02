@@ -3,11 +3,12 @@ return {
       -- a collection of mini 'submodules'
       "echasnovski/mini.nvim",
       dependencies = {
-         "folke/snacks.nvim" -- for mini.files lsp rename
+         "folke/snacks.nvim", -- for mini.files lsp rename
       },
       enabled = not vim.g.vscode,
       config = function()
          -- adds ability to move text around with <m-h/j/k/l>
+         -- FIXME: this is broken for up and down motions
          require("mini.move").setup({})
 
          -- highlights/underlines the word under the cursor
