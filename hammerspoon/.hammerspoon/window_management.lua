@@ -89,6 +89,35 @@ hs.hotkey.bind(hyperkey, "M", function()
    resizeAndCenter(sizes[nextSizeIndex])
 end)
 
+-- TODO: consider creating a generic utils file
+local function reverse_list(list)
+   local reversed = {}
+   for i = #list, 1, -1 do
+      table.insert(reversed, list[i])
+   end
+   return reversed
+end
+
+-- the same as above, but in reverse
+hs.hotkey.bind(hyperkey, "N", function()
+   local sizes = reverse_list({ 0.99, 0.81, 0.64, 0.49 })
+   local win = hs.window.focusedWindow()
+   local f = win:frame()
+   local screenMax = win:screen():frame()
+
+   local currentFraction = f.w / screenMax.w
+   local nextSizeIndex = 1
+
+   for i, size in ipairs(sizes) do
+      if math.abs(size - currentFraction) < 0.01 then
+         nextSizeIndex = (i % #sizes) + 1
+         break
+      end
+   end
+
+   resizeAndCenter(sizes[nextSizeIndex])
+end)
+
 -- Move to display -------------------------------
 --------------------------------------------------
 
