@@ -166,9 +166,14 @@ return {
             -- end,
          })
 
-         -- Show warnings as virtual text, errors as virtual lines
+         -- START visual diagnostics
+         --------
+
+         -- Examples:
          -- https://www.reddit.com/r/neovim/comments/1jo9oe9/i_set_up_my_config_to_use_virtual_lines_for/
-         -- TODO: consider conditionally showing virtual_lines (https://www.reddit.com/r/neovim/comments/1jpbc7s/disable_virtual_text_if_there_is_diagnostic_in/)
+
+         -- -- Show all errors
+         ---@type vim.diagnostic.Opts
          local diagnostic_config = {
             virtual_text = {
                severity = {
@@ -176,35 +181,37 @@ return {
                   min = vim.diagnostic.severity.ERROR,
                },
             },
-            -- virtual_lines = {
-            --    current_line = true,
-            --    severity = {
-            --       min = vim.diagnostic.severity.ERROR,
-            --    },
-            -- },
          }
 
-         vim.diagnostic.config(diagnostic_config)
+         -- Only show warning, hints, for the current line
+         ---@type vim.diagnostic.Opts
+         -- local diagnostic_config = {
+         --    virtual_text = {
+         --       current_line = true,
+         --       severity = {
+         --          max = vim.diagnostic.severity.WARN,
+         --          -- min = vim.diagnostic.severity.ERROR, -- only show errors
+         --       },
+         --    },
+         -- }
 
-         -- -- Hide diagnostics when in insert mode
-         vim.api.nvim_create_autocmd("InsertEnter", {
-            pattern = "*",
-            callback = function()
-               vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-            end,
-         })
-         vim.api.nvim_create_autocmd("InsertLeave", {
-            pattern = "*",
-            callback = function()
-               vim.diagnostic.config(diagnostic_config)
-            end,
-         })
+          vim.diagnostic.config(diagnostic_config)
 
-         -- toggle virtual lines
-         vim.keymap.set("n", "<leader>gK", function()
-            local new_config = not vim.diagnostic.config().virtual_lines
-            vim.diagnostic.config({ virtual_lines = new_config and diagnostic_config.virtual_lines or false })
-         end, { desc = "Toggle diagnostic virtual_lines" })
+          -- Hide diagnostics when in insert mode
+          vim.api.nvim_create_autocmd("InsertEnter", {
+             pattern = "*",
+             callback = function()
+                -- vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+             end,
+          })
+          vim.api.nvim_create_autocmd("InsertLeave", {
+             pattern = "*",
+             callback = function()
+                vim.diagnostic.config(diagnostic_config)
+             end,
+          })
+         -- END visual diagnostics
+         --------
       end,
    },
 
@@ -419,5 +426,27 @@ return {
       dependencies = "neovim/nvim-lspconfig",
       event = "VeryLazy",
       opts = {},
+   },
+
+   {
+      -- shows diagnostic messages with wrapping for the current line
+      "rachartier/tiny-inline-diagnostic.nvim",
+      enabled = false, -- looks to show errors that aren't showing for the other TS lsp server?
+      event = "VeryLazy", -- Or `LspAttach`
+      priority = 1000, -- needs to be loaded in first
+      opts = {
+         options = {
+            multilines = {
+               -- enabled = true, -- show on all lines (not just current)
+            },
+            -- filter which severity levels to show
+            severity = {
+               vim.diagnostic.severity.ERROR,
+            },
+         }
+      },
+      config = function(_, opts)
+         require("tiny-inline-diagnostic").setup(opts)
+      end,
    },
 }
