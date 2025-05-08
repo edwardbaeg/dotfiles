@@ -28,8 +28,20 @@ set("n", "<leader>nn", "<cmd>bnext<cr>") -- next buffer
 set("n", "<leader>pp", "<cmd>bprevious<cr>") -- previous buffer
 set("n", "<leader>bn", ":bn<cr>", { silent = true }) -- emacs style
 set("n", "<leader>bp", ":bp<cr>", { silent = true })
-set("n", "<leader>bd", ":bd<cr>", { silent = true })
 set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer", silent = true }) -- format the buffer
+set("n", "<leader>bd", ":bd<cr>", { silent = true })
+
+-- TODO: refactor this to abstract functionality and add a force quit.
+local function confirm_and_execute()
+   local confirm = vim.fn.input("Are you sure you want to FORCE close the buffer? (y/n): ")
+   if confirm == "y" or confirm == "Y" then
+      vim.cmd("bd!")
+   else
+      print("Buffer close canceled.")
+   end
+end
+
+set("n", "<leader>bD", confirm_and_execute, { silent = true })
 
 -- Yank and paste
 set("n", "Y", "y$") -- yank to end of line (like C or D)
