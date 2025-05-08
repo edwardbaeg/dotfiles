@@ -7,8 +7,8 @@ return {
       "neovim/nvim-lspconfig",
       enabled = not vim.g.vscode,
       dependencies = {
-         "williamboman/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
-         "williamboman/mason-lspconfig.nvim", -- Automatically install LSPs
+         "mason-org/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
+         "mason-org/mason-lspconfig.nvim", -- Automatically install LSPs -- TODO: this can be replaced with nvim.lsp.config
          "nvimtools/none-ls.nvim", -- set up formatters and linters (null-ls replacement)
          "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
 
@@ -85,7 +85,7 @@ return {
             -- },
          }
 
-         require("mason").setup()
+         require("mason").setup() -- register commands
          local mason_lspconfig = require("mason-lspconfig")
 
          mason_lspconfig.setup({
@@ -119,17 +119,6 @@ return {
          -- )
          -- END TYPESCRIPT TOOLS
 
-         -- set up each server, add cmp
-         local capabilities = require("blink.cmp").get_lsp_capabilities()
-         mason_lspconfig.setup_handlers({
-            function(server_name)
-               require("lspconfig")[server_name].setup({
-                  capabilities = capabilities,
-                  on_attach = on_attach,
-                  settings = default_language_servers[server_name],
-               })
-            end,
-         })
          -- END LSP CONFIG
          -----------------
 
