@@ -36,6 +36,7 @@ end
 
 local MARGIN = 4
 -- Buffer margin space around screen edges
+-- FIXME: some of these edges don't work for all screens if there are multiple monitors
 local function applyScreenEdgeMargins(window, screen)
    local x, y, width, height = window.x, window.y, window.w, window.h
    -- left edge
@@ -66,7 +67,7 @@ end
 ---@param win hs.window
 ---@param rect hs.geometry
 ---@param duration number
-local function setFrame(win, rect, duration)
+local function setFrameWithMargins(win, rect, duration)
    local newRect = applyScreenEdgeMargins(rect, win:screen():frame())
    M.withAxHotfix(function()
       win:setFrame(newRect, duration)
@@ -74,7 +75,7 @@ local function setFrame(win, rect, duration)
 end
 
 ---Cycles through a list of rects to set focused window position
----@param options {h: number, w: number, x: number, y: number}[] list of rect to cycle through
+---@param options {h: number, w: number, x: number, y: number}[] list of rects to cycle through
 M.cyclePositions = function(options)
    local win = hs.window.focusedWindow()
    local frame = win:frame()
@@ -107,7 +108,7 @@ M.cyclePositions = function(options)
    local sameHeight = withinMargin(frame.h, nextOption.h)
    local duration = calculateDuration(win:application():name(), sameSize, sameHeight)
 
-   setFrame(win, nextOption, duration)
+   setFrameWithMargins(win, nextOption, duration)
 end
 
 ---Converts a list of unit rects to screen rects
@@ -135,7 +136,7 @@ M.resizeAndCenter = function(fraction)
    f.x = screenMax.x + (screenMax.w - f.w) / 2
    f.y = screenMax.y + (screenMax.h - f.h) / 2
 
-   setFrame(win, f, 0)
+   setFrameWithMargins(win, f, 0)
 end
 
 return M
