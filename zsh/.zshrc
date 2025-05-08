@@ -98,6 +98,7 @@ alias decrypt="cd ~/dev/oneadvisory/backend/ && ./bin/dispatch crypto decrypt" #
 
 # -- TODO: migrate to .env
 export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
+# export AWS_PROFILE=oa-prod # use this for forms building
 # export AWS_PROFILE=dispatch-dev01  # use this for development
 # export AWS_PROFILE=oa-dev
 # export AWS_PROFILE=duplo
@@ -203,6 +204,7 @@ alias ghist="git hist"
 alias ghista="git hista"
 alias ghistb="git histb"
 alias gmm="git merge master"
+alias gmo="git merge origin/master"
 alias gfl="git fetch && git pull"
 alias gdm="git diff master"
 alias gdo="git diff origin"
