@@ -92,6 +92,16 @@ return {
             ensure_installed = vim.tbl_keys(default_language_servers),
          })
 
+         local capabilities = require("blink.cmp").get_lsp_capabilities()
+         vim.lsp.config("*", {
+            on_attach = on_attach,
+            capabilities = capabilities,
+         })
+
+         for lsp, settings in pairs(default_language_servers) do
+            vim.lsp.config(lsp, { settings = settings })
+         end
+
          -- START TYPESCRIPT TOOLS
          require("typescript-tools").setup({
             on_attach = on_attach,
@@ -184,21 +194,21 @@ return {
          --    },
          -- }
 
-          vim.diagnostic.config(diagnostic_config)
+         vim.diagnostic.config(diagnostic_config)
 
-          -- Hide diagnostics when in insert mode
-          vim.api.nvim_create_autocmd("InsertEnter", {
-             pattern = "*",
-             callback = function()
-                -- vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
-             end,
-          })
-          vim.api.nvim_create_autocmd("InsertLeave", {
-             pattern = "*",
-             callback = function()
-                vim.diagnostic.config(diagnostic_config)
-             end,
-          })
+         -- Hide diagnostics when in insert mode
+         vim.api.nvim_create_autocmd("InsertEnter", {
+            pattern = "*",
+            callback = function()
+               -- vim.diagnostic.config({ virtual_lines = false, virtual_text = false })
+            end,
+         })
+         vim.api.nvim_create_autocmd("InsertLeave", {
+            pattern = "*",
+            callback = function()
+               vim.diagnostic.config(diagnostic_config)
+            end,
+         })
          -- END visual diagnostics
          --------
       end,
@@ -432,7 +442,7 @@ return {
             severity = {
                vim.diagnostic.severity.ERROR,
             },
-         }
+         },
       },
       config = function(_, opts)
          require("tiny-inline-diagnostic").setup(opts)
