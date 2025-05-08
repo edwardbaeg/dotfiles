@@ -6,6 +6,7 @@ require("caffeine") -- force awake menubar
 require("remapper") -- simple system keymaps
 require("window_grid") -- grid window positions
 require("window_management") -- window sizing and positions
+require("modal") -- modal mode keymaps
 
 -- NOTE: these are very slow
 -- require("application_shortcuts") -- app specific keymaps
