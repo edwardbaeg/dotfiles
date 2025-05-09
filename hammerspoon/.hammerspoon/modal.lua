@@ -10,12 +10,13 @@ function d:entered()
    local modalMessage = table.concat({
       "Modal mode:\n",
       "S: Open Raycast snippets",
-      "T: Open Telegram",
-      "U: Open Cursor",
-      "\n",
+      "T: Telegram",
+      "U: Cursor",
+      "",
       "P: Toggle personal override (currently: " .. (isPersonalOverride() and "on" or "off") .. ")",
       "C: Toggle caffeine (currently: " .. (hs.caffeinate.get("displayIdle") and "on" or "off") .. ")",
-      "\n<Esc> Exit",
+      "",
+      "<Esc> Exit",
    }, "\n")
    id = hs.alert.show(modalMessage, "indefinite")
 end
