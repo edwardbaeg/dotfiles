@@ -2,6 +2,8 @@ local constants = require("common/constants")
 local hyperkey = constants.hyperkey
 local allkey = constants.allkey
 
+local M = {};
+
 -- TODO?: if the application is already focused, then hide it
 ---@param modifiers table
 ---@param key string
@@ -33,7 +35,11 @@ local mappings = {
    { "8", "Slack" },
 }
 
-local isPersonalOverride = false
+-- Function to get the current personal override state
+local function isPersonalOverride()
+   return hs.settings.get("isPersonalOverride") or false
+end
+M.isPersonalOverride = isPersonalOverride
 
 -- Function to set up Arc hotkeys based on current state
 -- TODO: move out to module
@@ -49,7 +55,7 @@ local function setupArcHotkeys()
       setArcProfile("4")
    end
 
-   if isPersonalOverride then
+   if isPersonalOverride() then
       assignAppHotKey(hyperkey, "9", "Arc", setPersonal)
       assignAppHotKey(allkey, "9", "Arc", setWork)
    elseif constants.isPersonal then
@@ -63,11 +69,11 @@ end
 
 local personalOverrideMenuBar = hs.menubar.new()
 
-function enablePersonalOverride()
+local function enablePersonalOverride()
    if personalOverrideMenuBar then
       personalOverrideMenuBar:setTitle("P")
    end
-   isPersonalOverride = true
+   hs.settings.set("isPersonalOverride", true)
    setupArcHotkeys()
 end
 
@@ -75,11 +81,11 @@ hs.urlevent.bind("enablePersonalOverride", function()
    enablePersonalOverride()
 end)
 
-function disablePersonalOverride()
+local function disablePersonalOverride()
    if personalOverrideMenuBar then
       personalOverrideMenuBar:setTitle("-")
    end
-   isPersonalOverride = false
+   hs.settings.set("isPersonalOverride", false)
    setupArcHotkeys()
 end
 
@@ -87,7 +93,20 @@ hs.urlevent.bind("disablePersonalOverride", function()
    disablePersonalOverride()
 end)
 
+M.togglePersonalOverride = function()
+   if isPersonalOverride() then
+      disablePersonalOverride()
+   else
+      enablePersonalOverride()
+   end
+end
+
 function Main()
+   -- Initialize menu bar title based on saved state
+   if personalOverrideMenuBar then
+      personalOverrideMenuBar:setTitle(isPersonalOverride() and "P" or "-")
+   end
+
    for _, pair in pairs(mappings) do
       assignAppHotKey(hyperkey, pair[1], pair[2])
    end
@@ -112,3 +131,5 @@ function Main()
 end
 
 Main()
+
+return M

@@ -3,12 +3,12 @@ require("config_reloader") -- config watcher and reloader, load this first
 
 require("application_launcher") -- app launcher and switcher
 require("caffeine") -- force awake menubar
+require("modal") -- modal mode keymaps
 require("remapper") -- simple system keymaps
 require("window_grid") -- grid window positions
 require("window_management") -- window sizing and positions
-require("modal") -- modal mode keymaps
 
--- NOTE: these are very slow
+-- NOTE: these are disabled because they are very slow
 -- require("application_shortcuts") -- app specific keymaps
 -- require("window_highlight") -- replaced with janky borders
 
