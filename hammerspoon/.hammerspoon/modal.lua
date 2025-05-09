@@ -1,6 +1,7 @@
 local appLauncher = require("application_launcher")
 local togglePersonalOverride = appLauncher.togglePersonalOverride
 local isPersonalOverride = appLauncher.isPersonalOverride
+local caffeine = require("caffeine")
 
 local d = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
@@ -10,8 +11,10 @@ function d:entered()
       "Modal mode:\n",
       "S: Open Raycast snippets",
       "T: Open Telegram",
-      "C: Open Cursor",
+      "U: Open Cursor",
+      "\n",
       "P: Toggle personal override (currently: " .. (isPersonalOverride() and "on" or "off") .. ")",
+      "C: Toggle caffeine (currently: " .. (hs.caffeinate.get("displayIdle") and "on" or "off") .. ")",
       "\n<Esc> Exit",
    }, "\n")
    id = hs.alert.show(modalMessage, "indefinite")
@@ -37,12 +40,17 @@ d:bind("", "T", nil, function()
    d:exit()
 end)
 
-d:bind("", "C", nil, function()
+d:bind("", "U", nil, function()
    hs.application.launchOrFocus("Cursor")
    d:exit()
 end)
 
 d:bind("", "P", nil, function()
    togglePersonalOverride()
+   d:exit()
+end)
+
+d:bind("", "C", nil, function()
+   caffeine.toggle()
    d:exit()
 end)
