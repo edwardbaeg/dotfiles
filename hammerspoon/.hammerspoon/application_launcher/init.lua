@@ -1,6 +1,5 @@
 local constants = require("common/constants")
-local hyperkey = constants.hyperkey
-local allkey = constants.allkey
+local hyperkey, allkey = constants.hyperkey, constants.allkey
 
 local M = {};
 
