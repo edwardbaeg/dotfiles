@@ -124,8 +124,8 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/git
     # zgen oh-my-zsh plugins/vi-mode
     zgen oh-my-zsh plugins/colored-man-pages
-    zgen oh-my-zsh plugins/alias-finder # suggests aliases for command
     # zgen oh-my-zsh plugins/tmux
+    zgen oh-my-zsh plugins/alias-finder # says if command has an alias
 
     # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
     zgen load zdharma-continuum/fast-syntax-highlighting
@@ -226,6 +226,7 @@ alias vtop="vtop --theme brew"
 # alias ra="ranger"
 # alias ra="yazi"
 alias ya="yazi"
+alias ff="yazi" # for [f]ind [f]iles
 alias hdi="howdoi -c -n 3"
 alias npml="npm -g ls --depth=0"
 alias s="spotify"
