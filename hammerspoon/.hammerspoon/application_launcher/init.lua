@@ -1,7 +1,7 @@
 local constants = require("common/constants")
 local hyperkey, allkey = constants.hyperkey, constants.allkey
 
-local M = {};
+local M = {}
 
 -- TODO?: if the application is already focused, then hide it
 ---@param modifiers table
@@ -125,6 +125,13 @@ function Main()
       local success = hs.application.launchOrFocus("Arc")
       if success then
          setArcProfile("4")
+      end
+   end)
+
+   hs.urlevent.bind("arc", function(_name, params)
+      local success = hs.application.launchOrFocus("Arc")
+      if success and params.profile ~= nil and params.profile ~= "" then
+         setArcProfile(params.profile)
       end
    end)
 end
