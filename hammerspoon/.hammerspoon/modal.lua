@@ -6,9 +6,10 @@ local caffeine = require("caffeine")
 local d = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
+---@diagnostic disable-next-line: duplicate-set-field
 function d:entered()
    local function toggleStatus(value, label)
-      return (value and "● -> ○" or "○ -> ●") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
+      return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
    end
 
    local modalMessage = table.concat({
@@ -25,6 +26,7 @@ function d:entered()
    id = hs.alert.show(modalMessage, "indefinite")
 end
 
+---@diagnostic disable-next-line: duplicate-set-field
 function d:exited()
    hs.alert.closeSpecific(id, 0.1)
    -- hs.alert("Exited Modal Mode")
