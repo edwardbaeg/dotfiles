@@ -7,14 +7,18 @@ local d = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
 function d:entered()
+   local function toggleStatus(value, label)
+      return (value and "● -> ○" or "○ -> ●") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
+   end
+
    local modalMessage = table.concat({
       "Modal mode:\n",
       "S: Open Raycast snippets",
       "T: Telegram",
       "U: Cursor",
       "",
-      "P: Toggle personal override (currently: " .. (isPersonalOverride() and "on" or "off") .. ")",
-      "C: Toggle caffeine (currently: " .. (hs.caffeinate.get("displayIdle") and "on" or "off") .. ")",
+      "C: " .. toggleStatus(hs.caffeinate.get("displayIdle"), "caffeine"),
+      "P: " .. toggleStatus(isPersonalOverride(), "personal override"),
       "",
       "<Esc> Exit",
    }, "\n")
