@@ -276,6 +276,7 @@ return {
       -- NOTE: setting this with lazy.opts/keys doesnt work well - cannot disable default keymaps and use lazy.keys at the same time
       -- FIXME: disable its keymaps for <a-j/k>
       "Wansmer/sibling-swap.nvim",
+      enabled = false,
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()

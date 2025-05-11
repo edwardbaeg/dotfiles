@@ -1,6 +1,7 @@
 return {
    {
       -- automatically save sessions
+      -- TODO: add an entry to the Alpha dashboard for this
       "folke/persistence.nvim",
       event = "BufReadPre",
       config = true,
