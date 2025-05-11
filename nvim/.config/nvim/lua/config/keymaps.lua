@@ -75,8 +75,6 @@ set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "[q]uit [a]ll" }) -- quit
 set("n", "<leader>+", "<c-a>", { desc = "increment" }) -- increment
 set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
 set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
--- set("n", "<leader>tq", ":cclose<cr>", { desc = "close [q]uickfix window" }) -- close quickfix window
-set("n", "<leader>es", ":EslintFixAll<cr>", { silent = true })
 
 -- LSP
 -- set("n", "<leader>j", function() -- show inlay lsp hints

@@ -118,9 +118,12 @@ return {
             },
          })
 
+         -- TODO: see where this command comes from
+         vim.keymap.set("n", "<leader>es", ":LspEslintFixAll<cr>", { silent = true })
+
          -- NOTE: these are specific to typescript-tools
-         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>")
-         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>")
+         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true  })
+         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true  })
          -- FIXME: this doesn't work
          -- vim.api.nvim_create_user_command(
          --    "TSToolsLSP",
