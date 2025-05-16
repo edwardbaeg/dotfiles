@@ -1,3 +1,7 @@
+local constants = require("common/constants")
+
+local PADDING = constants.PADDING
+
 local M = {}
 
 -- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
@@ -34,41 +38,40 @@ M.withAxHotfix = function (fn, position)
    end
 end
 
-local MARGIN = 4
--- Buffer margin space around screen edges
+-- Buffer padding space around screen edges
 -- FIXME: some of these edges don't work for all screens if there are multiple monitors
-local function applyScreenEdgeMargins(window, screen)
+local function applyScreenEdgePadding(window, screen)
    local x, y, width, height = window.x, window.y, window.w, window.h
    -- left edge
-   if x - screen.x < MARGIN then
-      width = width - MARGIN
-      x = screen.x + MARGIN
+   if x - screen.x < PADDING then
+      width = width - PADDING
+      x = screen.x + PADDING
    end
    -- right edge
-   if screen.w - (x + width) < MARGIN then
-      width = width - MARGIN
+   if screen.w - (x + width) < PADDING then
+      width = width - PADDING
    end
    -- top edge
-   if y - screen.y < MARGIN then
-      height = height - MARGIN
-      y = screen.y + MARGIN
+   if y - screen.y < PADDING then
+      height = height - PADDING
+      y = screen.y + PADDING
    end
    -- bottom edge
-   if screen.h - (y + height) < MARGIN then
-      height = height - MARGIN
+   if screen.h - (y + height) < PADDING then
+      height = height - PADDING
    end
    return { x = x, y = y, w = width, h = height }
 end
 
-local function withinMargin(a, b)
-   return math.abs(a - b) <= MARGIN * 2
+local function withinPadding(a, b)
+   return math.abs(a - b) <= PADDING * 2
 end
 
 ---@param win hs.window
 ---@param rect hs.geometry
 ---@param duration number
-local function setFrameWithMargins(win, rect, duration)
-   local newRect = applyScreenEdgeMargins(rect, win:screen():frame())
+local function setFrameWithPadding(win, rect, duration)
+   local newRect = applyScreenEdgePadding(rect, win:screen():frame())
    M.withAxHotfix(function()
       win:setFrame(newRect, duration)
    end)
@@ -88,10 +91,10 @@ M.cyclePositions = function(options)
    end
 
    local function matchesOption(rect, option)
-      return withinMargin(rect.h, option.h)
-         and withinMargin(rect.w, option.w)
-         and withinMargin(rect.x, option.x)
-         and withinMargin(rect.y, option.y)
+      return withinPadding(rect.h, option.h)
+         and withinPadding(rect.w, option.w)
+         and withinPadding(rect.x, option.x)
+         and withinPadding(rect.y, option.y)
    end
 
    local firstOption = options[1]
@@ -104,11 +107,11 @@ M.cyclePositions = function(options)
       end
    end
 
-   local sameSize = withinMargin(frame.h, nextOption.h) and withinMargin(frame.w, nextOption.w)
-   local sameHeight = withinMargin(frame.h, nextOption.h)
+   local sameSize = withinPadding(frame.h, nextOption.h) and withinPadding(frame.w, nextOption.w)
+   local sameHeight = withinPadding(frame.h, nextOption.h)
    local duration = calculateDuration(win:application():name(), sameSize, sameHeight)
 
-   setFrameWithMargins(win, nextOption, duration)
+   setFrameWithPadding(win, nextOption, duration)
 end
 
 ---Converts a list of unit rects to screen rects
@@ -136,7 +139,7 @@ M.resizeAndCenter = function(fraction)
    f.x = screenMax.x + (screenMax.w - f.w) / 2
    f.y = screenMax.y + (screenMax.h - f.h) / 2
 
-   setFrameWithMargins(win, f, 0)
+   setFrameWithPadding(win, f, 0)
 end
 
 return M

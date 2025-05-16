@@ -9,4 +9,7 @@ module.allkey = { "cmd", "ctrl", "shift" }
 local hostname = hs.host.localizedName()
 module.isPersonal = hostname == "MacBook Pro14"
 
+-- screen edge padding
+module.PADDING = 4
+
 return module

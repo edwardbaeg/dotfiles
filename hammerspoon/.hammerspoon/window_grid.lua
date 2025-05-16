@@ -1,6 +1,7 @@
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
 local constants = require("common/constants")
+local PADDING = constants.PADDING
 
 hs.grid.setMargins({ x = 0, y = 0 }) -- margins between windows
 
@@ -12,9 +13,6 @@ hs.grid.ui.highlightStrokeColor = { 0.8, 0.8, 0, 0.2 }
 
 hs.grid.ui.selectedColor = { 0.2, 0.7, 0, 0.2 } -- for the first selected cell during a modal resize
 hs.grid.ui.textSize = 150
-
--- show interactive modal interface for resizing
-local PADDING = 4
 
 local function getScreenAndPaddedFrame()
     local win = hs.window.focusedWindow()
@@ -29,15 +27,10 @@ local function getScreenAndPaddedFrame()
     return screen, paddedFrame
 end
 
+-- show interactive modal interface for resizing
 hs.hotkey.bind(constants.hyperkey, "G", function()
     local screen, paddedFrame = getScreenAndPaddedFrame()
     hs.grid.setGrid("6x4", screen, paddedFrame)
-    hs.grid.show()
-end)
-
-hs.hotkey.bind(constants.hyperkey, "F", function()
-    local screen, paddedFrame = getScreenAndPaddedFrame()
-    hs.grid.setGrid("5x3", screen, paddedFrame)
     hs.grid.show()
 end)
 
