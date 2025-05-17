@@ -17,6 +17,7 @@ function d:entered()
       "S: Open Raycast snippets",
       "T: Telegram",
       "U: Cursor",
+      "Z: Zen",
       "",
       "C: " .. toggleStatus(hs.caffeinate.get("displayIdle"), "caffeine"),
       "P: " .. toggleStatus(isPersonalOverride(), "personal override"),
@@ -59,5 +60,10 @@ end)
 
 d:bind("", "C", nil, function()
    caffeine.toggle()
+   d:exit()
+end)
+
+d:bind("", "Z", nil, function()
+   hs.application.launchOrFocus("zen")
    d:exit()
 end)
