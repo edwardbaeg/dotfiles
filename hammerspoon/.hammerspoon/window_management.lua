@@ -71,7 +71,7 @@ end)
 
 -- Cycle through window sizes based on current position
 hs.hotkey.bind(hyperkey, "M", function()
-   local sizes = { 0.99, 0.81, 0.64, 0.49 }
+   local sizes = { 1, 0.81, 0.64, 0.49 }
    local win = hs.window.focusedWindow()
    local f = win:frame()
    local screenMax = win:screen():frame()
