@@ -15,10 +15,6 @@ set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 -- Experimental; move these after settled
 -- set("n", ":", ";") -- no shift for command line
 -- set("n", ";", ":")
-set("n", "<tab>", "<cmd>bnext<cr>") -- navigate tabs with tab
-set("n", "<s-tab>", "<cmd>bprevious<cr>")
--- set("n", "<tab>", "<cmd>tabnext<cr>") -- navigate buffers with <tab>
--- set("n", "<s-tab>", "<cmd>tabprevious<cr>")
 
 -- Cursor movement
 set({ "n", "v" }, "H", "^") -- move cursor to start of line
@@ -31,6 +27,8 @@ set("n", "<leader>nn", "<cmd>bnext<cr>") -- next buffer
 set("n", "<leader>pp", "<cmd>bprevious<cr>") -- previous buffer
 set("n", "<leader>bn", ":bn<cr>") -- emacs style
 set("n", "<leader>bp", ":bp<cr>")
+set("n", "<tab>", "<cmd>bnext<cr>") -- navigate buffers with tab
+set("n", "<s-tab>", "<cmd>bprevious<cr>")
 set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
 set("n", "<leader>bd", ":bd<cr>")
 
