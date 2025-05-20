@@ -37,9 +37,10 @@ return {
             -- with colorful-menu
             draw = {
                -- We don't need label_description now because label and label_description are already
-               -- conbined together in label by colorful-menu.nvim.
+               -- combined together in label by colorful-menu.nvim.
                columns = { { "kind_icon" }, { "label", gap = 1 } },
                components = {
+                  -- use colorful-menu to add syntax highlighting
                   label = {
                      text = function(ctx)
                         return require("colorful-menu").blink_components_text(ctx)
@@ -48,29 +49,28 @@ return {
                         return require("colorful-menu").blink_components_highlight(ctx)
                      end,
                   },
+                  -- add pictograms for menu item types, adds the the label
+                  kind_icon = {
+                     ellipsis = false,
+                     text = function(ctx)
+                        local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+                        if (ctx.source_name == "Cmdline") then
+                           return kind_icon
+                        end
+                        return kind_icon .. " " .. ctx.kind
+                     end,
+                     -- Optionally, you may also use the highlights from mini.icons
+                     highlight = function(ctx)
+                        local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+                        return hl
+                     end,
+                  },
                },
             },
             -- don't show for lsp saga rename
-            auto_show = function(ctx)
+            auto_show = function()
                return vim.bo.filetype ~= "sagarename"
             end,
-            -- mini.icons
-            -- draw = {
-            --    components = {
-            --       kind_icon = {
-            --          ellipsis = false,
-            --          text = function(ctx)
-            --             local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-            --             return kind_icon
-            --          end,
-            --          -- Optionally, you may also use the highlights from mini.icons
-            --          highlight = function(ctx)
-            --             local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-            --             return hl
-            --          end,
-            --       },
-            --    },
-            -- },
          },
       },
 
