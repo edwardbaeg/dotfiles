@@ -62,7 +62,8 @@ end, { expr = true })
 -- Quick insertion
 set("n", "<leader>o", "o<esc>0D") -- add empty line below
 set("n", "<m-o>", "i<cr><esc>") -- split line
-set("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true }) -- console.log with yanked text
+-- set("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true }) -- console.log with yanked text
+set("n", "<leader>cl", 'yiwoconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true }) -- console.log with yanked text
 
 -- Tabs
 set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
