@@ -3,7 +3,10 @@
 -- TODO: break up into modules or something with more structure
 -- also consider better organization for legibility
 
-local set = vim.keymap.set
+local set = function(mode, lhs, rhs, opts)
+  opts = vim.tbl_extend("force", { silent = true }, opts or {})
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
 
 -- Escaping
 set("i", "jk", "<Esc>") -- leave insert mode
@@ -20,16 +23,16 @@ set("n", "<s-tab>", "<cmd>bprevious<cr>")
 -- Cursor movement
 set({ "n", "v" }, "H", "^") -- move cursor to start of line
 set({ "n", "v" }, "L", "$") -- move cursor to end of line
-set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true }) -- deal with wordwrap
-set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true }) -- deal with wordwrap
+set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- Buffers
 set("n", "<leader>nn", "<cmd>bnext<cr>") -- next buffer
 set("n", "<leader>pp", "<cmd>bprevious<cr>") -- previous buffer
-set("n", "<leader>bn", ":bn<cr>", { silent = true }) -- emacs style
-set("n", "<leader>bp", ":bp<cr>", { silent = true })
-set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer", silent = true }) -- format the buffer
-set("n", "<leader>bd", ":bd<cr>", { silent = true })
+set("n", "<leader>bn", ":bn<cr>") -- emacs style
+set("n", "<leader>bp", ":bp<cr>")
+set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
+set("n", "<leader>bd", ":bd<cr>")
 
 -- TODO: refactor this to abstract functionality and add a force quit.
 local function confirm_and_execute()
@@ -41,7 +44,7 @@ local function confirm_and_execute()
    end
 end
 
-set("n", "<leader>bD", confirm_and_execute, { silent = true })
+set("n", "<leader>bD", confirm_and_execute)
 
 -- Yank and paste
 set("n", "Y", "y$") -- yank to end of line (like C or D)
@@ -62,8 +65,8 @@ end, { expr = true })
 -- Quick insertion
 set("n", "<leader>o", "o<esc>0D") -- add empty line below
 set("n", "<m-o>", "i<cr><esc>") -- split line
--- set("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true }) -- console.log with yanked text
-set("n", "<leader>cl", 'yiwoconsole.log({ <C-r>" });<Esc>', { noremap = true, silent = true }) -- console.log with yanked text
+-- set("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true }) -- console.log with yanked text
+set("n", "<leader>cl", 'yiwoconsole.log({ <C-r>" });<Esc>', { noremap = true }) -- console.log with yanked text
 
 -- Tabs
 set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
@@ -84,11 +87,11 @@ set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
 
 -- Misc
 set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
-set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights", silent = true })
+set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 -- set("n", "<esc>", ":nohlsearch<Bar>:echo<cr><esc>", { desc = "clear search highlights" })
 -- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- new blank line
 -- Disable the default s substitute command. This can have issues with keymaps that start with s, such as sx
-set("n", "s", "<nop>", { noremap = true, silent = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
+set("n", "s", "<nop>", { noremap = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
 -- vim.keymap.del("n", "s") -- disable s -- doesn't work
 -- vim.cmd([[unmap s]]) -- doesn't work
 
