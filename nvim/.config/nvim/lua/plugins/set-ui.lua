@@ -1,4 +1,4 @@
--- plugins that add visual elements to the vim ui
+-- Plugins that add visual elements to the vim ui
 return {
    {
       -- show outline of symbols
@@ -149,15 +149,20 @@ return {
    {
       -- improved markdown view in neovim
       -- :RenderMarkdownToggle
-      "MeanderingProgrammer/markdown.nvim",
-      -- enabled = false,
+      "MeanderingProgrammer/render-markdown.nvim",
       event = "VeryLazy",
+      ft = {
+         -- "markdown",
+         "codecompanion",
+      },
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
          require("render-markdown").setup({
             enabled = false,
          })
-         vim.api.nvim_create_user_command("MarkdownRenderToggle", require("render-markdown").toggle, {})
+         vim.api.nvim_create_user_command("RenderMarkdownToggle", function()
+            require("render-markdown").toggle()
+         end, {})
       end,
    },
 
