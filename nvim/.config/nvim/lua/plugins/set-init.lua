@@ -1,3 +1,4 @@
+-- TODO: move these into separate files
 -- misc plugins
 return {
    {
@@ -52,6 +53,7 @@ return {
       -- ability to format comments with fancy boxes and lines
       "LudoPinelli/comment-box.nvim",
       config = function()
+         ---@diagnostic disable-next-line: missing-fields
          require("comment-box").setup({
             -- comment_style = "auto",
             lines = {
@@ -71,12 +73,5 @@ return {
          keymap({ "n", "v" }, "<leader>gcb", "<cmd>CBccbox<CR>", opts) -- centered box with centered text
          keymap({ "n", "v" }, "<leader>gcd", "<cmd>CBd<CR>", opts) -- delete
       end,
-   },
-
-   {
-      "NStefan002/screenkey.nvim",
-      cmd = "Screenkey",
-      version = "*",
-      config = true,
    },
 }

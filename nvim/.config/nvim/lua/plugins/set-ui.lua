@@ -1,4 +1,4 @@
--- Plugins that add visual elements to the vim ui
+-- Plugins that adds or modifies visual elements to the vim ui
 return {
    {
       -- show outline of symbols
@@ -218,5 +218,13 @@ return {
          distance_stop_animating = 0.5, -- 0.1      > 0
          -- hide_target_hack = false, -- true     boolean
       },
+   },
+
+   {
+      -- Show key strokes in window
+      "NStefan002/screenkey.nvim",
+      cmd = "Screenkey",
+      version = "*",
+      config = true,
    },
 }
