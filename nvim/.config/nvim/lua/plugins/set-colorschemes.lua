@@ -22,19 +22,6 @@ return {
    },
 
    {
-      'jesseleite/nvim-noirbuddy',
-      enabled = false,
-      dependencies = {
-         { 'tjdevries/colorbuddy.nvim' }
-      },
-      lazy = false,
-      priority = 1000,
-      opts = {
-         preset = "miami-nights"
-      },
-   },
-
-   {
       -- green, blues, purples. Reminds me of the ocean
       "navarasu/onedark.nvim",
       -- lazy = true,

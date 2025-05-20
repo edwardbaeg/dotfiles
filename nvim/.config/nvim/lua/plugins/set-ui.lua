@@ -1,19 +1,6 @@
 -- Plugins that adds or modifies visual elements to the vim ui
 return {
    {
-      -- show outline of symbols
-      enabled = false, -- this is largely replaced with navbuddy
-      "hedyhli/outline.nvim",
-      config = function()
-         vim.keymap.set("n", "<leader>so", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
-
-         require("outline").setup({
-            -- autofold_depth = 1,
-         })
-      end,
-   },
-
-   {
       -- indentation guides and highlight the current indent chunk -- this replaced indent-blankline.nvim
       -- TODO?: replace with mini.indentscope
       "shellRaining/hlchunk.nvim",
@@ -163,19 +150,6 @@ return {
          vim.api.nvim_create_user_command("RenderMarkdownToggle", function()
             require("render-markdown").toggle()
          end, {})
-      end,
-   },
-
-   {
-      -- dim inactive windows
-      "levouh/tint.nvim",
-      enabled = false, -- seems to have some performance impact
-      config = function()
-         require("tint").setup({
-            tint = -20, -- default is -45, positive numbers will brighten
-            ---@diagnostic disable-next-line: assign-type-mismatch
-            saturation = 0.9, -- saturation to preserve
-         })
       end,
    },
 

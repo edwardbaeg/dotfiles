@@ -3,18 +3,9 @@ return {
    "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
    "arp242/undofile_warn.vim", -- warn when access undofile before current open
-   {
-      -- visual undotree
-      "simnalamburt/vim-mundo",
-      enabled = false, -- needs python, replaced with undotree
-      config = function()
-         vim.g.mundo_width = 40
-         vim.g.mundo_preview_bottom = 1
-         vim.keymap.set("n", "<leader>u", ":MundoToggle<cr>")
-      end,
-   },
 
    {
+      -- visual undotree
       "jiaoshijie/undotree",
       dependencies = "nvim-lua/plenary.nvim",
       config = true,
@@ -193,30 +184,6 @@ return {
    },
 
    {
-      -- highlight undo and redo changes
-      -- NOTE: this doesn't work with `d`
-      "tzachar/highlight-undo.nvim",
-      enabled = false, -- replaced with luminate.nvim
-      config = function()
-         require("highlight-undo").setup({})
-      end,
-   },
-
-   {
-      -- highlight yank, paste, undo, redo
-      "mei28/luminate.nvim",
-      enabled = false, -- replaced by tiny-glimmer
-      event = { "VeryLazy" },
-      config = function()
-         require("luminate").setup({
-            yank = {
-               enabled = false, -- replaced with tiny-glimmer
-            },
-         })
-      end,
-   },
-
-   {
       -- animated highlighting for yank, paste
       "rachartier/tiny-glimmer.nvim",
       -- event = "TextYankPost",
@@ -295,16 +262,6 @@ return {
          ]])
 
          -- vim.g.tmux_navigator_no_wrap = 1 -- disable wrapping at edges -- this breaks tmux unzoom
-      end,
-   },
-
-   {
-      -- Prevent nested vim sessions
-      "samjwill/nvim-unception",
-      enabled = false, -- this breaks lazygit commit messages
-      init = function()
-         -- Optional settings go here!
-         -- e.g.) vim.g.unception_open_buffer_in_new_tab = true
       end,
    },
 
