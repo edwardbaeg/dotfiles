@@ -3,67 +3,90 @@ local togglePersonalOverride = appLauncher.togglePersonalOverride
 local isPersonalOverride = appLauncher.isPersonalOverride
 local caffeine = require("caffeine")
 
-local d = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
+local modal = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
----@diagnostic disable-next-line: duplicate-set-field
-function d:entered()
-   local function toggleStatus(value, label)
-      return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
-   end
-
-   local modalMessage = table.concat({
-      "Modal mode:\n",
-      "S: Open Raycast snippets",
-      "T: Telegram",
-      "U: Cursor",
-      "Z: Zen",
-      "",
-      "C: " .. toggleStatus(hs.caffeinate.get("displayIdle"), "caffeine"),
-      "P: " .. toggleStatus(isPersonalOverride(), "personal override"),
-      "",
-      "<Esc> Exit",
-   }, "\n")
-   id = hs.alert.show(modalMessage, "indefinite")
+local function getToggleLabel(value, label)
+   return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
 end
 
----@diagnostic disable-next-line: duplicate-set-field
-function d:exited()
+local modalEntries = {
+   {
+      key = "S",
+      label = "Raycast snippets",
+      callback = function()
+         hs.urlevent.openURL("raycast://extensions/raycast/snippets/search-snippets")
+         modal:exit()
+      end,
+   },
+   {
+      key = "T",
+      label = "Telegram",
+      callback = function()
+         hs.application.launchOrFocus("Telegram")
+         modal:exit()
+      end,
+   },
+   {
+      key = "U",
+      label = "Cursor",
+      callback = function()
+         hs.application.launchOrFocus("Cursor")
+         modal:exit()
+      end,
+   },
+   {
+      key = "Z",
+      label = "Zen",
+      callback = function()
+         hs.application.launchOrFocus("zen")
+         modal:exit()
+      end,
+   },
+   {
+      key = "C",
+      label = function()
+         return getToggleLabel(hs.caffeinate.get("displayIdle"), "C")
+      end,
+      callback = function()
+         caffeine.toggle()
+         modal:exit()
+      end,
+   },
+   {
+      key = "P",
+      label = function()
+         return getToggleLabel(isPersonalOverride(), "Arc Personal")
+      end,
+      callback = function()
+         togglePersonalOverride()
+         modal:exit()
+      end,
+   },
+}
+
+function modal:entered()
+   local modalContent = table.concat(
+      ---@diagnostic disable-next-line: param-type-mismatch it's correct
+      hs.fnutils.map(modalEntries, function(entry)
+         local label = type(entry.label) == "function" and entry.label() or entry.label
+         return entry.key .. ": " .. label
+      end),
+      "\n"
+   )
+   modalContent = modalContent .. "\n\nEsc: Exit"
+   id = hs.alert.show(modalContent, "indefinite")
+end
+
+function modal:exited()
    hs.alert.closeSpecific(id, 0.1)
-   -- hs.alert("Exited Modal Mode")
 end
 
-d:bind("", "escape", function()
-   -- hs.alert("Exited Modal Mode", 0.1)
-   d:exit()
-end)
+-- Create bindings for each entry
+for _, entry in ipairs(modalEntries) do
+   modal:bind("", entry.key, entry.callback)
+end
 
-d:bind("", "S", nil, function()
-   hs.urlevent.openURL("raycast://extensions/raycast/snippets/search-snippets")
-   d:exit()
-end)
-
-d:bind("", "T", nil, function()
-   hs.application.launchOrFocus("Telegram")
-   d:exit()
-end)
-
-d:bind("", "U", nil, function()
-   hs.application.launchOrFocus("Cursor")
-   d:exit()
-end)
-
-d:bind("", "P", nil, function()
-   togglePersonalOverride()
-   d:exit()
-end)
-
-d:bind("", "C", nil, function()
-   caffeine.toggle()
-   d:exit()
-end)
-
-d:bind("", "Z", nil, function()
-   hs.application.launchOrFocus("zen")
-   d:exit()
+modal:bind("", "escape", function()
+   modal:exit()
 end)
