@@ -52,13 +52,16 @@ return {
                   -- add pictograms for menu item types, adds the the label
                   kind_icon = {
                      ellipsis = false,
+
                      text = function(ctx)
                         local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
-                        if (ctx.source_name == "Cmdline") then
+                        -- different display for cmdline and searches (through "Buffer" filter)
+                        if (ctx.source_name == "Cmdline" or ctx.source_name == "Buffer") then
                            return kind_icon
                         end
                         return kind_icon .. " " .. ctx.kind
                      end,
+
                      -- Optionally, you may also use the highlights from mini.icons
                      highlight = function(ctx)
                         local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
