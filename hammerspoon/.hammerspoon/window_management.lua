@@ -70,8 +70,7 @@ end)
 -------------------------------------------------
 
 -- Cycle through window sizes based on current position
-hs.hotkey.bind(hyperkey, "M", function()
-   local sizes = { 1, 0.81, 0.64, 0.49 }
+local function cycleWindowSize(sizes)
    local win = hs.window.focusedWindow()
    local f = win:frame()
    local screenMax = win:screen():frame()
@@ -87,7 +86,7 @@ hs.hotkey.bind(hyperkey, "M", function()
    end
 
    resizeAndCenter(sizes[nextSizeIndex])
-end)
+end
 
 -- TODO: consider creating a generic utils file
 local function reverse_list(list)
@@ -98,24 +97,16 @@ local function reverse_list(list)
    return reversed
 end
 
+local sizes = { 1, 0.49, 0.64, 0.81 }
+
+-- Start full size, then increase in size
+hs.hotkey.bind(hyperkey, "M", function()
+   cycleWindowSize(sizes)
+end)
+
 -- the same as above, but in reverse
 hs.hotkey.bind(hyperkey, "N", function()
-   local sizes = reverse_list({ 0.99, 0.81, 0.64, 0.49 })
-   local win = hs.window.focusedWindow()
-   local f = win:frame()
-   local screenMax = win:screen():frame()
-
-   local currentFraction = f.w / screenMax.w
-   local nextSizeIndex = 1
-
-   for i, size in ipairs(sizes) do
-      if math.abs(size - currentFraction) < 0.01 then
-         nextSizeIndex = (i % #sizes) + 1
-         break
-      end
-   end
-
-   resizeAndCenter(sizes[nextSizeIndex])
+   cycleWindowSize(reverse_list(sizes))
 end)
 
 -- Move to display -------------------------------
