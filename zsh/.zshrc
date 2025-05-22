@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-# TODO: modularize this file https://medium.com/codex/how-and-why-you-should-split-your-bashrc-or-zshrc-files-285e5cc3c843
 # TODO: convert most of file to bash, for linter support
 
 # setup direnv
@@ -8,7 +7,8 @@ if command -v direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
 
-work_zsh_path="$HOME/zsh/work.zsh"
+# TODO consider iterating over all files in the dir https://medium.com/codex/how-and-why-you-should-split-your-bashrc-or-zshrc-files-285e5cc3c843
+work_zsh_path="$HOME/zsh/work.sh"
 if [[ ! -f $work_zsh_path ]]; then
     echo "work.zsh not found in \$HOME/zsh"
 fi
@@ -152,112 +152,9 @@ function zvm_after_init() {
 
 
 # -- Aliases -------------------------------------------------------------------
-
-# -- [neo]vim aliases
-alias vim="nvim"
-alias v="nvim"
-alias oldvim="/usr/bin/vim"
-alias ovim="oldvim"
-
-# -- configuration files
-# TODO: choose one pattern and maintain
-alias vz="vim ~/.zshrc"
-alias ez="vim ~/.zshrc"
-# alias vv="vim ~/.vimrc"
-alias ev="vim ~/.config/nvim/init.lua -c \":cd %:h\""
-alias vt="vim ~/.tmux.conf"
-alias et="vim ~/.tmux.conf"
-# alias vh="vim ~/.hammerspoon/init.lua -c \":cd %:h\""
-alias vh="vim ~/.hammerspoon/init.lua -c \":cd ~/dev/dotfiles/hammerspoon\""
-alias eh="vim ~/.hammerspoon/init.lua -c \":cd %:h\""
-alias vw="vim ~/.wezterm.lua"
-alias ew="vim ~/.wezterm.lua"
-alias vk="vim ~/.config/kitty/kitty.conf"
-alias ek="vim ~/.config/kitty/kitty.conf"
-
-# -- other files
-alias vhist="vim ~/.zsh_history"
-
-# -- sourcing
-alias st="tmux source-file ~/.tmux.conf"
-alias sz="exec zsh" # do not source .zshrc
-
-# -- git
-alias gdt="git difftool"
-alias ghist="git hist"
-alias ghista="git hista"
-alias ghistb="git histb"
-alias gmm="git merge master"
-alias gmo="git merge origin/master"
-alias gfl="git fetch && git pull"
-alias gdm="git diff master"
-alias gdo="git diff origin"
-alias gd1="git diff HEAD~1"
-alias gd2="git diff HEAD~2"
-alias gd3="git diff HEAD~3"
-# alias glmm="git checkout master && git pull && git checkout - && git merge master"
-alias grpo="git remote prune origin"
-alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
-# https://stackoverflow.com/questions/43489303/how-can-i-delete-all-git-branches-which-have-been-squash-and-merge-via-github
-alias gbdm='git checkout -q master && git for-each-ref refs/heads/ "--format=%(refname:short)" | while read branch; do mergeBase=$(git merge-base master $branch) && [[ $(git cherry master $(git commit-tree $(git rev-parse "$branch^{tree}") -p $mergeBase -m _)) == "-"* ]] && git branch -D $branch; done'
-
-# from zsh git-open plugin
-alias gop="git open"
-
-#-- commands
-alias py="python3"
-alias vtop="vtop --theme brew"
-# alias ra="ranger"
-# alias ra="yazi"
-alias ya="yazi"
-alias ff="yazi" # for [f]ind [f]iles
-alias hdi="howdoi -c -n 3"
-alias npml="npm -g ls --depth=0"
-alias s="spotify"
-alias sp="spotify play"
-alias ss="spotify status"
-alias sn="spotify next"
-alias spp="spotify pause"
-alias gcal="gcalcli"
-alias gcalt="gcalcli agenda 12am 11pm --detail_location --color_reader 'blue'"
-alias end="cowsay 'Thats it! Thank you for listening!!' | nms -c -a"
-alias ns="npm start"
-alias oldcat="/bin/cat"
-# alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
-alias oldls="/bin/ls"
-alias lg="lazygit"
-alias ..="cd .."
-alias ll="ls -al"
-alias cl="clear"
-
-#-- Jumping
-alias dot="cd ~/dev/dotfiles"
-alias dots="cd ~/dev/dotfiles"
-
-#-- SSH
-alias whatbox='ssh "$WHATBOX_USER"@"$WHATBOX_HOST"'
-
-# conditional command aliases
-if command -v eza &> /dev/null; then
-    alias ls="eza --group-directories-first"
+if [[ -f "$HOME/zsh/aliases.sh" ]]; then
+    source "$HOME/zsh/aliases.sh"
 fi
-
-if command -v bat &> /dev/null; then
-    alias cat="bat"
-fi
-
-# if command -v zoxide &> /dev/null; then
-#     alias cd="z"
-# fi
-
-#-- pi
-alias sshpi="ssh pi@192.168.1.100"
-alias sshpirate="ssh pi@raspberrypirate"
-alias sshpiw="ssh pi@192.168.1.101"
-alias sshpiz="ssh pi@192.168.1.102"
-alias sshpizw="ssh pi@192.168.1.103"
-
-alias hsr="hs -c \"hs.reload()\""
 
 # -- Functions -----------------------------------------------------------------
 
