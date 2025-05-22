@@ -141,6 +141,7 @@ return {
                "stylua", -- check to see if this is aligning comments...
                "shfmt",
                "eslint",
+               "shellcheck" -- linter for sh
             },
          })
 
