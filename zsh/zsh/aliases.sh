@@ -83,12 +83,12 @@ alias dots="cd ~/dev/dotfiles"
 alias whatbox='ssh "$WHATBOX_USER"@"$WHATBOX_HOST"'
 
 # conditional command aliases
-if command -v eza &> /dev/null; then
-    alias ls="eza --group-directories-first"
+if command -v eza &>/dev/null; then
+	alias ls="eza --group-directories-first"
 fi
 
-if command -v bat &> /dev/null; then
-    alias cat="bat"
+if command -v bat &>/dev/null; then
+	alias cat="bat"
 fi
 
 # if command -v zoxide &> /dev/null; then
