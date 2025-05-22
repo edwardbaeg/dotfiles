@@ -1,6 +1,7 @@
 -- for plugins that change the view of different filetypes
 return {
    {
+      -- tabular view for csv files
       "hat0uma/csvview.nvim",
       ---@module "csvview"
       ---@type CsvView.Options
@@ -24,5 +25,14 @@ return {
          -- },
       },
       cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+      init = function()
+         -- enable by default
+         vim.api.nvim_create_autocmd("FileType", {
+            pattern = "csv",
+            callback = function()
+               vim.cmd("CsvViewEnable")
+            end,
+         })
+      end,
    },
 }
