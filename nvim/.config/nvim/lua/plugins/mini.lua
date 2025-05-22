@@ -34,8 +34,11 @@ return {
          vim.api.nvim_create_user_command("MiniFiles", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
          vim.api.nvim_create_user_command("Files", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
          vim.api.nvim_create_user_command("MF", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
-         vim.keymap.set("n", "<leader>ra", "<cmd>MiniFiles<cr>", {}) -- trying out with Mini.Files
-         vim.keymap.set("n", "<leader>mf", "<cmd>MiniFiles<cr>", {}) -- trying out with Mini.Files
+         -- vim.keymap.set("n", "<leader>ra", "<cmd>MiniFiles<cr>", {}) -- trying out with Mini.Files
+         vim.keymap.set("n", "<leader>ra", function()
+            vim.notify("Use <leader>mf instead")
+         end, {}) -- stop bad habits
+         vim.keymap.set("n", "<leader>mf", "<cmd>MiniFiles<cr>", {})
 
          -- FIXME: this doesn't work...
          local map_split = function(buf_id, lhs, direction)
