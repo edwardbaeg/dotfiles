@@ -1,7 +1,6 @@
-# ~/.zshrc
-#
-# TODO: modularize this file
-# https://medium.com/codex/how-and-why-you-should-split-your-bashrc-or-zshrc-files-285e5cc3c843
+#!/usr/bin/env zsh
+# TODO: modularize this file https://medium.com/codex/how-and-why-you-should-split-your-bashrc-or-zshrc-files-285e5cc3c843
+# TODO: convert most of file to bash, for linter support
 
 # setup direnv
 if command -v direnv >/dev/null 2>&1; then
@@ -9,10 +8,8 @@ if command -v direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
 
-# -- OneAdvisory, Dispatch -------------------------------------------------------
-if [ -f "$HOME/zsh/worsk.zsh" ]; then
-    source "$HOME/zsh/work.zsh"
-else
+work_zsh_path="$HOME/zsh/work.zsh"
+if [[ ! -f $work_zsh_path ]]; then
     echo "work.zsh not found in \$HOME/zsh"
 fi
 
@@ -22,6 +19,11 @@ fi
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# -- OneAdvisory, Dispatch -------------------------------------------------------
+if [[ -f $work_zsh_path ]]; then
+    source "$work_zsh_path"
 fi
 
 # -- Core ----------------------------------------------------------------------
