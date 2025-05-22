@@ -257,6 +257,17 @@ function npm_run_fuzzy() {
     fi
 }
 
+# -- git
+function gbdm() {
+    git checkout -q master
+    git for-each-ref refs/heads/ "--format=%(refname:short)" | while read -r branch; do
+    mergeBase=$(git merge-base master "$branch")
+    if [[ $(git cherry master "$(git commit-tree "$(git rev-parse "$branch^{tree}")" -p "$mergeBase" -m _ )") == "-"* ]]; then
+        git branch -D "$branch"
+    fi
+done
+}
+
 # -- other functions
 
 # alias for npm leaves to list globally installed packages
