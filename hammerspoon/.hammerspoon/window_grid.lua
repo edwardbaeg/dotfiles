@@ -15,27 +15,23 @@ hs.grid.ui.selectedColor = { 0.2, 0.7, 0, 0.2 } -- for the first selected cell d
 hs.grid.ui.textSize = 150
 
 local function getScreenAndPaddedFrame()
-    local win = hs.window.focusedWindow()
-    local screen = win and win:screen() or hs.screen.mainScreen()
-    local frame = screen:frame()
-    local paddedFrame = hs.geometry.rect(
-        frame.x + PADDING,
-        frame.y + PADDING,
-        frame.w - 2 * PADDING,
-        frame.h - 2 * PADDING
-    )
-    return screen, paddedFrame
+   local win = hs.window.focusedWindow()
+   local screen = win and win:screen() or hs.screen.mainScreen()
+   local frame = screen:frame()
+   local paddedFrame =
+      hs.geometry.rect(frame.x + PADDING, frame.y + PADDING, frame.w - 2 * PADDING, frame.h - 2 * PADDING)
+   return screen, paddedFrame
 end
 
 -- show interactive modal interface for resizing
 hs.hotkey.bind(constants.hyperkey, "G", function()
-    local screen, paddedFrame = getScreenAndPaddedFrame()
-    hs.grid.setGrid("6x4", screen, paddedFrame)
-    hs.grid.show()
+   local screen, paddedFrame = getScreenAndPaddedFrame()
+   hs.grid.setGrid("6x4", screen, paddedFrame)
+   hs.grid.show()
 end)
 
 hs.hotkey.bind(constants.hyperkey, "F", function()
-    local screen, paddedFrame = getScreenAndPaddedFrame()
-    hs.grid.setGrid("5x3", screen, paddedFrame)
-    hs.grid.show()
+   local screen, paddedFrame = getScreenAndPaddedFrame()
+   hs.grid.setGrid("5x3", screen, paddedFrame)
+   hs.grid.show()
 end)

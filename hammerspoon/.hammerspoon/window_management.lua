@@ -56,14 +56,14 @@ end)
 
 -- Center, full height positions
 hs.hotkey.bind(hyperkey, "C", function()
-    -- Cycle through center positions
-    local unitRects = {
-        { x = 0.25, y = 0, w = 0.5, h = 1 },
-        { x = 1 / 6, y = 0, w = 2 / 3, h = 1 },
-        { x = 1 / 3, y = 0, w = 1 / 3, h = 1 },
-    }
+   -- Cycle through center positions
+   local unitRects = {
+      { x = 0.25, y = 0, w = 0.5, h = 1 },
+      { x = 1 / 6, y = 0, w = 2 / 3, h = 1 },
+      { x = 1 / 3, y = 0, w = 1 / 3, h = 1 },
+   }
 
-    cyclePositions(mapScreenUnitRects(unitRects))
+   cyclePositions(mapScreenUnitRects(unitRects))
 end)
 
 -- Resize and center windows --------------------
