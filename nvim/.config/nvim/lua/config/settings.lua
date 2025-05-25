@@ -100,23 +100,24 @@ elseif vim.fn.has("unix") == 1 then
 end
 
 -- View output from running in terminal
-vim.cmd([[
-noremap <A-b> :call Build() <cr>
-function! Build()
-  if &filetype == "javascript"
-    exec "! node %"
-  elseif &filetype == 'typescript'
-    exec "!ts-node %"
-  elseif &filetype == 'lua'
-    exec "!lua %"
-  elseif &filetype == "python"
-    exec "!python3 %"
-  elseif &filetype == "sh"
-  elseif &filetype == "sh"
-    exec "!bash %"
-  endif
-endfunction
-]])
+local function run_build()
+  local ft = vim.bo.filetype
+  local file = vim.fn.expand('%')
+  if ft == "javascript" then
+    vim.cmd('terminal node ' .. file)
+  elseif ft == "typescript" then
+    vim.cmd('terminal ts-node ' .. file)
+  elseif ft == "lua" then
+    vim.cmd('luafile ' .. file)
+  elseif ft == "python" then
+    vim.cmd('terminal python3 ' .. file)
+  elseif ft == "sh" then
+    vim.cmd('terminal bash ' .. file)
+  end
+end
+
+vim.keymap.set('n', '<A-b>', run_build, { noremap = true, silent = true })
+vim.api.nvim_create_user_command('Build', run_build, {})
 
 vim.api.nvim_create_user_command("PrintFile", "echo @%", { desc = "Show the path for the current file" })
 vim.api.nvim_create_user_command("Pwf", "echo @%", { desc = "Show the path for the current file" })
