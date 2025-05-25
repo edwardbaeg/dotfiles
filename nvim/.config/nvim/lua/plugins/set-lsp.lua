@@ -318,7 +318,8 @@ return {
 
    {
       -- Popup with quick, interactive lsp navigation
-      "SmiteshP/nvim-navbuddy",
+      -- "SmiteshP/nvim-navbuddy",
+      "hasansujon786/nvim-navbuddy", -- this is the updated fork?
       event = "VeryLazy",
       dependencies = {
          "neovim/nvim-lspconfig",
