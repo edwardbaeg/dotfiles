@@ -1,4 +1,4 @@
---[[ Vim Options ]]--
+--[[ Vim Options ]]
 
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
@@ -70,54 +70,54 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ]])
 
 -- set clipboard for wsl
-if vim.fn.has('wsl') == 1 then
-  -- print("is wsl")
-  vim.cmd[[set clipboard=unnamedplus]]
-  vim.g.clipboard = {
-    name = 'WslClipboard',
-    copy = {
-      ['+'] = 'clip.exe',
-      ['*'] = 'clip.exe',
-    },
-    paste = {
-      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-    },
-    cache_enabled = 0,
-  }
+if vim.fn.has("wsl") == 1 then
+   -- print("is wsl")
+   vim.cmd([[set clipboard=unnamedplus]])
+   vim.g.clipboard = {
+      name = "WslClipboard",
+      copy = {
+         ["+"] = "clip.exe",
+         ["*"] = "clip.exe",
+      },
+      paste = {
+         ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+         ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      },
+      cache_enabled = 0,
+   }
 end
 
 -- integrate with system clipboards
 if vim.fn.has("win32") == 1 then
-  -- print("is windows?")
-  vim.o.clipboard = "unnamed"
+   -- print("is windows?")
+   vim.o.clipboard = "unnamed"
 elseif vim.fn.has("unix") == 1 then
-  local uname = vim.fn.system("uname")
-  if uname == "Darwin\n" then
-    -- print("is mac")
-    vim.opt.clipboard = "unnamedplus"
-  end
+   local uname = vim.fn.system("uname")
+   if uname == "Darwin\n" then
+      -- print("is mac")
+      vim.opt.clipboard = "unnamedplus"
+   end
 end
 
 -- View output from running in terminal
 local function run_build()
-  local ft = vim.bo.filetype
-  local file = vim.fn.expand('%')
-  if ft == "javascript" then
-    vim.cmd('terminal node ' .. file)
-  elseif ft == "typescript" then
-    vim.cmd('terminal ts-node ' .. file)
-  elseif ft == "lua" then
-    vim.cmd('luafile ' .. file)
-  elseif ft == "python" then
-    vim.cmd('terminal python3 ' .. file)
-  elseif ft == "sh" then
-    vim.cmd('terminal bash ' .. file)
-  end
+   local ft = vim.bo.filetype
+   local file = vim.fn.expand("%")
+   if ft == "javascript" then
+      vim.cmd("terminal node " .. file)
+   elseif ft == "typescript" then
+      vim.cmd("terminal ts-node " .. file)
+   elseif ft == "lua" then
+      vim.cmd("luafile " .. file)
+   elseif ft == "python" then
+      vim.cmd("terminal python3 " .. file)
+   elseif ft == "sh" then
+      vim.cmd("terminal bash " .. file)
+   end
 end
 
-vim.keymap.set('n', '<A-b>', run_build, { noremap = true, silent = true })
-vim.api.nvim_create_user_command('Build', run_build, {})
+vim.keymap.set("n", "<A-b>", run_build, { noremap = true, silent = true })
+vim.api.nvim_create_user_command("Build", run_build, {})
 
 vim.api.nvim_create_user_command("PrintFile", "echo @%", { desc = "Show the path for the current file" })
 vim.api.nvim_create_user_command("Pwf", "echo @%", { desc = "Show the path for the current file" })
@@ -135,7 +135,6 @@ vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating 
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#0A2222" }) -- set with reactive.nvim
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
 
-
 -- TODO: only highlight trailing whitespace
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" })
 
@@ -152,9 +151,9 @@ vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#bbbbbb" }) -- highlight cod
 -- Disable line wrapping for csv
 vim.api.nvim_create_augroup("csv_settings", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
-  group = "csv_settings",
-  pattern = "csv",
-  callback = function()
-    vim.opt_local.wrap = false
-  end,
+   group = "csv_settings",
+   pattern = "csv",
+   callback = function()
+      vim.opt_local.wrap = false
+   end,
 })
