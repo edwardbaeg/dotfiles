@@ -75,11 +75,14 @@ local function cycleWindowSize(sizes)
    local f = win:frame()
    local screenMax = win:screen():frame()
 
-   local currentFraction = f.w / screenMax.w
    local nextSizeIndex = 1
 
    for i, size in ipairs(sizes) do
-      if math.abs(size - currentFraction) < 0.01 then
+      local targetW = screenMax.w * size
+      local targetH = screenMax.h * size
+      local widthMatch = math.abs(f.w - targetW) / targetW < 0.03
+      local heightMatch = math.abs(f.h - targetH) / targetH < 0.03
+      if widthMatch and heightMatch then
          nextSizeIndex = (i % #sizes) + 1
          break
       end
