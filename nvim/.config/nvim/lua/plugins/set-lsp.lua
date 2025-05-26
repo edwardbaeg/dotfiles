@@ -333,7 +333,16 @@ return {
                auto_attach = true,
             },
             window = {
-               size = { height = "50%", width = "60%" },
+               border = "rounded",
+               size = { height = "60%", width = "60%" },
+               sections = {
+                  left = {
+                     size = "25%"
+                  },
+                  mid = {
+                     size = "25%"
+                  },
+               }
             },
          })
 
