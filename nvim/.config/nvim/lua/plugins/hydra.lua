@@ -1,6 +1,6 @@
 return {
    "anuvyklack/hydra.nvim",
-   enabled = false,
+   enabled = false, -- replaced with which-key functionality
    config = function()
       local hydra = require("hydra")
       -- hydra.setup()

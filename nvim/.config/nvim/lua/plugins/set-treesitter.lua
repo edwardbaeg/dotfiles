@@ -247,10 +247,11 @@ return {
    },
 
    {
+      -- Navigate with treesitter syntax context
+      -- Also set up to move sibling nodes
       "aaronik/treewalker.nvim",
       opts = {
-         -- FIXME: this doesn't seem to work?
-         highlight = true, -- default is false
+         highlight = true, -- highlight node after jumpting to it
       },
       config = function(_, opts)
          require("treewalker").setup(opts)
@@ -258,6 +259,9 @@ return {
          vim.keymap.set("n", "<leader>tk", ":Treewalker Up<cr>", { silent = true })
          vim.keymap.set("n", "<leader>th", ":Treewalker Left<cr>", { silent = true })
          vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true })
+
+         vim.keymap.set("n", "<leader>,", "<cmd>Treewalker SwapLeft<cr>")
+         vim.keymap.set("n", "<leader>.", "<cmd>Treewalker SwapRight<cr>")
       end,
    },
 
@@ -273,9 +277,9 @@ return {
       -- Swap sibling nodes with treesitter
       -- Usage: <leader>. and <leader>,
       -- NOTE: setting this with lazy.opts/keys doesnt work well - cannot disable default keymaps and use lazy.keys at the same time
-      -- FIXME: disable its keymaps for <a-j/k>
+      -- FIXME?: disable its keymaps for <a-j/k>?
       "Wansmer/sibling-swap.nvim",
-      enabled = false,
+      enabled = false, -- replaced with tree-walker
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
@@ -289,8 +293,8 @@ return {
             },
          })
 
-         vim.keymap.set('n', '<leader>,', sibling_swap.swap_with_left)
-         vim.keymap.set('n', '<leader>.', sibling_swap.swap_with_right)
+         vim.keymap.set("n", "<leader>,", sibling_swap.swap_with_left)
+         vim.keymap.set("n", "<leader>.", sibling_swap.swap_with_right)
       end,
    },
 }
