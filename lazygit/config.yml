@@ -11,15 +11,16 @@ git:
   branchLogCmd: "git log --color=always --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --date-order"
   paging:
     colorArg: always
-    # pager: delta --dark --paging=never --diff-so-fancy # this breaks syntax highlighting
+    pager: delta --dark --paging=never --side-by-side # side by side takes more horizontal space
     # pager: delta --dark --paging=never
-    pager: delta --dark --paging=never --side-by-side
+    # pager: delta --dark --paging=never --diff-so-fancy # diff-so-fancy mode breaks syntax highlighting
   disableForcePushing: true
 keybinding:
   universal:
     toggleRangeSelect: "V"
   commits:
-    cherryPickCopy: "c"
+    cherryPickCopy: "y"
+    copyCommitAttributeToClipboard: "c"
     pasteCommits: "v"
 confirmOnQuit: true
 customCommands:
