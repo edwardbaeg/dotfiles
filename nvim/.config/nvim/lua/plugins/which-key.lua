@@ -17,7 +17,7 @@ return {
             },
          },
          win = {
-            border = "single",
+            border = "rounded",
          },
       })
 

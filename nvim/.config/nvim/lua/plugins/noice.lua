@@ -1,7 +1,9 @@
 return {
    -- configurable UI views
    -- cmdline, lsp progress
+   -- NOTE: this breaks vim.lsp.buf.hover, need to use noice.hover instead! https://github.com/neovim/nvim-lspconfig/issues/3036#issuecomment-1968518789
    "folke/noice.nvim",
+   -- enabled = false,
    event = "VeryLazy",
    opts = {
       -- add any options here
@@ -16,6 +18,9 @@ return {
    },
    config = function()
       require("noice").setup({
+         messages = {
+            -- enabled = false, -- not sure what this does
+         },
          cmdline = {
             -- view = "cmdline" -- native bottom location of command input -- replaed with presets.command_palette
          },
@@ -37,7 +42,12 @@ return {
             command_palette = true, -- position the cmdline and popupmenu together at the top
             long_message_to_split = true, -- long messages will be sent to a split
             inc_rename = false, -- enables an input dialog for inc-rename.nvim
-            -- lsp_doc_border = false, -- add a border to hover docs and signature help
+            lsp_doc_border = true, -- add a border to hover docs and signature help
+         },
+         views = {
+            hover = {
+               -- scrollbar = false,
+            },
          },
       })
    end,

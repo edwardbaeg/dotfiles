@@ -29,11 +29,11 @@ return {
          documentation = {
             auto_show = true,
             window = {
-               border = "single",
+               border = "rounded",
             },
          },
          menu = {
-            border = "single",
+            border = "rounded",
             -- with colorful-menu
             draw = {
                -- We don't need label_description now because label and label_description are already
@@ -100,7 +100,7 @@ return {
       signature = {
          enabled = true,
          window = {
-            border = "single",
+            border = "rounded",
          },
       },
 
