@@ -250,18 +250,30 @@ return {
       -- Navigate with treesitter syntax context
       -- Also set up to move sibling nodes
       "aaronik/treewalker.nvim",
+      dependencies = "folke/which-key.nvim",
       opts = {
          highlight = true, -- highlight node after jumpting to it
       },
       config = function(_, opts)
          require("treewalker").setup(opts)
+         vim.keymap.set("n", "<leader>,", "<cmd>Treewalker SwapLeft<cr>")
+         vim.keymap.set("n", "<leader>.", "<cmd>Treewalker SwapRight<cr>")
+
+         -- Hydra: Treewalker
+         vim.keymap.set("n", "<leader>t<space>", function()
+            ---@type wk.Filter
+            require("which-key").show({
+               keys = "<leader>t",
+               loop = true,
+               mode = "n",
+            })
+         end, { desc = "HYDRA: TreeWalker" })
          vim.keymap.set("n", "<leader>tj", ":Treewalker Down<cr>", { silent = true })
          vim.keymap.set("n", "<leader>tk", ":Treewalker Up<cr>", { silent = true })
          vim.keymap.set("n", "<leader>th", ":Treewalker Left<cr>", { silent = true })
          vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true })
-
-         vim.keymap.set("n", "<leader>,", "<cmd>Treewalker SwapLeft<cr>")
-         vim.keymap.set("n", "<leader>.", "<cmd>Treewalker SwapRight<cr>")
+         -- FIXME: this doesn't work. Want the ability to exit hydramode without having to press <esc>
+         vim.keymap.set("n", "<leader>tq", "<Esc>", { silent = true })
       end,
    },
 

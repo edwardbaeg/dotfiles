@@ -2,9 +2,9 @@ return {
    -- shows available keybinds, hydra mode
    -- NOTE: this can prevent reactive.nvim from working for operators if triggered
    "folke/which-key.nvim",
-   dependencies = {
-      "aaronik/treewalker.nvim", -- move around in a syntax aware manner with treesitter
-   },
+   -- dependencies = {
+   --    "aaronik/treewalker.nvim", -- move around in a syntax aware manner with treesitter
+   -- },
    config = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 200
@@ -21,9 +21,16 @@ return {
          },
       })
 
+      -- add grouping labels
+      wk.add({
+         { "<leader>fg", group = "Fuzzy git" }
+      })
+
       -- Hydra modes:
       -- TODO: set these up for git, diagnostics
       -- Would be nice if this "mode" could be styled differently
+
+      -- Hydra: window navigation
       vim.keymap.set("n", "<c-w><space>", function()
          ---@type wk.Filter
          require("which-key").show({
@@ -32,14 +39,5 @@ return {
          })
       end)
 
-      -- Hydra: Treewalker
-      -- TODO: add user command for this :TreeHydra
-      vim.keymap.set("n", "<leader>t<space>", function()
-         ---@type wk.Filter
-         require("which-key").show({
-            keys = "<leader>t",
-            loop = true,
-         })
-      end, { desc = "HYDRA: TreeWalker" })
    end,
 }
