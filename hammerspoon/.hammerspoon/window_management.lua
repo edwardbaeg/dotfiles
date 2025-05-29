@@ -73,13 +73,14 @@ end)
 local function cycleWindowSize(sizes)
    local win = hs.window.focusedWindow()
    local f = win:frame()
-   local screenMax = win:screen():frame()
+   local screenFrame = win:screen():frame()
 
    local nextSizeIndex = 1
 
+   -- FIXME: doesn't seem to work on non main screen
    for i, size in ipairs(sizes) do
-      local targetW = screenMax.w * size
-      local targetH = screenMax.h * size
+      local targetW = screenFrame.w * size
+      local targetH = screenFrame.h * size
       local widthMatch = math.abs(f.w - targetW) / targetW < 0.03
       local heightMatch = math.abs(f.h - targetH) / targetH < 0.03
       if widthMatch and heightMatch then

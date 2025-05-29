@@ -87,6 +87,9 @@ for _, entry in ipairs(modalEntries) do
    modal:bind("", entry.key, entry.callback)
 end
 
+-- TODO?: create bindings for all other key presses to exit the modal
+-- https://github.com/Hammerspoon/hammerspoon/issues/848#issuecomment-930456782
+
 modal:bind("", "escape", function()
    modal:exit()
 end)

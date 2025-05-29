@@ -59,6 +59,9 @@ require("config.post-plugins")
 ]]
 
 --[[ KEYMAP GUIDE
+--TODO: audit keymaps for g vs <leader>g
+--TODO: use consistent style for keymap desc. Potentially: sentence case
+--TODO: use a helper that defaults opts
 
 - Don't add to operator pending for y, d
 -  - and maybe c?
