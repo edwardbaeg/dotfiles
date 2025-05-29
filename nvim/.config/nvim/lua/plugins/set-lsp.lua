@@ -22,8 +22,19 @@ return {
       config = function()
          local keymap = vim.keymap.set
 
-         -- backup keymaps
-         keymap("n", "gK", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+         -- Floating window signature and hover
+         -- NOTE!!: noice will overwrite the hover handler
+         keymap("n", "K", function()
+            vim.lsp.buf.hover({
+               border = "rounded", -- floating window border
+            })
+         end, { desc = "Hover documentation" })
+
+         vim.keymap.set({ "n" }, "gK", function()
+            vim.lsp.buf.signature_help({
+               border = "rounded", -- floating window border
+            })
+         end, { silent = true, noremap = true, desc = "Hover signature" })
 
          -- START LSP CONFIG
          -------------------
@@ -122,8 +133,8 @@ return {
          vim.keymap.set("n", "<leader>es", ":LspEslintFixAll<cr>", { silent = true })
 
          -- NOTE: these are specific to typescript-tools
-         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true  })
-         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true  })
+         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true })
+         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true })
          -- FIXME: this doesn't work
          -- vim.api.nvim_create_user_command(
          --    "TSToolsLSP",
@@ -141,7 +152,7 @@ return {
                "stylua", -- check to see if this is aligning comments...
                "shfmt",
                "eslint",
-               "shellcheck" -- linter for sh
+               "shellcheck", -- linter for sh
             },
          })
 
@@ -278,8 +289,8 @@ return {
          local keymap = vim.keymap.set
 
          -- lsp saga keymaps
-         keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>")
-         keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>")
+         keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>") -- consider replacing with builtin lsp code action (gra)
+         -- keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>") -- replaced with builtin, grr
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
          -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
          -- keymap("n", "gr", "<cmd>Lspsaga finder<cr>") -- conflicts with builtin gr* mappings
@@ -290,7 +301,7 @@ return {
          keymap("n", "ge", "<cmd>Lspsaga diagnostic_jump_next<cr>")
          keymap("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
          -- keymap('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
-         keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" })
+         -- keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" }) -- replaced with builtin lsp signature_help
       end,
    },
 
@@ -337,12 +348,12 @@ return {
                size = { height = "60%", width = "60%" },
                sections = {
                   left = {
-                     size = "25%"
+                     size = "25%",
                   },
                   mid = {
-                     size = "25%"
+                     size = "25%",
                   },
-               }
+               },
             },
          })
 
@@ -390,6 +401,7 @@ return {
       -- show lsp signature while typing in 1) floating window and 2) virtual text
       -- NOTE: this might be covered by the completion plugin
       "ray-x/lsp_signature.nvim",
+      -- enabled = false, -- might be breaking borders? https://www.reddit.com/r/neovim/comments/1jmsl3j/comment/mmmhne5/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
       event = "VeryLazy",
       opts = {
          floating_window = false, -- disable floating window, replaced with blink.cmp
