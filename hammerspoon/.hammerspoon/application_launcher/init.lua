@@ -134,6 +134,11 @@ function Main()
          setArcProfile(params.profile)
       end
    end)
+
+   hs.hotkey.bind(hyperkey, "w", function()
+      hs.execute("kitten quick-access-terminal", true)
+   end)
+
 end
 
 Main()
