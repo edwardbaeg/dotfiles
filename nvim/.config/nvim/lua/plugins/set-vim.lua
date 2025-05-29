@@ -99,7 +99,7 @@ return {
 
    {
       -- color f/t targets
-      -- NOTE: consider removing this for `flash.nvim`
+      -- NOTE: consider removing this for `flash.nvim` or eye-liner (lua)
       "unblevable/quick-scope",
       enabled = true,
       init = function()
@@ -333,5 +333,24 @@ return {
       "jake-stewart/auto-cmdheight.nvim",
       enabled = false, -- might not be needed with noice
       lazy = false,
+   },
+
+   {
+      -- hints for faster vim motions
+      -- TODO: disable hints for hjkl https://github.com/m4xshen/hardtime.nvim/issues/160
+      "m4xshen/hardtime.nvim",
+      lazy = false,
+      dependencies = { "MunifTanjim/nui.nvim" },
+      opts = {
+         restriction_mode = "hint", -- disble restrictions
+         notification = false, -- disable notifications for disabled and restricted keys
+         disabled_keys = {
+            -- arrow keys are disabled by default
+            ["<Up>"] = false,
+            ["<Down>"] = false,
+            ["<Left>"] = false,
+            ["<Right>"] = false,
+         },
+      },
    },
 }
