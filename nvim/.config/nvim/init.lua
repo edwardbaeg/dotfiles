@@ -17,6 +17,7 @@ require("lazy").setup("plugins", {
 require("config.post-plugins")
 
 --[[ TODO
+- figure out how to show function signature in normal mode
 
 - rewrite all vimscript stuff to lua
 - determine a way to open *.stories or *.test for the given file

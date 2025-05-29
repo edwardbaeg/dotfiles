@@ -19,6 +19,8 @@ vim.o.hidden = true -- allow switching buffers without saving
 vim.o.scrolloff = 20 -- number of lines to keep above/below the cursor -- FIXME: this sometimes get unset?
 -- vim.o.winblend = 10 -- floating window transparency -- disable for transparent mode
 
+-- vim.o.winborder = "rounded" -- default border for floating windows, can mess up some many uis
+
 vim.o.ignorecase = true -- case insensitive searching
 vim.o.smartcase = true -- ...unless /C or capital in search
 vim.o.inccommand = "nosplit" -- show likve search and replace
