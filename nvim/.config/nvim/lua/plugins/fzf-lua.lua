@@ -61,10 +61,18 @@ return {
          -- -- grep
          vim.keymap.set("n", "<leader>*", "<cmd>lua require('fzf-lua').grep_cword()<cr>", { silent = true })
          vim.keymap.set("v", "<leader>*", "<cmd>lua require('fzf-lua').grep_visual()<cr>", { silent = true })
-         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
          vim.keymap.set("n", "<leader>fl", "<cmd>lua require('fzf-lua').blines()<cr>", { silent = true })
-         --
-         -- -- buffers/files
+
+         -- with ignore file
+         vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
+         -- without ignore file, TODO: create a user command for this
+         vim.keymap.set("n", "<c-f>", function()
+            require("fzf-lua").grep_project({
+               rg_opts = "--hidden --no-ignore --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+            })
+         end, { silent = true })
+
+         -- -- buffers/files -- replaced with mini.pick
          -- vim.keymap.set("n", "<c-p>", "<cmd>lua require('fzf-lua').files()<cr>", { silent = true })
          -- vim.keymap.set("n", "<c-b>", "<cmd>lua require('fzf-lua').buffers()<cr>", { silent = true })
          -- vim.keymap.set("n", "<leader>i", "<cmd>lua require('fzf-lua').buffers()<cr>", { silent = true })

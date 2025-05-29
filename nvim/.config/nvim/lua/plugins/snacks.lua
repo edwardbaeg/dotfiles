@@ -87,7 +87,9 @@ return {
       {
          "<c-p>",
          function()
-            Snacks.picker.files()
+            Snacks.picker.files({
+               args = { "--no-ignore" },
+            })
          end,
          desc = "[f]iles",
       },
