@@ -34,10 +34,12 @@ require("config.post-plugins")
    - :enew to open an empty buffer
       - vnew to open an empty buffer in a vertical split
    - move between tabs -> gt and gT
-- Find and replace
+- Search and replace
+   - %s/foo/bar/ to search whole file, at gc to confirm each
    - when in a visual block, omit the `%`: <'>'/s
    - to skip typing the text to replace, use * and then start search and skip the argument
       - example: :s//foo
+   - to do quick search and replace, do `cgn` (change, go to next) to make it . (dot) repeatable
 - Files
    - do :e to reload a file from external changes
 - Settings
