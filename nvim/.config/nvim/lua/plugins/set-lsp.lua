@@ -30,6 +30,11 @@ return {
             })
          end, { desc = "Hover documentation" })
 
+         vim.keymap.set({ "n" }, "<leader>K", function()
+            vim.lsp.buf.signature_help({
+               border = "rounded", -- floating window border
+            })
+         end, { silent = true, noremap = true, desc = "Hover signature" })
          vim.keymap.set({ "n" }, "gK", function()
             vim.lsp.buf.signature_help({
                border = "rounded", -- floating window border
