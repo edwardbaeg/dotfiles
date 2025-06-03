@@ -12,13 +12,21 @@ end
 
 local modalEntries = {
    {
-      key = "S",
-      label = "Raycast snippets",
+      key = "L",
+      label = "Linear",
       callback = function()
-         hs.urlevent.openURL("raycast://extensions/raycast/snippets/search-snippets")
+         hs.application.launchOrFocus("Linear")
          modal:exit()
       end,
    },
+   -- {
+   --    key = "S",
+   --    label = "Raycast snippets",
+   --    callback = function()
+   --       hs.urlevent.openURL("raycast://extensions/raycast/snippets/search-snippets")
+   --       modal:exit()
+   --    end,
+   -- },
    {
       key = "T",
       label = "Telegram",
