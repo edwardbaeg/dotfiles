@@ -353,4 +353,11 @@ return {
          },
       },
    },
+
+   {
+      -- Adds line/char move mappings
+      -- <A-h/j/k/l>
+      "booperlv/nvim-gomove",
+      config = true,
+   },
 }

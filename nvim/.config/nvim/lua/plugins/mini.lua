@@ -9,7 +9,7 @@ return {
       config = function()
          -- adds ability to move text around with <m-h/j/k/l>
          -- FIXME: this is broken for up and down motions
-         require("mini.move").setup({})
+         -- require("mini.move").setup({}) -- replaced with nvim-gomove
 
          -- highlights/underlines the word under the cursor
          require("mini.cursorword").setup({
