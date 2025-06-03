@@ -154,10 +154,14 @@ return {
          -- Set up formatting
          require("mason-null-ls").setup({
             ensure_installed = {
+               -- Formatters
                "stylua", -- check to see if this is aligning comments...
                "shfmt",
                "eslint",
+
+               -- Linters
                "shellcheck", -- linter for sh
+               "dotenv-linter", -- linter for .env files -- doesn't seem to work...
             },
          })
 
@@ -170,6 +174,9 @@ return {
                null_ls.builtins.formatting.prettier,
                null_ls.builtins.formatting.stylua,
                null_ls.builtins.formatting.shfmt,
+
+               null_ls.builtins.diagnostics.dotenv_linter,
+               null_ls.builtins.diagnostics.shellcheck,
             },
             -- on_attach = function(client, bufnr) -- format on save
             --    if client.supports_method("textDocument/formatting") then
