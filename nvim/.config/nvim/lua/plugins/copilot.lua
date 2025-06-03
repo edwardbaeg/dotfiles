@@ -48,21 +48,21 @@ return {
       keys = {
          {
             mode = { "n", "v" },
-            "<leader>cct",
+            "<leader>ct",
             function()
                require("CopilotChat").open()
             end,
             desc = "CopilotChat",
          },
-         {
-            mode = { "n", "v" },
-            "<leader>ccp",
-            function()
-               local actions = require("CopilotChat.actions")
-               require("CopilotChat.integrations.fzflua").pick(actions.prompt_actions())
-            end,
-            desc = "CopilotChat - Prompt actions",
-         },
+         -- {
+         --    mode = { "n", "v" },
+         --    "<leader>ccp",
+         --    function()
+         --       local actions = require("CopilotChat.actions")
+         --       require("CopilotChat.integrations.fzflua").pick(actions.prompt_actions())
+         --    end,
+         --    desc = "CopilotChat - Prompt actions",
+         -- },
       },
    },
 }
