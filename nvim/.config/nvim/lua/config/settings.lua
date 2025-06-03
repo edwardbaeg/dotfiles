@@ -159,3 +159,13 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.opt_local.wrap = false
    end,
 })
+
+-- Quick open file in Cursor.app
+vim.api.nvim_create_user_command("OpenInCursor", function()
+   local file_path = vim.fn.expand("%:p")
+   local line_number = vim.fn.line(".")
+   vim.fn.system(string.format("cursor -g %s:%d", file_path, line_number))
+end, {
+   nargs = 0,
+   desc = "Open current file and line in external IDE",
+})
