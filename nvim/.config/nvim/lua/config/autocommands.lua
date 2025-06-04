@@ -91,6 +91,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
    end,
 })
 
+-- close all lsp clients on exit
+-- This might be better than garbage-day?
+-- https://www.reddit.com/r/neovim/comments/1kz0a23/nvim_0112_bug_fixes_and_vimlspenable_related/mvbxpu8/
+vim.api.nvim_create_autocmd("VimLeavePre", {
+   callback = function()
+      vim.iter(vim.lsp.get_clients()):each(function(client)
+         client:stop()
+      end)
+   end,
+})
+
 -- show cursor line only in active window
 -- this doesn't work with <c-c>, only with <esc>
 -- https://github.com/folke/dot/blob/master/nvim/lua/config/autocmds.lua
