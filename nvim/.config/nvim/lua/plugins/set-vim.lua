@@ -360,4 +360,13 @@ return {
       "booperlv/nvim-gomove",
       config = true,
    },
+
+   {
+      -- persist cursor location
+      "ethanholz/nvim-lastplace",
+      enabled = true,
+      config = function()
+         require("nvim-lastplace").setup({})
+      end,
+   },
 }

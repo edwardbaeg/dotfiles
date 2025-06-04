@@ -1,26 +1,5 @@
--- TODO: move these into separate files
--- misc plugins
+-- plugins for comments
 return {
-   {
-      -- persist cursor location
-      "ethanholz/nvim-lastplace",
-      enabled = true,
-      config = function()
-         require("nvim-lastplace").setup({})
-      end,
-   },
-
-   {
-      -- preview markdown
-      "iamcco/markdown-preview.nvim",
-      enabled = false,
-      build = "cd app && npm install",
-      init = function()
-         vim.g.mkdp_filetypes = { "markdown" }
-      end,
-      ft = { "markdown" }, -- lazy load on file type
-   },
-
    {
       -- Highlight comments, examples:
       -- TODO
@@ -52,6 +31,7 @@ return {
    {
       -- ability to format comments with fancy boxes and lines
       "LudoPinelli/comment-box.nvim",
+      enabled = false, -- not used
       config = function()
          ---@diagnostic disable-next-line: missing-fields
          require("comment-box").setup({

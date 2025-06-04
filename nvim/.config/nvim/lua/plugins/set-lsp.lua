@@ -140,12 +140,6 @@ return {
          -- NOTE: these are specific to typescript-tools
          vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true })
          vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true })
-         -- FIXME: this doesn't work
-         -- vim.api.nvim_create_user_command(
-         --    "TSToolsLSP",
-         --    ":TSToolsAddMissingImports <bar> TSToolsSortImports",
-         --    { desc = "" }
-         -- )
          -- END TYPESCRIPT TOOLS
 
          -- END LSP CONFIG
