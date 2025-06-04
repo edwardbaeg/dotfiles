@@ -135,6 +135,7 @@ function Main()
       end
    end)
 
+   -- This is buggy, might need to manually call it in the terminal first a few times?
    hs.hotkey.bind(hyperkey, "w", function()
       hs.execute("kitten quick-access-terminal", true)
    end)
