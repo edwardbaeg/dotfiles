@@ -114,6 +114,18 @@ return {
             capabilities = capabilities,
          })
 
+         -- eslint fix all on save?
+         local base_on_attach = vim.lsp.config.eslint.on_attach
+         vim.lsp.config('eslint', {
+            on_attach = function(client, bufnr)
+               base_on_attach(client, bufnr)
+               vim.api.nvim_create_autocmd("BufWritePre", {
+                  buffer = bufnr,
+                  command = "LspEslintFixAll",
+               })
+            end,
+         })
+
          for lsp, settings in pairs(default_language_servers) do
             vim.lsp.config(lsp, { settings = settings })
          end
@@ -134,13 +146,15 @@ return {
             },
          })
 
-         -- TODO: see where this command comes from
-         vim.keymap.set("n", "<leader>es", ":LspEslintFixAll<cr>", { silent = true })
-
          -- NOTE: these are specific to typescript-tools
          vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true })
          vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true })
          -- END TYPESCRIPT TOOLS
+
+         -- This command comes from the eslint lsp server
+         -- FIXME?: this doesnt seem to be attached to typescript files, just typescriptreact?
+         -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/eslint.lua#L43
+         vim.keymap.set("n", "<leader>es", ":LspEslintFixAll<cr>", { silent = true })
 
          -- END LSP CONFIG
          -----------------
