@@ -53,9 +53,14 @@ return {
             inc_rename = false, -- enables an input dialog for inc-rename.nvim
             lsp_doc_border = true, -- add a border to hover docs and signature help
          },
+         ---@type NoiceConfigViews
          views = {
+            ---@type NoiceViewOptions
             hover = {
                scrollbar = true,
+               size = {
+                  max_height = 25, -- default is 20
+               }
             },
          },
       })
