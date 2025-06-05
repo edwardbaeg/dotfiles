@@ -247,5 +247,10 @@ return {
       vim.api.nvim_create_user_command("Scratch", function()
          Snacks.scratch()
       end, {})
+
+      -- Toggle mappings
+      Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>tsp")
+      Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
+      Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
    end,
 }
