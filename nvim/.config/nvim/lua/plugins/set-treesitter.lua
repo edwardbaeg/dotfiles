@@ -42,6 +42,7 @@ return {
                "json",
                "kdl", -- zellij config file
                "lua",
+               "make", -- makefiles
                "markdown",
                "markdown_inline",
                "python",

@@ -170,6 +170,7 @@ return {
                -- Linters
                "shellcheck", -- linter for sh
                "dotenv-linter", -- linter for .env files -- doesn't seem to work...
+               "checkmake", -- linter for makefiles
             },
          })
 
@@ -183,8 +184,9 @@ return {
                null_ls.builtins.formatting.stylua,
                null_ls.builtins.formatting.shfmt,
 
+               null_ls.builtins.diagnostics.checkmake,
                null_ls.builtins.diagnostics.dotenv_linter,
-               null_ls.builtins.diagnostics.shellcheck,
+               -- null_ls.builtins.diagnostics.shellcheck, -- this is throwing errors
             },
             -- on_attach = function(client, bufnr) -- format on save
             --    if client.supports_method("textDocument/formatting") then
