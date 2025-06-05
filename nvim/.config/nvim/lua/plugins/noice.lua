@@ -1,7 +1,10 @@
+---@module "lazy"
+---@type LazySpec
 return {
    -- configurable UI views
    -- cmdline, lsp progress
    -- NOTE: this breaks vim.lsp.buf.hover, need to use noice.hover instead! https://github.com/neovim/nvim-lspconfig/issues/3036#issuecomment-1968518789
+   -- this appears to set cmdheight=0 under the hood...
    "folke/noice.nvim",
    -- enabled = false,
    event = "VeryLazy",
@@ -14,12 +17,18 @@ return {
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      -- "rcarriga/nvim-notify",
+      "rcarriga/nvim-notify",
    },
    config = function()
       require("noice").setup({
+         -- shows messages (in cmdheight area) in different view, uses notify if available, oherwise fallback to Noice.mini
          messages = {
-            -- enabled = false, -- not sure what this does
+            enabled = true,
+            -- view = "notify",
+            -- view_error = "notify",
+            -- view_warn = "notify",
+            -- view_history = "messages",
+            -- view_search = "virtualtext",
          },
          cmdline = {
             -- view = "cmdline" -- native bottom location of command input -- replaed with presets.command_palette
@@ -46,9 +55,16 @@ return {
          },
          views = {
             hover = {
-               -- scrollbar = false,
+               scrollbar = true,
             },
          },
       })
+
+      -- these aren't sticking
+      vim.o.cmdheight = 1
+   end,
+   init = function()
+      -- these aren't sticking
+      vim.o.cmdheight = 1
    end,
 }
