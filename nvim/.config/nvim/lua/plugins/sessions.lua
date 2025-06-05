@@ -9,6 +9,12 @@ return {
          vim.keymap.set("n", "<leader>sl", function()
             require("persistence").load()
          end, { desc = "[s]ession [l]oad", silent = true })
+         vim.keymap.set("n", "<leader>ss", function()
+            require("persistence").save()
+         end, { desc = "[s]ession [s]ave", silent = true })
+         vim.keymap.set("n", "<leader>sS", function()
+            require("persistence").select()
+         end)
       end,
    },
 }
