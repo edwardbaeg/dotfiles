@@ -1,3 +1,4 @@
+-- TODO: change priorities; want to move `properties` from lsp to be higher priority
 return {
    -- Completion engine
    -- NOTE: this uses native nvim snippets, which are loaded from /snippets

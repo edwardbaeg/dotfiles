@@ -4,8 +4,8 @@
 -- also consider better organization for legibility
 
 local set = function(mode, lhs, rhs, opts)
-  opts = vim.tbl_extend("force", { silent = true }, opts or {})
-  vim.keymap.set(mode, lhs, rhs, opts)
+   opts = vim.tbl_extend("force", { silent = true }, opts or {})
+   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 -- Escaping
@@ -132,3 +132,19 @@ vim.cmd([[
    ab functino function
    ab exfn export function
 ]])
+
+-- Smart Enter key that tries gx (open URL) or gf (open file)
+-- ~/Downloads
+-- https://example.com
+local function smart_enter()
+   local cmd, err = vim.ui.open(vim.fn.expand("<cfile>"))
+   if cmd then
+      cmd:wait()
+   else
+      print('fail?')
+   end
+   -- TODO: check if the vim.ui.open success worked, if not then do:
+   -- vim.cmd("normal! gf")
+end
+
+set("n", "<CR>", smart_enter, { desc = "Smart Enter: try gx (URL) or gf (file)" })

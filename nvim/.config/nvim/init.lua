@@ -17,6 +17,7 @@ require("lazy").setup("plugins", {
 require("config.post-plugins")
 
 --[[ TODO
+- create a command/keymap to open help with cword
 - rewrite all vimscript stuff to lua
 - determine a way to open *.stories or *.test for the given file
 - move legacy/inactive settings to a separate file that is not loaded?

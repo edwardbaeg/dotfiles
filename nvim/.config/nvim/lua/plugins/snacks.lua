@@ -88,7 +88,10 @@ return {
          "<c-p>",
          function()
             Snacks.picker.files({
+               -- TODO: we want to ignore some files. Maybe hardcode here or create another ignore file?
+               -- args = { "--no-ignore", "!assets/documents" },
                args = { "--no-ignore" },
+
             })
          end,
          desc = "[f]iles",

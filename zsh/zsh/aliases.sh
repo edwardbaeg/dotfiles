@@ -73,6 +73,7 @@ alias lg="lazygit"
 alias ..="cd .."
 alias ll="ls -al"
 alias cl="clear"
+alias tel="nchat"
 
 #-- Jumping
 alias dot="cd ~/dev/dotfiles"

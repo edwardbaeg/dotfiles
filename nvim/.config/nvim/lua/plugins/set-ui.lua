@@ -73,6 +73,9 @@ return {
       enabled = not vim.g.vscode,
       dependencies = "nvim-tree/nvim-web-devicons",
       config = function()
+         -- local version = vim.version()
+         -- print(string.format("Neovim version: %d.%d.%d", version.major, version.minor, version.patch))
+
          require("alpha").setup(require("alpha.themes.startify").config)
       end,
    },

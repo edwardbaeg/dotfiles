@@ -83,7 +83,7 @@ These are mostly brew packages.
 
 # Setup
 
-Copy over configuration files (using `stow`)
+Copy over configuration files with `stow`
 
 ```
 make all
