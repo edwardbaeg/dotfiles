@@ -136,10 +136,10 @@ function Main()
    end)
 
    -- This is buggy, might need to manually call it in the terminal first a few times?
+   -- This appears to be blocking, which can cause issues if its stuck
    hs.hotkey.bind(hyperkey, "w", function()
-      hs.execute("kitten quick-access-terminal", true)
+      hs.execute("cd ~/dev/dotfiles/ && kitten quick-access-terminal", true)
    end)
-
 end
 
 Main()
