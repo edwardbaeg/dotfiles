@@ -5,6 +5,7 @@ require("application_launcher") -- app launcher and switcher
 require("caffeine") -- force awake menubar
 require("modal") -- modal mode keymaps
 require("remapper") -- simple system keymaps
+require("url_listeners") -- url listeners
 require("window_grid") -- grid window positions
 require("window_management") -- window sizing and positions
 

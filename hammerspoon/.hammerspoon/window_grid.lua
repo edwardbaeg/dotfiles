@@ -23,15 +23,16 @@ local function getScreenAndPaddedFrame()
    return screen, paddedFrame
 end
 
--- show interactive modal interface for resizing
-hs.hotkey.bind(constants.hyperkey, "G", function()
-   local screen, paddedFrame = getScreenAndPaddedFrame()
-   hs.grid.setGrid("6x4", screen, paddedFrame)
-   hs.grid.show()
-end)
-
 hs.hotkey.bind(constants.hyperkey, "F", function()
    local screen, paddedFrame = getScreenAndPaddedFrame()
    hs.grid.setGrid("5x3", screen, paddedFrame)
    hs.grid.show()
 end)
+
+-- show interactive modal interface for resizing
+hs.hotkey.bind(constants.hyperkey, "G", function()
+   local screen, paddedFrame = getScreenAndPaddedFrame()
+   hs.grid.setGrid("6x6", screen, paddedFrame)
+   hs.grid.show()
+end)
+
