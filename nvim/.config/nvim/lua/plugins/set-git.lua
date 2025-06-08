@@ -109,4 +109,12 @@ return {
          end, {})
       end,
    },
+
+   {
+      -- Open remote github repos
+      -- Usage: :GitDevOpen <url>
+      "moyiz/git-dev.nvim",
+      event = "VeryLazy",
+      opts = {},
+   },
 }
