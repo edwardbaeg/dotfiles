@@ -58,6 +58,11 @@ require("config.post-plugins")
 - Builtin commands
    - :TSPlaygroundToggle replaced with :Inspect
    - <c-t> to use tag stack to jump
+- Cmdline
+   - :h filename-modifiers
+   - :%:h -> parent directory
+   - :%:p -> full path
+   - :%:t -> filename
 ]]
 
 --[[ KEYMAP GUIDE
