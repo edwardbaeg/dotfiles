@@ -124,6 +124,10 @@ set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in 
 set("n", "g>>", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
+set("n", "g>h", function ()
+  local cword = vim.fn.expand("<cword>")
+  vim.cmd("vert help " .. cword)
+end, { desc = "Goto [h]elpfile in vertical split" })
 set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
 
 -- Abbreviations
@@ -144,7 +148,7 @@ local function smart_enter()
       print('fail?')
    end
    -- TODO: check if the vim.ui.open success worked, if not then do:
-   -- vim.cmd("normal! gf")
+   vim.cmd("normal! gf")
 end
 
 set("n", "<CR>", smart_enter, { desc = "Smart Enter: try gx (URL) or gf (file)" })
