@@ -1,4 +1,4 @@
---[[ NEOVIM CONFIG ROOT ]]
+--[[ NEOVIM CONFIG ROOT --]]
 
 require("config.lazy")
 require("config.keymaps")
@@ -53,6 +53,9 @@ require("config.post-plugins")
 - Editing
    - instead of using `dd` for an empty line, use `J`
    - indent in insert mode with `<c-t>/<c-d>`
+   - <c-o> to type a single command in normal mode and then return to insert mode
+   - <c-r> access the register
+     - <c-w> after to access cword
 - Quickfix
    - use `:copen` to open the quickfix window
 - Builtin commands

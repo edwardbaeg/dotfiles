@@ -1,16 +1,19 @@
 --[[ Vim Options ]]
+--vim.o -> global options
+--vim.bo -> buffer local options
+--vim.wo -> window local options
 
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
 
 -- Wrapping
--- vim.o.wrap = false -- set visual wrapping of long lines
+vim.o.wrap = true -- set visual wrapping of long lines
 vim.o.linebreak = true -- wrap at spaces instead of the middle of a word
 vim.o.breakindent = true -- wrapped lines will have consistent indents
-vim.o.showbreak = "… " -- string added to the start of wrapped lines, ellipsis, this is highlighted with NonText
+vim.o.showbreak = "… " -- string added to the start of wrapped lines -- ellipsis -- this is highlighted with NonText
 vim.api.nvim_set_hl(0, "NonText", { fg = "grey30" }) -- highlights showbreak characters, slightly different than comment text
 
-vim.o.updatetime = 250 -- Decrease update time
+vim.o.updatetime = 250 -- Decrease update time (ms), default is 4000 ms
 vim.o.signcolumn = "yes" -- always show sign column
 vim.o.completeopt = "menuone,noselect" -- better completion experience
 vim.o.mouse = "a" -- Enable mouse moedwardbaeg9@gmail.com@de
