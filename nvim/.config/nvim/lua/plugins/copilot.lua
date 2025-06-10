@@ -43,7 +43,15 @@ return {
          { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
       },
       build = "make tiktoken", -- Only on MacOS or Linux
-      opts = {},
+      ---@type CopilotChat.config
+      opts = {
+         mappings = {
+            ---@diagnostic disable-next-line: missing-fields
+            reset = {
+               normal = "gl",
+            },
+         },
+      },
       cmd = "CopilotChat",
       keys = {
          {
@@ -54,15 +62,6 @@ return {
             end,
             desc = "CopilotChat",
          },
-         -- {
-         --    mode = { "n", "v" },
-         --    "<leader>ccp",
-         --    function()
-         --       local actions = require("CopilotChat.actions")
-         --       require("CopilotChat.integrations.fzflua").pick(actions.prompt_actions())
-         --    end,
-         --    desc = "CopilotChat - Prompt actions",
-         -- },
       },
    },
 }
