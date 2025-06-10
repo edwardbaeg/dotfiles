@@ -3,6 +3,8 @@
 --vim.bo -> buffer local options
 --vim.wo -> window local options
 
+-- TODO: create new sections or files for autocommands and user commands
+
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
 
@@ -164,11 +166,15 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Quick open file in Cursor.app
-vim.api.nvim_create_user_command("OpenInCursor", function()
+local function OpenInCursor()
    local file_path = vim.fn.expand("%:p")
    local line_number = vim.fn.line(".")
    vim.fn.system(string.format("cursor -g %s:%d", file_path, line_number))
-end, {
+end
+
+vim.keymap.set("n", "<leader>gu", OpenInCursor, { noremap = true, silent = true, desc = "Open current file and line in Cursor" })
+
+vim.api.nvim_create_user_command("OpenInCursor", OpenInCursor, {
    nargs = 0,
-   desc = "Open current file and line in external IDE",
+   desc = "Open current file and line in Cursor",
 })
