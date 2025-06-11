@@ -3,8 +3,7 @@ return {
       -- opens 'foo/bar' in github with gx
       "gabebw/vim-github-link-opener",
       init = function()
-         -- this remaps the default mapping with silent flag
-         vim.g.github_link_opener_no_mappings = 1
+         vim.g.github_link_opener_no_mappings = 1 -- disable default mapping. the default mapping is gx but it is not silent.
          vim.keymap.set("n", "gx", ":OpenGitHubLink<cr>", { silent = true })
       end,
    },

@@ -63,8 +63,9 @@ return {
 
          -- Set up lazygit --NOTE replaced with snacks.lazy_git
          local lazygit = Terminal:new({
-            cmd = "lazygit", --[[ hidden = true ]]
-         }) -- hidden terminals won't resize
+            cmd = "lazygit",
+            -- hidden = true -- hidden terminals won't resize
+         })
          function _G._lazygit_toggle()
             lazygit:toggle()
          end
