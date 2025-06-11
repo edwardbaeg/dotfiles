@@ -76,7 +76,6 @@ set("n", "<leader>eq", "<cmd>q<cr>", { desc = "[q]uit" }) -- quit
 set("n", "<leader>qa", "<cmd>qa<cr>", { desc = "[q]uit [a]ll" }) -- quit
 set("n", "<leader>+", "<c-a>", { desc = "increment" }) -- increment
 set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
-set("n", "<leader>vs", ":vs<cr>", { desc = "[vs]plit" }) -- vertical split
 
 -- LSP
 -- set("n", "<leader>j", function() -- show inlay lsp hints
@@ -120,7 +119,10 @@ set("n", "<leader>w", "<c-w>")
 
 -- Go to definition/tag
 set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
--- open goto definition in vertical split
+
+-- Vertical splits
+set("n", "<leader>vs", ":vsplit<cr>", { desc = "[vs]plit" })
+set("n", "<leader>ve", ":vsplit edit<cr>", { desc = "[v]split [e]dit" })
 set("n", "g>>", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
@@ -128,7 +130,7 @@ set("n", "g>h", function ()
   local cword = vim.fn.expand("<cword>")
   vim.cmd("vert help " .. cword)
 end, { desc = "Goto [h]elpfile in vertical split" })
-set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
+-- set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
 
 -- Abbreviations
 -- TODO: refactor to lua first class api when available
