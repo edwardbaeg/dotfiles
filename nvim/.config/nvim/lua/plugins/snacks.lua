@@ -10,13 +10,15 @@ return {
       -- NOTE: use <c-q> to add files to quickfix (default for grep)
       picker = {
          sources = {
-            explorer = { hidden = true },
+            explorer = {
+               hidden = true,
+            },
             files = { hidden = true },
             grep = { hidden = true },
             buffers = {
                layout = {
                   preset = "dropdown",
-               }
+               },
                -- on_show = function()
                --    vim.cmd.stopinsert()
                -- end,
@@ -91,7 +93,6 @@ return {
                -- TODO: we want to ignore some files. Maybe hardcode here or create another ignore file?
                -- args = { "--no-ignore", "!assets/documents" },
                args = { "--no-ignore" },
-
             })
          end,
          desc = "[f]iles",
@@ -120,7 +121,18 @@ return {
       {
          "<leader>fe",
          function()
-            Snacks.explorer()
+            -- ---@class snacks.picker.explorer.Config -- this doesn't work?
+            ---@diagnostic disable-next-line: missing-fields
+            Snacks.explorer({
+               win = {
+                  list = {
+                     keys = {
+                        ["o"] = "explorer_add", -- default is explorer_open
+                        ["O"] = "explorer_open",
+                     },
+                  },
+               },
+            })
          end,
          desc = "File Explorer",
       },
