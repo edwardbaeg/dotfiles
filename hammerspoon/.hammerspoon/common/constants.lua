@@ -1,4 +1,5 @@
 -- Set up modifier combos
+-- TODO: add typings
 local module = {}
 
 module.hyperkey = { "cmd", "ctrl" }

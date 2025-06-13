@@ -22,3 +22,11 @@ sendSystemKey(cmdShift, ",", "PREVIOUS")
 sendSystemKey(cmdShift, "/", "PLAY")
 sendSystemKey(cmdShift, "o", "SOUND_UP")
 sendSystemKey(cmdShift, "i", "SOUND_DOWN")
+
+-- Raycast commands can only have one hotkey
+-- This command is remapped to cmd+ctrl+shift+= for zmk based keyoards
+-- This remap is specific for apple based keyboards
+-- TODO: consider if remapping to cmd+ctrl+shift+= is more performant
+hs.hotkey.bind(constants.hyperkey, "=", function()
+   hs.execute("open -g raycast://extensions/raycast/window-management/make-larger")
+end)
