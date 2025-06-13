@@ -11,10 +11,25 @@ return {
       picker = {
          sources = {
             explorer = {
-               hidden = true,
+               hidden = true, -- show hidden files
+               win = {
+                  list = {
+                     keys = {
+                        ["o"] = "explorer_add", -- default is explorer_open
+                        ["O"] = "explorer_open",
+                     },
+                  },
+               },
             },
-            files = { hidden = true },
-            grep = { hidden = true },
+            files = {
+               hidden = true, -- show hidden files
+               -- TODO: we want to ignore some files. Maybe hardcode here or create another ignore file?
+               -- args = { "--no-ignore", "!assets/documents" },
+               args = { "--no-ignore" },
+            },
+            grep = {
+               hidden = true, -- show hidden files
+            },
             buffers = {
                layout = {
                   preset = "dropdown",
@@ -89,11 +104,7 @@ return {
       {
          "<c-p>",
          function()
-            Snacks.picker.files({
-               -- TODO: we want to ignore some files. Maybe hardcode here or create another ignore file?
-               -- args = { "--no-ignore", "!assets/documents" },
-               args = { "--no-ignore" },
-            })
+            Snacks.picker.files()
          end,
          desc = "[f]iles",
       },
@@ -121,18 +132,7 @@ return {
       {
          "<leader>fe",
          function()
-            -- ---@class snacks.picker.explorer.Config -- this doesn't work?
-            ---@diagnostic disable-next-line: missing-fields
-            Snacks.explorer({
-               win = {
-                  list = {
-                     keys = {
-                        ["o"] = "explorer_add", -- default is explorer_open
-                        ["O"] = "explorer_open",
-                     },
-                  },
-               },
-            })
+            Snacks.explorer()
          end,
          desc = "File Explorer",
       },
