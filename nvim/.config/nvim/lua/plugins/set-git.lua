@@ -2,6 +2,7 @@ return {
    {
       -- opens 'foo/bar' in github with gx
       "gabebw/vim-github-link-opener",
+      -- Usage: :OpenGitHubLink
       init = function()
          vim.g.github_link_opener_no_mappings = 1 -- disable default mapping. the default mapping is gx but it is not silent.
          vim.keymap.set("n", "gx", ":OpenGitHubLink<cr>", { silent = true })
@@ -115,5 +116,17 @@ return {
       "moyiz/git-dev.nvim",
       event = "VeryLazy",
       opts = {},
+   },
+
+   {
+      -- Github
+      "pwntester/octo.nvim",
+      -- usage: :Octo
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         "folke/snacks.nvim",
+         "nvim-tree/nvim-web-devicons",
+         picker = "snacks",
+      },
    },
 }
