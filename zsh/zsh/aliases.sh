@@ -5,20 +5,23 @@ alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 
 # -- configuration files
-# TODO: choose one pattern and maintain
+# TODO: choose one pattern and maintain; v* for shell, e* for within nvim
+# TODO: change working dir for each?
 alias vz="vim ~/.zshrc"
-alias ez="vim ~/.zshrc"
+alias vzw="vim ~/zsh/work.sh"
+alias vza="vim ~/zsh/aliases.sh"
+# alias ez="vim ~/.zshrc"
 # alias vv="vim ~/.vimrc"
 alias ev="vim ~/.config/nvim/init.lua -c \":cd %:h\""
 alias vt="vim ~/.tmux.conf"
-alias et="vim ~/.tmux.conf"
+# alias et="vim ~/.tmux.conf"
 # alias vh="vim ~/.hammerspoon/init.lua -c \":cd %:h\""
 alias vh="vim ~/.hammerspoon/init.lua -c \":cd ~/dev/dotfiles/hammerspoon\""
-alias eh="vim ~/.hammerspoon/init.lua -c \":cd %:h\""
+# alias eh="vim ~/.hammerspoon/init.lua -c \":cd %:h\""
 alias vw="vim ~/.wezterm.lua"
-alias ew="vim ~/.wezterm.lua"
+# alias ew="vim ~/.wezterm.lua"
 alias vk="vim ~/.config/kitty/kitty.conf"
-alias ek="vim ~/.config/kitty/kitty.conf"
+# alias ek="vim ~/.config/kitty/kitty.conf"
 
 # -- other files
 alias vhist="vim ~/.zsh_history"
