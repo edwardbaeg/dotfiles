@@ -1,8 +1,8 @@
----@module "yazi" -- for YaziConfig type
-
--- TODO: fix the types here
+---@module "lazy"
 ---@type LazySpec
 return {
+   -- yazi file manager
+   -- keymaps: <c-\\> to cwd
    "mikavilpas/yazi.nvim",
    event = "VeryLazy",
    dependencies = {
@@ -30,6 +30,7 @@ return {
       --    desc = "Resume the last yazi session",
       -- },
    },
+   ---@module "yazi"
    ---@type YaziConfig | {}
    opts = {
       -- if you want to open yazi instead of netrw, see below for more info
