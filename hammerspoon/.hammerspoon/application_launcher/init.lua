@@ -135,10 +135,12 @@ function Main()
       end
    end)
 
-   -- This is buggy, might need to manually call it in the terminal first a few times?
-   -- This appears to be blocking, which can cause issues if its stuck
    hs.hotkey.bind(hyperkey, "w", function()
-      hs.execute("cd ~/dev/dotfiles/ && kitten quick-access-terminal", true)
+      -- NOTE: need to use full paths
+      -- TODO: consider auto attaching to a tmux session
+      hs.task
+         .new("/bin/bash", nil, { "-c", "cd $HOME/dev/dotfiles && /opt/homebrew/bin/kitten quick-access-terminal" })
+         :start()
    end)
 end
 
