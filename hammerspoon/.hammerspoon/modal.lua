@@ -15,7 +15,9 @@ local modalEntries = {
       key = "A",
       label = "Personal AI Preset",
       callback = function()
-         hs.urlevent.openURL("raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D")
+         hs.urlevent.openURL(
+            "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D"
+         )
          modal:exit()
       end,
    },
@@ -91,7 +93,19 @@ function modal:entered()
       "\n"
    )
    modalContent = modalContent .. "\n\nEsc: Exit"
-   id = hs.alert.show(modalContent, "indefinite")
+   id = hs.alert.show(modalContent, {
+      -- strokeColor = { white = 1, alpha = 0.5 }, -- border color
+      fillColor = {
+         red = 0.3,
+         green = 0.3,
+         blue = 0.3,
+         alpha = 1,
+      }, -- background fill
+      -- textColor = { white = 1 }, -- Text color
+      -- textFont = "Helvetica", -- Optional font
+      -- textSize = 15, -- Optional text size
+      radius = 16, -- Optional corner radius
+   }, "indefinite")
 end
 
 function modal:exited()
