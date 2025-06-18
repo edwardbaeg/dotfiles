@@ -17,13 +17,16 @@ return {
       -- adds syntax highlighting for quickfix lists
       "stevearc/quicker.nvim",
       event = "FileType qf",
-      config = function()
-         require("quicker").setup({})
-      end,
+      ---@module "quicker"
+      ---@type quicker.SetupOptions
+      opts = {},
+      -- config = function()
+      --    require("quicker").setup({})
+      -- end,
    },
 
    {
-      -- improve interacting with quickfix and location list
+      -- adds preview window
       "kevinhwang91/nvim-bqf",
       config = function()
          require("bqf").setup()

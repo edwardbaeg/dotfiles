@@ -311,6 +311,8 @@ return {
 
    {
       -- Improve marks experience
+      -- dmx - delete mark x
+      -- MarkListX - open marks in location lists or QF for quickfix
       "chentoast/marks.nvim",
       event = "VeryLazy",
       opts = {},

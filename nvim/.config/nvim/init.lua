@@ -56,8 +56,9 @@ require("config.post-plugins")
    - <c-o> to type a single command in normal mode and then return to insert mode
    - <c-r> access the register
      - <c-w> after to access cword
-- Quickfix
-   - use `:copen` to open the quickfix window
+- Quickfix/Location Lists
+   - quickfix is global, location list is per buffer
+   - use `:copen` to open the quickfix window; `:lopen` for location list
 - Builtin commands
    - :TSPlaygroundToggle replaced with :Inspect
    - <c-t> to use tag stack to jump
