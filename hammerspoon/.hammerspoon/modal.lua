@@ -3,6 +3,8 @@ local togglePersonalOverride = appLauncher.togglePersonalOverride
 local isPersonalOverride = appLauncher.isPersonalOverride
 local caffeine = require("caffeine")
 
+local M = {}
+
 local modal = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
@@ -132,14 +134,20 @@ function modal:exited()
    hs.alert.closeSpecific(id, 0.1)
 end
 
--- Create bindings for each entry
-for _, entry in ipairs(modalEntries) do
-   modal:bind("", entry.key, entry.callback)
+function Start()
+   -- TODO: wrap these
+   -- Create bindings for each entry
+   for _, entry in ipairs(modalEntries) do
+      modal:bind("", entry.key, entry.callback)
+   end
+
+   -- TODO?: create bindings for all other key presses to exit the modal
+   -- https://github.com/Hammerspoon/hammerspoon/issues/848#issuecomment-930456782
+
+   modal:bind("", "escape", function()
+      modal:exit()
+   end)
 end
 
--- TODO?: create bindings for all other key presses to exit the modal
--- https://github.com/Hammerspoon/hammerspoon/issues/848#issuecomment-930456782
-
-modal:bind("", "escape", function()
-   modal:exit()
-end)
+M.Start = Start
+M.Start()
