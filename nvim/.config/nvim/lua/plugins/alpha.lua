@@ -11,6 +11,23 @@ return { -- start page for nvim
       local version = vim.version()
       local version_string = string.format("NVIM %d.%d.%d", version.major, version.minor, version.patch)
 
+      -- Custom header
+      config.layout[2] = {
+         type = "text",
+         val = { "", version_string },
+      }
+
+      table.insert(config.layout, 3, {
+         type = "text",
+         val = { "", "Nvim is open source and freely distributable" },
+         opts = {
+            -- position = "center",
+            -- hl = "String",
+         },
+      })
+
+      require("alpha").setup(config)
+
       -- Change the position for every layout item -- this crashes vim
       -- for _, element in ipairs(config.layout) do
       --    vim.print(element)
@@ -23,12 +40,6 @@ return { -- start page for nvim
       --       -- element.opts.val.position = "right"
       --    end
       -- end
-
-      -- Custom header
-      config.layout[2] = {
-         type = "text",
-         val = { "", version_string },
-      }
 
       -- config.layout[2] = {
       --    type = "text",
@@ -47,17 +58,5 @@ return { -- start page for nvim
       --       hl = "Type",
       --    },
       -- }
-
-      -- Separate for centering
-      table.insert(config.layout, 3, {
-         type = "text",
-         val = { "", "Nvim is open source and freely distributable" },
-         opts = {
-            -- position = "center",
-            -- hl = "String",
-         },
-      })
-
-      require("alpha").setup(config)
    end,
 }
