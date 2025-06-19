@@ -179,7 +179,7 @@ return {
          desc = "Git Status",
       },
       {
-         "<leader>fgh",
+         "<leader>fgl",
          function()
             Snacks.picker.git_log_file()
          end,
