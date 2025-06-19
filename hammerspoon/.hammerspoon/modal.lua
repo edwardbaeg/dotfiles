@@ -92,6 +92,14 @@ local modalEntries = {
          modal:exit()
       end,
    },
+   {
+      key = "S",
+      label = "Sleep",
+      callback = function()
+         hs.urlevent.openURL("raycast://extensions/raycast/system/sleep")
+         modal:exit()
+      end,
+   },
 }
 
 function modal:entered()
