@@ -104,10 +104,10 @@ local modalEntries = {
 
 function modal:entered()
    local modalContent = table.concat(
-      ---@diagnostic disable-next-line: param-type-mismatch it's correct
+      ---@diagnostic disable-next-line: param-type-mismatch it's correct?
       hs.fnutils.map(modalEntries, function(entry)
          local label = type(entry.label) == "function" and entry.label() or entry.label
-         return entry.key .. ": " .. label
+         return "[" .. entry.key .. "] " .. label
       end),
       "\n"
    )
@@ -120,9 +120,10 @@ function modal:entered()
          blue = 0.3,
          alpha = 1,
       }, -- background fill
-      -- textColor = { white = 1 }, -- Text color
-      -- textFont = "Helvetica", -- Optional font
-      -- textSize = 15, -- Optional text size
+      -- textColor = { white = 1 },
+      textFont = "0xProto",
+      -- textFont = "Helvetica",
+      textSize = 20,
       radius = 16, -- Optional corner radius
    }, "indefinite")
 end
