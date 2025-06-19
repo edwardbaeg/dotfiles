@@ -32,7 +32,6 @@ end)
 -- show interactive modal interface for resizing
 hs.hotkey.bind(constants.hyperkey, "G", function()
    local screen, paddedFrame = getScreenAndPaddedFrame()
-   hs.grid.setGrid("6x6", screen, paddedFrame)
+   hs.grid.setGrid("8x4", screen, paddedFrame)
    hs.grid.show()
 end)
-
