@@ -13,7 +13,7 @@ end
 local modalEntries = {
    {
       key = "A",
-      label = "Personal AI Preset",
+      label = "Personal-extensions AI Preset",
       callback = function()
          hs.urlevent.openURL(
             "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D"
@@ -54,6 +54,17 @@ local modalEntries = {
       end,
    },
    {
+      key = "R",
+      label = "Restart cursor server",
+      callback = function()
+         hs.application.launchOrFocus("Cursor")
+         hs.timer.doAfter(1, function()
+            hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find("Cursor"))
+         end)
+         modal:exit()
+      end,
+   },
+   {
       key = "Z",
       label = "Zen",
       callback = function()
@@ -74,7 +85,7 @@ local modalEntries = {
    {
       key = "P",
       label = function()
-         return getToggleLabel(isPersonalOverride(), "Arc Personal")
+         return getToggleLabel(isPersonalOverride(), "Arc personal")
       end,
       callback = function()
          togglePersonalOverride()
