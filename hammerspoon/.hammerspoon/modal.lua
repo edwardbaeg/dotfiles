@@ -15,7 +15,7 @@ end
 local modalEntries = {
    {
       key = "A",
-      label = "Personal-extensions AI Preset",
+      label = "Raycast AI - Personal Extensions",
       callback = function()
          hs.urlevent.openURL(
             "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D"
@@ -57,12 +57,16 @@ local modalEntries = {
    },
    {
       key = "R",
-      label = "Restart cursor server",
+      label = "Restart Cursor debug server",
       callback = function()
-         hs.application.launchOrFocus("Cursor")
-         hs.timer.doAfter(1, function()
-            hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find("Cursor"))
-         end)
+         local cursorApp = hs.application.find("Cursor")
+         if not cursorApp then
+            hs.alert("Cursor not running")
+         else
+            hs.timer.doAfter(1, function()
+               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find("Cursor"))
+            end)
+         end
          modal:exit()
       end,
    },
