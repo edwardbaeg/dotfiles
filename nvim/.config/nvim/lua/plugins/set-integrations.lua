@@ -111,6 +111,7 @@ return {
 
          -- adapters
          "marilari88/neotest-vitest", -- vitest
+         "thenbe/neotest-playwright", -- playwright
       },
       cmd = { "NeoTestSummaryToggle", "NeoTestOutputToggle", "NeoTestToggle" },
       config = function()
@@ -119,7 +120,7 @@ return {
             status = {
                enabled = true,
                virtual_text = true,
-               signs = true
+               signs = true,
             },
             adapters = {
                require("neotest-vitest")({ -- note: this cannot use the opts syntax
@@ -127,6 +128,26 @@ return {
                   filter_dir = function(name, rel_path, root)
                      return name ~= "node_modules"
                   end,
+               }),
+               require("neotest-playwright").adapter({
+                  options = {
+                     persist_project_selection = true,
+                     enable_dynamic_test_discovery = true,
+                     is_test_file = function(file_path)
+                        -- By default, only returns true if a file contains one of several file
+                        -- extension patterns. See default implementation here: https://github.com/thenbe/neotest-playwright/blob/53c7c9ad8724a6ee7d708c1224f9ea25fa071b61/src/discover.ts#L25-L47
+                        -- local result = file_path:find("%.test%.[tj]sx?$") ~= nil
+                        --    or file_path:find("%.spec%.[tj]sx?$") ~= nil
+
+                        -- Alternative example: Match only files that end in `test.ts`
+                        -- local result = file_path:find("%.test%.ts$") ~= nil
+                        local result = file_path:find("%.play%.ts$") ~= nil
+
+                        -- Alternative example: Match only files that end in `test.ts`, but only if it has ancestor directory `e2e/tests`
+                        -- local result = file_path:find("e2e/tests/.*%.test%.ts$") ~= nil
+                        return result
+                     end,
+                  },
                }),
             },
          })
