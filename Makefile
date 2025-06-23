@@ -2,6 +2,7 @@
 
 all: stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin
 
+# TODO: follow a single pattern for directories. Probably set nested dirs here instead of in git filesystem
 stow-nvim:
 	stow --verbose --restow -t ~ nvim
 
@@ -30,7 +31,7 @@ stow-borders:
 	stow --verbose --restow -t ~ borders
 
 stow-bin:
-	stow --verbose --restow -t ~ bin
+	stow --verbose --restow -t ~/bin bin
 
 clean:
 	stow --delete -t ~ nvim tmux zsh hammerspoon wezterm gitconfig gh-dash kitty borders bin
