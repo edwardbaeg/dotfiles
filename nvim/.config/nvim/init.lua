@@ -17,9 +17,12 @@ require("lazy").setup("plugins", {
 require("config.post-plugins")
 
 --[[ TODO
-- create a command/keymap to open help with cword
+-- PLUGINS:
+- add a custom % motion (endwise?) thing for START and END comments
+- determine a way to open *.stories or *.test for the given file - maybe a plugin? or extension of snacks.picker?
+
+-- OTHER:
 - rewrite all vimscript stuff to lua
-- determine a way to open *.stories or *.test for the given file
 - move legacy/inactive settings to a separate file that is not loaded?
 ]]
 

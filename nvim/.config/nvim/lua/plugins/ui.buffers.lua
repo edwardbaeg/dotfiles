@@ -3,6 +3,7 @@ return {
       -- TODO: add filetype to the buvvers window
       -- TODO: add ability to jump directly to buvvers window
       "aidancz/buvvers.nvim",
+      enabled = false,
       config = function()
          local buvvers = require("buvvers")
 
