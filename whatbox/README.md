@@ -61,3 +61,12 @@ put, mirror <dir>
 ## Set up nginx web server to serve files over HTTP
 
 Follow the nginx guide [here](https://whatbox.ca/wiki/Userland_Nginx).
+
+## Setup ssh
+
+Official guide [here](https://whatbox.ca/wiki/ssh).
+
+### Set up key pairs
+
+- Add public key to `~/.ssh/authorized_keys`
+  - this should be found in the local machine at `~/.ssh/id_rsa.pub``
