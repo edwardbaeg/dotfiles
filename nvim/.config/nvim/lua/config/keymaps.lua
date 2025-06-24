@@ -142,18 +142,20 @@ vim.cmd([[
 -- Smart enter key that tries gx (open URL) or gf (open file)
 -- ~/Downloads
 -- https://example.com
-local function smart_enter()
-   vim.cmd("normal gx")
-   -- TODO: check if the vim.ui.open/gx worked first. this command opens the html file for urls
-   vim.cmd("normal! gf")
+-- local function smart_enter()
+--    -- vim.cmd("normal gx")
+--    -- TODO: check if the vim.ui.open/gx worked first. this command opens the html file for urls
+--    vim.cmd("normal! gf")
+--
+--    -- this doesn't include the mapping for open in git
+--    -- local cmd, err = vim.ui.open(vim.fn.expand("<cfile>"))
+--    -- if cmd then
+--    --    cmd:wait()
+--    -- else
+--    --    print('fail?')
+--    -- end
+-- end
 
-   -- this doesn't include the mapping for open in git
-   -- local cmd, err = vim.ui.open(vim.fn.expand("<cfile>"))
-   -- if cmd then
-   --    cmd:wait()
-   -- else
-   --    print('fail?')
-   -- end
-end
+-- set("n", "<CR>", smart_enter, { desc = "Smart Enter: try gx (URL) or gf (file)" })
 
-set("n", "<CR>", smart_enter, { desc = "Smart Enter: try gx (URL) or gf (file)" })
+set("n", "<CR>", "gf", { silent = true })
