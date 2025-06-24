@@ -1,14 +1,14 @@
+local home_path = vim.fn.expand("~")
+
 return {
    "obsidian-nvim/obsidian.nvim",
    version = "*", -- recommended, use latest release instead of latest commit
    lazy = true,
    -- ft = "markdown",
+   -- only load on obsidian .md files
    event = {
-      -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-      -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-      -- refer to `:h file-pattern` for more examples
-      "BufReadPre " .. vim.fn.expand("~") .. "/Sync/Obsidian Vault/*.md",
-      "BufNewFile  " .. vim.fn.expand("~") .. "/Sync/Obsidian Vault/*.md",
+      "BufReadPre " .. home_path .. "/Sync/Obsidian Vault/*.md",
+      "BufNewFile  " .. home_path .. "/Sync/Obsidian Vault/*.md",
    },
    dependencies = {
       "nvim-lua/plenary.nvim", -- Required
@@ -19,10 +19,6 @@ return {
             name = "main",
             path = "~/Sync/Obsidian Vault/",
          },
-         -- {
-         --   name = "work",
-         --   path = "~/vaults/work",
-         -- },
       },
       picker = {
          name = "mini.pick",

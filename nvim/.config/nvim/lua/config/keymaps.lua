@@ -109,6 +109,7 @@ set("n", "<leader>et", ":edit ~/.tmux.conf<cr>", { desc = "[e]dit [t]mux.conf" }
 set("n", "<leader>ez", ":edit ~/.zshrc<cr>", { desc = "[e]dit [z]shrc" })
 set("n", "<leader>eh", ":edit ~/.hammerspoon/init.lua<cr>", { desc = "[e]dit [h]ammerspoon" })
 set("n", "<leader>ek", ":edit ~/.config/kitty/kitty.conf<cr>", { desc = "[e]dit [k]itty.conf" })
+set("n", "<leader>eo", ":edit ~/Sync/Obsidian Vault/<cr>", { desc = "[e]dit [o]bsidian" })
 
 -- Windows
 set("n", "<leader>w", "<c-w>")
