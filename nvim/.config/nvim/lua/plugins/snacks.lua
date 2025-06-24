@@ -8,6 +8,7 @@ return {
    ---@type snacks.Config
    opts = {
       -- NOTE: use <c-q> to add files to quickfix (default for grep)
+      ---@class snacks.picker.Config
       picker = {
          sources = {
             explorer = {
@@ -68,20 +69,69 @@ return {
                   vim.cmd.stopinsert()
                end,
             },
-         },
-      },
-      win = {
-         -- input window
-         input = {
-            keys = {
-               -- close from insert mode -- this doesn't seem to work...
-               ["<Esc>"] = { "close", mode = { "n", "i" } },
-            },
-         },
 
-         -- result list window
-         list = {
-            keys = {},
+            -- -- FIXME: add source for quickly finding test files
+            -- test_files = {
+            --    finder = "grep",
+            --    cmd = "rg --files --glob '*.test.*' --glob '*.spec.*'",
+            --    format = "file",
+            --    live = true,
+            --    supports_live = true,
+            -- },
+            --
+            -- -- custom
+            -- -- Add to snacks config
+            -- -- Trigger with: `:lua require('snacks.picker').git_diff_base()`
+            -- git_diff_base = {
+            --    finder = function(opts, ctx)
+            --       local line, h = {}, {}
+            --       return require("snacks.picker.source.proc").proc({
+            --          cmd = "git",
+            --          args = { "diff", "--color=always", "--no-ext-diff", "master" }, -- Replace 'master' with your base
+            --          transform = function(item)
+            --             -- Parses diff output into hunks
+            --             local text = item.text
+            --             if text:find("^diff") then
+            --                item.file = text:match("diff.-a/(.*) b/")
+            --             elseif text:find("^@@") then
+            --                table.insert(h, text)
+            --             elseif text:find("^[+-]") then
+            --                table.insert(line, text)
+            --                if #line > 0 then
+            --                   item.diff = table.concat(line, "\n")
+            --                   item.hunk = table.concat(h, "\n")
+            --                   return true
+            --                end
+            --             end
+            --             return false
+            --          end,
+            --       }, ctx)
+            --    end,
+            -- },
+         },
+         win = {
+            -- input window
+            input = {
+               keys = {
+                  -- NOTE: use <esc> to enter normal mode; <c-c> to close
+                  -- ["<Esc>"] = { "close", mode = { "n", "i" } },
+
+                  ["K"] = { "preview_scroll_up", mode = { "n" } },
+                  ["J"] = { "preview_scroll_down", mode = { "n" } },
+                  -- ["<c-b>"] = { "preview_scroll_up", mode = { "i", "n" } },
+                  -- ["<c-f>"] = { "preview_scroll_down", mode = { "i", "n" } },
+               },
+            },
+
+            -- result list window
+            list = {
+               keys = {
+                  ["K"] = { "preview_scroll_up", mode = { "n" } },
+                  ["J"] = { "preview_scroll_down", mode = { "n" } },
+                  -- ["<c-b>"] = { "preview_scroll_up", mode = { "i", "n" } },
+                  -- ["<c-f>"] = { "preview_scroll_down", mode = { "i", "n" } },
+               },
+            },
          },
       },
    },
@@ -97,14 +147,16 @@ return {
       {
          "<leader>ff",
          function()
-            Snacks.picker.files()
+            -- Snacks.picker.files()
+            Snacks.picker.git_files()
          end,
          desc = "[f]iles",
       },
       {
          "<c-p>",
          function()
-            Snacks.picker.files()
+            -- Snacks.picker.files()
+            Snacks.picker.git_files()
          end,
          desc = "[f]iles",
       },
@@ -262,6 +314,60 @@ return {
       vim.api.nvim_create_user_command("Scratch", function()
          Snacks.scratch()
       end, {})
+
+      -- -- START Custom pickers
+      -- local function pick_cmd_result(picker_opts)
+      --    local git_root = Snacks.git.get_root()
+      --    local function finder(opts, ctx)
+      --       return require("snacks.picker.source.proc").proc({
+      --          opts,
+      --          {
+      --             cmd = picker_opts.cmd,
+      --             args = picker_opts.args,
+      --             transform = function(item)
+      --                item.cwd = picker_opts.cwd or git_root
+      --                item.file = item.text
+      --             end,
+      --          },
+      --       }, ctx)
+      --    end
+      --
+      --    Snacks.picker.pick({
+      --       source = picker_opts.name,
+      --       finder = finder,
+      --       preview = picker_opts.preview,
+      --       title = picker_opts.title,
+      --    })
+      -- end
+      --
+      -- -- Custom Pickers
+      -- local custom_pickers = {}
+      --
+      -- -- function custom_pickers.git_show()
+      -- --    pick_cmd_result({
+      -- --       cmd = "git",
+      -- --       args = { "diff-tree", "--no-commit-id", "--name-only", "--diff-filter=d", "HEAD", "-r" },
+      -- --       name = "git_show",
+      -- --       title = "Git Last Commit",
+      -- --       preview = "git_show",
+      -- --    })
+      -- -- end
+      --
+      -- function custom_pickers.git_diff_merge_point()
+      --    pick_cmd_result({
+      --       cmd = "git",
+      --       -- args = { "diff-tree", "--no-commit-id", "--name-only", "--diff-filter=d", "HEAD@{u}..HEAD", "-r" },
+      --       -- args = { "diff-tree", "--no-commit-id", "--name-only", "--diff-filter=d", "master...HEAD", "-r" },
+      --       -- args = { "diff", "--merge-base", "master" },
+      --       name = "git_diff_upstream",
+      --       title = "Git Branch Changed Files",
+      --       preview = "file",
+      --    })
+      -- end
+      --
+      -- -- vim.keymap.set("n", "<leader>fgh", custom_pickers.git_show)
+      -- vim.keymap.set("n", "<leader>fgu", custom_pickers.git_diff_merge_point)
+      -- -- END custom pickers
 
       -- Toggle mappings
       Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>tsp")
