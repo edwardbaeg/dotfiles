@@ -3,10 +3,13 @@
 -- TODO: break up into modules or something with more structure
 -- also consider better organization for legibility
 
+local M = {}
+
 local set = function(mode, lhs, rhs, opts)
    opts = vim.tbl_extend("force", { silent = true }, opts or {})
    vim.keymap.set(mode, lhs, rhs, opts)
 end
+M.set = set
 
 -- Escaping
 set("i", "jk", "<Esc>") -- leave insert mode
@@ -23,12 +26,10 @@ set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true }) -- deal with wordwra
 set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- Buffers
-set("n", "<leader>nn", "<cmd>bnext<cr>") -- next buffer
-set("n", "<leader>pp", "<cmd>bprevious<cr>") -- previous buffer
-set("n", "<leader>bn", ":bn<cr>") -- emacs style
-set("n", "<leader>bp", ":bp<cr>")
-set("n", "<tab>", "<cmd>bnext<cr>") -- navigate buffers with tab
-set("n", "<s-tab>", "<cmd>bprevious<cr>")
+-- set("n", "<leader>bn", ":bnext<cr>") -- emacs style -- replaced with bufferline to follow visual order
+-- set("n", "<leader>bp", ":bprevious<cr>")
+-- set("n", "<tab>", "<cmd>bnext<cr>") -- navigate buffers with tab
+-- set("n", "<s-tab>", "<cmd>bprevious<cr>")
 set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
 set("n", "<leader>bd", ":bd<cr>")
 
@@ -160,3 +161,5 @@ vim.cmd([[
 -- set("n", "<CR>", smart_enter, { desc = "Smart Enter: try gx (URL) or gf (file)" })
 
 set("n", "<CR>", "gf", { silent = true })
+
+return M

@@ -18,6 +18,7 @@ require("config.post-plugins")
 
 --[[ TODO
 -- PLUGINS:
+- an extenion for bufferline to reorder the list of buffers?
 - add a custom % motion (endwise?) thing for START and END comments
 - determine a way to open *.stories or *.test for the given file - maybe a plugin? or extension of snacks.picker?
 

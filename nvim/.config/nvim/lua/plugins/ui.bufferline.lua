@@ -1,3 +1,5 @@
+local set = require("config.keymaps").set
+
 return {
    -- fancier tabline
    "akinsho/bufferline.nvim",
@@ -120,5 +122,11 @@ return {
             },
          },
       })
+
+      -- use theses over :bnext or :bprevious to follow the visual roder set by the plugin
+      set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>")
+      set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<cr>")
+      set("n", "<tab>", "<cmd>BufferLineCycleNext<cr>")
+      set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<cr>")
    end,
 }
