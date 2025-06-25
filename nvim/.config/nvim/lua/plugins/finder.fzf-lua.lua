@@ -20,6 +20,9 @@ return {
                },
             },
             keymap = {
+               fzf = {
+                  ["ctrl-q"] = "select-all+accept", -- send all to quickfix
+               },
                builtin = {
                   ["<c-p>"] = "preview-page-up",
                   ["<c-n>"] = "preview-page-down",
