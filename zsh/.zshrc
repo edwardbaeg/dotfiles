@@ -92,6 +92,9 @@ fi
 # Improve less
 export LESS="$LESS -FRXK"
 
+# Use Neovim as manpager # TODO: open this without loading plugins to speed up
+export MANPAGER='nvim +Man!'
+
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
 
