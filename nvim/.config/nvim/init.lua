@@ -23,6 +23,7 @@ require("config.post-plugins")
 - determine a way to open *.stories or *.test for the given file - maybe a plugin? or extension of snacks.picker?
 
 -- OTHER:
+- use exported `set` keymap function from config.keymaps
 - rewrite all vimscript stuff to lua
 - move legacy/inactive settings to a separate file that is not loaded?
 ]]
