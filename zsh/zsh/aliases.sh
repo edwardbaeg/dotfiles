@@ -38,15 +38,21 @@ alias ghistb="git histb"
 alias gmm="git merge master"
 alias gmo="git merge origin/master"
 alias gfl="git fetch && git pull"
-alias gdm="git diff master"
+# alias gdm="git diff master" # this is not as useful if master is no longer at the fork point of the branch
+alias gdm="git diff --merge-base master"
 alias gdo="git diff origin"
 alias gd1="git diff HEAD~1"
 alias gd2="git diff HEAD~2"
 alias gd3="git diff HEAD~3"
-# alias glmm="git checkout master && git pull && git checkout - && git merge master"
 alias grpo="git remote prune origin"
 alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'"
 # https://stackoverflow.com/questions/43489303/how-can-i-delete-all-git-branches-which-have-been-squash-and-merge-via-github
+
+# git_diff_fork_point() {
+#   # git diff "$(git merge-base --fork-point master)"
+#   # git diff master...HEAD
+#   git diff --merge-base master
+# }
 
 # from zsh git-open plugin
 alias gop="git open"
