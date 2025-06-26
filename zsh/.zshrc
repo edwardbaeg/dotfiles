@@ -111,7 +111,7 @@ if ! zgen saved; then
     # load oh-my-zsh first
     zgen oh-my-zsh
 
-    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/git # adds git aliases
     # zgen oh-my-zsh plugins/vi-mode
     zgen oh-my-zsh plugins/colored-man-pages
     # zgen oh-my-zsh plugins/tmux
@@ -309,7 +309,7 @@ function wttr() {
 # -- Neovim stuffs -------------------------------------------------
 
 # -- Aliases to immediately run commands
-alias vpp="nvim -c \"lua require('snacks').picker.files()\""
+alias vpp="nvim -c \"lua require('snacks').picker.git_files()\""
 alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsr="nvim -c \"lua require('persistence').load()\""
 alias ve="nvim -c \"enew\"" # open empty buffer
