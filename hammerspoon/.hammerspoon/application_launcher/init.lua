@@ -29,11 +29,6 @@ local function setArcProfile(profileIndex)
    end)
 end
 
-local mappings = {
-   { "0", "Kitty" },
-   { "8", "Slack" },
-}
-
 -- Function to get the current personal override state
 local function isPersonalOverride()
    return hs.settings.get("isPersonalOverride") or false
@@ -99,6 +94,12 @@ M.togglePersonalOverride = function()
       enablePersonalOverride()
    end
 end
+
+local mappings = {
+   { "0", "Kitty" },
+   { "8", "Slack" },
+   { "7", "Perplexity" },
+}
 
 function Main()
    -- Initialize menu bar title based on saved state
