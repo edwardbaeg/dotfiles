@@ -14,4 +14,15 @@ return {
          }
       }
    },
+   keys = {
+      {
+         mode = { "n", "v" },
+         "<leader>cc",
+         function()
+            -- require("codecompanion").chat()
+            require("codecompanion").toggle()
+         end,
+         desc = "CodeCompanion",
+      },
+   }
 }

@@ -57,7 +57,7 @@ return {
                      text = function(ctx)
                         local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
                         -- different display for cmdline and searches (through "Buffer" filter)
-                        if (ctx.source_name == "Cmdline" or ctx.source_name == "Buffer") then
+                        if ctx.source_name == "Cmdline" or ctx.source_name == "Buffer" then
                            return kind_icon
                         end
                         return kind_icon .. " " .. ctx.kind
@@ -95,6 +95,9 @@ return {
                -- score_offset = 10,
                async = true,
             },
+         },
+         per_filetype = {
+            codecompanion = { "codecompanion" },
          },
       },
 

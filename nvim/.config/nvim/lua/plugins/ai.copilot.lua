@@ -56,7 +56,7 @@ return {
       keys = {
          {
             mode = { "n", "v" },
-            "<leader>ct",
+            "<leader>co",
             function()
                require("CopilotChat").open()
             end,
