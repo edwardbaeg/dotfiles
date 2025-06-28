@@ -98,7 +98,7 @@ end
 local mappings = {
    { "0", "Kitty" },
    { "8", "Slack" },
-   { "7", "Perplexity" },
+   { "P", "Perplexity" },
 }
 
 function Main()
