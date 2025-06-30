@@ -116,7 +116,7 @@ return {
 
          -- eslint fix all on save?
          local base_on_attach = vim.lsp.config.eslint.on_attach
-         vim.lsp.config('eslint', {
+         vim.lsp.config("eslint", {
             on_attach = function(client, bufnr)
                base_on_attach(client, bufnr)
                vim.api.nvim_create_autocmd("BufWritePre", {
@@ -311,7 +311,7 @@ return {
          local keymap = vim.keymap.set
 
          -- lsp saga keymaps
-         keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>") -- consider replacing with builtin lsp code action (gra)
+         -- keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>") -- consider replacing with builtin lsp code action (gra)
          -- keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>") -- replaced with builtin, grr
          keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
          -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
@@ -466,6 +466,31 @@ return {
       },
       config = function(_, opts)
          require("tiny-inline-diagnostic").setup(opts)
+      end,
+   },
+
+   {
+      -- show and visualize code actions
+      "rachartier/tiny-code-action.nvim",
+      dependencies = {
+         { "nvim-lua/plenary.nvim" },
+      },
+      event = "LspAttach",
+      opts = {
+         picker = {
+            "buffer",
+            opts = {
+               -- winborder = "rounded",
+               hotkeys_mode = "text_based",
+               position = "center"
+            },
+         },
+      },
+      init = function()
+         vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+            ---@diagnostic disable-next-line: missing-parameter it's correct
+            require("tiny-code-action").code_action()
+         end, { desc = "[C]ode [A]ction", silent = true, noremap = true })
       end,
    },
 }
