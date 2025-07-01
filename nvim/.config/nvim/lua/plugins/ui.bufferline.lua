@@ -126,7 +126,10 @@ return {
       -- use theses over :bnext or :bprevious to follow the visual roder set by the plugin
       set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>")
       set("n", "<leader>bp", "<cmd>BufferLineCyclePrev<cr>")
-      set("n", "<tab>", "<cmd>BufferLineCycleNext<cr>")
+
+      -- https://github.com/neovim/neovim/issues/20126#issuecomment-1296036118
+      set("n", "<tab>", "<cmd>BufferLineCycleNext<cr>") -- this breaks <c-i>, seems to send the same terminal code?
+      -- set("n", "<tab>", "<cmd>bnext<cr>") -- this breaks <c-i>, seems to send the same terminal code?
       set("n", "<s-tab>", "<cmd>BufferLineCyclePrev<cr>")
    end,
 }
