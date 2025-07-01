@@ -12,6 +12,7 @@ return {
    },
    dependencies = {
       "nvim-lua/plenary.nvim", -- Required
+      "nvim-treesitter", -- to improve syntax highlighting
    },
    opts = {
       workspaces = {
@@ -21,13 +22,20 @@ return {
          },
       },
       picker = {
-         name = "mini.pick",
+         name = "snacks.pick",
       },
       completion = {
          nvim_cmp = false,
          blink = true,
          min_chars = 1,
       },
+
+      --- FIXME: does not work
+      -- open = {
+      --    func = function(uri)
+      --       vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
+      --    end,
+      -- },
    },
    init = function()
       vim.api.nvim_create_autocmd("FileType", {
@@ -36,5 +44,11 @@ return {
             vim.wo.conceallevel = 2
          end,
       })
+
+      -- Open vault home directory
+      vim.api.nvim_create_user_command("OpenObsidianVault", function()
+         vim.cmd("edit ~/Sync/Obsidian\\ Vault/")
+      end, {})
+      vim.api.nvim_set_keymap("n", "<leader>eo", ":OpenObsidianVault<CR>", { noremap = true, silent = true })
    end,
 }
