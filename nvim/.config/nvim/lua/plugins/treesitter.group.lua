@@ -105,10 +105,10 @@ return {
                swap = {
                   enable = true,
                   swap_next = {
-                     ["<leader>a"] = "@parameter.inner",
+                     ["<leader>."] = "@parameter.inner",
                   },
                   swap_previous = {
-                     ["<leader>A"] = "@parameter.inner",
+                     ["<leader>,"] = "@parameter.inner",
                   },
                },
             },
@@ -259,8 +259,8 @@ return {
       },
       config = function(_, opts)
          require("treewalker").setup(opts)
-         vim.keymap.set("n", "<leader>,", "<cmd>Treewalker SwapLeft<cr>")
-         vim.keymap.set("n", "<leader>.", "<cmd>Treewalker SwapRight<cr>")
+         -- vim.keymap.set("n", "<leader>,", "<cmd>Treewalker SwapLeft<cr>")
+         -- vim.keymap.set("n", "<leader>.", "<cmd>Treewalker SwapRight<cr>")
 
          -- Hydra: Treewalker
          vim.keymap.set("n", "<leader>t<space>", function()
@@ -294,7 +294,7 @@ return {
       -- NOTE: setting this with lazy.opts/keys doesnt work well - cannot disable default keymaps and use lazy.keys at the same time
       -- FIXME?: disable its keymaps for <a-j/k>?
       "Wansmer/sibling-swap.nvim",
-      enabled = false, -- replaced with tree-walker
+      enabled = false, -- replaced with tree-walker, treesitter-textobjects
       event = "VeryLazy",
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
