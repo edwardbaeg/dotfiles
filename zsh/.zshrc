@@ -215,6 +215,7 @@ function vim_grep {
 
 # List tmux sessions, filter with fzf, and attach to the selected session
 # TODO: add the ability to create a session if there is no match in fzf
+# TODO: switch sessions if already in one
 alias ta="tmux_attach"
 function tmux_attach() {
     if [[ -n "$TMUX" ]]; then
