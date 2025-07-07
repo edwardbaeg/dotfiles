@@ -5,7 +5,7 @@ hs.urlevent.bind("alert", function(_, params)
    hs.alert.show(title, {
       strokeColor = { white = 1, alpha = 0.5 }, -- Optional border color
       fillColor = {
-         red = 0.1,
+         red = 0.5,
          green = 0.1,
          blue = 0.6,
          alpha = 0.9,
