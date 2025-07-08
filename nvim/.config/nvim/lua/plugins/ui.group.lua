@@ -126,15 +126,16 @@ return {
       -- improved markdown view in neovim
       -- :RenderMarkdownToggle
       "MeanderingProgrammer/render-markdown.nvim",
+      -- enabled = false,
       event = "VeryLazy",
       ft = {
-         -- "markdown",
+         "markdown",
          "codecompanion",
       },
       dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
          require("render-markdown").setup({
-            enabled = false,
+            enabled = false, -- render by default
          })
          vim.api.nvim_create_user_command("RenderMarkdownToggle", function()
             require("render-markdown").toggle()

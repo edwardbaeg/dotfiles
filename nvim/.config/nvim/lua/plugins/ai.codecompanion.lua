@@ -1,6 +1,6 @@
 return {
    -- AI code programming
-   -- :CodeCompanion <prompt> to do an inline change
+   -- :CodeCompanion <prompt> to do an inline change (see todo below)
    -- <leader>cc to open chat
    -- ga to change adapter+model
    "olimorris/codecompanion.nvim",

@@ -142,6 +142,8 @@ return {
             },
          },
       },
+      -- TODO: maybe add edgy integration to be able to change window focus with c-w shortcuts?
+      -- terminal = { }
    },
    keys = {
       -- Pickers
