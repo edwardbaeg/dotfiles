@@ -17,17 +17,33 @@ local function getToggleLabel(value, label)
 end
 
 local subModalEntries = {
+   "--Cursor--",
    {
       key = "O",
-      label = "Open Cursor",
+      label = "Open",
       callback = function()
          hs.application.launchOrFocus("Cursor")
-         modal:exit()
+         cursorSubmodal:exit()
+      end,
+   },
+   {
+      key = "S",
+      label = "Start debug server",
+      callback = function()
+         local cursorApp = hs.application.find("Cursor")
+         if not cursorApp then
+            hs.alert("Cursor not running")
+         else
+            hs.timer.doAfter(1, function()
+               hs.eventtap.keyStroke({}, "F5", 0, hs.application.find("Cursor"))
+            end)
+         end
+         cursorSubmodal:exit()
       end,
    },
    {
       key = "R",
-      label = "Restart Cursor debug server",
+      label = "Restart debug server",
       callback = function()
          local cursorApp = hs.application.find("Cursor")
          if not cursorApp then
@@ -37,7 +53,7 @@ local subModalEntries = {
                hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find("Cursor"))
             end)
          end
-         modal:exit()
+         cursorSubmodal:exit()
       end,
    },
 }
@@ -45,6 +61,11 @@ local subModalEntries = {
 function cursorSubmodal:entered()
    local modalContent = table.concat(
       hs.fnutils.map(subModalEntries, function(entry)
+         -- Handle string entries (display-only)
+         if type(entry) == "string" then
+            return entry
+         end
+         -- Handle table entries (with keybindings)
          local label = type(entry.label) == "function" and entry.label() or entry.label
          return "[" .. entry.key .. "] " .. label
       end),
@@ -69,6 +90,7 @@ function cursorSubmodal:exited()
 end
 
 local modalEntries = {
+   "--Apps--",
    {
       key = "A",
       label = "Raycast AI - Personal Extensions",
@@ -119,6 +141,8 @@ local modalEntries = {
          modal:exit()
       end,
    },
+   "",
+   "--System--",
    {
       key = "C",
       label = function()
@@ -147,6 +171,8 @@ local modalEntries = {
          modal:exit()
       end,
    },
+   "",
+   "--Submodals--",
    {
       key = "U",
       label = "Cursor: modal",
@@ -161,6 +187,11 @@ function modal:entered()
    local modalContent = table.concat(
       ---@diagnostic disable-next-line: param-type-mismatch it's correct?
       hs.fnutils.map(modalEntries, function(entry)
+         -- Handle string entries (display-only)
+         if type(entry) == "string" then
+            return entry
+         end
+         -- Handle table entries (with keybindings)
          local label = type(entry.label) == "function" and entry.label() or entry.label
          return "[" .. entry.key .. "] " .. label
       end),
@@ -191,12 +222,18 @@ function Start()
    -- TODO: wrap these
    -- Create bindings for each entry
    for _, entry in ipairs(modalEntries) do
-      modal:bind("", entry.key, entry.callback)
+      -- Skip string entries (display-only)
+      if type(entry) == "table" and entry.key and entry.callback then
+         modal:bind("", entry.key, entry.callback)
+      end
    end
 
    -- Create bindings for sub-modal entries
    for _, entry in ipairs(subModalEntries) do
-      cursorSubmodal:bind("", entry.key, entry.callback)
+      -- Skip string entries (display-only)
+      if type(entry) == "table" and entry.key and entry.callback then
+         cursorSubmodal:bind("", entry.key, entry.callback)
+      end
    end
 
    -- TODO?: create bindings for all other key presses to exit the modal
