@@ -8,8 +8,64 @@ local M = {}
 local modal = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
+-- TODO: abstract to different modal?
+local cursorSubmodal = hs.hotkey.modal.new()
+local cursorSubmodalId
+
 local function getToggleLabel(value, label)
    return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
+end
+
+local subModalEntries = {
+   {
+      key = "O",
+      label = "Open Cursor",
+      callback = function()
+         hs.application.launchOrFocus("Cursor")
+         modal:exit()
+      end,
+   },
+   {
+      key = "R",
+      label = "Restart Cursor debug server",
+      callback = function()
+         local cursorApp = hs.application.find("Cursor")
+         if not cursorApp then
+            hs.alert("Cursor not running")
+         else
+            hs.timer.doAfter(1, function()
+               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find("Cursor"))
+            end)
+         end
+         modal:exit()
+      end,
+   },
+}
+
+function cursorSubmodal:entered()
+   local modalContent = table.concat(
+      hs.fnutils.map(subModalEntries, function(entry)
+         local label = type(entry.label) == "function" and entry.label() or entry.label
+         return "[" .. entry.key .. "] " .. label
+      end),
+      "\n"
+   )
+   modalContent = modalContent .. "\n\nEsc: Exit"
+   cursorSubmodalId = hs.alert.show(modalContent, {
+      fillColor = {
+         red = 0.2,
+         green = 0.4,
+         blue = 0.6,
+         alpha = 1,
+      },
+      textFont = "0xProto",
+      textSize = 20,
+      radius = 16,
+   }, "indefinite")
+end
+
+function cursorSubmodal:exited()
+   hs.alert.closeSpecific(cursorSubmodalId, 0.1)
 end
 
 local modalEntries = {
@@ -47,29 +103,14 @@ local modalEntries = {
          modal:exit()
       end,
    },
-   {
-      key = "U",
-      label = "Cursor",
-      callback = function()
-         hs.application.launchOrFocus("Cursor")
-         modal:exit()
-      end,
-   },
-   {
-      key = "R",
-      label = "Restart Cursor debug server",
-      callback = function()
-         local cursorApp = hs.application.find("Cursor")
-         if not cursorApp then
-            hs.alert("Cursor not running")
-         else
-            hs.timer.doAfter(1, function()
-               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find("Cursor"))
-            end)
-         end
-         modal:exit()
-      end,
-   },
+   -- {
+   --    key = "U",
+   --    label = "Cursor",
+   --    callback = function()
+   --       hs.application.launchOrFocus("Cursor")
+   --       modal:exit()
+   --    end,
+   -- },
    {
       key = "Z",
       label = "Zen",
@@ -104,6 +145,14 @@ local modalEntries = {
       callback = function()
          hs.urlevent.openURL("raycast://extensions/raycast/system/sleep")
          modal:exit()
+      end,
+   },
+   {
+      key = "U",
+      label = "Cursor: modal",
+      callback = function()
+         modal:exit()
+         cursorSubmodal:enter()
       end,
    },
 }
@@ -145,11 +194,20 @@ function Start()
       modal:bind("", entry.key, entry.callback)
    end
 
+   -- Create bindings for sub-modal entries
+   for _, entry in ipairs(subModalEntries) do
+      cursorSubmodal:bind("", entry.key, entry.callback)
+   end
+
    -- TODO?: create bindings for all other key presses to exit the modal
    -- https://github.com/Hammerspoon/hammerspoon/issues/848#issuecomment-930456782
 
    modal:bind("", "escape", function()
       modal:exit()
+   end)
+
+   cursorSubmodal:bind("", "escape", function()
+      cursorSubmodal:exit()
    end)
 end
 
