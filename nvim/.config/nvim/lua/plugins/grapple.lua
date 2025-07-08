@@ -38,7 +38,8 @@ return {
          require("harpeek").toggle({ winopts = { row = lines * 0.80, col = columns } })
       end
       -- vim.keymap.set("n", "<c-h>", harpeek_toggle, { noremap = true, silent = true, desc = "[H]arpeek toggle" })
-      vim.keymap.set("n", "<leader>h", harpeek_toggle, { noremap = true, silent = true, desc = "[H]arpeek toggle" })
+      -- vim.keymap.set("n", "<leader>h", harpeek_toggle, { noremap = true, silent = true, desc = "[H]arpeek toggle" })
+      vim.keymap.set("n", "<leader>kh", harpeek_toggle, { noremap = true, silent = true, desc = "[H]arpeek toggle" })
       vim.api.nvim_create_user_command("HarpeekToggle", "lua require('harpeek').toggle()", {})
    end,
    keys = {
