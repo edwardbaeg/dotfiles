@@ -5,6 +5,13 @@ local caffeine = require("caffeine")
 
 local M = {}
 
+---@alias ModalEntry string | ModalEntryTable
+
+---@class ModalEntryTable
+---@field key string The key to bind for this entry
+---@field label string | function The label to display (can be a function that returns a string)
+---@field callback function The function to call when the key is pressed
+
 local modal = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
@@ -16,6 +23,7 @@ local function getToggleLabel(value, label)
    return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
 end
 
+---@type ModalEntry[]
 local subModalEntries = {
    "--Cursor--",
    {
@@ -59,18 +67,16 @@ local subModalEntries = {
 }
 
 function cursorSubmodal:entered()
-   local modalContent = table.concat(
-      hs.fnutils.map(subModalEntries, function(entry)
-         -- Handle string entries (display-only)
-         if type(entry) == "string" then
-            return entry
-         end
-         -- Handle table entries (with keybindings)
+   local mappedEntries = {}
+   for _, entry in ipairs(subModalEntries) do
+      if type(entry) == "string" then
+         table.insert(mappedEntries, entry)
+      elseif type(entry) == "table" and entry.key and entry.label then
          local label = type(entry.label) == "function" and entry.label() or entry.label
-         return "[" .. entry.key .. "] " .. label
-      end),
-      "\n"
-   )
+         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
+      end
+   end
+   local modalContent = table.concat(mappedEntries, "\n")
    modalContent = modalContent .. "\n\nEsc: Exit"
    cursorSubmodalId = hs.alert.show(modalContent, {
       fillColor = {
@@ -89,6 +95,7 @@ function cursorSubmodal:exited()
    hs.alert.closeSpecific(cursorSubmodalId, 0.1)
 end
 
+---@type ModalEntry[]
 local modalEntries = {
    "--Apps--",
    {
@@ -184,19 +191,16 @@ local modalEntries = {
 }
 
 function modal:entered()
-   local modalContent = table.concat(
-      ---@diagnostic disable-next-line: param-type-mismatch it's correct?
-      hs.fnutils.map(modalEntries, function(entry)
-         -- Handle string entries (display-only)
-         if type(entry) == "string" then
-            return entry
-         end
-         -- Handle table entries (with keybindings)
+   local mappedEntries = {}
+   for _, entry in ipairs(modalEntries) do
+      if type(entry) == "string" then
+         table.insert(mappedEntries, entry)
+      elseif type(entry) == "table" and entry.key and entry.label then
          local label = type(entry.label) == "function" and entry.label() or entry.label
-         return "[" .. entry.key .. "] " .. label
-      end),
-      "\n"
-   )
+         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
+      end
+   end
+   local modalContent = table.concat(mappedEntries, "\n")
    modalContent = modalContent .. "\n\nEsc: Exit"
    id = hs.alert.show(modalContent, {
       -- strokeColor = { white = 1, alpha = 0.5 }, -- border color
