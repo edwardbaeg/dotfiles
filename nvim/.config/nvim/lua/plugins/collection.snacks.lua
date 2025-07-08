@@ -10,6 +10,14 @@ return {
       -- NOTE: use <c-q> to add files to quickfix (default for grep)
       ---@class snacks.picker.Config
       picker = {
+         formatters = {
+            file = {
+               -- truncate the file path to fit the picker window. This must also be set in each keymap to be dynamic
+               truncate = (function()
+                  return vim.api.nvim_win_get_width(0) * 0.8
+               end)(),
+            }
+         },
          sources = {
             explorer = {
                hidden = true, -- show hidden files
@@ -148,7 +156,16 @@ return {
          "<leader>ff",
          function()
             -- Snacks.picker.files()
-            Snacks.picker.git_files()
+            Snacks.picker.git_files({
+               formatters = {
+                  file = {
+                     truncate = (function()
+                        return vim.api.nvim_win_get_width(0) * 0.8
+                     end)(),
+                     -- truncate = 100
+                  }
+               }
+            })
          end,
          desc = "[f]iles",
       },
@@ -156,17 +173,26 @@ return {
          "<c-p>",
          function()
             -- Snacks.picker.files()
-            Snacks.picker.git_files()
+            Snacks.picker.git_files({
+               formatters = {
+                  file = {
+                     truncate = (function()
+                        return vim.api.nvim_win_get_width(0) * 0.8
+                     end)(),
+                     -- truncate = 100
+                  }
+               }
+            })
          end,
          desc = "[f]iles",
       },
-      {
-         "<leader>f,",
-         function()
-            Snacks.picker.buffers()
-         end,
-         desc = "Buffers",
-      },
+      -- {
+      --    "<leader>f,",
+      --    function()
+      --       Snacks.picker.buffers()
+      --    end,
+      --    desc = "Buffers",
+      -- },
       {
          "<leader>:",
          function()
@@ -264,6 +290,7 @@ return {
          desc = "Grep",
       },
 
+      -- this is super slow in large TS projects
       {
          "<leader>fsw",
          function()
@@ -271,6 +298,7 @@ return {
          end,
          desc = "workspace symbols",
       },
+
       {
          "<leader>fss",
          function()
