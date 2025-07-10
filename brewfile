@@ -1,2 +1,3 @@
 tap "FelixKratz/formulae"
 brew "borders"
+brew "eza"
