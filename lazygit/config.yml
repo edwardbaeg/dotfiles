@@ -1,3 +1,6 @@
+# Default keybinds:
+# + and _ -> cycle through layouts: normal, half, full
+
 gui:
   showIcons: true # enable nerd fonts
   theme:
