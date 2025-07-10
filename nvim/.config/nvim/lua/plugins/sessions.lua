@@ -14,7 +14,7 @@ return {
          end, { desc = "[s]ession [s]ave", silent = true })
          vim.keymap.set("n", "<leader>sS", function()
             require("persistence").select()
-         end)
+         end, { desc = "[s]ession [S]elect", silent = true })
       end,
    },
 }
