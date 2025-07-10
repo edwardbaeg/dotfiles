@@ -14,9 +14,9 @@ return {
             file = {
                -- truncate the file path to fit the picker window. This must also be set in each keymap to be dynamic
                truncate = (function()
-                  return vim.api.nvim_win_get_width(0) * 0.8
+                  return vim.api.nvim_win_get_width(0) * 0.4
                end)(),
-            }
+            },
          },
          sources = {
             explorer = {
@@ -143,7 +143,23 @@ return {
          },
       },
       -- TODO: maybe add edgy integration to be able to change window focus with c-w shortcuts?
-      -- terminal = { }
+      -- terminal = { },
+      styles = {
+         ---@diagnostic disable-next-line: missing-fields
+         terminal = {
+            keys = {
+               -- term_normal = {
+               --    "<c-w>",
+               --    function()
+               --       vim.cmd("stopinsert")
+               --    end,
+               --    mode = "t",
+               --    expr = true,
+               --    desc = "Exit terminal mode to normal mode",
+               -- },
+            },
+         },
+      },
    },
    keys = {
       -- Pickers
@@ -158,15 +174,15 @@ return {
          "<leader>ff",
          function()
             -- Snacks.picker.files()
-            Snacks.picker.git_files({
+            Snacks.picker.files({
                formatters = {
                   file = {
                      truncate = (function()
-                        return vim.api.nvim_win_get_width(0) * 0.8
+                        return vim.api.nvim_win_get_width(0) * 0.4
                      end)(),
                      -- truncate = 100
-                  }
-               }
+                  },
+               },
             })
          end,
          desc = "[f]iles",
@@ -179,14 +195,14 @@ return {
                formatters = {
                   file = {
                      truncate = (function()
-                        return vim.api.nvim_win_get_width(0) * 0.8
+                        return vim.api.nvim_win_get_width(0) * 0.4
                      end)(),
                      -- truncate = 100
-                  }
-               }
+                  },
+               },
             })
          end,
-         desc = "[f]iles",
+         desc = "git files",
       },
       -- {
       --    "<leader>f,",
@@ -207,7 +223,7 @@ return {
          function()
             Snacks.picker.notifications()
          end,
-         desc = "Notification History",
+         desc = "[N]otification History",
       },
       {
          "<leader>fe",
