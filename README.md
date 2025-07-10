@@ -42,7 +42,7 @@ These are mostly brew packages.
 - `ncdu` ncurses disk usage viewer
 - `ripgrep` better grep (and faster than ag)
 - `stow` symlink manager
-- `tldr` community written short man pages
+- `tlrc` community written short man pages (tlrc is rust client of tldr)
 - `zoxide` directory jumper
 
 #### TUI
@@ -52,6 +52,7 @@ These are mostly brew packages.
 - `neovim` better vim (async, community developed)
 - `ranger` file manager (install with `pip install ranger-fm`)
 - `tmux` terminal multiplexer
+- `tmuxp` terminal session manager
 - `yazi` file manager, seemingly faster than ranger
 
 #### Phone/Android

@@ -1,0 +1,24 @@
+# check man tmuxp to see all options
+# load with tmuxp load %
+# TODO: move to ~/.config/tmuxp
+session_name: work-main
+windows:
+  - window_name: main
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+      # shell_command_before:
+      #   - cd ~/ # run as a first command in all panes
+    panes:
+      - shell_command: # pane no. 1
+          - front
+      -
+
+  - window_name: worktree
+    layout: even-vertical
+    panes:
+    - shell_command: # pane no. 1
+      - work
+    - shell_command: # pane no. 1
+      - front
+      - npm run dev:local
