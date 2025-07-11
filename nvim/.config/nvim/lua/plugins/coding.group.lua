@@ -2,7 +2,7 @@
 -- plugins that focus on improving coding and typing experience
 
 return {
-   -- "christoomey/vim-sort-motion", -- add sort operator
+   -- "christoomey/vim-sort-motion", -- add sort operator -- replaced with mini.operators
    "peitalin/vim-jsx-typescript", -- better support for react?
 
    {
