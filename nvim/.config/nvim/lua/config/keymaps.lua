@@ -39,7 +39,7 @@ local function confirm_and_execute()
    if confirm == "y" or confirm == "Y" then
       vim.cmd("bd!")
    else
-      print("Buffer close canceled.")
+      vim.notify("Buffer close canceled.")
    end
 end
 

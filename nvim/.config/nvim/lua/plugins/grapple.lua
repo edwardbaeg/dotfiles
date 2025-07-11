@@ -45,8 +45,8 @@ return {
    keys = {
       -- Toggle tag
       { "<leader>kl", function ()
-         print("Grapple toggled buffer")
          require("grapple").toggle()
+         vim.notify("Grapple toggled buffer")
       end, desc = "Grapple toggle tag" },
 
       -- Show grapple tags
