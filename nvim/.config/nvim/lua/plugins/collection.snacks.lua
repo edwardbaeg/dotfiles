@@ -190,8 +190,8 @@ return {
       {
          "<c-p>",
          function()
-            -- Snacks.picker.files()
-            Snacks.picker.git_files({
+            -- Snacks.picker.git_files({
+            Snacks.picker.files({
                formatters = {
                   file = {
                      truncate = (function()
