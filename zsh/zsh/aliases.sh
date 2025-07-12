@@ -23,7 +23,8 @@ alias vw="vim ~/.wezterm.lua"
 # alias ew="vim ~/.wezterm.lua"
 alias vk="vim ~/.config/kitty/kitty.conf"
 # alias ek="vim ~/.config/kitty/kitty.conf"
-alias vo="vim ~/Sync/Obsidian\ Vault/"
+alias vo="vim ~/Sync/Obsidian\ Vault/ -c \":cd ~/Sync/Obsidian\ Vault/\""
+alias obs="cd ~/Sync/Obsidian\ Vault/"
 
 # -- other files
 alias vhist="vim ~/.zsh_history"
