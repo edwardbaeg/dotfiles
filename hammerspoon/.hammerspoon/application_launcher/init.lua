@@ -96,7 +96,8 @@ M.togglePersonalOverride = function()
 end
 
 local mappings = {
-   { "0", "Kitty" },
+   -- { "0", "Kitty" },
+   { ";", "Kitty" },
    { "8", "Slack" },
    { "P", "Perplexity" },
 }
@@ -134,6 +135,10 @@ function Main()
       if success and params.profile ~= nil and params.profile ~= "" then
          setArcProfile(params.profile)
       end
+   end)
+
+   hs.hotkey.bind(hyperkey, "0", function()
+      hs.alert("Deprecated. Use ;")
    end)
 
    hs.hotkey.bind(hyperkey, "w", function()
