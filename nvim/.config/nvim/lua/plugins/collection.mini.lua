@@ -11,6 +11,8 @@ return {
          -- FIXME: this is broken for up and down motions
          -- require("mini.move").setup({}) -- replaced with nvim-gomove
 
+         local Snacks = require("snacks")
+
          -- highlights/underlines the word under the cursor
          require("mini.cursorword").setup({
             delay = 200, -- in ms
@@ -70,7 +72,6 @@ return {
          })
 
          -- LSP support for file renames
-         local Snacks = require("snacks")
          vim.api.nvim_create_autocmd("User", {
             pattern = "MiniFilesActionRename",
             callback = function(event)
@@ -137,6 +138,16 @@ return {
                close = { enable = false }, -- window closing
             })
          end
+
+         Snacks.toggle({
+            name = "Mini Animate",
+            get = function()
+               return not vim.g.minianimate_disable
+            end,
+            set = function(state)
+               vim.g.minianimate_disable = not state
+            end,
+         }):map("<leader>ta")
          -- END mini.animate: smooth scrolling
 
          -- track and reuse system visits
