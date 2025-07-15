@@ -124,6 +124,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 #### Utilities
 
 - `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
+<!-- TODO: replace with browserosaurus, FOSS alternative -->
 - `Choosy`: browser launcher
 - `Dropover`: drag & drop temporary file shelf
 - `Hammerspoon`: mac scripting

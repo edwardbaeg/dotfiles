@@ -26,6 +26,9 @@ require("config.post-plugins")
 - use exported `set` keymap function from config.keymaps
 - rewrite all vimscript stuff to lua
 - move legacy/inactive settings to a separate file that is not loaded?
+
+- how to open link (gx) with netrw disabled: https://www.reddit.com/r/neovim/comments/ro6oye/comment/hpwkvae/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+
 ]]
 
 --[[ Usability Notes
@@ -72,6 +75,11 @@ require("config.post-plugins")
    - :%:h -> parent directory
    - :%:p -> full path
    - :%:t -> filename
+
+- Bug with TMUX
+  - tmux cannot distinguish between <c-i> and <tab>
+    - see :help CTRL-I
+    - https://github.com/tmux/tmux/issues/2705
 ]]
 
 --[[ KEYMAP GUIDE

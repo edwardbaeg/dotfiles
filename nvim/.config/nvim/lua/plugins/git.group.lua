@@ -2,7 +2,7 @@ return {
    {
       -- opens 'foo/bar' in github with gx
       "gabebw/vim-github-link-opener",
-      -- Usage: :OpenGitHubLink
+      -- Usage: :OpenGitHubLink -- TODO: would be nice to disable this? bc it is too close to :GitPortalOpenLink
       init = function()
          vim.g.github_link_opener_no_mappings = 1 -- disable default mapping. the default mapping is gx but it is not silent.
          vim.keymap.set("n", "gx", ":OpenGitHubLink<cr>", { silent = true })
