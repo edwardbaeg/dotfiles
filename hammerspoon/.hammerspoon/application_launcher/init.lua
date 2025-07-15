@@ -24,10 +24,13 @@ local function setArcProfile(profileIndex)
    hs.timer.doAfter(0.05, function()
       hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
    end)
-   hs.timer.doAfter(0.1, function()
-      hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
-   end)
+   -- hs.timer.doAfter(0.1, function()
+   --    hs.eventtap.keyStroke({ "ctrl" }, profileIndex)
+   -- end)
 end
+
+local BROWSER_KEY = ";"
+-- local BROWSER_KEY = "9"
 
 -- Function to get the current personal override state
 local function isPersonalOverride()
@@ -39,8 +42,8 @@ M.isPersonalOverride = isPersonalOverride
 -- TODO: move out to module
 local function setupArcHotkeys()
    -- Clear existing Arc hotkeys
-   hs.hotkey.disableAll(hyperkey, "9")
-   hs.hotkey.disableAll(allkey, "9")
+   hs.hotkey.disableAll(hyperkey, BROWSER_KEY)
+   hs.hotkey.disableAll(allkey, BROWSER_KEY)
 
    local setPersonal = function()
       setArcProfile("2")
@@ -50,14 +53,14 @@ local function setupArcHotkeys()
    end
 
    if isPersonalOverride() then
-      assignAppHotKey(hyperkey, "9", "Arc", setPersonal)
-      assignAppHotKey(allkey, "9", "Arc", setWork)
+      assignAppHotKey(hyperkey, BROWSER_KEY, "Arc", setPersonal)
+      assignAppHotKey(allkey, BROWSER_KEY, "Arc", setWork)
    elseif constants.isPersonal then
-      assignAppHotKey(hyperkey, "9", "Arc")
-      assignAppHotKey(allkey, "9", "Arc")
+      assignAppHotKey(hyperkey, BROWSER_KEY, "Arc")
+      assignAppHotKey(allkey, BROWSER_KEY, "Arc")
    else
-      assignAppHotKey(hyperkey, "9", "Arc", setWork)
-      assignAppHotKey(allkey, "9", "Arc", setPersonal)
+      assignAppHotKey(hyperkey, BROWSER_KEY, "Arc", setWork)
+      assignAppHotKey(allkey, BROWSER_KEY, "Arc", setPersonal)
    end
 end
 
@@ -97,7 +100,7 @@ end
 
 local mappings = {
    -- { "0", "Kitty" },
-   { ";", "Kitty" },
+   { "return", "Kitty" },
    { "8", "Slack" },
    { "P", "Perplexity" },
 }
@@ -138,6 +141,10 @@ function Main()
    end)
 
    hs.hotkey.bind(hyperkey, "0", function()
+      hs.alert("Deprecated. Use <enter>")
+   end)
+
+   hs.hotkey.bind(hyperkey, "9", function()
       hs.alert("Deprecated. Use ;")
    end)
 
