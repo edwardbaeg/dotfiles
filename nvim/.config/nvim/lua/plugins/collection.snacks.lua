@@ -165,7 +165,7 @@ return {
                         self.esc_timer:stop()
                         vim.cmd("stopinsert")
                      else
-                        self.esc_timer:start(200, 0, function() end)
+                        self.esc_timer:start(400, 0, function() end)
                         return "<esc>"
                      end
                   end,
@@ -435,5 +435,8 @@ return {
       Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>tsp")
       Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
       Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
+      Snacks.toggle
+         .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+         :map("<leader>tc")
    end,
 }
