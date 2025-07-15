@@ -191,4 +191,9 @@ return {
       version = "*",
       config = true,
    },
+
+   {
+      -- image support
+      "3rd/image.nvim"
+   }
 }
