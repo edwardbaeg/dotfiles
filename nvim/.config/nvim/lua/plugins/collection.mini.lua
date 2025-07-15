@@ -148,6 +148,21 @@ return {
                vim.g.minianimate_disable = not state
             end,
          }):map("<leader>ta")
+
+         -- Go to last insert position with animate temporarily disabled
+         vim.keymap.set("n", "gi", function()
+            vim.g.minianimate_disable = true
+            vim.cmd("normal! gi")
+            vim.g.minianimate_disable = false
+
+            -- since normal commands need to be "complete", invote :startinsert
+            -- this is deffered until after the cursor is settled
+            vim.defer_fn(function()
+               vim.cmd("normal! l")
+               vim.cmd("startinsert")
+            end, 100)
+         end, { desc = "gi (fixed)" })
+
          -- END mini.animate: smooth scrolling
 
          -- track and reuse system visits
