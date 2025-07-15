@@ -29,6 +29,9 @@ return {
          blink = true,
          min_chars = 1,
       },
+      daily_notes = {
+        folder = "dailies",
+      },
 
       --- FIXME: does not work
       -- open = {
@@ -46,9 +49,11 @@ return {
       })
 
       -- Open vault home directory
-      vim.api.nvim_create_user_command("OpenObsidianVault", function()
-         vim.cmd("edit ~/Sync/Obsidian\\ Vault/")
-      end, {})
-      vim.api.nvim_set_keymap("n", "<leader>eo", ":OpenObsidianVault<CR>", { noremap = true, silent = true })
+      -- vim.api.nvim_create_user_command("OpenObsidianVault", function()
+      --    vim.cmd("edit ~/Sync/Obsidian\\ Vault/")
+      -- end, {})
+      -- vim.keymap.set("n", "<leader>eo", ":OpenObsidianVault<CR>", { noremap = true, silent = true })
+
+      vim.keymap.set("n", "<leader>ob", "<cmd>Obsidian<cr>", { noremap = true, silent = true })
    end,
 }
