@@ -32,24 +32,27 @@ GITSTATUS_LOG_LEVEL=DEBUG
 # Improve colors
 export TERM="xterm-256color"
 
+# Use nvim as default editor
+export EDITOR=nvim
+export VISUAL=nvim
+
+# -- History
 # Share history
 setopt inc_append_history
 setopt hist_ignore_dups
 setopt share_history
 
-# Use nvim as default editor (eg, ranger)
-export EDITOR=nvim
-export VISUAL=nvim
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEhist=100000
+setopt appendhistory
 
-# In normal mode, use `v` to open command in editor
-autoload edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-
+# -- Path
 # Add custom programs
 export PATH=~/bin:$PATH
 export PATH=~/.local/bin:$PATH
 
+# Emacs
 export PATH="$HOME/.emacs.d/bin:$PATH"
 
 # Add go packages to path
@@ -60,10 +63,6 @@ export PATH=$PATH:$GOPATH/bin
 # export PATH="/usr/local/sbin:$PATH"
 export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH
 
-# Don't automatically load ranger rc to prevent loading it twice
-# TODO: make conditional for if the rc already exists
-export RANGER_LOAD_DEFAULT_RC=FALSE
-
 # Add python to path
 export PATH=$PATH:/$HOME/Library/Python/3.9/bin
 
@@ -71,14 +70,14 @@ export PATH=$PATH:/$HOME/Library/Python/3.9/bin
 export DENO_INSTALL="/Users/edwardbaeg/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+# -- Zsh specific
+# In normal mode, use `v` to open command in editor
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 # Key bindings
 set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
-
-# History settings
-HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEhist=100000
-setopt appendhistory
 
 # Configure completions with zsh from `brew zsh-completions`
 # This must be called before compinit and oh-my-zsh.sh
@@ -89,11 +88,17 @@ if type brew &>/dev/null; then
     # compinit
 fi
 
+# -- Pager
 # Improve less
 export LESS="$LESS -FRXK"
 
 # Use Neovim as manpager # TODO: open this without loading plugins to speed up
 export MANPAGER='nvim +Man!'
+
+# -- Misc
+# Don't automatically load ranger rc to prevent loading it twice
+# TODO: make conditional for if the rc already exists
+export RANGER_LOAD_DEFAULT_RC=FALSE
 
 # change default config directory for MacOS
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -153,13 +158,13 @@ function zvm_after_init() {
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 }
 
-
 # -- Aliases -------------------------------------------------------------------
 if [[ -f "$HOME/zsh/aliases.sh" ]]; then
     source "$HOME/zsh/aliases.sh"
 fi
 
 # -- Functions -----------------------------------------------------------------
+# TODO: abstract to separate file
 
 # -- fzf functions
 
