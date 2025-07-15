@@ -341,6 +341,7 @@ return {
       -- hints for faster vim motions
       -- TODO: disable hints for hjkl https://github.com/m4xshen/hardtime.nvim/issues/160
       "m4xshen/hardtime.nvim",
+      enabled = false, -- this breaks <c-n>???
       lazy = false,
       dependencies = { "MunifTanjim/nui.nvim" },
       opts = {
