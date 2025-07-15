@@ -64,8 +64,7 @@ end, { expr = true })
 -- Quick insertion
 set("n", "<leader>o", "o<esc>0D") -- add empty line below
 set("n", "<m-o>", "i<cr><esc>") -- split line
--- set("n", "<leader>cl", 'oconsole.log({ <C-r>" });<Esc>', { noremap = true }) -- console.log with yanked text
-set("n", "<leader>cl", 'yiwoconsole.log({ <C-r>" });<Esc>', { noremap = true }) -- console.log with yanked text
+set("n", "<leader>cl", require("utils.coding").smart_print_word, { desc = "[L]og/print cword" })
 
 -- Tabs
 set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
@@ -128,11 +127,11 @@ set("n", "<leader>ve", ":vsplit edit<cr>", { desc = "[v]split [e]dit" })
 set("n", "g>>", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
-set("n", "g>h", function ()
-  local cword = vim.fn.expand("<cword>")
-  vim.cmd("vert help " .. cword)
+set("n", "g>h", function()
+   local cword = vim.fn.expand("<cword>")
+   vim.cmd("vert help " .. cword)
 end, { desc = "Goto [h]elpfile in vertical split" })
-set("n", "g>H", function ()
+set("n", "g>H", function()
    local cword = vim.fn.expand("<cWORD>")
    vim.cmd("vert help " .. cword)
 end, { desc = "Goto [h]elpfile in vertical split" })
