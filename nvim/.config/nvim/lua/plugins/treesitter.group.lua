@@ -122,6 +122,12 @@ return {
                enable_close_on_slash = false, -- Auto close on trailing </
             },
          })
+
+         vim.g.matchup_matchparen_deferred = 1 -- deferred highlighting to improve cursor movement performance
+         -- vim.api.nvim_set_hl(0, 'MatchParen', {
+         --    -- ctermbg = 'blue',
+         --    -- bg = 'lightgrey',
+         -- })
       end,
    },
 
