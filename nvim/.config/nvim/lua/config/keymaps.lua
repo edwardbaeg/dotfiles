@@ -17,7 +17,7 @@ set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 
 -- Experimental; move these after settled
 -- set("n", ":", ";") -- no shift for command line
--- set("n", ";", ":")
+set("n", ";", ":")
 
 -- Cursor movement
 set({ "n", "v" }, "H", "^") -- move cursor to start of line
@@ -131,6 +131,10 @@ set("n", "g>f", "<cmd>vs<cr>gf", { desc = "Goto [f]ile in vertical split" })
 set("n", "g>h", function ()
   local cword = vim.fn.expand("<cword>")
   vim.cmd("vert help " .. cword)
+end, { desc = "Goto [h]elpfile in vertical split" })
+set("n", "g>H", function ()
+   local cword = vim.fn.expand("<cWORD>")
+   vim.cmd("vert help " .. cword)
 end, { desc = "Goto [h]elpfile in vertical split" })
 -- set("n", "<leader>v>", "<cmd>vs<cr><c-]>", { desc = "[V]ertical split Goto Definition" })
 
