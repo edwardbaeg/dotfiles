@@ -101,6 +101,7 @@ end
 local mappings = {
    -- { "0", "Kitty" },
    { "return", "Kitty" },
+   { "'", "Kitty" },
    { "8", "Slack" },
    { "P", "Perplexity" },
 }
