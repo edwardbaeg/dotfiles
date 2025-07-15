@@ -32,7 +32,10 @@ return {
             },
          })
          -- open with focus on the current file
-         vim.api.nvim_create_user_command("MiniFiles", "lua MiniFiles.open(vim.api.nvim_buf_get_name(0))", {})
+         -- TODO: add a fallback in case this fails? I think that can happen when the current file is deleted or moved
+         vim.api.nvim_create_user_command("MiniFiles", function()
+            MiniFiles.open(vim.api.nvim_buf_get_name(0))
+         end, {})
          vim.keymap.set("n", "<leader>ra", function()
             vim.notify("Use <leader>mf instead")
          end, {}) -- stop bad habits
@@ -92,9 +95,21 @@ return {
             },
          })
 
-         -- smooth scrolling
+         -- START mini.animate: smooth scrolling
          -- NOTE: this breaks `gi`
-         -- vim.g.minianimate_disable = true
+         -- vim.g.minianimate_disable = true -- can use this dynamically
+
+         -- don't use animate when scrolling with the mouse
+         -- https://www.lazyvim.org/extras/ui/mini-animate
+         local mouse_scrolled = false
+         for _, scroll in ipairs({ "Up", "Down" }) do
+            local key = "<ScrollWheel" .. scroll .. ">"
+            vim.keymap.set({ "", "i" }, key, function()
+               mouse_scrolled = true
+               return key
+            end, { expr = true })
+         end
+
          local animate = require("mini.animate")
          if not vim.g.neovide then
             animate.setup({
@@ -102,8 +117,18 @@ return {
                   enable = not vim.g.vscode,
                   timing = animate.gen_timing.linear({
                      easing = "out",
-                     duration = 60,
+                     -- duration = 60,
+                     duration = 30,
                      unit = "total",
+                  }),
+                  subscroll = animate.gen_subscroll.equal({
+                     predicate = function(total_scroll)
+                        if mouse_scrolled then
+                           mouse_scrolled = false
+                           return false
+                        end
+                        return total_scroll > 1
+                     end,
                   }),
                },
                cursor = { enable = false }, -- cursor path
@@ -112,6 +137,7 @@ return {
                close = { enable = false }, -- window closing
             })
          end
+         -- END mini.animate: smooth scrolling
 
          -- track and reuse system visits
          require("mini.visits").setup({})
