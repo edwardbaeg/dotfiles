@@ -67,8 +67,11 @@ set("n", "<m-o>", "i<cr><esc>") -- split line
 set("n", "<leader>cl", require("utils.coding").smart_print_word, { desc = "[L]og/print cword" })
 
 -- Tabs
-set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
-set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
+-- set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
+-- set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
+set("n", "<leader>Tn", "<cmd>tabnext<cr>") -- next tab
+set("n", "<leader>Tp", "<cmd>tabprevious<cr>") -- previous tab
+set("n", "<leader>TN", "<cmd>tabnew<cr>") -- next tab
 
 -- Commands
 set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) -- save
@@ -120,6 +123,12 @@ set("n", "<leader>w", "<c-w>")
 
 -- Go to definition/tag
 set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
+
+-- Help
+set("n", "<leader>gh", function()
+   local cword = vim.fn.expand("<cword>")
+   vim.cmd("help " .. cword)
+end, { desc = "Goto [h]elpfile" })
 
 -- Vertical splits
 set("n", "<leader>vs", ":vsplit<cr>", { desc = "[vs]plit" })
