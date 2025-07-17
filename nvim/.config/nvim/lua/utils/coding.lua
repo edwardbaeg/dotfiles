@@ -23,6 +23,8 @@ function M.smart_print_word()
    local print_statement = M.get_print_statement(word, filetype)
 
    vim.api.nvim_put({ print_statement }, "c", false, true)
+   -- fix alignment, the `normal! o` doesn't include the indent as it would manually
+   vim.cmd("normal! ==")
 end
 
 return M
