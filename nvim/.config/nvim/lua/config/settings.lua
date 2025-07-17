@@ -148,8 +148,9 @@ vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens
 -- TODO: only highlight trailing whitespace
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" })
 
-vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db" }) -- eg +, =, || -- TODO?: only do for js?
 -- Syntax
+vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db", ctermfg = "NONE" }) -- eg +, =, ||
+vim.api.nvim_set_hl(0, "Operator", { italic = false, fg = "#99d1db", ctermfg = "NONE" }) -- eg +, =, ||
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -- eg +, =, || -- TODO?: only do for js?
 vim.api.nvim_set_hl(0, "Exception", { italic = true }) -- eg try, catch, TODO: set to green?
 -- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
