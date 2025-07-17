@@ -109,7 +109,7 @@
   "quick-scope": { "branch": "master", "commit": "f2b6043e04d9ef05205c8953e389304a4c1946f2" },
   "quicker.nvim": { "branch": "master", "commit": "51d3926f183c2d98fbc237cc237ae0926839af3a" },
   "rainbow-delimiters.nvim": { "branch": "master", "commit": "55ad4fb76ab68460f700599b7449385f0c4e858e" },
-  "reactive.nvim": { "branch": "main", "commit": "228386e8437470b01f3edda2988f7165f0b7bc5f" },
+  "reactive.nvim": { "branch": "main", "commit": "d0063007a8700f41a2ba9de6ba36523917c55b51" },
   "render-markdown.nvim": { "branch": "main", "commit": "24aacee83544ca113055564ed22be7852067c342" },
   "rnvimr": { "branch": "main", "commit": "57f7a8edd629791557d1315463d9fb2e411a45f1" },
   "screenkey.nvim": { "branch": "main", "commit": "16390931d847b1d5d77098daccac4e55654ac9e2" },
