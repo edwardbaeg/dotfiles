@@ -2,7 +2,6 @@
 
 require("config.lazy")
 require("config.keymaps")
-require("config.settings")
 require("config.autocommands")
 
 require("lazy").setup("plugins", {
@@ -14,7 +13,7 @@ require("lazy").setup("plugins", {
    -- check for plugin updates and notify on launch
    checker = { enabled = false },
 })
-require("config.post-plugins")
+require("config.settings")
 
 --[[ TODO
 -- PLUGINS:

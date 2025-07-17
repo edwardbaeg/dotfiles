@@ -132,6 +132,9 @@ vim.api.nvim_create_user_command("Pwf", "echo @%", { desc = "Show the path for t
 vim.api.nvim_create_user_command("Bda", "bufdo bd", { desc = "Close all buffers" })
 
 -- [[ Highlights ]]
+-- NOTE: a number of these highlights are set after plugins are loaded -- so we load this file after plugins
+
+-- UI
 -- local frappe = require("catppuccin.palettes").get_palette("frappe")
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
@@ -146,6 +149,7 @@ vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens
 -- vim.api.nvim_set_hl(0, "Whitespace", { fg = "#ffffff" })
 
 vim.api.nvim_set_hl(0, "@operator", { italic = false, fg = "#99d1db" }) -- eg +, =, || -- TODO?: only do for js?
+-- Syntax
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#e78284" }) -- eg +, =, || -- TODO?: only do for js?
 vim.api.nvim_set_hl(0, "Exception", { italic = true }) -- eg try, catch, TODO: set to green?
 -- vim.api.nvim_set_hl(0, '@keyword.function', { italic = true }) -- highlights the keyword 'function'
@@ -153,7 +157,8 @@ vim.api.nvim_set_hl(0, "Exception", { italic = true }) -- eg try, catch, TODO: s
 -- vim.api.nvim_set_hl(0, '@method.call', { italic = false }) -- highlights the keyword 'Instance.method'
 vim.api.nvim_set_hl(0, "LspInlayHint", { italic = true, bg = "#333333" }) -- highlight codeium suggestions
 
-vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#bbbbbb" }) -- highlight codeium suggestions
+-- Plugins
+vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#bbbbbb" }) -- highlight codeium suggestions -- TODO: move to plugin file?
 
 -- Disable line wrapping for csv
 vim.api.nvim_create_augroup("csv_settings", { clear = true })
