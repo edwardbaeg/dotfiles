@@ -1,0 +1,31 @@
+session_name: dotfiles
+windows:
+  - window_name: neovim
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - shell_command: # pane no. 1
+          - cd ~/dev/dotfiles/nvim/.config/nvim/
+      - shell_command: # pane no. 2
+          -
+
+  - window_name: hammerspoon
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - shell_command: # pane no. 1
+          - cd ~/dev/dotfiles/hammerspoon/
+      - shell_command: # pane no. 2
+          -
+
+  - window_name: tmux
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - shell_command: # pane no. 1
+          - cd ~/dev/dotfiles/tmux/
+      - shell_command: # pane no. 2
+          -

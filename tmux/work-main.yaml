@@ -1,7 +1,7 @@
-# check man tmuxp to see all options
-# load with tmuxp load %
+# check :Man tmux to see all options
+# load with tmuxp load <filename>
 # TODO: move to ~/.config/tmuxp
-session_name: work-main
+session_name: dispatch
 windows:
   - window_name: main
     layout: main-vertical
@@ -12,13 +12,14 @@ windows:
     panes:
       - shell_command: # pane no. 1
           - front
-      -
+      - shell_command: # pane no. 2
+          - claude
 
   - window_name: worktree
     layout: even-vertical
     panes:
-    - shell_command: # pane no. 1
-      - work
-    - shell_command: # pane no. 1
-      - front
-      - npm run dev:local
+      - shell_command: # pane no. 1
+          - work
+      - shell_command: # pane no. 1
+          - front
+          - npm run dev:local

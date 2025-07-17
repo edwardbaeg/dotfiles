@@ -1,0 +1,19 @@
+session_name: obsidian
+windows:
+  - window_name: main
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - shell_command: # pane no. 1
+          - cd ~/Sync/Obsidian\ Vault/
+          - nvim Home.md
+
+  - window_name: work
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - shell_command: # pane no. 1
+          - cd ~/Sync/Obsidian\ Vault/
+          - nvim Work.md

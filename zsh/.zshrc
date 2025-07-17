@@ -106,6 +106,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # source ~/.env if it exists
 [ -f "$HOME/.env" ] && source "$HOME/.env"
 
+# Don't automatically set terminal title, for tmux, required by tmuxp
+export DISABLE_AUTO_TITLE='true'
+
 # -- Plugins -----------------------------------------------------------
 
 # Load zgen
