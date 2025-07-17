@@ -70,6 +70,14 @@ vim.api.nvim_create_autocmd("FileType", {
    end,
 })
 
+-- explicitly prevent q from closing man files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "man",
+  callback = function(event)
+    vim.keymap.set("n", "q", "<Nop>", { buffer = event.buf })
+  end
+})
+
 -- keep cursor position after yanking
 -- https://nanotipsforvim.prose.sh/sticky-yank
 local cursorPreYank
