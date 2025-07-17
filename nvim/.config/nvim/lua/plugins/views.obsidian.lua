@@ -1,11 +1,11 @@
 local home_path = vim.fn.expand("~")
 
 return {
-   "obsidian-nvim/obsidian.nvim",
+   -- Obsidian functionality in neovim
+   "obsidian-nvim/obsidian.nvim", -- this is the community maintained fork
    version = "*", -- recommended, use latest release instead of latest commit
    lazy = true,
-   -- ft = "markdown",
-   -- only load on obsidian .md files
+   -- only load on obsidian .md files, replaces ft = "markdown",
    event = {
       "BufReadPre " .. home_path .. "/Sync/Obsidian Vault/*.md",
       "BufNewFile  " .. home_path .. "/Sync/Obsidian Vault/*.md",
@@ -30,7 +30,10 @@ return {
          min_chars = 1,
       },
       daily_notes = {
-        folder = "dailies",
+         folder = "dailies",
+      },
+      backlinks = {
+         parse_headers = false, -- whether to parse header under cursor -- default is true
       },
 
       --- FIXME: does not work
@@ -54,6 +57,9 @@ return {
       -- end, {})
       -- vim.keymap.set("n", "<leader>eo", ":OpenObsidianVault<CR>", { noremap = true, silent = true })
 
-      vim.keymap.set("n", "<leader>ob", "<cmd>Obsidian<cr>", { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>obs", "<cmd>Obsidian<cr>", { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>obb", "<cmd>Obsidian backlinks<cr>", { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>obn", "<cmd>Obsidian new<cr>", { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>obq", "<cmd>Obsidian quick_switch<cr>", { noremap = true, silent = true })
    end,
 }
