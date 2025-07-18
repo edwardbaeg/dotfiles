@@ -5,27 +5,37 @@ windows:
     options:
       main-pane-width: 66%
     panes:
-      - shell_command: # pane no. 1
+      - shell_command:
           - cd ~/dev/dotfiles/nvim/.config/nvim/
-      - shell_command: # pane no. 2
-          -
+        focus: true
+      - null
 
   - window_name: hammerspoon
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command: # pane no. 1
+      - shell_command:
           - cd ~/dev/dotfiles/hammerspoon/
-      - shell_command: # pane no. 2
-          -
+        focus: true
+      - null
 
   - window_name: tmux
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command: # pane no. 1
+      - shell_command:
           - cd ~/dev/dotfiles/tmux/
-      - shell_command: # pane no. 2
-          -
+        focus: true
+      - null
+
+  - window_name: zsh
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - shell_command:
+        - cd ~/dev/dotfiles/zsh/
+        focus: true
+      - null
