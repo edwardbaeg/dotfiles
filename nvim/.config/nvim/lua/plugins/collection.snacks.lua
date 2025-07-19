@@ -438,5 +438,33 @@ return {
       Snacks.toggle
          .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
          :map("<leader>tc")
+
+      -- Open installed plugin folder
+      function installed_plugin_finder()
+         Snacks.picker.files({
+            dirs = { vim.fn.stdpath("data") .. "/lazy" },
+            cmd = "fd",
+            args = { "-td", "--exact-depth", "1" },
+            confirm = function(picker, item, action)
+               picker:close()
+               if item and item.file then
+                  vim.schedule(function()
+                     local where = action and action.name or "confirm"
+                     if where == "edit_vsplit" then
+                        vim.cmd("vsplit | lcd " .. item.file)
+                     elseif where == "edit_split" then
+                        vim.cmd("split | lcd " .. item.file)
+                     else
+                        vim.cmd("tabnew | tcd " .. item.file)
+                     end
+                  end)
+               end
+
+               vim.cmd("ex " .. item.file)
+            end,
+         })
+      end
+
+      vim.keymap.set("n", "<leader>fa", installed_plugin_finder, { noremap = true, silent = true })
    end,
 }
