@@ -14,8 +14,8 @@ return {
                style = {
                   { fg = frappe.surface2 },
                },
-               duration = 150, -- default 200
-               delay = 200, -- default 300
+               duration = 100, -- default 200
+               delay = 100, -- default 300
                exclude_filetypes = {
                   snacks_picker_list = true,
                },
