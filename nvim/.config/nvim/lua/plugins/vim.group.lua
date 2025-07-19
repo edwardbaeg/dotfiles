@@ -109,6 +109,9 @@ return {
 
    {
       -- quick navigation, extends search, extends char motions, remote operations
+      -- F -> enter flash jump
+      -- S -> select treesitter node
+      -- r {operator} -> remote operations
       "folke/flash.nvim",
       event = "VeryLazy",
       ---@type Flash.Config
@@ -165,8 +168,7 @@ return {
             desc = "Remote Flash",
          },
          {
-            -- Operator on remote location
-            -- Ex: yank remote word with yR<flash>iw or delete remote line with dR<flash>d
+            -- same as above
             "r",
             mode = "o",
             function()

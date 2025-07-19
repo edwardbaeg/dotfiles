@@ -13,7 +13,7 @@ vim.o.wrap = true -- set visual wrapping of long lines
 vim.o.linebreak = true -- wrap at spaces instead of the middle of a word
 vim.o.breakindent = true -- wrapped lines will have consistent indents
 vim.o.showbreak = "… " -- string added to the start of wrapped lines -- ellipsis -- this is highlighted with NonText
-vim.api.nvim_set_hl(0, "NonText", { fg = "grey30" }) -- highlights showbreak characters, slightly different than comment text
+-- vim.api.nvim_set_hl(0, "NonText", { fg = "grey30" }) -- highlights showbreak characters, slightly different than comment text -- NOTE: this is also used by snacks.picker for the directory
 
 vim.o.updatetime = 250 -- Decrease update time (ms), default is 4000 ms
 vim.o.signcolumn = "yes" -- always show sign column
@@ -138,7 +138,7 @@ vim.api.nvim_create_user_command("Bda", "bufdo bd", { desc = "Close all buffers"
 -- local frappe = require("catppuccin.palettes").get_palette("frappe")
 -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1c1c1c" }) -- set background color of floating windows; plugins: telescope, which-key
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178", bg = "#1c1c1c" }) -- border of floating windows
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows
+-- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows -- this is set by some plugins
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" })
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" })
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- set with reactive.nvim

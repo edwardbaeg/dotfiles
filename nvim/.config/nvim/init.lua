@@ -1,9 +1,10 @@
 --[[ NEOVIM CONFIG ROOT --]]
 
-require("config.lazy")
+require("config.lazy") -- bootstrap lazy
 require("config.keymaps")
 require("config.autocommands")
 
+-- load plugins
 require("lazy").setup("plugins", {
    -- automatically watch for config file changes and reload ui
    change_detection = {
@@ -13,6 +14,8 @@ require("lazy").setup("plugins", {
    -- check for plugin updates and notify on launch
    checker = { enabled = false },
 })
+
+-- load settings after plugins
 require("config.settings")
 
 --[[ TODO

@@ -54,7 +54,7 @@ return {
 
    {
       -- jump to any location
-      -- this is currently only used for its remote operations
+      -- this is currently only used for its remote operations -- this could be replaced with Flash's remote
       "ggandor/leap.nvim",
       config = function()
          require("leap").setup({})

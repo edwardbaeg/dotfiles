@@ -1,3 +1,4 @@
+-- TODO: move this to utils/index.lua
 local M = {}
 
 --- Combine two associate tables
@@ -13,7 +14,7 @@ function M.object_assign(t1, t2)
 end
 
 ---@param name string
-function M.isIndexFile(name)
+local function isIndexFile(name)
    return name:find("^index.")
 end
 
@@ -29,7 +30,7 @@ end
 ---@return string text shorthand filename that includes the parent directory for index.* files
 function M.getDisplayFileName(filename, path, short)
    short = short or false
-   if not M.isIndexFile(filename) then
+   if not isIndexFile(filename) then
       return filename
    else
       local parentDirName = path:match("(.*)/(.*)$")
