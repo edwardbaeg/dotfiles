@@ -30,7 +30,7 @@ return {
          min_chars = 1,
       },
       daily_notes = {
-         folder = "dailies",
+         folder = "Dailies",
       },
       backlinks = {
          parse_headers = false, -- whether to parse header under cursor -- default is true
@@ -61,5 +61,6 @@ return {
       vim.keymap.set("n", "<leader>obb", "<cmd>Obsidian backlinks<cr>", { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>obn", "<cmd>Obsidian new<cr>", { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>obq", "<cmd>Obsidian quick_switch<cr>", { noremap = true, silent = true })
+      vim.keymap.set("n", "<leader>obr", "<cmd>Obsidian rename<cr>", { noremap = true, silent = true })
    end,
 }

@@ -62,7 +62,7 @@ set("n", "dd", function()
 end, { expr = true })
 
 -- Quick insertion
-set("n", "<leader>o", "o<esc>0D") -- add empty line below
+-- set("n", "<leader>o", "o<esc>0D") -- add empty line below -- using o** for obsidiajnj
 set("n", "<m-o>", "i<cr><esc>") -- split line
 set("n", "<leader>cl", require("utils.coding").smart_print_word, { desc = "[L]og/print cword" })
 
