@@ -52,7 +52,7 @@ return {
          end
 
          -- Automatically install these servers
-         local default_language_servers = {
+         local language_servers = {
             -- START TYPESCRIPT
             -- ----------------
             -- Options for typescript:
@@ -90,6 +90,11 @@ return {
             terraformls = {},
             jsonls = {},
             yamlls = {},
+
+            -- markdown
+            -- NOTE: this expects markdown files to have a single #top level header
+            marksman = {},
+
             -- grammar (not just spell check)
             -- harper_ls = {
             --    ["harper-ls"] = {
@@ -105,7 +110,7 @@ return {
          local mason_lspconfig = require("mason-lspconfig")
 
          mason_lspconfig.setup({
-            ensure_installed = vim.tbl_keys(default_language_servers),
+            ensure_installed = vim.tbl_keys(language_servers),
          })
 
          local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -126,7 +131,7 @@ return {
             end,
          })
 
-         for lsp, settings in pairs(default_language_servers) do
+         for lsp, settings in pairs(language_servers) do
             vim.lsp.config(lsp, { settings = settings })
          end
 
