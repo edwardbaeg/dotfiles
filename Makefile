@@ -1,3 +1,6 @@
+#TODO
+# add marksman.toml
+
 .PHONY: all clean test stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin
 
 all: stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin
