@@ -190,8 +190,12 @@ return {
       config = function()
          require("treesitter-context").setup({
             multiwindow = true, -- default is false
-            max_lines = 3,
-            separator = "-",
+            -- max_lines = 3,
+            max_lines = 0,
+            -- hi TreesitterContextLineNumberBottom sets an underline
+            -- separator = "-",
+            -- separator = "—",
+            -- separator = "─",
             zindex = 1, -- default is 20, lower to show under floating windows
          })
       end,

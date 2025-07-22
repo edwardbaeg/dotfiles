@@ -8,6 +8,10 @@ return {
       local utils = require("../utils")
       require("incline").setup({
          window = {
+            placement = {
+               horizontal = "center",
+               vertical = "top",
+            },
             padding = 0,
             margin = {
                horizontal = 0,
@@ -58,9 +62,13 @@ return {
 
             -- example: █▓   incline-nvim.lua ▓█
             return {
+               -- Utils.object_assign({
+               --    " ░▓█", -- these are unicode block shade characters
+               -- }, invertedFieldOptions),
+
                Utils.object_assign({
-                  " ░▓█", -- these are unicode block shade characters
-               }, invertedFieldOptions),
+                  " ",
+               }, defaultFieldOptions),
 
                Utils.object_assign({
                   devicon,
