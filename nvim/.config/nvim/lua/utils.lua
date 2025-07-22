@@ -1,7 +1,7 @@
 -- TODO: move this to utils/index.lua
 local M = {}
 
---- Combine two associate tables
+--- Combine two tables
 ---@param t1 table
 ---@param t2 table
 ---@return table

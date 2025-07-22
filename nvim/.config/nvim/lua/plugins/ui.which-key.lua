@@ -23,7 +23,9 @@ return {
 
       -- add grouping labels
       wk.add({
-         { "<leader>fg", group = "Fuzzy git" }
+         { "<leader>fg", group = "Fuzzy git" },
+         { "<leader>a", group = "Claude Code" },
+         { "<leader>ob", group = "Obsidian" },
       })
 
       -- Hydra modes:
@@ -38,6 +40,5 @@ return {
             loop = true,
          })
       end)
-
    end,
 }

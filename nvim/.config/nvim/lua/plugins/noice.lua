@@ -31,7 +31,7 @@ return {
             -- view_search = "virtualtext",
          },
          cmdline = {
-            -- view = "cmdline" -- native bottom location of command input -- replaed with presets.command_palette
+            -- view = "cmdline" -- native bottom location of command input -- replaced with presets.command_palette
          },
          -- show lsp progress messages
          lsp = {

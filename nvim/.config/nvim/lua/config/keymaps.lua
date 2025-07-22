@@ -16,8 +16,7 @@ set("i", "jk", "<Esc>") -- leave insert mode
 set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 
 -- Experimental; move these after settled
--- set("n", ":", ";") -- no shift for command line
-set("n", ";", ":")
+set("n", ";", ":") -- enter command mode without shift
 
 -- Cursor movement
 set({ "n", "v" }, "H", "^") -- move cursor to start of line
@@ -89,11 +88,7 @@ set("n", "<leader>-", "<c-x>", { desc = "decrement" }) -- decrement
 set("n", "<leader>q", "") -- close whichkey / cancel leader without starting macro
 set("n", "<leader><space>", ":nohlsearch<Bar>:echo<cr>", { desc = "clear search highlights" })
 -- set("n", "<esc>", ":nohlsearch<Bar>:echo<cr><esc>", { desc = "clear search highlights" })
--- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- new blank line
--- Disable the default s substitute command. This can have issues with keymaps that start with s, such as sx
-set("n", "s", "<nop>", { noremap = true }) -- kinda works, but blocks other keymaps if not pressed quickly enough
--- vim.keymap.del("n", "s") -- disable s -- doesn't work
--- vim.cmd([[unmap s]]) -- doesn't work
+-- vim.keymap.set("n", "<leader>o", "i<cr><esc>") -- new blank line -- disabled for obsidian
 
 -- Macros
 set("n", "Q", "q") -- use Q to start/stop recording a macro

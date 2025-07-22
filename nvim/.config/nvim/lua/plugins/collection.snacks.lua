@@ -432,7 +432,7 @@ return {
       -- -- END custom pickers
 
       -- Toggle mappings
-      Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>tsp")
+      Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>tsp") -- this only affects current buffer
       Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
       Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
       Snacks.toggle
