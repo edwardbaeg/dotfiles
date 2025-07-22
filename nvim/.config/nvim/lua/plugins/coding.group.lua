@@ -8,10 +8,22 @@ return {
    {
       -- add motions for substituting text
       "gbprod/substitute.nvim",
+      dependencies = {
+         "rachartier/tiny-glimmer.nvim",
+      },
       config = function()
-         require("substitute").setup({})
+         require("substitute").setup({
+            on_substitute = require("tiny-glimmer.support.substitute").substitute_cb,
+            highlight_substituted_text = {
+               enabled = false,
+            },
+         })
+         -- Disable the default s substitute command. This can have issues with keymaps that start with s, such as sx
+         vim.keymap.set("n", "s", "<nop>", { noremap = true, desc = "substitute" }) -- kinda works, but blocks other keymaps if not pressed quickly enough
+         -- vim.keymap.del("n", "s") -- disable s -- doesn't work
+         -- vim.cmd([[unmap s]]) -- doesn't work
 
-         -- add exchange operator, invoke twice, cancle with <esc>
+         -- add exchange operator, invoke twice, cancel with <esc>
          -- NOTE: this needs to be pressed quickly until the s mapping is fixed
          -- this can be replaced with gX from mini.operators
          vim.keymap.set("n", "sx", "<cmd>lua require('substitute.exchange').operator()<cr>", { noremap = true })
@@ -67,7 +79,7 @@ return {
 
    {
       -- automatically indent from the first column to the current indent level
-      'vidocqh/auto-indent.nvim',
+      "vidocqh/auto-indent.nvim",
       opts = {},
    },
 }

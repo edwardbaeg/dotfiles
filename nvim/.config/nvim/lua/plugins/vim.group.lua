@@ -187,6 +187,7 @@ return {
 
    {
       -- animated highlighting for yank, paste
+      -- NOTE: this breaks insert mode <c-o>p
       "rachartier/tiny-glimmer.nvim",
       -- event = "TextYankPost",
       opts = {
@@ -199,6 +200,7 @@ return {
                from_color = "#2d4f67",
             },
          },
+
          overwrite = {
             paste = {
                enabled = true,
@@ -212,6 +214,15 @@ return {
             -- search = {
             --    enabled = true,
             -- }
+         },
+
+         support = {
+            -- TODO this doesnt seem to work https://github.com/rachartier/tiny-glimmer.nvim/issues/17
+            -- integrate with gbprod/substitute.nvim
+            substitute = {
+               enabled = true,
+               default_animation = "fade",
+            },
          },
       },
    },
