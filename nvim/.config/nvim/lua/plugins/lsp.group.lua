@@ -4,6 +4,7 @@ return {
    {
       -- LSP, formatter, and linter config and plugins
       -- NOTE: do not lazy load
+      -- TODO: consider replacing nonels with conform.nvim
       "neovim/nvim-lspconfig",
       enabled = not vim.g.vscode,
       dependencies = {
