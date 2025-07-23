@@ -49,6 +49,7 @@ return {
                "query",
                "regex",
                "terraform",
+               "toml",
                "tsx",
                "typescript",
                "vim",

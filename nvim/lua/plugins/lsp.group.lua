@@ -91,6 +91,7 @@ return {
             terraformls = {},
             jsonls = {},
             yamlls = {},
+            taplo = {}, -- toml
 
             -- markdown
             -- NOTE: this expects markdown files to have a single #top level header
