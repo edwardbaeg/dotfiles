@@ -42,7 +42,7 @@ These are mostly brew packages.
 - `ncdu` ncurses disk usage viewer
 - `ripgrep` better grep (and faster than ag)
 - `stow` symlink manager
-- `tlrc` community written short man pages (tlrc is rust client of tldr)
+- `tlrc` community written short man pages (command is tldr; tlrc is rust client of tldr)
 - `zoxide` directory jumper
 
 #### TUI
@@ -62,7 +62,7 @@ These are mostly brew packages.
 - `scrcpy` android screen mirror/recorder (requires adb)
 
 #### Fun
-- `fastfetch` display system info
+- `fastfetch` display system info (replaces neofetch)
 
 #### Dependencies
 
@@ -118,6 +118,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 - `Bartender`: menubar management
 - `Dato`: menubar calendar and meetings
+- `Meteorologist`: weather in menubar
 - `Monitor Control`: menubar monitor brightness
 - `Stats`: menubar system monitoring
 
@@ -130,10 +131,13 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Hammerspoon`: mac scripting
 - `JankyBorders`: visually highlight focused window (need to start brew service)
 - `Karabiner Elements`: remap keys; RShift -> Backspace; Fn -> Fn on external keyboards (maintain for builtin)
+- `LocalSend`: file transfer
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
 - `Raycast`: launcher
 - `Shortcat`: keyboard shortcuts everywhere
+<!-- TODO: consider flameshot, FOSS alternative -->
 - `Shottr`: screenshot tool
+- `Syncthing`: file sync
 
 ## oh-my-zsh
 
