@@ -61,16 +61,18 @@ return {
 
          local Terminal = require("toggleterm.terminal").Terminal
 
-         -- Set up lazygit --NOTE replaced with snacks.lazy_git
+         -- Set up lazygit
          local lazygit = Terminal:new({
             cmd = "lazygit",
             -- hidden = true -- hidden terminals won't resize
          })
-         function _G._lazygit_toggle()
+         local function lazygit_toggle()
             lazygit:toggle()
          end
 
-         vim.keymap.set("n", "<leader>lg", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
+         vim.keymap.set("n", "<leader>lg", function()
+            lazygit_toggle()
+         end, { noremap = true, silent = true })
          vim.keymap.set("n", "<c-\\>", "<cmd>ToggleTerm<cr>", { noremap = true, silent = true })
          -- vim.keymap.set("n", "<c-\\>", "<cmd>lua _lazygit_toggle()<cr>", { noremap = true, silent = true })
 

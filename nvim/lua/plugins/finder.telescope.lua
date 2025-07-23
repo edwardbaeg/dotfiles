@@ -98,28 +98,28 @@ return {
       -- custom picker that greps the word under the cursor (cword)
       -- https://github.com/nvim-telescope/telescope.nvim/issues/1766#issuecomment-1150437074
       -- vim.keymap.set("n", "<leader>*", "<cmd>lua live_grep_cword()<cr>")
-      _G.live_grep_cword = function()
-         local cword = vim.fn.expand("<cword>")
-         require("telescope.builtin").live_grep({
-            default_text = cword,
-            on_complete = cword ~= ""
-                  and {
-                     function(picker)
-                        local mode = vim.fn.mode()
-                        local keys = mode ~= "n" and "<ESC>" or ""
-                        vim.api.nvim_feedkeys(
-                           vim.api.nvim_replace_termcodes(keys .. [[^v$<C-g>]], true, false, true),
-                           "n",
-                           true
-                        )
-                        table.remove(picker._completion_callbacks, 1)
-                        vim.tbl_map(function(mapping)
-                           vim.api.nvim_buf_set_keymap(0, "s", mapping.lhs, mapping.rhs, {})
-                        end, vim.api.nvim_buf_get_keymap(0, "i"))
-                     end,
-                  }
-               or nil,
-         })
-      end
+      -- local function live_grep_cword()
+      --    local cword = vim.fn.expand("<cword>")
+      --    require("telescope.builtin").live_grep({
+      --       default_text = cword,
+      --       on_complete = cword ~= ""
+      --             and {
+      --                function(picker)
+      --                   local mode = vim.fn.mode()
+      --                   local keys = mode ~= "n" and "<ESC>" or ""
+      --                   vim.api.nvim_feedkeys(
+      --                      vim.api.nvim_replace_termcodes(keys .. [[^v$<C-g>]], true, false, true),
+      --                      "n",
+      --                      true
+      --                   )
+      --                   table.remove(picker._completion_callbacks, 1)
+      --                   vim.tbl_map(function(mapping)
+      --                      vim.api.nvim_buf_set_keymap(0, "s", mapping.lhs, mapping.rhs, {})
+      --                   end, vim.api.nvim_buf_get_keymap(0, "i"))
+      --                end,
+      --             }
+      --          or nil,
+      --    })
+      -- end
    end,
 }
