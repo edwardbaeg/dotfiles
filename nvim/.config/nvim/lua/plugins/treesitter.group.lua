@@ -191,7 +191,8 @@ return {
          require("treesitter-context").setup({
             multiwindow = true, -- default is false
             -- max_lines = 3,
-            max_lines = 0,
+            -- max_lines = 0, -- 0 is unlimited
+            max_lines = '20%', -- 0 is unlimited
             -- hi TreesitterContextLineNumberBottom sets an underline
             -- separator = "-",
             -- separator = "—",
