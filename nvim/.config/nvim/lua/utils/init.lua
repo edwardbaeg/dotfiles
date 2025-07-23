@@ -15,7 +15,7 @@ end
 
 ---@param name string
 local function isIndexFile(name)
-   return name:find("^index.")
+   return name:find("^index.") or name:find("^[i]nit.")
 end
 
 ---@param path string

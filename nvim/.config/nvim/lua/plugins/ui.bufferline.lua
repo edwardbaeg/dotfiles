@@ -13,7 +13,7 @@ return {
 
       local white = "white" -- #ffffff
 
-      local utils = require("../utils")
+      local utils = require("utils")
 
       require("bufferline").setup({
          options = {

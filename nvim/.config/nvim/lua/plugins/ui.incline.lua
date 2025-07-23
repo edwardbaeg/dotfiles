@@ -5,7 +5,7 @@ return {
    -- event = "VeryLazy",
    config = function()
       local frappe = require("catppuccin.palettes").get_palette("frappe")
-      local utils = require("../utils")
+      local utils = require("utils")
       require("incline").setup({
          window = {
             placement = {
@@ -58,7 +58,7 @@ return {
                guibg = frappe.crust,
             }
 
-            local Utils = require('../utils')
+            local object_assign = require('utils').object_assign
 
             -- example: █▓   incline-nvim.lua ▓█
             return {
@@ -66,11 +66,11 @@ return {
                --    " ░▓█", -- these are unicode block shade characters
                -- }, invertedFieldOptions),
 
-               Utils.object_assign({
+               object_assign({
                   " ",
                }, defaultFieldOptions),
 
-               Utils.object_assign({
+               object_assign({
                   devicon,
                }, defaultFieldOptions),
 
