@@ -1,4 +1,3 @@
--- TODO: move this to utils/index.lua
 local M = {}
 
 --- Combine two tables
@@ -40,6 +39,17 @@ function M.getDisplayFileName(filename, path, short)
       end
       return parentDirName .. "/" .. filename
    end
+end
+
+function M.get_visual_selection()
+-- Store the visual selection in a register and get it
+   vim.cmd('normal! "vy')
+   local selected_text = vim.fn.getreg("v")
+
+   -- Clean up whitespace and newlines
+   selected_text = selected_text:gsub("\n", " "):gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+
+   return selected_text
 end
 
 return M

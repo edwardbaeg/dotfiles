@@ -127,12 +127,7 @@ end, { desc = "Goto [h]elpfile" })
 
 -- Open help for visual selection
 set("v", "<leader>fh", function()
-   -- Store the visual selection in a register and get it
-   vim.cmd('normal! "vy')
-   local selected_text = vim.fn.getreg("v")
-
-   -- Clean up whitespace and newlines
-   selected_text = selected_text:gsub("\n", " "):gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+   local selected_text = require("utils").get_visual_selection()
 
    vim.cmd("help " .. selected_text)
 end, { desc = "Help picker with visual selection" })
