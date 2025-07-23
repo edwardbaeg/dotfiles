@@ -23,7 +23,7 @@ return {
             local path = vim.api.nvim_buf_get_name(props.buf)
             local modified = vim.bo[props.buf].modified
 
-            filename = utils.getDisplayFileName(filename, path, false)
+            filename = utils.get_filename_display(filename, path, false)
             if filename == "" then
                filename = "[No Name]"
             end

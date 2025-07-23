@@ -21,7 +21,7 @@ return {
       vim.keymap.set("n", "<leader>dp", actions.prev_conflict, { noremap = true, desc = "[p]revious conflict" })
       vim.keymap.set("n", "<leader>gdp", actions.prev_conflict, { noremap = true, desc = "[p]revious conflict" })
 
-      local function diffOpenWithInput()
+      local function diff_open_with_input()
          -- local user_input = vim.fn.input("Revision to Open: ")
          -- TODO replace with some ui plugin like snacks
          vim.ui.input({ prompt = "Revision to Open: " }, function(input)
@@ -37,7 +37,7 @@ return {
 
       require("which-key").add({
          {
-            "<leader>di", diffOpenWithInput, desc = "Diffview [I]nput"
+            "<leader>di", diff_open_with_input, desc = "Diffview [I]nput"
          }
       })
    end,

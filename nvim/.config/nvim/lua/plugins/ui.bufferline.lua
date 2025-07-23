@@ -19,7 +19,7 @@ return {
          options = {
             name_formatter = function(buf)
                ---@diagnostic disable-next-line: undefined-field buf type is incorrect
-               return utils.getDisplayFileName(buf.name, buf.path, true)
+               return utils.get_filename_display(buf.name, buf.path, true)
             end,
             -- numbers = function(opts)
             --    return string.format("%s·%s", opts.raise(opts.ordinal), opts.lower(opts.id))

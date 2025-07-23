@@ -27,8 +27,8 @@ return {
             col = columns,
          },
          format = function (path)
-            local filename = utils.getFilenameFromPath(path)
-            return utils.getDisplayFileName(filename, path)
+            local filename = utils.get_filename_from_path(path)
+            return utils.get_filename_display(filename, path)
          end,
       })
 

@@ -172,15 +172,15 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Quick open file in Cursor.app
-local function OpenInCursor()
+local function open_in_cursor()
    local file_path = vim.fn.expand("%:p")
    local line_number = vim.fn.line(".")
    vim.fn.system(string.format("cursor -g %s:%d", file_path, line_number))
 end
 
-vim.keymap.set("n", "<leader>gu", OpenInCursor, { noremap = true, silent = true, desc = "Open current file and line in Cursor" })
+vim.keymap.set("n", "<leader>gu", open_in_cursor, { noremap = true, silent = true, desc = "Open current file and line in Cursor" })
 
-vim.api.nvim_create_user_command("OpenInCursor", OpenInCursor, {
+vim.api.nvim_create_user_command("OpenInCursor", open_in_cursor, {
    nargs = 0,
    desc = "Open current file and line in Cursor",
 })

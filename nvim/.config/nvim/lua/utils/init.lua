@@ -13,12 +13,12 @@ function M.object_assign(t1, t2)
 end
 
 ---@param name string
-local function isIndexFile(name)
+local function is_index_file(name)
    return name:find("^index.") or name:find("^[i]nit.")
 end
 
 ---@param path string
-function M.getFilenameFromPath(path)
+function M.get_filename_from_path(path)
    return path:gsub(".*/", "")
 end
 
@@ -27,9 +27,9 @@ end
 ---@param path string file path
 ---@param short? boolean whether to display index filename as "index" or "i"
 ---@return string text shorthand filename that includes the parent directory for index.* files
-function M.getDisplayFileName(filename, path, short)
+function M.get_filename_display(filename, path, short)
    short = short or false
-   if not isIndexFile(filename) then
+   if not is_index_file(filename) then
       return filename
    else
       local parentDirName = path:match("(.*)/(.*)$")
