@@ -1,7 +1,8 @@
 local appLauncher = require("application_launcher")
-local togglePersonalOverride = appLauncher.togglePersonalOverride
-local isPersonalOverride = appLauncher.isPersonalOverride
 local caffeine = require("caffeine")
+
+local isPersonalOverride = appLauncher.isPersonalOverride
+local togglePersonalOverride = appLauncher.togglePersonalOverride
 
 local M = {}
 
@@ -15,16 +16,19 @@ local M = {}
 local modal = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
--- TODO: abstract to different modal?
+-- TODO: abstract to different module?
 local cursorSubmodal = hs.hotkey.modal.new()
 local cursorSubmodalId
+
+local raycastSubmodal = hs.hotkey.modal.new()
+local raycastSubmodalId
 
 local function getToggleLabel(value, label)
    return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
 end
 
 ---@type ModalEntry[]
-local subModalEntries = {
+local cursorSubModalEntries = {
    "--Cursor--",
    {
       key = "O",
@@ -68,7 +72,7 @@ local subModalEntries = {
 
 function cursorSubmodal:entered()
    local mappedEntries = {}
-   for _, entry in ipairs(subModalEntries) do
+   for _, entry in ipairs(cursorSubModalEntries) do
       if type(entry) == "string" then
          table.insert(mappedEntries, entry)
       elseif type(entry) == "table" and entry.key and entry.label then
@@ -93,6 +97,74 @@ end
 
 function cursorSubmodal:exited()
    hs.alert.closeSpecific(cursorSubmodalId, 0.1)
+end
+
+---@type ModalEntry[]
+local raycastSubModalEntries = {
+   "--Raycast--",
+   {
+      key = "A",
+      label = "AI - Personal Extensions",
+      callback = function()
+         hs.urlevent.openURL(
+            "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D"
+         )
+         raycastSubmodal:exit()
+      end,
+   },
+   {
+      key = "S",
+      label = "Snippets",
+      callback = function()
+         hs.urlevent.openURL("raycast://extensions/raycast/snippets/search-snippets")
+         raycastSubmodal:exit()
+      end,
+   },
+   {
+      key = "E",
+      label = "Emoji",
+      callback = function()
+         hs.urlevent.openURL("raycast://extensions/raycast/emoji-symbols/search-emoji-symbols")
+         raycastSubmodal:exit()
+      end,
+   },
+   {
+      key = "C",
+      label = "Clipboard",
+      callback = function()
+         hs.urlevent.openURL("raycast://extensions/raycast/clipboard-history/clipboard-history")
+         raycastSubmodal:exit()
+      end,
+   },
+}
+
+function raycastSubmodal:entered()
+   local mappedEntries = {}
+   for _, entry in ipairs(raycastSubModalEntries) do
+      if type(entry) == "string" then
+         table.insert(mappedEntries, entry)
+      elseif type(entry) == "table" and entry.key and entry.label then
+         local label = type(entry.label) == "function" and entry.label() or entry.label
+         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
+      end
+   end
+   local modalContent = table.concat(mappedEntries, "\n")
+   modalContent = modalContent .. "\n\nEsc: Exit"
+   raycastSubmodalId = hs.alert.show(modalContent, {
+      fillColor = {
+         red = 0.6,
+         green = 0.4,
+         blue = 0.2,
+         alpha = 1,
+      },
+      textFont = "0xProto",
+      textSize = 20,
+      radius = 16,
+   }, "indefinite")
+end
+
+function raycastSubmodal:exited()
+   hs.alert.closeSpecific(raycastSubmodalId, 0.1)
 end
 
 ---@type ModalEntry[]
@@ -181,6 +253,14 @@ local modalEntries = {
    "",
    "--Submodals--",
    {
+      key = "R",
+      label = "Raycast: modal",
+      callback = function()
+         modal:exit()
+         raycastSubmodal:enter()
+      end,
+   },
+   {
       key = "U",
       label = "Cursor: modal",
       callback = function()
@@ -233,10 +313,17 @@ function Start()
    end
 
    -- Create bindings for sub-modal entries
-   for _, entry in ipairs(subModalEntries) do
+   for _, entry in ipairs(cursorSubModalEntries) do
       -- Skip string entries (display-only)
       if type(entry) == "table" and entry.key and entry.callback then
          cursorSubmodal:bind("", entry.key, entry.callback)
+      end
+   end
+
+   for _, entry in ipairs(raycastSubModalEntries) do
+      -- Skip string entries (display-only)
+      if type(entry) == "table" and entry.key and entry.callback then
+         raycastSubmodal:bind("", entry.key, entry.callback)
       end
    end
 
@@ -249,6 +336,10 @@ function Start()
 
    cursorSubmodal:bind("", "escape", function()
       cursorSubmodal:exit()
+   end)
+
+   raycastSubmodal:bind("", "escape", function()
+      raycastSubmodal:exit()
    end)
 end
 
