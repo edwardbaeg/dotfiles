@@ -48,6 +48,7 @@ return {
    {
       -- align text by delimiters
       "junegunn/vim-easy-align",
+      enabled = false, -- keymaps conflict with code companion. Also consider using mini.align
       init = function()
          vim.keymap.set("n", "ga", "<Plug>(EasyAlign)")
          vim.keymap.set("x", "ga", "<Plug>(EasyAlign)")

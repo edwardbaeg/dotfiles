@@ -16,7 +16,6 @@ return {
          "pmizio/typescript-tools.nvim", -- native lua typescript support
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
-         -- "j-hui/fidget.nvim", -- small nvim-lsp progress ui -- replaced with noice.lsp
          "nvim-tree/nvim-web-devicons", -- adds icons
          "saghen/blink.cmp", -- completion engine
       },
