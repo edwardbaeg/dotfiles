@@ -7,9 +7,11 @@ all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezter
 
 # TODO: follow a single pattern for directories. Probably set nested dirs here instead of in git filesystem
 stow-nvim:
+	mkdir -p ~/.config/nvim
 	stow --verbose --restow -t ~/.config/nvim nvim
 
 stow-nvim-lazyvim:
+	mkdir -p ~/.config/nvim-lazyvim
 	stow --verbose --restow -t ~/.config/nvim-lazyvim nvim-lazyvim
 
 stow-tmux:
