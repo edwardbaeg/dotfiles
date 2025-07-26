@@ -179,9 +179,9 @@ alias bf="git_checkout_fuzzy"
 function git_checkout_fuzzy () {
     local branches branch
     branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
-    branch=$(echo "$branches" |
-    fzf -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
-    local target_branch=$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+        branch=$(echo "$branches" |
+        fzf -d $(( 2 + $(wc -l <<< "$branches") )) +m --query="$1") &&
+        local target_branch=$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
     local command="git checkout $target_branch"
     print "$command"
     print -s "$command"
@@ -197,28 +197,28 @@ function vim_files() {
     IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
     [[ -n "$files" ]] && {
         local command="${EDITOR:-nvim} ${files[@]}"
-        print "$command"
-        print -s "$command"
-        eval $command
-    }
+            print "$command"
+            print -s "$command"
+            eval $command
+        }
 }
 
 # NOTE: this doesn't support <tab> selection
 # https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
 alias vg="vim_grep"
 function vim_grep {
-  local results=$(command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" \
-  | command fzf -d':' --ansi \
-    --preview "command bat -p --color=always {1} --highlight-line {2}" \
-    --preview-window ~8,+{2}-5 \
-  | awk -F':' '{print $1 " +" $2}')
-  
-  if [[ -n "$results" ]]; then
-    local command="${EDITOR:-nvim} $results"
-    print "$command"
-    print -s "$command"
-    eval $command
-  fi
+    local results=$(command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" \
+        | command fzf -d':' --ansi \
+        --preview "command bat -p --color=always {1} --highlight-line {2}" \
+        --preview-window ~8,+{2}-5 \
+        | awk -F':' '{print $1 " +" $2}')
+
+    if [[ -n "$results" ]]; then
+        local command="${EDITOR:-nvim} $results"
+        print "$command"
+        print -s "$command"
+        eval $command
+    fi
 }
 
 # List tmux sessions, filter with fzf, and attach to the selected session
@@ -289,33 +289,33 @@ function npm_run_fuzzy() {
 alias fui="fzf_demo_ui"
 function fzf_demo_ui() {
     git ls-files | fzf --style full --scheme path \
-    --border --padding 1,2 \
-    --ghost 'Type in your query' \
-    --border-label ' Demo ' --input-label ' Input ' --header-label ' File Type ' \
-    --footer-label ' MD5 Hash ' \
-    --preview 'BAT_THEME=gruvbox-dark fzf-preview.sh {}' \
-    --bind 'result:bg-transform-list-label:
-        if [[ -z $FZF_QUERY ]]; then
-          echo " $FZF_MATCH_COUNT items "
-        else
-          echo " $FZF_MATCH_COUNT matches for [$FZF_QUERY] "
-        fi
-        ' \
-    --bind 'focus:bg-transform-preview-label:[[ -n {} ]] && printf " Previewing [%s] " {}' \
-    --bind 'focus:+bg-transform-header:[[ -n {} ]] && file --brief {}' \
-    --bind 'focus:+bg-transform-footer:if [[ -n {} ]]; then
-              echo "MD5:    $(md5sum < {})"
-              echo "SHA1:   $(sha1sum < {})"
-              echo "SHA256: $(sha256sum < {})"
-            fi' \
-    --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' \
-    --color 'border:#aaaaaa,label:#cccccc' \
-    --color 'preview-border:#9999cc,preview-label:#ccccff' \
-    --color 'list-border:#669966,list-label:#99cc99' \
-    --color 'input-border:#996666,input-label:#ffcccc' \
-    --color 'header-border:#6699cc,header-label:#99ccff' \
-    --color 'footer:#ccbbaa,footer-border:#cc9966,footer-label:#cc9966'
-}
+        --border --padding 1,2 \
+        --ghost 'Type in your query' \
+        --border-label ' Demo ' --input-label ' Input ' --header-label ' File Type ' \
+        --footer-label ' MD5 Hash ' \
+        --preview 'BAT_THEME=gruvbox-dark fzf-preview.sh {}' \
+        --bind 'result:bg-transform-list-label:
+    if [[ -z $FZF_QUERY ]]; then
+        echo " $FZF_MATCH_COUNT items "
+    else
+        echo " $FZF_MATCH_COUNT matches for [$FZF_QUERY] "
+    fi
+    ' \
+        --bind 'focus:bg-transform-preview-label:[[ -n {} ]] && printf " Previewing [%s] " {}' \
+        --bind 'focus:+bg-transform-header:[[ -n {} ]] && file --brief {}' \
+        --bind 'focus:+bg-transform-footer:if [[ -n {} ]]; then
+    echo "MD5:    $(md5sum < {})"
+    echo "SHA1:   $(sha1sum < {})"
+    echo "SHA256: $(sha256sum < {})"
+    fi' \
+        --bind 'ctrl-r:change-list-label( Reloading the list )+reload(sleep 2; git ls-files)' \
+        --color 'border:#aaaaaa,label:#cccccc' \
+        --color 'preview-border:#9999cc,preview-label:#ccccff' \
+        --color 'list-border:#669966,list-label:#99cc99' \
+        --color 'input-border:#996666,input-label:#ffcccc' \
+        --color 'header-border:#6699cc,header-label:#99ccff' \
+        --color 'footer:#ccbbaa,footer-border:#cc9966,footer-label:#cc9966'
+    }
 
 # -- git
 function gbdm() {
