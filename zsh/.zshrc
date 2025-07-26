@@ -250,9 +250,12 @@ function tmux_attach() {
 # Fuzzy picker for tmuxp files
 alias tp="tmuxp_picker"
 alias tmuxpf="tmuxp_picker"
+
 function tmuxp_picker() {
     local file
-    file=$(find ~/dev/dotfiles/tmux -type f -name '*.yaml' | fzf --prompt="tmuxp > " --height=40% --border)
+    file=$(find ~/dev/dotfiles/tmux -type f -name '*.yaml' | \
+        fzf --prompt="tmuxp > " --height=40% --border \
+            --preview="head -40 {}" --preview-window=right:40%)
     if [[ -n "$file" ]]; then
         local command="tmuxp load \"$file\""
         print "$command"
