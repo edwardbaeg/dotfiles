@@ -61,6 +61,12 @@ vim.api.nvim_create_autocmd("FileType", {
    end,
 })
 
+-- searching
+vim.opt.path:append('**') -- fuzzy searching for :find -- NOTE: this can be SUPER slow
+vim.keymap.set('n', '<leader>fi', ':find ', { desc = 'Find files recursively' }) -- is this better than ctrl-p?
+
+vim.opt.grepprg = "rg --vimgrep" -- replace grep with rg -- TODO: check why a noice window opens for this
+
 -- Folding
 
 -- vim.o.foldmethod = "expr"
