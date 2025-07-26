@@ -36,7 +36,7 @@ stow-kitty:
 	stow --verbose --restow -t ~ kitty
 
 stow-borders:
-	stow --verbose --restow -t ~ borders
+	stow --verbose --restow -t ~/.config/borders borders
 
 stow-bin:
 	stow --verbose --restow -t ~/bin bin
