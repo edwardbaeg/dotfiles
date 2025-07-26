@@ -253,7 +253,7 @@ alias tmuxpf="tmuxp_picker"
 
 function tmuxp_picker() {
     local file
-    file=$(find ~/dev/dotfiles/tmux -type f -name '*.yaml' | \
+    file=$(find ~/dev/dotfiles/tmuxp -type f -name '*.yaml' | \
         fzf --prompt="tmuxp > " --height=40% --border \
             --preview="head -40 {}" --preview-window=right:40%)
     if [[ -n "$file" ]]; then
