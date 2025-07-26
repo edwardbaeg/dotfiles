@@ -41,8 +41,5 @@ stow-borders:
 stow-bin:
 	stow --verbose --restow -t ~/bin bin
 
-clean:
-	stow --delete -t ~ nvim tmux zsh hammerspoon wezterm gitconfig gh-dash kitty borders bin
-
 test:
 	@echo "No tests defined."

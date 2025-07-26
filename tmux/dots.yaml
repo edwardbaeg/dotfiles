@@ -6,7 +6,7 @@ windows:
       main-pane-width: 66%
     panes:
       - shell_command:
-          - cd ~/dev/dotfiles/nvim/.config/nvim/
+        - cd ~/dev/dotfiles/nvim/
         focus: true
       - null
 
