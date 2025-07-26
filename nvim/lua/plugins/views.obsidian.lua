@@ -35,7 +35,9 @@ return {
       backlinks = {
          parse_headers = false, -- whether to parse header under cursor -- default is true
       },
-      new_notes_location = "Quick Notes",
+
+      notes_subdir = "Quick Notes",
+      new_notes_location = "notes_subdir",
 
       --- FIXME: does not work
       -- open = {
