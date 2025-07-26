@@ -16,4 +16,4 @@ windows:
     panes:
       - shell_command: # pane no. 1
           - cd ~/Sync/Obsidian\ Vault/
-          - nvim Work.md
+          - nvim ~/Sync/Obsidian\ Vault/work/work-home.md
