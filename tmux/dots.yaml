@@ -1,5 +1,15 @@
 session_name: dotfiles
 windows:
+  - window_name: dotfiles root
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - shell_command:
+          - cd ~/dev/dotfiles/
+        focus: true
+      - null
+
   - window_name: neovim
     layout: main-vertical
     options:
