@@ -1,15 +1,26 @@
 -- usage: hammerspoon://alert?title=Server%20restarted!!&duration=5
+
+-- TODO: abstract these colors
+local purple = {
+   red = 0.5,
+   green = 0.1,
+   blue = 0.6,
+   alpha = 0.9,
+}
+
+local navy = {
+   red = 0.1,
+   green = 0.2,
+   blue = 0.4,
+   alpha = 0.9,
+}
+
 hs.urlevent.bind("alert", function(_, params)
    local title = params.title or "Alert"
    local duration = tonumber(params.duration) or 2
    hs.alert.show(title, {
       strokeColor = { white = 1, alpha = 0.5 }, -- Optional border color
-      fillColor = {
-         red = 0.5,
-         green = 0.1,
-         blue = 0.6,
-         alpha = 0.9,
-      }, -- Custom background color
+      fillColor = purple, -- Custom background color
       textColor = { white = 1 },
       textFont = "Helvetica",
       radius = 8,
@@ -17,28 +28,30 @@ hs.urlevent.bind("alert", function(_, params)
 end)
 
 -- usage: hammerspoon://alert-claudecode?title=ClaudeCode%20alert!&duration=5
+-- TODO: abstract canvas logic to function
 hs.urlevent.bind("alert-claudecode", function(_, params)
    local title = params.title or "Alert"
-   local duration = tonumber(params.duration) or 2
+   local duration = tonumber(params.duration) or 5
 
    local screen = hs.screen.mainScreen():fullFrame()
-   local padding = 24
+   local screenPadding = 48
    local width = 300
    local height = 60
    local textPadding = 10
    local textOffsetY = 15
 
    local canvas = hs.canvas.new({
-      x = screen.w - width - padding,
-      y = padding,
+      x = screen.w - width - screenPadding,
+      y = screenPadding,
       w = width,
       h = height,
    })
 
+
    canvas[1] = {
       type = "rectangle",
       action = "fill",
-      fillColor = { red = 0.1, green = 0.2, blue = 0.4, alpha = 0.9 },
+      fillColor = navy,
       strokeColor = { white = 1, alpha = 0.5 },
       strokeWidth = 1,
       roundedRectRadii = { xRadius = 8, yRadius = 8 },

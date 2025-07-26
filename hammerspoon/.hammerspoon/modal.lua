@@ -138,6 +138,13 @@ local raycastSubModalEntries = {
    },
 }
 
+local blue = {
+   red = 0.6,
+   green = 0.4,
+   blue = 0.2,
+   alpha = 1,
+}
+
 function raycastSubmodal:entered()
    local mappedEntries = {}
    for _, entry in ipairs(raycastSubModalEntries) do
@@ -151,12 +158,7 @@ function raycastSubmodal:entered()
    local modalContent = table.concat(mappedEntries, "\n")
    modalContent = modalContent .. "\n\nEsc: Exit"
    raycastSubmodalId = hs.alert.show(modalContent, {
-      fillColor = {
-         red = 0.6,
-         green = 0.4,
-         blue = 0.2,
-         alpha = 1,
-      },
+      fillColor = blue,
       textFont = "0xProto",
       textSize = 20,
       radius = 16,
@@ -270,6 +272,13 @@ local modalEntries = {
    },
 }
 
+local orange = {
+   red = 0.3,
+   green = 0.3,
+   blue = 0.3,
+   alpha = 1,
+}
+
 function modal:entered()
    local mappedEntries = {}
    for _, entry in ipairs(modalEntries) do
@@ -284,12 +293,7 @@ function modal:entered()
    modalContent = modalContent .. "\n\nEsc: Exit"
    id = hs.alert.show(modalContent, {
       -- strokeColor = { white = 1, alpha = 0.5 }, -- border color
-      fillColor = {
-         red = 0.3,
-         green = 0.3,
-         blue = 0.3,
-         alpha = 1,
-      }, -- background fill
+      fillColor = orange, -- background fill
       -- textColor = { white = 1 },
       textFont = "0xProto",
       -- textFont = "Helvetica",
