@@ -16,7 +16,7 @@ set("i", "jk", "<Esc>") -- leave insert mode
 set("i", "<c-c>", "<Esc>") -- make <c-c> trigger InsertLeave
 
 -- Experimental; move these after settled
-set("n", ";", ":") -- enter command mode without shift
+-- set("n", ";", ":") -- enter command mode without shift
 
 -- Cursor movement
 set({ "n", "v" }, "H", "^") -- move cursor to start of line
@@ -124,9 +124,18 @@ set("n", "<leader>gh", function()
    local cword = vim.fn.expand("<cword>")
    vim.cmd("help " .. cword)
 end, { desc = "Goto [h]elpfile" })
+set("n", "<leader>fH", function()
+   local cword = vim.fn.expand("<cword>")
+   vim.cmd("help " .. cword)
+end, { desc = "Goto [h]elpfile" })
 
 -- Open help for visual selection
 set("v", "<leader>fh", function()
+   local selected_text = require("utils").get_visual_selection()
+
+   vim.cmd("help " .. selected_text)
+end, { desc = "Help picker with visual selection" })
+set("v", "<leader>fH", function()
    local selected_text = require("utils").get_visual_selection()
 
    vim.cmd("help " .. selected_text)
