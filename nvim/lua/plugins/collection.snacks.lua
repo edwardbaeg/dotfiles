@@ -206,8 +206,8 @@ return {
       {
          "<c-p>",
          function()
-            -- Snacks.picker.git_files({
-            Snacks.picker.files({
+            Snacks.picker.git_files({ -- need to ignore node_modules
+            -- Snacks.picker.files({
                formatters = {
                   file = {
                      truncate = (function()
