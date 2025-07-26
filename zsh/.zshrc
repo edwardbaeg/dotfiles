@@ -247,6 +247,22 @@ function tmux_attach() {
     fi
 }
 
+# Fuzzy picker for tmuxp files
+alias tp="tmuxp_picker"
+alias tmuxpf="tmuxp_picker"
+function tmuxp_picker() {
+    local file
+    file=$(find ~/dev/dotfiles/tmux -type f -name '*.yaml' | fzf --prompt="tmuxp > " --height=40% --border)
+    if [[ -n "$file" ]]; then
+        local command="tmuxp load \"$file\""
+        print "$command"
+        print -s "$command"
+        eval $command
+    else
+        echo "Exit: No file selected."
+    fi
+}
+
 alias nf="npm_run_fuzzy"
 alias npmf="npm_run_fuzzy"
 function npm_run_fuzzy() {
