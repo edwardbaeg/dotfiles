@@ -14,7 +14,7 @@ function git_checkout_fuzzy() {
 	local command="git checkout $target_branch"
 	print "$command"
 	print -s "$command"
-	eval $command
+	eval "$command"
 }
 
 # [FUZZY PATTERN] - Open the selected file with the default editor
@@ -28,7 +28,7 @@ function vim_files() {
 		local command="${EDITOR:-nvim} ${files[@]}"
 		print "$command"
 		print -s "$command"
-		eval $command
+		eval "$command"
 	}
 }
 
@@ -46,7 +46,7 @@ function vim_grep {
 		local command="${EDITOR:-nvim} $results"
 		print "$command"
 		print -s "$command"
-		eval $command
+		eval "$command"
 	fi
 }
 
@@ -70,7 +70,7 @@ function tmux_attach() {
 		local command="tmux attach-session -t $session_name"
 		print "$command"
 		print -s "$command"
-		eval $command
+		eval "$command"
 	else
 		echo "Exit: No session selected."
 	fi
@@ -89,7 +89,7 @@ function tmuxp_picker() {
 		local command="tmuxp load \"$file\""
 		print "$command"
 		print -s "$command"
-		eval $command
+		eval "$command"
 	else
 		echo "Exit: No file selected."
 	fi
@@ -103,12 +103,12 @@ function npm_run_fuzzy() {
 
 		if [[ -n $scripts ]]; then
 			# Extract script name and remove all whitespace and quotes
-			script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
+			script_name=$(echo "$scripts" | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
 			command="npm run $script_name"
 			print "$command"
 			# Add command to history and execute it
 			print -s "$command"
-			eval $command
+			eval "$command"
 		else
 			echo "Exit: No script selected."
 		fi
