@@ -163,10 +163,7 @@ function zvm_after_init() {
 
 alias sz="exec zsh" # do not source .zshrc
 # -- Aliases -------------------------------------------------------------------
-echo "checking aliases"
-echo "$HOME/zsh/aliases.sh"
 if [[ -f "$HOME/zsh/aliases.sh" ]]; then
-    echo "sourcing aliases"
     source "$HOME/zsh/aliases.sh"
 fi
 

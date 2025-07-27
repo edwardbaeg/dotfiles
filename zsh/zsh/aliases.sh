@@ -7,7 +7,7 @@ alias ovim="oldvim"
 # -- configuration files
 # v* for shell, e* for within nvim
 # TODO: change working dir for each? #TODO: see if theres benefits
-alias vz="vim ~/.zshrc"
+alias vz="vim ~/.zshrc -c \":cd ~/dev/dotfiles/zsh\""
 alias vzw="vim ~/zsh/work.sh"
 alias vza="vim ~/zsh/aliases.sh"
 # alias ez="vim ~/.zshrc"
