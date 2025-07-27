@@ -5,7 +5,6 @@
 
 all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin
 
-# TODO: follow a single pattern for directories. Probably set nested dirs here instead of in git filesystem
 stow-nvim:
 	mkdir -p ~/.config/nvim
 	stow --verbose --restow -t ~/.config/nvim nvim
@@ -34,7 +33,8 @@ stow-gh-dash:
 	stow --verbose --restow -t ~ gh-dash
 
 stow-kitty:
-	stow --verbose --restow -t ~ kitty
+	mkdir -p ~/.config/kitty
+	stow --verbose --restow -t ~/.config/kitty kitty
 
 stow-borders:
 	mkdir -p ~/.config/borders

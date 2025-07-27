@@ -5,8 +5,8 @@ alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 
 # -- configuration files
-# TODO: choose one pattern and maintain; v* for shell, e* for within nvim
-# TODO: change working dir for each?
+# v* for shell, e* for within nvim
+# TODO: change working dir for each? #TODO: see if theres benefits
 alias vz="vim ~/.zshrc"
 alias vzw="vim ~/zsh/work.sh"
 alias vza="vim ~/zsh/aliases.sh"
