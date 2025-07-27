@@ -35,7 +35,6 @@ alias vhist="vim ~/.zsh_history"
 
 # -- sourcing
 alias st="tmux source-file ~/.tmux.conf"
-alias sz="exec zsh" # do not source .zshrc
 
 # -- git
 alias gdt="git difftool"

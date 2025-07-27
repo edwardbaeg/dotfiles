@@ -161,14 +161,18 @@ function zvm_after_init() {
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 }
 
+alias sz="exec zsh" # do not source .zshrc
 # -- Aliases -------------------------------------------------------------------
-if [[ -f "$home/zsh/aliases.sh" ]]; then
-    source "$home/zsh/aliases.sh"
+echo "checking aliases"
+echo "$HOME/zsh/aliases.sh"
+if [[ -f "$HOME/zsh/aliases.sh" ]]; then
+    echo "sourcing aliases"
+    source "$HOME/zsh/aliases.sh"
 fi
 
 # -- Functions -----------------------------------------------------------------
-if [[ -f "$home/zsh/functions.sh" ]]; then
-    source "$home/zsh/functions.sh"
+if [[ -f "$HOME/zsh/functions.sh" ]]; then
+    source "$HOME/zsh/functions.sh"
 fi
 
 # -- Neovim stuffs -------------------------------------------------
