@@ -21,7 +21,8 @@ stow-zsh:
 	stow --verbose --restow -t ~ zsh
 
 stow-hammerspoon:
-	stow --verbose --restow -t ~ hammerspoon
+	mkdir -p ~/.hammerspoon
+	stow --verbose --restow -t ~/.hammerspoon hammerspoon
 
 stow-wezterm:
 	stow --verbose --restow -t ~ wezterm
@@ -36,6 +37,7 @@ stow-kitty:
 	stow --verbose --restow -t ~ kitty
 
 stow-borders:
+	mkdir -p ~/.config/borders
 	stow --verbose --restow -t ~/.config/borders borders
 
 stow-bin:
