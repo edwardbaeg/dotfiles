@@ -1,3 +1,4 @@
+# NOTE aliases can be prefixed with \ to run the original command, eg \vim
 # -- [neo]vim aliases
 alias vim="nvim"
 alias v="nvim"
