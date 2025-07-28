@@ -1,3 +1,7 @@
+# This is a workaround for claude code to search hidden files
+# https://github.com/anthropics/claude-code/issues/2336#issuecomment-3002050396
+!.*
+
 mpv/watch_later
 .DS_Store
 __pycache__
