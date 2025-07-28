@@ -43,5 +43,8 @@ stow-borders:
 stow-bin:
 	stow --verbose --restow -t ~/bin bin
 
+stow-claude:
+	stow --verbose --restow -t ~/.claude claude
+
 test:
 	@echo "No tests defined."
