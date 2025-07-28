@@ -92,9 +92,6 @@ fi
 # Improve less
 export LESS="$LESS -FRXK"
 
-# Use Neovim as manpager # TODO: open this without loading plugins to speed up
-export MANPAGER='nvim +Man!'
-
 # -- Misc
 # Don't automatically load ranger rc to prevent loading it twice
 # TODO: make conditional for if the rc already exists
@@ -173,6 +170,12 @@ if [[ -f "$HOME/zsh/functions.sh" ]]; then
 fi
 
 # -- Neovim stuffs -------------------------------------------------
+
+# Use Neovim as manpager
+export MANPAGER='nvim +Man!'
+# export MANPAGER="nvim --cmd 'let g:disable_plugins=1' +Man!"
+
+alias nvim_no_plugins="nvim +'let g:disable_plugins=1'"
 
 # -- Aliases to immediately run commands
 alias vpp="nvim -c \"lua require('snacks').picker.git_files()\""

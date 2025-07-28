@@ -4,16 +4,18 @@ require("config.lazy") -- bootstrap lazy
 require("config.keymaps")
 require("config.autocommands")
 
--- load plugins
-require("lazy").setup("plugins", {
-   -- automatically watch for config file changes and reload ui
-   change_detection = {
-      enabled = true,
-      notify = true, -- show notification when changes are found
-   },
-   -- check for plugin updates and notify on launch
-   checker = { enabled = false },
-})
+if not vim.g.disable_plugins then
+   -- load plugins
+   require("lazy").setup("plugins", {
+      -- automatically watch for config file changes and reload ui
+      change_detection = {
+         enabled = true,
+         notify = true, -- show notification when changes are found
+      },
+      -- check for plugin updates and notify on launch
+      checker = { enabled = false },
+   })
+end
 
 -- load settings after plugins
 require("config.settings")
