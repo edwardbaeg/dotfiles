@@ -119,8 +119,8 @@ return {
                   timing = animate.gen_timing.linear({
                      easing = "out",
                      -- duration = 60,
-                     -- duration = 30,
-                     duration = 15,
+                     duration = 30,
+                     -- duration = 15,
                      unit = "total",
                   }),
                   subscroll = animate.gen_subscroll.equal({
