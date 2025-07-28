@@ -1,0 +1,19 @@
+# Claude Instructions
+
+## CLI and Terminal Commands
+
+### Manual Pages (man)
+- **ALWAYS export MANPAGER when using man commands**
+  - Command: `export MANPAGER="less -X"; man command`
+  - Use grep on man pages instead of dumping entire manual (more efficient, reduces cache usage)
+  - Example: `man tmux | grep -A 5 -B 5 "option-name"`
+
+### Code Quality
+- Include confidence levels when identifying issues
+- Comments should focus on WHY something is done, not what it does (code should be self-documenting)
+
+## File Management
+- Do what has been asked; nothing more, nothing less
+- NEVER create files unless absolutely necessary for achieving your goal
+- ALWAYS prefer editing an existing file to creating a new one
+- NEVER proactively create documentation files (*.md) or README files unless explicitly requested

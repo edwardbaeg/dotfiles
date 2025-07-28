@@ -1,9 +1,9 @@
-#TODO
-# add marksman.toml
+# TODO: add marksman.toml
+# NOTE: a downside to stowing a dir to a dir is that the contents of the dir are linked, not the dir itself. so new files are not tracked.
 
 .PHONY: all clean test stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin
 
-all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin
+all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-claude
 
 stow-nvim:
 	mkdir -p ~/.config/nvim
