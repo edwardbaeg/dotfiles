@@ -1,8 +1,19 @@
+---@module "lazy"
+---@type LazyPluginSpec -- NOTE: this doesnt seem to detect unexpected fields?
 return {
    -- Adds IDE integration for Claude Code in Nvim
    "coder/claudecode.nvim",
    dependencies = { "folke/snacks.nvim" },
+   -- lazy = false, -- register :ClaudeCode commands immediately
    config = true,
+   cmd = {
+      "ClaudeCode",
+      "ClaudeCodeFocus",
+      "ClaudeCodeSend",
+      "ClaudeCodeAdd",
+      -- "ClaudeCodeDiffAccept",
+      -- "ClaudeCodeDiffDeny",
+   },
    keys = {
       { "<leader>a", nil, desc = "AI/Claude Code" },
       { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },

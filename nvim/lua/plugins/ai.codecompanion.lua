@@ -5,7 +5,13 @@ return {
    -- ga in chat to change adapter+model
    -- TODO: change default inline diff keymaps: ga and gr; they conflict
    "olimorris/codecompanion.nvim",
-   lazy = false,
+   -- lazy = false, -- expose :CodeCompanion commands immediately
+   cmd = {
+      "CodeCompanion",
+      "CodeCompanionChat",
+      "CodeCompanionCmd",
+      "CodeCompanionActions",
+   },
    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
