@@ -17,3 +17,8 @@
 - NEVER create files unless absolutely necessary for achieving your goal
 - ALWAYS prefer editing an existing file to creating a new one
 - NEVER proactively create documentation files (*.md) or README files unless explicitly requested
+
+## IDE Integration
+- When user references "this file" or is vague about what file they mean, check for active IDE integration first
+- Use system reminders about opened files to determine the correct file instead of searching unnecessarily
+- The IDE integration provides context about which files are currently open and being worked on
