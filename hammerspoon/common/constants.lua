@@ -11,6 +11,6 @@ local hostname = hs.host.localizedName()
 module.isPersonal = hostname == "MacBook Pro14"
 
 -- screen edge padding
-module.PADDING = 4
+M.screenPadding = 6
 
 return module
