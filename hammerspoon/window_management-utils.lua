@@ -1,6 +1,7 @@
+---@type Constants
 local constants = require("common/constants")
 
-local PADDING = constants.PADDING
+local screenPadding = constants.screenPadding
 
 local M = {}
 
@@ -27,7 +28,7 @@ local function axHotfix(win)
 end
 
 -- TODO?: add branching logic for firefox, for potential performance
-M.withAxHotfix = function (fn, position)
+M.withAxHotfix = function(fn, position)
    if not position then
       position = 1
    end
@@ -43,28 +44,28 @@ end
 local function applyScreenEdgePadding(window, screen)
    local x, y, width, height = window.x, window.y, window.w, window.h
    -- left edge
-   if x - screen.x < PADDING then
-      width = width - PADDING
-      x = screen.x + PADDING
+   if x - screen.x < screenPadding then
+      width = width - screenPadding
+      x = screen.x + screenPadding
    end
    -- right edge
-   if screen.w - (x + width) < PADDING then
-      width = width - PADDING
+   if screen.w - (x + width) < screenPadding then
+      width = width - screenPadding
    end
    -- top edge
-   if y - screen.y < PADDING then
-      height = height - PADDING
-      y = screen.y + PADDING
+   if y - screen.y < screenPadding then
+      height = height - screenPadding
+      y = screen.y + screenPadding
    end
    -- bottom edge
-   if screen.h - (y + height) < PADDING then
-      height = height - PADDING
+   if screen.h - (y + height) < screenPadding then
+      height = height - screenPadding
    end
    return { x = x, y = y, w = width, h = height }
 end
 
 local function withinPadding(a, b)
-   return math.abs(a - b) <= PADDING * 2
+   return math.abs(a - b) <= screenPadding * 2
 end
 
 ---@param win hs.window

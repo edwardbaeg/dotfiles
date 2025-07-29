@@ -1,3 +1,4 @@
+---@type Constants
 local constants = require("common/constants")
 local hyperkey, allkey = constants.hyperkey, constants.allkey
 

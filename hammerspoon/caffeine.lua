@@ -1,4 +1,6 @@
-local isPersonal = require("common/constants").isPersonal
+---@type Constants
+local constants = require("common/constants")
+local isPersonal = constants.isPersonal
 
 -- Caffeine menubar app --------------------------------------------------
 --------------------------------------------------------------------------

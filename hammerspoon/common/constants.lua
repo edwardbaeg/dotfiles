@@ -1,16 +1,23 @@
--- Set up modifier combos
--- TODO: add typings
-local module = {}
+---@alias ModifierKeys string[] Array of modifier key names
 
-module.hyperkey = { "cmd", "ctrl" }
-module.cmdShift = { "cmd", "shift" }
-module.altShift = { "alt", "shift" }
-module.allkey = { "cmd", "ctrl", "shift" }
+---@class Constants
+---@field hyperkey ModifierKeys Modifier keys for hyperkey (cmd + ctrl)
+---@field cmdShift ModifierKeys Modifier keys for cmd + shift
+---@field altShift ModifierKeys Modifier keys for alt + shift
+---@field allkey ModifierKeys Modifier keys for cmd + ctrl + shift
+---@field isPersonal boolean Whether this is running on personal machine
+---@field screenPadding number Screen edge padding in pixels
+local M = {}
 
+M.hyperkey = { "cmd", "ctrl" }
+M.cmdShift = { "cmd", "shift" }
+M.altShift = { "alt", "shift" }
+M.allkey = { "cmd", "ctrl", "shift" }
+
+---@type string
 local hostname = hs.host.localizedName()
-module.isPersonal = hostname == "MacBook Pro14"
+M.isPersonal = hostname == "MacBook Pro14"
 
--- screen edge padding
 M.screenPadding = 6
 
-return module
+return M
