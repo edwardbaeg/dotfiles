@@ -18,6 +18,9 @@ return {
             vertical = 0, -- overlap window border
          },
       },
+      hide = {
+         cursorline = true, -- hide if on the same line as cursor
+      },
       render = function(props)
          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
          local path = vim.api.nvim_buf_get_name(props.buf)
