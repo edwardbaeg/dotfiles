@@ -120,26 +120,22 @@ set("n", "<leader>w", "<c-w>")
 set("n", "gD", "<C-]>") -- using this allows for <c-t> to return. Also works in helpfiles
 
 -- Open help for cword
-set("n", "<leader>gh", function()
+local function open_help_cword()
    local cword = vim.fn.expand("<cword>")
    vim.cmd("help " .. cword)
-end, { desc = "Goto [h]elpfile" })
-set("n", "<leader>fH", function()
-   local cword = vim.fn.expand("<cword>")
-   vim.cmd("help " .. cword)
-end, { desc = "Goto [h]elpfile" })
+end
+set("n", "<leader>gh", open_help_cword, { desc = "Goto [h]elpfile" })
+set("n", "<leader>fH", open_help_cword, { desc = "Goto [h]elpfile" })
 
 -- Open help for visual selection
-set("v", "<leader>fh", function()
+local function open_help_visual()
    local selected_text = require("utils").get_visual_selection()
-
    vim.cmd("help " .. selected_text)
-end, { desc = "Help picker with visual selection" })
-set("v", "<leader>fH", function()
-   local selected_text = require("utils").get_visual_selection()
-
-   vim.cmd("help " .. selected_text)
-end, { desc = "Help picker with visual selection" })
+end
+set("v", "<leader>fh", open_help_visual, { desc = "Help picker with visual selection" })
+set("v", "<leader>fH", open_help_visual, { desc = "Help picker with visual selection" })
+set("v", "<leader>gh", open_help_visual, { desc = "Help picker with visual selection" })
+set("v", "<leader>gH", open_help_visual, { desc = "Help picker with visual selection" })
 
 -- Vertical splits
 set("n", "<leader>vs", ":vsplit<cr>", { desc = "[vs]plit" })
