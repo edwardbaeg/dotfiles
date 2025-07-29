@@ -1,7 +1,8 @@
 -- Windows grids ---------------------------------------------------------
 --------------------------------------------------------------------------
+---@type Constants
 local constants = require("common/constants")
-local PADDING = constants.PADDING
+local PADDING = constants.screenPadding
 
 hs.grid.setMargins({ x = 0, y = 0 }) -- margins between windows
 
