@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "open -g 'hammerspoon://alert-claudecode?title=ClaudeCode%20Notification!&duration=5'"
+            "command": "open -g 'hammerspoon://alert-claudecode?title=ClaudeCode%20Notification!&duration=10'"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "TRANSCRIPT_PATH=$(jq -r '.transcript_path' | sed 's|^~|'\"$HOME\"'|'); TITLE=$(tac \"$TRANSCRIPT_PATH\" | grep -m 1 '\"type\":\"text\"' | jq -r '.message.content[0].text' | head -c 24); TITLE=${TITLE:-\"Claude Code STOP\"}; osascript -e 'beep 1'; open -g \"hammerspoon://alert-claudecode?title=${TITLE}&duration=5\""
+            "command": "TRANSCRIPT_PATH=$(jq -r '.transcript_path' | sed 's|^~|'\"$HOME\"'|'); TITLE=$(tac \"$TRANSCRIPT_PATH\" | grep -m 1 '\"type\":\"text\"' | jq -r '.message.content[0].text' | head -c 24); TITLE=${TITLE:-\"ClaudeCode FINISHED\"}; osascript -e 'beep 1'; open -g \"hammerspoon://alert-claudecode?title=${TITLE}&duration=10\""
           }
         ]
       }
