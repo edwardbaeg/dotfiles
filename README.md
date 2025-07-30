@@ -39,7 +39,7 @@ These are mostly brew packages.
 - `eza` better ls
 - `fd` better find (fd-find for `apt`)
 - `fzf` fuzzy finder
-- `ncdu` ncurses disk usage viewer
+- `gdu` better ncdu, disk usage viewer
 - `ripgrep` better grep (and faster than ag)
 - `stow` symlink manager
 - `tlrc` community written short man pages (command is tldr; tlrc is rust client of tldr)
