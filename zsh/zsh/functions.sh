@@ -83,15 +83,20 @@ alias tp="tmuxp_picker"
 alias tmuxpf="tmuxp_picker"
 
 function tmuxp_picker() {
-	local file
-	file=$(find ~/dev/dotfiles/tmuxp -type f -name '*.yaml' |
-		fzf --prompt="tmuxp > " --height=40% --border \
-			--preview="head -40 {}" --preview-window=right:40%)
-	if [[ -n "$file" ]]; then
-		local command="tmuxp load \"$file\""
-		print "$command"
-		print -s "$command"
-		eval "$command"
+	local IFS=$'\n'
+	local files
+	files=($(find ~/dev/dotfiles/tmuxp -type f -name '*.yaml' |
+		fzf --prompt="tmuxp > " --height=40% --border --multi \
+			--preview="head -40 {}" --preview-window=right:40%))
+	IFS=' '
+	
+	if [[ ${#files[@]} -gt 0 ]]; then
+		for file in "${files[@]}"; do
+			local command="tmuxp load \"$file\""
+			print "$command"
+			print -s "$command"
+			eval "$command"
+		done
 	else
 		echo "Exit: No file selected."
 	fi
