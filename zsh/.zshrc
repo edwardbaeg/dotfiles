@@ -178,11 +178,11 @@ export MANPAGER='nvim +Man!'
 alias nvim_no_plugins="nvim +'let g:disable_plugins=1'"
 
 # -- Aliases to immediately run commands
-alias vpp="nvim --command \"lua require('snacks').picker.git_files()\""
-alias vgg="nvim --command \"lua require('fzf-lua').grep_project()\""
-alias vsr="nvim --command \"lua require('persistence').load()\""
-alias vsl="nvim --command \"lua require('persistence').load()\""
-alias ve="nvim --command \"enew\"" # open empty buffer
+alias vpp="nvim -c \"lua require('snacks').picker.git_files()\""
+alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
+alias vsr="nvim -c \"lua require('persistence').load()\""
+alias vsl="nvim -c \"lua require('persistence').load()\""
+alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
 # alias vl="nvim -c \"Lazy\"" # this doesnt work, maybe its before the command is loaded?
 
