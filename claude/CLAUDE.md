@@ -22,3 +22,4 @@
 - When user references "this file" or is vague about what file they mean, check for active IDE integration first
 - Use system reminders about opened files to determine the correct file instead of searching unnecessarily
 - The IDE integration provides context about which files are currently open and being worked on
+- **ALWAYS prioritize IDE context over git status or other file discovery methods when determining which file the user is referring to**
