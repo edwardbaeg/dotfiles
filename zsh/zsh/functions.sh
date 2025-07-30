@@ -24,7 +24,9 @@ function git_checkout_fuzzy() {
 #   https://github.com/junegunn/fzf/wiki/Examples#opening-files
 alias vp="vim_files"
 function vim_files() {
-	IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
+	local IFS=$'\n'
+	files=($(fzf --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
+	IFS=' '
 	[[ -n "$files" ]] && {
 		local command="${EDITOR:-nvim} ${files[*]}"
 		print "$command"
