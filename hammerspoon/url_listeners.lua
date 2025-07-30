@@ -1,26 +1,10 @@
 -- usage: hammerspoon://alert?title=Server%20restarted!!&duration=5
-
--- TODO: abstract these colors
-local purple = {
-   red = 0.5,
-   green = 0.1,
-   blue = 0.6,
-   alpha = 0.9,
-}
-
-local navy = {
-   red = 0.1,
-   green = 0.2,
-   blue = 0.4,
-   alpha = 0.9,
-}
-
 hs.urlevent.bind("alert", function(_, params)
    local title = params.title or "Alert"
    local duration = tonumber(params.duration) or 2
    hs.alert.show(title, {
       strokeColor = { white = 1, alpha = 0.5 }, -- Optional border color
-      fillColor = purple, -- Custom background color
+      fillColor = require('common.constants').colors.purple,
       textColor = { white = 1 },
       textFont = "Helvetica",
       radius = 8,
@@ -47,11 +31,14 @@ hs.urlevent.bind("alert-claudecode", function(_, params)
       h = height,
    })
 
+   if canvas == nil then
+      return
+   end
 
    canvas[1] = {
       type = "rectangle",
       action = "fill",
-      fillColor = navy,
+      fillColor = require('common.constants').colors.navy,
       strokeColor = { white = 1, alpha = 0.5 },
       strokeWidth = 1,
       roundedRectRadii = { xRadius = 8, yRadius = 8 },

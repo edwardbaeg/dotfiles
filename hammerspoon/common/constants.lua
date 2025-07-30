@@ -20,4 +20,37 @@ M.isPersonal = hostname == "MacBook Pro14"
 
 M.screenPadding = 6
 
+M.colors = {
+   orange = {
+      red = 0.6,
+      green = 0.4,
+      blue = 0.2,
+      alpha = 1,
+   },
+   grey = {
+      red = 0.3,
+      green = 0.3,
+      blue = 0.3,
+      alpha = 1,
+   },
+   lightBlue = {
+      red = 0.2,
+      green = 0.4,
+      blue = 0.6,
+      alpha = 1,
+   },
+   purple = {
+      red = 0.5,
+      green = 0.1,
+      blue = 0.6,
+      alpha = 0.9,
+   },
+   navy = {
+      red = 0.1,
+      green = 0.2,
+      blue = 0.4,
+      alpha = 0.9,
+   },
+}
+
 return M
