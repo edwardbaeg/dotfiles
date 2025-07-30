@@ -178,14 +178,6 @@ local modalEntries = {
          modal:exit()
       end,
    },
-   -- {
-   --    key = "S",
-   --    label = "Raycast snippets",
-   --    callback = function()
-   --       hs.urlevent.openURL("raycast://extensions/raycast/snippets/search-snippets")
-   --       modal:exit()
-   --    end,
-   -- },
    {
       key = "T",
       label = "Telegram",
@@ -194,14 +186,6 @@ local modalEntries = {
          modal:exit()
       end,
    },
-   -- {
-   --    key = "U",
-   --    label = "Cursor",
-   --    callback = function()
-   --       hs.application.launchOrFocus("Cursor")
-   --       modal:exit()
-   --    end,
-   -- },
    {
       key = "Z",
       label = "Zen",
