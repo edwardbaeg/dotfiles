@@ -54,10 +54,12 @@ vim.o.showmode = false --whether to show -- INSERT -- in command-line
 -- vim.o.matchtime = 2 = multiple of 100ms
 
 -- set tabstop for specific filetypes
+-- FIXME this doesnt seem to always work?
 vim.api.nvim_create_autocmd("FileType", {
-   pattern = "sh",
+   pattern = { "sh", "bash" },
    callback = function()
-      vim.api.nvim_buf_set_option(0, "tabstop", 4)
+      vim.notify("set tabstop to 4 for bash", vim.log.levels.INFO)
+      vim.bo.tabstop = 4
    end,
 })
 
