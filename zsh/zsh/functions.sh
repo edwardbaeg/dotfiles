@@ -35,19 +35,20 @@ function vim_files() {
 	}
 }
 
-# NOTE: this doesn't support <tab> selection
 # https://github.com/junegunn/fzf/issues/2789#issuecomment-2196524694
 alias vg="vim_grep"
 function vim_grep {
+	local IFS=$'\n'
 	local results
-	results=$(command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" |
-		command fzf -d':' --ansi \
+	results=($(command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" |
+		command fzf -d':' --ansi --multi \
 			--preview "command bat -p --color=always {1} --highlight-line {2}" \
 			--preview-window "~8,+{2}-5" |
-		awk -F':' '{print $1 " +" $2}')
+		awk -F':' '{print $1 " +" $2}'))
+	IFS=' '
 
-	if [[ -n "$results" ]]; then
-		local command="${EDITOR:-nvim} $results"
+	if [[ ${#results[@]} -gt 0 ]]; then
+		local command="${EDITOR:-nvim} ${results[*]}"
 		print "$command"
 		print -s "$command"
 		eval "$command"
