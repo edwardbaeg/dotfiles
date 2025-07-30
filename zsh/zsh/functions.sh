@@ -194,3 +194,12 @@ function wttr() {
 		curl -s "v2d.wttr.in/$location"
 	fi
 }
+
+# always pipe brew leaves to fzf
+function brew() {
+	if [[ "$*" == "leaves" ]]; then
+		command brew leaves | fzf
+	else
+		command brew "$@"
+	fi
+}
