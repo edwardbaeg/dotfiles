@@ -7,6 +7,7 @@ return {
       lazy = false, -- load main colorscheme during startup
       priority = 1000, -- load before other plugins change highlights
       config = function()
+         ---@type CatppuccinOptions -- how did the lsp load this by default?
          require("catppuccin").setup({
             float = {
                transparent = true, -- enables transparency on floating windows

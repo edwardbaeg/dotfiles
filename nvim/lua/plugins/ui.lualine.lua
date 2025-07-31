@@ -55,11 +55,13 @@ return {
                },
 
                -- lualine_x = { "filetype" },
-               lualine_x = {
-                  -- "encoding",
-                  -- "fileformat",
-                  "filetype",
-               },
+               lualine_x = { "ccusage", "filetype" },
+               -- lualine_x = {
+               --    -- "encoding",
+               --    -- "fileformat",
+               --    "filetype",
+               --    "ccusage"
+               -- },
 
                lualine_y = { "progress" },
                lualine_z = { "location" },
