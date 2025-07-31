@@ -32,7 +32,7 @@ M.allkey = { "cmd", "ctrl", "shift" }
 local hostname = hs.host.localizedName()
 M.isPersonal = hostname == "MacBook Pro14"
 
-M.screenPadding = 6
+M.screenPadding = 5
 
 M.colors = {
    orange = {
