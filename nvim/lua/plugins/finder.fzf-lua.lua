@@ -69,7 +69,7 @@ return {
          -- with ignore file
          vim.keymap.set("n", "<c-g>", "<cmd>lua require('fzf-lua').grep_project()<cr>", { silent = true })
          -- without ignore file, TODO: create a user command for this
-         vim.keymap.set("n", "<c-f>", function()
+         vim.keymap.set("n", "<leader><c-g>", function()
             require("fzf-lua").grep_project({
                rg_opts = "--hidden --no-ignore --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
             })

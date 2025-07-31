@@ -29,7 +29,8 @@ set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 -- set("n", "<leader>bp", ":bprevious<cr>")
 -- set("n", "<tab>", "<cmd>bnext<cr>") -- navigate buffers with tab
 -- set("n", "<s-tab>", "<cmd>bprevious<cr>")
-set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
+-- set("n", "<leader>bf", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
+set("n", "<c-f>", ":Format<cr>", { desc = "[f]ormat buffer" }) -- format the buffer
 set("n", "<leader>bd", ":bd<cr>")
 
 -- TODO: refactor this to abstract functionality and add a force quit.
