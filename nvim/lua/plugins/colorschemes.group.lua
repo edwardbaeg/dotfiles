@@ -8,6 +8,10 @@ return {
       priority = 1000, -- load before other plugins change highlights
       config = function()
          require("catppuccin").setup({
+            float = {
+               transparent = true, -- enables transparency on floating windows
+               solid = false,
+            },
             flavour = "frappe",
             transparent_background = true,
             styles = {
