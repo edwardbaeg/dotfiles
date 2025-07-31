@@ -8,7 +8,7 @@ return {
       enabled = not vim.g.vscode,
       config = function()
          -- adds ability to move text around with <m-h/j/k/l>
-         -- FIXME: this is broken for up and down motions
+         -- FIXME: this is broken for up and down motions, might be treesitter related
          -- require("mini.move").setup({}) -- replaced with nvim-gomove
 
          local Snacks = require("snacks")
