@@ -31,7 +31,7 @@ tell application "System Events"
 			# click screenMirroringButton click doesn't work
 			perform action 1 of screenMirroringButton
 			delay 0.5
-			set myScreen to checkbox 1 of its scroll area 1 of group 1
+			set myScreen to checkbox 1 of group 1 of its scroll area 1 of group 1
 			perform action 1 of myScreen
 		end tell
 
