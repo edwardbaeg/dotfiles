@@ -45,6 +45,25 @@ return {
       --       vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
       --    end,
       -- },
+
+      ---@class obsidian.config.FooterOpts
+      ---@field enabled? boolean
+      ---@field format? string
+      ---@field hl_group? string
+      ---@field separator? string|false Set false to disable separator; set an empty string to insert a blank line separator.
+      footer = {
+         enabled = true,
+         -- format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars",
+         format = "{{backlinks}} backlinks  {{properties}} properties",
+         hl_group = "Whitespace", -- TODO: find an alternative, check :h highlight-groups
+         separator = string.rep("─", 80),
+      },
+      ---@class obsidian.config.CheckboxOpts
+      ---@field order? string[]
+      checkbox = {
+         ---Order of checkbox state chars, e.g.{ " ", "~", "!", ">", "x" },
+         order = { " ", "x" },
+      },
    },
    init = function()
       vim.api.nvim_create_autocmd("FileType", {
