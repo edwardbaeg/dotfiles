@@ -62,13 +62,6 @@ return {
         return path:with_suffix(".md")
       end,
 
-      --- FIXME: does not work
-      -- open = {
-      --    func = function(uri)
-      --       vim.ui.open(uri, { cmd = { "open", "-a", "/Applications/Obsidian.app" } })
-      --    end,
-      -- },
-
       ---@class obsidian.config.FooterOpts
       ---@field enabled? boolean
       ---@field format? string
