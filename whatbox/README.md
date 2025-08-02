@@ -8,6 +8,7 @@ Usage guide.
 - gdu (replaces ncdu)
 - lazygit
 - nvim
+- fzf
 
 ### How to install programs
 
