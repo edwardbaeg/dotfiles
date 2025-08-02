@@ -66,8 +66,8 @@ require("config.settings")
    - instead of using `dd` for an empty line, use `J`
    - indent in insert mode with `<c-t>/<c-d>`
    - <c-o> to type a single command in normal mode and then return to insert mode
-   - <c-r> access the register
-     - <c-w> after to access cword
+   - <c-r> access the register [to paste?] in insert mode. use 0 for last yank. use this over <c-o>p because of tiny-glimmer
+
 - Quickfix/Location Lists
    - quickfix is global, location list is per buffer
    - use `:copen` to open the quickfix window; `:lopen` for location list
