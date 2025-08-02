@@ -5,13 +5,13 @@ Usage guide.
 ## Install programs manually
 
 - ranger/yazi
-- ncdu
+- gdu (replaces ncdu)
 - lazygit
 - nvim
 
 ### How to install programs
 
-Download the linux arch64 binary (check system arch with `uname -m` or `arch`)
+Download the linux `arch64` binary (check system arch with `uname -m` or `arch`. `x86_64` -> `arch64`)
 
 ```
 wget <url>
@@ -21,6 +21,18 @@ Unpack the .tar.gz:
 
 ```
 tar -xzf
+```
+
+Or to do at the same time:
+
+```
+wget <url> || tar xz
+```
+
+Set permissions:
+
+```
+chmod +x
 ```
 
 Move executable to a directory in $PATH, eg, `/bin`
