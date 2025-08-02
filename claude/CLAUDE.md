@@ -23,3 +23,10 @@
 - Use system reminders about opened files to determine the correct file instead of searching unnecessarily
 - The IDE integration provides context about which files are currently open and being worked on
 - **ALWAYS prioritize IDE context over git status or other file discovery methods when determining which file the user is referring to**
+
+## Neovim
+
+### Plugin Documentation
+- For lazy.nvim managed plugins, documentation is located at `~/.local/share/nvim/lazy/[plugin-name]/doc/[plugin-name].txt`
+- Example: obsidian.nvim docs at `~/.local/share/nvim/lazy/obsidian.nvim/doc/obsidian.txt`
+- Use `Read` tool to access plugin help files directly instead of trying nvim help commands
