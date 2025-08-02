@@ -25,8 +25,8 @@ sendSystemKey(cmdShift, "o", "SOUND_UP")
 sendSystemKey(cmdShift, "i", "SOUND_DOWN")
 
 -- Page up/down
-sendKey({"alt", "ctrl"}, "k", {}, "pageup")
-sendKey({"alt", "ctrl"}, "j", {}, "pagedown")
+sendKey({ "alt", "ctrl" }, "k", {}, "pageup")
+sendKey({ "alt", "ctrl" }, "j", {}, "pagedown")
 
 -- Raycast commands can only have one hotkey
 -- This command is remapped to cmd+ctrl+shift+= for zmk based keyoards

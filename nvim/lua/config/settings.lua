@@ -64,8 +64,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- searching
-vim.opt.path:append('**') -- fuzzy searching for :find -- NOTE: this can be SUPER slow
-vim.keymap.set('n', '<leader>fi', ':find ', { desc = 'Find files recursively' }) -- is this better than ctrl-p?
+vim.opt.path:append("**") -- fuzzy searching for :find -- NOTE: this can be SUPER slow
+vim.keymap.set("n", "<leader>fi", ":find ", { desc = "Find files recursively" }) -- is this better than ctrl-p?
 
 vim.opt.grepprg = "rg --vimgrep" -- replace grep with rg -- TODO: check why a noice window opens for this
 
@@ -186,7 +186,12 @@ local function open_in_cursor()
    vim.fn.system(string.format("cursor -g %s:%d", file_path, line_number))
 end
 
-vim.keymap.set("n", "<leader>gu", open_in_cursor, { noremap = true, silent = true, desc = "Open current file and line in Cursor" })
+vim.keymap.set(
+   "n",
+   "<leader>gu",
+   open_in_cursor,
+   { noremap = true, silent = true, desc = "Open current file and line in Cursor" }
+)
 
 vim.api.nvim_create_user_command("OpenInCursor", open_in_cursor, {
    nargs = 0,

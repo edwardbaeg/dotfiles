@@ -37,8 +37,10 @@ return {
 
       require("which-key").add({
          {
-            "<leader>di", diff_open_with_input, desc = "Diffview [I]nput"
-         }
+            "<leader>di",
+            diff_open_with_input,
+            desc = "Diffview [I]nput",
+         },
       })
    end,
 }

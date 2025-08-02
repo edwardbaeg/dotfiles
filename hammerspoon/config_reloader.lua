@@ -37,4 +37,3 @@ end)
 hs.urlevent.bind("reloadConfig", function()
    reloadConfig()
 end)
-

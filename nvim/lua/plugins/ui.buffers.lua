@@ -42,7 +42,7 @@ return {
             })
          end
 
-         vim.api.nvim_create_augroup("buvvers_config", {clear = true})
+         vim.api.nvim_create_augroup("buvvers_config", { clear = true })
          vim.api.nvim_create_autocmd("User", {
             group = "buvvers_config",
             pattern = "BuvversBufEnabled",

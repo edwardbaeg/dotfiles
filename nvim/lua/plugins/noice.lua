@@ -60,7 +60,7 @@ return {
                scrollbar = true,
                size = {
                   max_height = 25, -- default is 20
-               }
+               },
             },
          },
       })

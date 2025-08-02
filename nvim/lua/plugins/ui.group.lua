@@ -194,6 +194,6 @@ return {
 
    {
       -- image support
-      "3rd/image.nvim"
-   }
+      "3rd/image.nvim",
+   },
 }

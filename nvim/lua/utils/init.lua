@@ -42,7 +42,7 @@ function M.get_filename_display(filename, path, short)
 end
 
 function M.get_visual_selection()
--- Store the visual selection in a register and get it
+   -- Store the visual selection in a register and get it
    vim.cmd('normal! "vy')
    local selected_text = vim.fn.getreg("v")
 

@@ -41,25 +41,25 @@ return {
 
       -- Customize how note IDs are generated to include the ID in filename
       note_id_func = function(title)
-        -- Generate timestamp-based ID
-        local suffix = ""
-        if title ~= nil then
-          -- Transform title into valid file name
-          suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-        else
-          -- Add 4 random uppercase letters if no title
-          for _ = 1, 4 do
-            suffix = suffix .. string.char(math.random(65, 90))
-          end
-        end
-        return tostring(os.time()) .. "-" .. suffix
+         -- Generate timestamp-based ID
+         local suffix = ""
+         if title ~= nil then
+            -- Transform title into valid file name
+            suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+         else
+            -- Add 4 random uppercase letters if no title
+            for _ = 1, 4 do
+               suffix = suffix .. string.char(math.random(65, 90))
+            end
+         end
+         return tostring(os.time()) .. "-" .. suffix
       end,
 
       -- Customize how note file names are generated to include the ID
       note_path_func = function(spec)
-        -- This will create filenames like "1234567890-my-note-title.md"
-        local path = spec.dir / tostring(spec.id)
-        return path:with_suffix(".md")
+         -- This will create filenames like "1234567890-my-note-title.md"
+         local path = spec.dir / tostring(spec.id)
+         return path:with_suffix(".md")
       end,
 
       ---@class obsidian.config.FooterOpts

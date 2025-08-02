@@ -193,7 +193,7 @@ return {
             multiwindow = true, -- default is false
             -- max_lines = 3,
             -- max_lines = 0, -- 0 is unlimited
-            max_lines = '15%', -- 0 is unlimited
+            max_lines = "15%", -- 0 is unlimited
             -- hi TreesitterContextLineNumberBottom sets an underline
             -- separator = "-",
             -- separator = "—",
@@ -328,5 +328,5 @@ return {
    {
       "HiPhish/rainbow-delimiters.nvim",
       enabled = false, -- ugly
-   }
+   },
 }

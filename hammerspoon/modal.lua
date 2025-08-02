@@ -83,7 +83,7 @@ function cursorSubmodal:entered()
    local modalContent = table.concat(mappedEntries, "\n")
    modalContent = modalContent .. "\n\nEsc/q: Exit"
    cursorSubmodalId = hs.alert.show(modalContent, {
-      fillColor = require('common.constants').colors.lightBlue,
+      fillColor = require("common.constants").colors.lightBlue,
       textFont = "0xProto",
       textSize = 20,
       radius = 16,
@@ -146,7 +146,7 @@ function raycastSubmodal:entered()
    local modalContent = table.concat(mappedEntries, "\n")
    modalContent = modalContent .. "\n\nEsc: Exit"
    raycastSubmodalId = hs.alert.show(modalContent, {
-      fillColor = require('common.constants').colors.orange,
+      fillColor = require("common.constants").colors.orange,
       textFont = "0xProto",
       textSize = 20,
       radius = 16,
@@ -258,7 +258,7 @@ function modal:entered()
    modalContent = modalContent .. "\n\nEsc: Exit"
    id = hs.alert.show(modalContent, {
       -- strokeColor = { white = 1, alpha = 0.5 }, -- border color
-      fillColor = require('common.constants').colors.grey,
+      fillColor = require("common.constants").colors.grey,
       -- textColor = { white = 1 },
       textFont = "0xProto",
       -- textFont = "Helvetica",

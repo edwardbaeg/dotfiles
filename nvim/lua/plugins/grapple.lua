@@ -26,7 +26,7 @@ return {
             row = lines * 0.80,
             col = columns,
          },
-         format = function (path)
+         format = function(path)
             local filename = utils.get_filename_from_path(path)
             return utils.get_filename_display(filename, path)
          end,
@@ -44,10 +44,14 @@ return {
    end,
    keys = {
       -- Toggle tag
-      { "<leader>kl", function ()
-         require("grapple").toggle()
-         vim.notify("Grapple toggled buffer")
-      end, desc = "Grapple toggle tag" },
+      {
+         "<leader>kl",
+         function()
+            require("grapple").toggle()
+            vim.notify("Grapple toggled buffer")
+         end,
+         desc = "Grapple toggle tag",
+      },
 
       -- Show grapple tags
       { "<leader>kk", "<cmd>Grapple toggle_tags<cr>", desc = "Grapple toggle tags" },

@@ -61,7 +61,7 @@ return {
             guibg = frappe.crust,
          }
 
-         local object_assign = require('utils').object_assign
+         local object_assign = require("utils").object_assign
 
          -- example: █▓   incline-nvim.lua ▓█
          return {

@@ -442,8 +442,8 @@ return {
       Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
       Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>tb")
       Snacks.toggle
-          .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-          :map("<leader>tc")
+         .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+         :map("<leader>tc")
 
       -- Open installed plugin folder
       function installed_plugin_finder()

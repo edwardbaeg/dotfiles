@@ -8,7 +8,7 @@ return {
    dependencies = {
       -- check the installation instructions at
       -- https://github.com/folke/snacks.nvim
-      "folke/snacks.nvim"
+      "folke/snacks.nvim",
    },
    keys = {
       -- 👇 in this section, choose your own keymappings!

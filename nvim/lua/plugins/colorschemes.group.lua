@@ -20,7 +20,7 @@ return {
                operators = { "italic" },
             },
             -- enabled by default: cmp, gitsigns, nvimtree, treesitter, mini
-            integrations = { },
+            integrations = {},
          })
          vim.cmd.colorscheme("catppuccin")
       end,

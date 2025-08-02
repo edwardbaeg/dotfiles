@@ -1,7 +1,7 @@
 local leet_arg = "leetcode.nvim"
 
 return {
-   -- leetcode in nvim 
+   -- leetcode in nvim
    -- launch with `nvim leetcode.nvim`
    "kawre/leetcode.nvim",
    build = ":TSUpdate html",

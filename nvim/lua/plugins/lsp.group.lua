@@ -488,7 +488,7 @@ return {
             opts = {
                -- winborder = "rounded",
                hotkeys_mode = "text_based",
-               position = "center"
+               position = "center",
             },
          },
       },

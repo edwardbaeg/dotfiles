@@ -9,9 +9,9 @@ return {
          require("other-nvim").setup({
             mappings = {
                "react",
-               "golang"
-            }
+               "golang",
+            },
          })
-      end
+      end,
    },
 }
