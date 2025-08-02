@@ -186,23 +186,23 @@ return {
          end,
          desc = "[F]uzzy Snacks...",
       },
-      {
-         "<leader>ff",
-         function()
-            -- Snacks.picker.files()
-            Snacks.picker.files({
-               formatters = {
-                  file = {
-                     truncate = (function()
-                        return vim.api.nvim_win_get_width(0) * 0.4
-                     end)(),
-                     -- truncate = 100
-                  },
-               },
-            })
-         end,
-         desc = "[f]iles",
-      },
+      -- {
+      --    "<leader>ff",
+      --    function()
+      --       -- Snacks.picker.files()
+      --       Snacks.picker.files({
+      --          formatters = {
+      --             file = {
+      --                truncate = (function()
+      --                   return vim.api.nvim_win_get_width(0) * 0.4
+      --                end)(),
+      --                -- truncate = 100
+      --             },
+      --          },
+      --       })
+      --    end,
+      --    desc = "[f]iles",
+      -- },
       {
          "<c-p>",
          function()
