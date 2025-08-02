@@ -85,7 +85,7 @@ alias tmuxpf="tmuxp_picker"
 function tmuxp_picker() {
 	local IFS=$'\n'
 	local files
-	files=($(find ~/dev/dotfiles/tmuxp -type f -name '*.yaml' |
+	files=($(find ~/dev/dotfiles/tmux/tmuxp -type f -name '*.yaml' |
 		fzf --prompt="tmuxp > " --height=40% --border --multi \
 			--preview="head -40 {}" --preview-window=right:40%))
 	IFS=' '
