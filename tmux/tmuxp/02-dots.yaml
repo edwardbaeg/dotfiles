@@ -8,7 +8,8 @@ windows:
       - shell_command:
           - cd ~/dev/dotfiles/
         focus: true
-      - null
+      - shell_command:
+          - cd ~/dev/dotfiles/
 
   - window_name: neovim
     layout: main-vertical
@@ -18,7 +19,8 @@ windows:
       - shell_command:
         - cd ~/dev/dotfiles/nvim/
         focus: true
-      - null
+      - shell_command:
+        - cd ~/dev/dotfiles/nvim/
 
   - window_name: hammerspoon
     layout: main-vertical
@@ -28,7 +30,8 @@ windows:
       - shell_command:
           - cd ~/dev/dotfiles/hammerspoon/
         focus: true
-      - null
+      - shell_command:
+          - cd ~/dev/dotfiles/hammerspoon/
 
   - window_name: tmux
     layout: main-vertical
@@ -38,7 +41,9 @@ windows:
       - shell_command:
           - cd ~/dev/dotfiles/tmux/
         focus: true
-      - null
+      - shell_command:
+          - cd ~/dev/dotfiles/tmux/
+
 
   - window_name: zsh
     layout: main-vertical
@@ -48,4 +53,5 @@ windows:
       - shell_command:
         - cd ~/dev/dotfiles/zsh/
         focus: true
-      - null
+      - shell_command:
+        - cd ~/dev/dotfiles/zsh/
