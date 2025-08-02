@@ -110,6 +110,16 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
    end,
 })
 
+-- enable spell checking for markdown files
+vim.api.nvim_create_autocmd("FileType", {
+   group = augroup("markdown_spell"),
+   pattern = "markdown",
+   callback = function()
+      vim.opt_local.spell = true
+      vim.opt_local.spelllang = "en_us"
+   end,
+})
+
 -- show cursor line only in active window
 -- this doesn't work with <c-c>, only with <esc>
 -- https://github.com/folke/dot/blob/master/nvim/lua/config/autocmds.lua
