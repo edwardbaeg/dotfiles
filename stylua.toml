@@ -1,2 +1,5 @@
+syntax = "LuaJIT"
+column_width = 120
 indent_type = "Spaces"
 indent_width = 3 # luarocks style guide, middle for 2 vs 3, also looks good with `do..end` blocks
+call_parentheses = "Always"
