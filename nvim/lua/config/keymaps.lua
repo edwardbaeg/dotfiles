@@ -126,6 +126,7 @@ local function open_help_cword()
    vim.cmd("help " .. cword)
 end
 set("n", "<leader>gh", open_help_cword, { desc = "Goto [h]elpfile" })
+set("n", "<leader>gH", open_help_cword, { desc = "Goto [h]elpfile" })
 set("n", "<leader>fH", open_help_cword, { desc = "Goto [h]elpfile" })
 
 -- Open help for visual selection
