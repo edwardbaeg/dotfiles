@@ -385,4 +385,10 @@ return {
          require("nvim-lastplace").setup({})
       end,
    },
+
+   {
+      -- prevents nested vim sessions from nvim terminal
+      -- NOTE: doesnt seem to work with toggleterm
+      "brianhuster/unnest.nvim",
+   },
 }
