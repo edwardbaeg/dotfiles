@@ -209,23 +209,23 @@ return {
       --    end,
       --    desc = "[f]iles",
       -- },
-      {
-         "<c-p>",
-         function()
-            Snacks.picker.git_files({ -- need to ignore node_modules
-               -- Snacks.picker.files({
-               formatters = {
-                  file = {
-                     truncate = (function()
-                        return vim.api.nvim_win_get_width(0) * 0.4
-                     end)(),
-                     -- truncate = 100
-                  },
-               },
-            })
-         end,
-         desc = "git files",
-      },
+      -- {
+      --    "<c-p>",
+      --    function()
+      --       Snacks.picker.git_files({ -- need to ignore node_modules
+      --          -- Snacks.picker.files({
+      --          formatters = {
+      --             file = {
+      --                truncate = (function()
+      --                   return vim.api.nvim_win_get_width(0) * 0.4
+      --                end)(),
+      --                -- truncate = 100
+      --             },
+      --          },
+      --       })
+      --    end,
+      --    desc = "git files",
+      -- },
       -- {
       --    "<leader>f,",
       --    function()
