@@ -89,7 +89,7 @@ function tmuxp_picker() {
 		fzf --prompt="tmuxp > " --height=40% --border --multi \
 			--preview="head -40 {}" --preview-window=right:40%))
 	IFS=' '
-	
+
 	if [[ ${#files[@]} -gt 0 ]]; then
 		for file in "${files[@]}"; do
 			local command="tmuxp load \"$file\""
@@ -106,7 +106,10 @@ alias nf="npm_run_fuzzy"
 alias npmf="npm_run_fuzzy"
 function npm_run_fuzzy() {
 	if cat package.json >/dev/null 2>&1; then
-		scripts=$(jq .scripts package.json | sed '1d;$d' | fzf --height 40%)
+		# --tiebreak=begin to put higher score for matches at the beginning of the line
+		# TODO: update preview to match on matches closer to beginning of the line
+		scripts=$(jq .scripts package.json | sed '1d;$d' | fzf --height 40% --tiebreak=begin)
+
 
 		if [[ -n $scripts ]]; then
 			# Extract script name and remove all whitespace and quotes
