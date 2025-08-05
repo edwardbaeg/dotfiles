@@ -79,6 +79,12 @@ require("config.settings")
    - :%:h -> parent directory
    - :%:p -> full path
    - :%:t -> filename
+- Spelling:
+  - :set spell
+  - :set spelllang=en_us
+  - ]s to jump to next misspelled word
+  - z= to show suggestions
+  - zg to add word to dictionary
 
 - Bug with TMUX
   - tmux cannot distinguish between <c-i> and <tab>
