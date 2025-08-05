@@ -181,6 +181,7 @@ vim.cmd([[
 
 -- set("n", "<CR>", smart_enter, { desc = "Smart Enter: try gx (URL) or gf (file)" })
 
+-- TODO? try to extend so that it also tries gD (or the tag equivalent)
 set("n", "<CR>", "gf", { silent = true })
 
 return M
