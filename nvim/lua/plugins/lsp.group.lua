@@ -79,6 +79,12 @@ return {
                      },
                   },
                   telemetry = { enable = false },
+                  -- lua_ls comes with a builtin formatter by EmmyLuaCodeStyle
+                  -- https://luals.github.io/wiki/formatter/
+                  format = {
+                     enable = true,
+                     align_continuous_inline_comment = false, -- default true
+                  },
                },
             },
 
@@ -169,9 +175,10 @@ return {
          require("mason-null-ls").setup({
             ensure_installed = {
                -- Formatters
-               "stylua", -- check to see if this is aligning comments...
-               "shfmt",
+               "stylua",
+               "shfmt", -- shell files
                "eslint",
+               "taplo", -- toml
 
                -- Linters
                "shellcheck", -- linter for sh
