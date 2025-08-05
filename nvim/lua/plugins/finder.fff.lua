@@ -2,6 +2,7 @@ return {
    "dmtrKovalenko/fff.nvim",
    build = "cargo build --release",
    opts = {
+      prompt = " ▶ ", -- Input prompt symbol
       keymaps = {
          close = { "<Esc>", "<c-c>" },
       },
