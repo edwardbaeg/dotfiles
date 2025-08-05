@@ -326,7 +326,7 @@ return {
          -- lsp saga keymaps
          -- keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>") -- consider replacing with builtin lsp code action (gra)
          -- keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>") -- replaced with builtin, grr
-         keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]>
+         -- keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]> -- replaced with overlook
          -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
          -- keymap("n", "gr", "<cmd>Lspsaga finder<cr>") -- conflicts with builtin gr* mappings
          -- keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
@@ -505,5 +505,59 @@ return {
             require("tiny-code-action").code_action()
          end, { desc = "[C]ode [A]ction", silent = true, noremap = true })
       end,
+   },
+
+   {
+      -- peek definition in floating window
+      "WilliamHsieh/overlook.nvim",
+      opts = {
+         ui = {
+            size_ratio = 0.75, -- default is 0.65
+         },
+      },
+      keys = {
+         {
+            "gd",
+            function()
+               require("overlook.api").peek_definition()
+            end,
+            desc = "Overlook: Peek definition",
+         },
+         {
+            "<leader>ps",
+            function()
+               require("overlook.api").open_in_split()
+            end,
+            desc = "Overlook: Open popup in split",
+         },
+         {
+            "<leader>pv",
+            function()
+               require("overlook.api").open_in_vsplit()
+            end,
+            desc = "Overlook: Open popup in vsplit",
+         },
+         {
+            "<leader>po",
+            function()
+               require("overlook.api").open_in_original_window()
+            end,
+            desc = "Overlook: Open popup in original window",
+         },
+         -- {
+         --    "<leader>pc",
+         --    function()
+         --       require("overlook.api").close_all()
+         --    end,
+         --    desc = "Overlook: Close all popup",
+         -- },
+         -- {
+         --    "<leader>pu",
+         --    function()
+         --       require("overlook.api").restore_popup()
+         --    end,
+         --    desc = "Overlook: Restore popup",
+         -- },
+      },
    },
 }
