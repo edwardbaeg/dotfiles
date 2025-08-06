@@ -10,7 +10,7 @@ windows:
       - shell_command: # pane no. 1
           - front
       - shell_command: # pane no. 2
-          - claude
+          - front
 
   - window_name: worktree
     layout: even-vertical
