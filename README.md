@@ -1,11 +1,19 @@
 # Dotfiles
 
-My neovim and terminal (Tmux in Kitty) based development setup. Always a work progress!
+My neovim and terminal (tmux in Kitty) based development setup. Always a work progress!
 
 <!-- TODO: replace with urls instead of assets -->
 ![screenshot](assets/main.png)
 
-# Neovim
+## Setup
+
+Copy over configuration files with `stow`
+
+```
+make all
+```
+
+## Neovim
 
 Configuration: [init.lua](nvim/.config/nvim/init.lua)
 
@@ -19,7 +27,7 @@ Key plugins:
 
 Set up [below](#neovim-setup).
 
-# Terminal
+## Terminal
 
 Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 
@@ -27,7 +35,29 @@ Application: [Kitty](https://sw.kovidgoyal.net/kitty/)
 
 - autocompletions, vi-mode, syntax highlighting, fzf, z jumping
 
-## Packages
+### Package managers
+
+#### Brew
+
+[Instructions here.](#install-brew)
+
+#### Python
+
+TODO
+
+#### NPM
+
+TODO
+
+#### Rust
+
+Install with rustup:
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+### Packages
 
 These are mostly brew packages.
 
@@ -77,34 +107,26 @@ These are mostly brew packages.
 - `kitty` (cask) terminal emulator
 - `emacs` (cask) text editor / environment / operating system
 
-**Terminal Multiplexer**: `tmux`
+#### Terminal Multiplexer: `tmux`
 
-- Configuration: [tmux.conf](.tmux.conf)
-  - keymaps, session keybing toggle
+- Configuration: [tmux.conf](tmux/.tmux.conf)
+  - keymaps, session keybind toggle
 
-# Setup
+### MacOS
 
-Copy over configuration files with `stow`
-
-```
-make all
-```
-
-## MacOS
-
-Install brew
+#### Install brew
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Disable mouse acceleration
+#### Disable mouse acceleration
 
 ```
 defaults write .GlobalPreferences com.apple.mouse.scaling -1
 ```
 
-Enable key repeat
+#### Enable key repeat
 
 ```
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -112,9 +134,9 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 - Settings -> Keyboard -> Key repeat rate & Delay until repeat
 
-### Applications:
+#### Applications:
 
-#### Menubar
+##### Menubar
 
 - `Bartender`: menubar management
 - `Dato`: menubar calendar and meetings
@@ -122,7 +144,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Monitor Control`: menubar monitor brightness
 - `Stats`: menubar system monitoring
 
-#### Utilities
+##### Utilities
 
 - `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
 <!-- TODO: replace with browserosaurus, FOSS alternative -->
@@ -139,7 +161,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Shottr`: screenshot tool
 - `Syncthing`: file sync
 
-## oh-my-zsh
+### oh-my-zsh
 
 Install zsh framework
 
@@ -159,7 +181,7 @@ Set up fzf
 $(brew --prefix)/opt/fzf/install
 ```
 
-## Neovim setup
+### Neovim setup
 
 Install neovim and pynvim (to support python plugins in nvim)
 
@@ -170,18 +192,20 @@ pip3 install --upgrade pynvim
 
 Ensure python is working with `:checkhealth`
 
-### Dependencies
+#### Dependencies
 
 - `deno` - for peek.nvim
 - `fzf`
+- `rust` - for fff.nvim
+- `lua` - for various plugins
 
-## Hammerspoon
+### Hammerspoon
 
 Configuration: [init.lua](hammerspoon/init.lua)
 
 - window management, sleep toggle, toggle apps
 
-## Keyboard
+### Keyboard
 
 Remap Capslock to Control under MacOs settings: Keyboard -> Keyboard Shortcuts -> Modifier Keys
 
@@ -198,7 +222,7 @@ Keyboard layers (0-index), global keyboard bindings are managed through ZSA Oryx
   - `cmd` + `ctrl` + `hjkl mnbv`: move, resize
   - `cmd` + `ctrl` + `shift` + `hjkl`, change display
 
-## Configure git for github
+### Configure git for github
 
 - Create ssh key for git (press enter for default file location)
 - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
@@ -231,9 +255,9 @@ echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa
 pbcopy < ~/.ssh/id_rsa.pub
 ```
 
-## Mods
+### Mods
 
-- Spicetify: theme spotify
+- Spicetify: theme Spotify
   - install cli tool, install marketplace, restart app
     ```
     spicetify --config
@@ -241,7 +265,7 @@ pbcopy < ~/.ssh/id_rsa.pub
     spicetify update
     ```
 
-# RaspberryPi Setup
+## RaspberryPi Setup
 
 See detailed instructions in the [raspberrypi directory](raspberrypi/README.md)
 
