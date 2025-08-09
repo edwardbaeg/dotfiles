@@ -1,4 +1,4 @@
-session_name: dispatch
+session_name: main-personal
 windows:
   - window_name: main
     layout: main-vertical
@@ -8,15 +8,6 @@ windows:
       #   - cd ~/ # run as a first command in all panes
     panes:
       - shell_command: # pane no. 1
-          - front
+          - 
       - shell_command: # pane no. 2
-          - claude
-
-  - window_name: worktree
-    layout: even-vertical
-    panes:
-      - shell_command: # pane no. 1
-          - work
-      - shell_command: # pane no. 1
-          - front
-          - npm run dev:local
+          - 
