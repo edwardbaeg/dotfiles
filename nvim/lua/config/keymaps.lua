@@ -141,6 +141,7 @@ set("v", "<leader>gH", open_help_visual, { desc = "Help picker with visual selec
 
 -- Vertical splits
 set("n", "<leader>vs", ":vsplit<cr>", { desc = "[vs]plit" })
+set("n", "<leader>vS", ":split<cr>", { desc = "[s]plit" })
 set("n", "<leader>ve", ":vsplit edit<cr>", { desc = "[v]split [e]dit" })
 set("n", "g>>", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
 set("n", "g>d", "<cmd>vs<cr><c-]>", { desc = "Goto [d]efinition in vertical split" })
