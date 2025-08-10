@@ -12,7 +12,9 @@ return {
             chunk = {
                enable = true,
                style = {
-                  { fg = frappe.surface2 },
+                  {
+                     fg = frappe.surface2,
+                  },
                },
                duration = 100, -- default 200
                delay = 100, -- default 300
@@ -31,7 +33,10 @@ return {
                chars = { "┆" },
                -- chars = { "╎" },
                style = {
-                  { fg = frappe.surface0 },
+                  {
+                     -- fg = frappe.surface0,
+                     fg = "#222333"
+                  },
                },
                exclude_filetypes = {
                   snacks_picker_list = true,
