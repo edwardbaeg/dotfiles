@@ -178,7 +178,8 @@ export MANPAGER='nvim +Man!'
 alias nvim_no_plugins="nvim +'let g:disable_plugins=1'"
 
 # -- Aliases to immediately run commands
-alias vpp="nvim -c \"lua require('snacks').picker.git_files()\""
+alias vpp="nvim -c \"lua require('fff').find_files()\""
+# alias vpp="nvim -c \"lua require('snacks').picker.git_files()\""
 alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsr="nvim -c \"lua require('persistence').load()\""
 alias vsl="nvim -c \"lua require('persistence').load()\""
