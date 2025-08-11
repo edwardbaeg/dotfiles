@@ -390,5 +390,6 @@ return {
       -- prevents nested vim sessions from nvim terminal
       -- NOTE: doesnt seem to work with toggleterm
       "brianhuster/unnest.nvim",
+      enabled = false, -- seems to break with lazygit?
    },
 }
