@@ -40,6 +40,7 @@
 
     filter1440Sponsors();
     filterMorningBrewSponsors();
+    highlightUnsubscribe();
   }
 
   setInterval(main, 1000);
@@ -193,4 +194,119 @@ function getRootTableContaining(text) {
   }
 
   return target;
+}
+
+function highlightUnsubscribe() {
+  // The problem is that not all emails have a table in its email content
+  // const table = getEmailTable();
+  // if (table) {
+  //   table.style.border = '2px solid green';
+  // }
+
+  const contentDiv = getEmailContentDiv();
+
+  if (contentDiv) {
+    // contentDiv.style.border = '2px solid red';
+
+    const unsubElement = findLastUnsubscribeElement(contentDiv);
+    if (unsubElement) {
+      unsubElement.style.border = '2px solid red';
+    }
+  }
+}
+
+/**
+ * @returns {HTMLTableElement} of the email body, if there is one
+ */
+function getEmailTable() {
+  const span = findToSpan();
+  span.style.backgroundColor = 'yellow';
+  const table = findNextTable(span);
+  return table;
+}
+
+function findToSpan() {
+  // Select all spans
+  const spans = document.querySelectorAll('span');
+
+  // Find the span whose text starts with "to "
+  return Array.from(spans).find(span =>
+    span.textContent.trim().toLowerCase().startsWith('to '),
+  );
+}
+
+function findNextTable(startElement) {
+  const walker = document.createTreeWalker(
+    startElement.getRootNode(),
+    NodeFilter.SHOW_ELEMENT,
+    null,
+    false,
+  );
+
+  // Set walker to start from the given element
+  walker.currentNode = startElement;
+
+  // Find next table
+  while (walker.nextNode()) {
+    if (walker.currentNode.tagName.toLowerCase() === 'table') {
+      return walker.currentNode;
+    }
+  }
+
+  return null;
+}
+
+function getEmailContentDiv() {
+  const adnAdsDiv = document.querySelector('.adn.ads');
+
+  if (!adnAdsDiv) {
+    return null;
+  }
+
+  const children = adnAdsDiv.children;
+  if (children.length < 2) {
+    return null;
+  }
+  const secondChild = children[1];
+
+  const emailContentDiv = secondChild.lastElementChild;
+  if (!emailContentDiv) {
+    return null;
+  }
+
+  return emailContentDiv;
+}
+
+function findLastUnsubscribeElement(rootElement) {
+  if (!rootElement) {
+    return null;
+  }
+
+  let lastUnsubscribeElement = null;
+  const walker = document.createTreeWalker(
+    rootElement,
+    NodeFilter.SHOW_ELEMENT,
+    null,
+    false,
+  );
+
+  while (walker.nextNode()) {
+    const element = walker.currentNode;
+    const elementText = element.textContent?.toLowerCase() || '';
+
+    if (elementText.includes('unsubscribe')) {
+      const hasChildElements = element.children.length > 0;
+      const hasChildrenWithText =
+        hasChildElements &&
+        Array.from(element.children).some(child =>
+          child.textContent?.toLowerCase().includes('unsubscribe'),
+        );
+
+      if (!hasChildrenWithText) {
+        lastUnsubscribeElement = element;
+      }
+    }
+  }
+
+  return lastUnsubscribeElement;
 }
