@@ -1,3 +1,8 @@
+# Various shell functions
+
+# Source utility functions
+source "${0:A:h}/utils.sh"
+
 # -- fzf functions
 
 # fuzzy search git branches
@@ -110,7 +115,6 @@ function npm_run_fuzzy() {
 		# TODO: update preview to match on matches closer to beginning of the line
 		scripts=$(jq .scripts package.json | sed '1d;$d' | fzf --height 40% --tiebreak=begin)
 
-
 		if [[ -n $scripts ]]; then
 			# Extract script name and remove all whitespace and quotes
 			script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
@@ -124,6 +128,33 @@ function npm_run_fuzzy() {
 		fi
 	else
 		echo "Error: No package.json."
+	fi
+}
+
+# Fuzzy picker for shell history removal
+alias histf="shell_history_remove"
+function shell_history_remove() {
+	local selected_lines
+	selected_lines=($(tail -10 ~/.zsh_history | nl -b a | sort -nr |
+		fzf --multi --prompt="History > " --header="Select lines to remove (Tab for multi-select)" \
+			--preview="echo {}" --preview-window="down:3:wrap" |
+		awk '{print $1}'))
+
+	if [[ ${#selected_lines[@]} -gt 0 ]]; then
+		# Get total number of lines in history file
+		local total_lines=$(wc -l <~/.zsh_history)
+
+		# Convert relative line numbers to absolute line numbers
+		local absolute_lines=()
+		for rel_line in "${selected_lines[@]}"; do
+			local abs_line=$((total_lines - 10 + rel_line))
+			absolute_lines+=($abs_line)
+		done
+
+		# Use the remove_lines_from_file function
+		remove_lines_from_file ~/.zsh_history "${absolute_lines[@]}"
+	else
+		echo "Exit: No lines selected."
 	fi
 }
 
