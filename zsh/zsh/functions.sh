@@ -134,8 +134,9 @@ function npm_run_fuzzy() {
 # Fuzzy picker for shell history removal
 alias histf="shell_history_remove"
 function shell_history_remove() {
+	local history_count=25
 	local selected_lines
-	selected_lines=($(tail -10 ~/.zsh_history | nl -b a | sort -nr |
+	selected_lines=($(tail -$history_count ~/.zsh_history | nl -b a | sort -nr |
 		fzf --multi --prompt="History > " --header="Select lines to remove (Tab for multi-select)" \
 			--preview="echo {}" --preview-window="down:3:wrap" |
 		awk '{print $1}'))
@@ -147,7 +148,7 @@ function shell_history_remove() {
 		# Convert relative line numbers to absolute line numbers
 		local absolute_lines=()
 		for rel_line in "${selected_lines[@]}"; do
-			local abs_line=$((total_lines - 10 + rel_line))
+			local abs_line=$((total_lines - history_count + rel_line))
 			absolute_lines+=($abs_line)
 		done
 
