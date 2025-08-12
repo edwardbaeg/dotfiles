@@ -14,36 +14,76 @@
   'use strict';
 
   let curr = '';
-  let count = 0;
+  let debounceTimer = null;
 
-  function main() {
+  function processCurrentEmail() {
     const title = getEmailSubjectTitle();
 
-    // TODO?: encapsulate into a function, detectTitleChanges
-    if (!title) {
-      log('no title');
-      return;
-    } else {
-      log('title: ' + title);
-    }
-
-    if (title != curr) {
-      count = 0;
-    }
-
-    if (title == curr && count > 5) {
+    if (!title || title == curr) {
       return;
     }
 
     curr = title;
-    count++;
+    log('title: ' + title);
 
     filter1440Sponsors();
     filterMorningBrewSponsors();
     highlightUnsubscribe();
   }
 
-  setInterval(main, 1000);
+  function debouncedProcessEmail() {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    debounceTimer = setTimeout(processCurrentEmail, 300);
+  }
+
+  // Observe changes to Gmail's main content area
+  const observer = new MutationObserver(mutations => {
+    let shouldProcess = false;
+
+    for (const mutation of mutations) {
+      // Check if any changes affect email content or subject areas
+      if (mutation.type === 'childList' || mutation.type === 'characterData') {
+        // Look for changes in email subject area or content
+        const target = mutation.target;
+        if (
+          target.closest &&
+          (target.closest('.hP') || // Email subject
+            target.closest('.adn.ads') || // Email content area
+            target.closest('table')) // Email tables
+        ) {
+          shouldProcess = true;
+          break;
+        }
+      }
+    }
+
+    if (shouldProcess) {
+      debouncedProcessEmail();
+    }
+  });
+
+  // Start observing when DOM is ready
+  function startObserving() {
+    const target = document.body || document.documentElement;
+    observer.observe(target, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+
+    // Run once initially
+    processCurrentEmail();
+    log('Gmail script initialized with MutationObserver');
+  }
+
+  // Start immediately if DOM is ready, otherwise wait
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startObserving);
+  } else {
+    startObserving();
+  }
 })();
 
 let alertEl = null;
