@@ -1,7 +1,7 @@
 # Various shell functions
 
 # Source utility functions
-source "${0:A:h}/utils.sh"
+source "$(dirname "${BASH_SOURCE[0]:-$0}")/utils.sh"
 
 # -- fzf functions
 
