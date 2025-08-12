@@ -11,9 +11,9 @@
 
 // TODO?: use TS source file
 (function main() {
-  'use strict';
+  "use strict";
 
-  let curr = '';
+  let curr = "";
   let debounceTimer = null;
 
   function processCurrentEmail() {
@@ -24,7 +24,7 @@
     }
 
     curr = title;
-    log('title: ' + title);
+    log("title: " + title);
 
     filter1440Sponsors();
     filterMorningBrewSponsors();
@@ -39,19 +39,19 @@
   }
 
   // Observe changes to Gmail's main content area
-  const observer = new MutationObserver(mutations => {
+  const observer = new MutationObserver((mutations) => {
     let shouldProcess = false;
 
     for (const mutation of mutations) {
       // Check if any changes affect email content or subject areas
-      if (mutation.type === 'childList' || mutation.type === 'characterData') {
+      if (mutation.type === "childList" || mutation.type === "characterData") {
         // Look for changes in email subject area or content
         const target = mutation.target;
         if (
           target.closest &&
-          (target.closest('.hP') || // Email subject
-            target.closest('.adn.ads') || // Email content area
-            target.closest('table')) // Email tables
+          (target.closest(".hP") || // Email subject
+            target.closest(".adn.ads") || // Email content area
+            target.closest("table")) // Email tables
         ) {
           shouldProcess = true;
           break;
@@ -75,34 +75,34 @@
 
     // Run once initially
     processCurrentEmail();
-    log('Gmail script initialized with MutationObserver');
+    log("Gmail script initialized with MutationObserver");
   }
 
   // Start immediately if DOM is ready, otherwise wait
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startObserving);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", startObserving);
   } else {
     startObserving();
   }
 })();
 
 let alertEl = null;
-function createAlertEl(message = '<missing title>') {
+function createAlertEl(message = "<missing title>") {
   if (!alertEl) {
-    alertEl = document.createElement('div');
-    alertEl.style.border = '1px solid red';
-    alertEl.style.borderRadius = '4px';
-    alertEl.style.textAlign = 'center';
-    alertEl.style.fontSize = '1rem';
-    alertEl.style.height = '1.5rem';
-    alertEl.style.backgroundColor = 'white';
+    alertEl = document.createElement("div");
+    alertEl.style.border = "1px solid red";
+    alertEl.style.borderRadius = "4px";
+    alertEl.style.textAlign = "center";
+    alertEl.style.fontSize = "1rem";
+    alertEl.style.height = "1.5rem";
+    alertEl.style.backgroundColor = "white";
   }
-  alertEl.textContent = '[GMAIL SCRIPT]: ' + message;
+  alertEl.textContent = "[GMAIL SCRIPT]: " + message;
   return alertEl;
 }
 
 function addScriptAlertBanner({
-  emailContentSearchText = 'Copyright',
+  emailContentSearchText = "Copyright",
   alertText,
 }) {
   const emailTable = getRootTableContaining(emailContentSearchText);
@@ -112,14 +112,14 @@ function addScriptAlertBanner({
       emailTable.parentNode.prepend(alertEl);
     }
   } else {
-    console.warn('Email table not found');
+    console.warn("Email table not found");
   }
 }
 
 function getEmailSubjectTable() {
-  const tables = document.querySelectorAll('table');
+  const tables = document.querySelectorAll("table");
   for (let table of tables) {
-    const spans = table.querySelectorAll('span[email]');
+    const spans = table.querySelectorAll("span[email]");
     if (spans.length === 1) {
       return table;
     }
@@ -132,25 +132,25 @@ function isFromSender(searchText) {
   return subjectTable?.textContent.includes(searchText);
 }
 
-const _1440_SENDER = '1440';
+const _1440_SENDER = "1440";
 function filter1440Sponsors() {
   if (!isFromSender(_1440_SENDER)) {
     return;
   }
 
   addScriptAlertBanner({
-    emailContentSearchText: 'hello@join1440',
-    alertText: '1440',
+    emailContentSearchText: "hello@join1440",
+    alertText: "1440",
   });
 
   // Fade out sections containing ad messaging
-  const spans = document.querySelectorAll('span');
-  spans.forEach(span => {
-    if (span.textContent.includes('In partnership with')) {
-      const parent = span.closest('table');
+  const spans = document.querySelectorAll("span");
+  spans.forEach((span) => {
+    if (span.textContent.includes("In partnership with")) {
+      const parent = span.closest("table");
       // parent.style.border = "2px solid red";
 
-      const secondParent = parent.parentNode.closest('table');
+      const secondParent = parent.parentNode.closest("table");
       if (secondParent) {
         // secondParent.style.border = "2px solid red";
         secondParent.style.opacity = 0.1;
@@ -159,15 +159,15 @@ function filter1440Sponsors() {
   });
 }
 
-const MORNINGBREW_SENDER = 'Morning Brew';
-const MORNINGBREW_EMAIL_CONTENT = 'Copyright';
+const MORNINGBREW_SENDER = "Morning Brew";
+const MORNINGBREW_EMAIL_CONTENT = "Copyright";
 const MORNINGBREW_AD_PREFIXES = [
-  'presented by',
-  'together with',
-  'brought to you by',
-  'games',
-  'answer',
-  'share the brew',
+  "presented by",
+  "together with",
+  "brought to you by",
+  "games",
+  "answer",
+  "share the brew",
 ];
 function filterMorningBrewSponsors() {
   if (!isFromSender(MORNINGBREW_SENDER)) {
@@ -176,18 +176,18 @@ function filterMorningBrewSponsors() {
 
   addScriptAlertBanner({
     emailContentSearchText: MORNINGBREW_EMAIL_CONTENT,
-    alertText: 'Morning Brew',
+    alertText: "Morning Brew",
   });
 
   // Fade out sections containing ad messaging
-  const headers = document.querySelectorAll('h3');
-  headers.forEach(header => {
+  const headers = document.querySelectorAll("h3");
+  headers.forEach((header) => {
     if (
-      MORNINGBREW_AD_PREFIXES.some(prefix =>
+      MORNINGBREW_AD_PREFIXES.some((prefix) =>
         header.textContent.toLocaleLowerCase().includes(prefix),
       )
     ) {
-      const parent = header.closest('table');
+      const parent = header.closest("table");
       // parent.style.border = "2px solid red";
       parent.style.opacity = 0.1;
 
@@ -202,22 +202,22 @@ function filterMorningBrewSponsors() {
 }
 
 function log(message) {
-  console.log('[GMAIL SCRIPT]: ' + message);
+  console.log("[GMAIL SCRIPT]: " + message);
 }
 
 // TODO: come up with something more robust
 // maybe search for a specific table?
 function getEmailSubjectTitle() {
-  const EMAIL_SUBJECT_TITLE_SELECTOR = '.hP';
+  const EMAIL_SUBJECT_TITLE_SELECTOR = ".hP";
   return document.querySelector(EMAIL_SUBJECT_TITLE_SELECTOR)?.textContent;
 }
 
 function getRootTableContaining(text) {
-  const tds = document.querySelectorAll('td');
+  const tds = document.querySelectorAll("td");
   let target = null;
-  tds.forEach(td => {
+  tds.forEach((td) => {
     if (td.textContent.includes(text)) {
-      target = td.closest('table');
+      target = td.closest("table");
       return;
     }
   });
@@ -225,7 +225,7 @@ function getRootTableContaining(text) {
   let count = 0;
   while (target && count < 10) {
     count++;
-    const parent = target.parentNode.closest('table');
+    const parent = target.parentNode.closest("table");
     if (parent) {
       target = parent;
     } else {
@@ -250,7 +250,7 @@ function highlightUnsubscribe() {
 
     const unsubElement = findLastUnsubscribeElement(contentDiv);
     if (unsubElement) {
-      unsubElement.style.border = '2px solid red';
+      unsubElement.style.border = "2px solid red";
     }
   }
 }
@@ -260,18 +260,18 @@ function highlightUnsubscribe() {
  */
 function getEmailTable() {
   const span = findToSpan();
-  span.style.backgroundColor = 'yellow';
+  span.style.backgroundColor = "yellow";
   const table = findNextTable(span);
   return table;
 }
 
 function findToSpan() {
   // Select all spans
-  const spans = document.querySelectorAll('span');
+  const spans = document.querySelectorAll("span");
 
   // Find the span whose text starts with "to "
-  return Array.from(spans).find(span =>
-    span.textContent.trim().toLowerCase().startsWith('to '),
+  return Array.from(spans).find((span) =>
+    span.textContent.trim().toLowerCase().startsWith("to "),
   );
 }
 
@@ -288,7 +288,7 @@ function findNextTable(startElement) {
 
   // Find next table
   while (walker.nextNode()) {
-    if (walker.currentNode.tagName.toLowerCase() === 'table') {
+    if (walker.currentNode.tagName.toLowerCase() === "table") {
       return walker.currentNode;
     }
   }
@@ -297,7 +297,7 @@ function findNextTable(startElement) {
 }
 
 function getEmailContentDiv() {
-  const adnAdsDiv = document.querySelector('.adn.ads');
+  const adnAdsDiv = document.querySelector(".adn.ads");
 
   if (!adnAdsDiv) {
     return null;
@@ -332,14 +332,14 @@ function findLastUnsubscribeElement(rootElement) {
 
   while (walker.nextNode()) {
     const element = walker.currentNode;
-    const elementText = element.textContent?.toLowerCase() || '';
+    const elementText = element.textContent?.toLowerCase() || "";
 
-    if (elementText.includes('unsubscribe')) {
+    if (hasUnsubscribeKeywords(elementText)) {
       const hasChildElements = element.children.length > 0;
       const hasChildrenWithText =
         hasChildElements &&
-        Array.from(element.children).some(child =>
-          child.textContent?.toLowerCase().includes('unsubscribe'),
+        Array.from(element.children).some((child) =>
+          hasUnsubscribeKeywords(child.textContent?.toLowerCase()),
         );
 
       if (!hasChildrenWithText) {
@@ -349,4 +349,13 @@ function findLastUnsubscribeElement(rootElement) {
   }
 
   return lastUnsubscribeElement;
+}
+
+function hasUnsubscribeKeywords(text) {
+  return (
+    text.includes("unsubscribe") ||
+    text.includes("opt out") ||
+    text.includes("manage your preferences") ||
+    text.includes("manage preferences")
+  );
 }
