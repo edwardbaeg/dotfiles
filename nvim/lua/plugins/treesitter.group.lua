@@ -269,6 +269,7 @@ return {
       opts = {
          highlight = true, -- highlight node after jumpting to it
       },
+      event = "VeryLazy",
       config = function(_, opts)
          require("treewalker").setup(opts)
          -- vim.keymap.set("n", "<leader>,", "<cmd>Treewalker SwapLeft<cr>")

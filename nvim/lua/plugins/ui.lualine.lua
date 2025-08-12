@@ -2,9 +2,32 @@ return {
    {
       -- statusline
       "nvim-lualine/lualine.nvim",
-      -- event = "VeryLazy",
+      dependencies = {
+         {
+            -- display Claude Code
+            -- NOTE: requires `npm i -g ccusage`
+            "S1M0N38/ccusage.nvim",
+            version = "1.*",
+            opts = {},
+         },
+         {
+            -- Adds git blame line as virtual text or in the status bar
+            "f-person/git-blame.nvim",
+            enabled = false,
+            config = function()
+               require("gitblame").setup({})
+               -- vim.g.gitblame_message_template = "<author> • <summary> • <date>"
+               -- vim.g.gitblame_message_template = "<author>, <summary>, <date>"
+               vim.g.gitblame_message_template = "<author>, <date>"
+               vim.g.gitblame_date_format = "%r" -- relative date
+               vim.g.gitblame_message_when_not_committed = "Not committed"
+            end,
+         },
+      },
+      event = "VeryLazy", -- ui elements shouldnt be lazy loaded
+      lazy = true,
       config = function()
-         local git_blame = require("gitblame")
+         -- local git_blame = require("gitblame")
          vim.g.gitblame_display_virtual_text = 0 -- don't show virtual text
 
          local function shorten(text, _, max_length)
@@ -48,10 +71,10 @@ return {
                   },
                   -- "searchcount",
                   "codeium#GetStatusString",
-                  {
-                     git_blame.get_current_blame_text,
-                     cond = git_blame.is_blame_text_available,
-                  },
+                  -- {
+                  --    git_blame.get_current_blame_text,
+                  --    cond = git_blame.is_blame_text_available,
+                  -- },
                },
 
                -- lualine_x = { "filetype" },

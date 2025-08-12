@@ -5,6 +5,7 @@ return {
    -- enabled = false, -- not as good compared to navbuddy, but this can work with just treesitter
    opts = {},
    -- Optional dependencies
+   event = "VeryLazy",
    dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",

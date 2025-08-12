@@ -36,12 +36,4 @@ return {
          { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
       },
    },
-
-   {
-      -- display Claude Code usage with lualine integration
-      -- NOTE: requires `npm i -g ccusage`
-      "S1M0N38/ccusage.nvim",
-      version = "1.*",
-      opts = {},
-   },
 }

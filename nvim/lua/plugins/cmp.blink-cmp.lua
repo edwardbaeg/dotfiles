@@ -10,6 +10,7 @@ return {
       "echasnovski/mini.nvim", -- for icons
       "xzbdmw/colorful-menu.nvim", -- for syntax highlighting in menu with treesitter
    },
+   event = "InsertEnter",
    version = "*", -- use a release tag to download pre-built binaries
    ---@module 'blink.cmp'
    ---@type blink.cmp.Config

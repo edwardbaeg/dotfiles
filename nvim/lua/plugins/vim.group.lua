@@ -90,6 +90,7 @@ return {
       -- file explorer as nvim buffer
       "stevearc/oil.nvim",
       -- enabled = false,
+      cmd = "Oil",
       config = function()
          require("oil").setup({
             default_file_explorer = false, -- this disabled netrw, which is needed for GBrowse, use :Oil
@@ -340,6 +341,7 @@ return {
    {
       -- better helpview
       "OXY2DEV/helpview.nvim",
+      event = "VeryLazy",
       lazy = false, -- plugin lazy loads by default
    },
 

@@ -273,6 +273,7 @@ return {
          "neovim/nvim-lspconfig",
          "nvim-tree/nvim-web-devicons", -- adds icons
       },
+      event = "VeryLazy",
       config = function()
          require("lspsaga").setup({
             lightbulb = {
