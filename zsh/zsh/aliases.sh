@@ -34,9 +34,9 @@ alias vpp="nvim -c \"lua require('fff').find_files()\""
 alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
 alias vsr="nvim -c \"lua require('persistence').load()\""
 alias vsl="nvim -c \"lua require('persistence').load()\""
+alias vla="nvim -c \"lua require('lazy').home()\""
 alias ve="nvim -c \"enew\"" # open empty buffer
 alias leet="nvim leetcode.nvim"
-# alias vl="nvim -c \"Lazy\"" # this doesnt work, maybe its before the command is loaded?
 
 # -- obsidian
 alias vo="vim ~/Sync/Obsidian\ Vault/ -c \":cd ~/Sync/Obsidian\ Vault/\""
