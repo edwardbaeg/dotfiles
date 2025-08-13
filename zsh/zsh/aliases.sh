@@ -5,10 +5,11 @@ alias v="nvim"
 alias oldvim="/usr/bin/vim"
 alias ovim="oldvim"
 
-# -- configuration files
+# -- open configuration files
 # v* for shell, e* for within nvim
 # TODO: change working dir for each? #TODO: see if theres benefits
-alias vz="vim ~/dev/dotfiles/zsh/.zshrc -c \":cd ~/dev/dotfiles/zsh\""
+# TODO: s/vim/\$EDITOR for portability
+alias vz="\$EDITOR ~/dev/dotfiles/zsh/.zshrc -c \":cd ~/dev/dotfiles/zsh\""
 alias vzw="vim ~/dev/dotfiles/zsh/zsh/work.sh"
 alias vza="vim ~/dev/dotfiles/zsh/zsh/aliases.sh"
 alias vzf="vim ~/dev/dotfiles/zsh/zsh/functions.sh"
@@ -26,6 +27,16 @@ alias vw="vim ~/dev/dotfiles/wezterm/.wezterm.lua"
 # alias ew="vim ~/dev/dotfiles/.wezterm.lua"
 alias vk="vim ~/dev/dotfiles/kitty/kitty.conf"
 # alias ek="vim ~/dev/dotfiles/.config/kitty/kitty.conf"
+
+# -- vim with commands
+alias vpp="nvim -c \"lua require('fff').find_files()\""
+# alias vpp="nvim -c \"lua require('snacks').picker.git_files()\""
+alias vgg="nvim -c \"lua require('fzf-lua').grep_project()\""
+alias vsr="nvim -c \"lua require('persistence').load()\""
+alias vsl="nvim -c \"lua require('persistence').load()\""
+alias ve="nvim -c \"enew\"" # open empty buffer
+alias leet="nvim leetcode.nvim"
+# alias vl="nvim -c \"Lazy\"" # this doesnt work, maybe its before the command is loaded?
 
 # -- obsidian
 alias vo="vim ~/Sync/Obsidian\ Vault/ -c \":cd ~/Sync/Obsidian\ Vault/\""
