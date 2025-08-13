@@ -14,7 +14,7 @@ function git_checkout_fuzzy() {
 	local branches branch
 	branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
 		branch=$(echo "$branches" |
-			fzf --delimiter=$((2 + $(wc -l <<<"$branches"))) +m --query="$1") &&
+			fzf -d $((2 + $(wc -l <<<"$branches"))) +m --query="$1") &&
 		local target_branch
 	target_branch=$(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 	local command="git checkout $target_branch"
@@ -46,10 +46,10 @@ function vim_grep {
 	local IFS=$'\n'
 	local results
 	results=($(command rg --hidden --color=always --line-number --no-heading --smart-case "${*:-}" |
-		command fzf --delimiter=':' --ansi --multi \
+		command fzf -d':' --ansi --multi \
 			--preview "command bat -p --color=always {1} --highlight-line {2}" \
 			--preview-window "~8,+{2}-5" |
-		awk --field-separator=':' '{print $1 " +" $2}'))
+		awk -F':' '{print $1 " +" $2}'))
 	IFS=' '
 
 	if [[ ${#results[@]} -gt 0 ]]; then
@@ -67,7 +67,7 @@ function tmux_attach() {
 	selected_session=$(tmux ls | fzf --height 40% --reverse --border --header "Select a tmux session")
 
 	if [[ -n "$selected_session" ]]; then
-		session_name=$(echo "$selected_session" | cut --delimiter=: --fields=1)
+		session_name=$(echo "$selected_session" | cut -d: -f1)
 
 		if [[ -n "$TMUX" ]]; then
 			local command="tmux switch-client -t $session_name"
@@ -117,7 +117,7 @@ function npm_run_fuzzy() {
 
 		if [[ -n $scripts ]]; then
 			# Extract script name and remove all whitespace and quotes
-			script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr --delete '[:space:]')
+			script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
 			command="npm run $script_name"
 			print "$command"
 			# Add command to history and execute it
@@ -136,14 +136,14 @@ alias histf="shell_history_remove"
 function shell_history_remove() {
 	local history_count=25
 	local selected_lines
-	selected_lines=($(tail -$history_count ~/.zsh_history | nl --body-numbering=a | sort --numeric-sort --reverse |
+	selected_lines=($(tail -$history_count ~/.zsh_history | nl -b a | sort -nr |
 		fzf --multi --prompt="History > " --header="Select lines to remove (Tab for multi-select)" \
 			--preview="echo {}" --preview-window="down:3:wrap" |
 		awk '{print $1}'))
 
 	if [[ ${#selected_lines[@]} -gt 0 ]]; then
 		# Get total number of lines in history file
-		local total_lines=$(wc --lines <~/.zsh_history)
+		local total_lines=$(wc -l <~/.zsh_history)
 
 		# Convert relative line numbers to absolute line numbers
 		local absolute_lines=()
@@ -161,7 +161,7 @@ function shell_history_remove() {
 
 # -- git
 function gbdm() {
-	git checkout --quiet master
+	git checkout -q master
 	git for-each-ref refs/heads/ "--format=%(refname:short)" | while read -r branch; do
 		mergeBase=$(git merge-base master "$branch")
 		if [[ $(git cherry master "$(git commit-tree "$(git rev-parse "$branch^{tree}")" -p "$mergeBase" -m _)") == "-"* ]]; then
@@ -175,7 +175,7 @@ function gbdm() {
 # alias for npm leaves to list globally installed packages
 function npm() {
 	if [[ "$*" == "leaves" ]] || [[ "$*" == "ls" ]]; then
-		command npm --global ls --depth=0
+		command npm -g ls --depth=0
 	else
 		command npm "$@"
 	fi
@@ -192,8 +192,8 @@ function cht() {
 		curl "cht.sh/${query}"
 	else
 		local token
-		token=$(echo "$1" | cut --delimiter=' ' --fields=1)
-		query=$(echo "$*" | cut --delimiter=' ' --fields=2- | sed 's/ /+/g')
+		token=$(echo "$1" | cut -d' ' -f1)
+		query=$(echo "$*" | cut -d' ' -f2- | sed 's/ /+/g')
 
 		echo "cht.sh/$token/$query"
 		curl "cht.sh/$token/$query"
@@ -206,7 +206,7 @@ function wttr() {
 	else
 		local location
 		location=$(echo "$@" | tr ' ' '+')
-		curl --silent "v2d.wttr.in/$location"
+		curl -s "v2d.wttr.in/$location"
 	fi
 }
 
