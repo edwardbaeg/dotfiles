@@ -325,4 +325,25 @@ return {
       "HiPhish/rainbow-delimiters.nvim",
       enabled = false, -- ugly
    },
+
+   {
+      -- tree sitter powered print/log statements
+      -- usage: gl*
+      "Goose97/timber.nvim",
+      version = "*", -- Use for stability; omit to use `main` branch for the latest features
+      event = "VeryLazy",
+      -- config = true,
+      opts = {
+         log_templates = {
+            default = {
+               javascript = [[console.log('%log_target', %log_target)]],
+               typescript = [[console.log('%log_target', %log_target)]],
+            },
+            plain = {
+               javascript = [[console.log('%insert_cursor')]],
+               typescript = [[console.log('%insert_cursor')]],
+            },
+         },
+      },
+   },
 }
