@@ -24,6 +24,9 @@ set({ "n", "v" }, "L", "$") -- move cursor to end of line
 set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true }) -- deal with wordwrap
 set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
+-- Comments
+set("n", "gjk", "gcc", { remap = true })
+
 -- Buffers
 -- set("n", "<leader>bn", ":bnext<cr>") -- emacs style -- replaced with bufferline to follow visual order
 -- set("n", "<leader>bp", ":bprevious<cr>")

@@ -148,32 +148,27 @@ return {
       "folke/ts-comments.nvim",
       opts = {},
       event = "VeryLazy",
-      enabled = vim.fn.has("nvim-0.10.0") == 1,
-      init = function()
-         vim.keymap.set("n", "gjk", "gcc", { remap = true })
-      end,
+      -- enabled = vim.fn.has("nvim-0.10.0") == 1,
    },
 
    {
-      -- comment
+      -- Commenting plugin
       -- this is now part of nvim 0.10, but doesn't seem to be context aware...
+      -- eg sometimes it will do blockwise instead of linewise in typescriptreact
       "numToStr/Comment.nvim",
-      enabled = false,
-      lazy = false,
+      -- enabled = false,
+      event = "VeryLazy",
       dependencies = {
          "JoosepAlviste/nvim-ts-context-commentstring", -- context aware commenting
       },
       config = function()
          require("ts_context_commentstring").setup({
-            enable_autocmd = false,
+            enable_autocmd = true,
          })
          ---@diagnostic disable-next-line: missing-fields
          require("Comment").setup({
             pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
          })
-         -- alternative keymap to toggle comment line; rolling keys is faster
-         -- set("n", "gjk", "gcc", { desc = "comment line", remap = true }) -- comment line
-         vim.keymap.set("n", "gjk", "<Plug>(comment_toggle_linewise_current)", { noremap = false, silent = true })
          -- comment line in insert mode
          -- vim.keymap.set(
          --    "i",
