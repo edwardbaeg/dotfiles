@@ -513,7 +513,7 @@ return {
       "WilliamHsieh/overlook.nvim",
       opts = {
          ui = {
-            size_ratio = 0.75, -- default is 0.65
+            size_ratio = 0.85, -- default is 0.65
          },
       },
       keys = {
