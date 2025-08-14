@@ -2,16 +2,17 @@
 return {
    {
       -- Highlight, edit, and navigate code
-      -- NOTE: Don't lazy load treesitter
       -- Uninstall with :TSUninstall
       "nvim-treesitter/nvim-treesitter",
+      -- NOTE: Do NOT lazy load -- TODO: validate this
+      lazy = false,
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
          "windwp/nvim-ts-autotag", -- autoclose and autorename html tags using treesitter
          "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua, vimscript, ruby, etc
          "andymass/vim-matchup", -- extend % matching, with opt in treesitter integration. Also highlights matches -- TODO: add END and START comment matching
       },
-      -- Run :TSInstall tsx after initial install
+      -- NOTE: Run :TSInstall tsx after initial install
       build = function()
          pcall(require("nvim-treesitter.install").update({ with_sync = true }))
       end,
@@ -26,10 +27,12 @@ return {
                   node_decremental = "V",
                },
             },
-            endwise = { -- for "RRethy/nvim-treesitter-endwise"
+            -- RRethy/nvim-treesitter-endwise
+            endwise = {
                enable = true,
             },
-            matchup = { -- for "andymass/vim-matchup"
+            -- andymass/vim-matchup
+            matchup = {
                enable = true,
             },
             ensure_installed = {
@@ -319,11 +322,6 @@ return {
          vim.keymap.set("n", "<leader>,", sibling_swap.swap_with_left)
          vim.keymap.set("n", "<leader>.", sibling_swap.swap_with_right)
       end,
-   },
-
-   {
-      "HiPhish/rainbow-delimiters.nvim",
-      enabled = false, -- ugly
    },
 
    {
