@@ -191,7 +191,7 @@ return {
             multiwindow = true, -- default is false
             -- max_lines = 3,
             -- max_lines = 0, -- 0 is unlimited
-            max_lines = "15%", -- 0 is unlimited
+            max_lines = "10%", -- 0 is unlimited
             -- hi TreesitterContextLineNumberBottom sets an underline
             -- separator = "-",
             -- separator = "—",
@@ -328,20 +328,47 @@ return {
       -- tree sitter powered print/log statements
       -- usage: gl*
       "Goose97/timber.nvim",
+      dependencies = "nvim-treesitter/nvim-treesitter",
       version = "*", -- Use for stability; omit to use `main` branch for the latest features
       event = "VeryLazy",
       -- config = true,
       opts = {
+         -- FIXME these arent working, trying to replace double quotes with single quotes in js/ts
          log_templates = {
             default = {
                javascript = [[console.log('%log_target', %log_target)]],
-               typescript = [[console.log('%log_target', %log_target)]],
+               typescript = [[console.log('%log_target foo', %log_target)]],
+               javascriptreact = [[console.log('%log_target', %log_target)]],
+               typescriptreact = [[console.log('%log_target', %log_target)]],
             },
             plain = {
                javascript = [[console.log('%insert_cursor')]],
-               typescript = [[console.log('%insert_cursor')]],
+               typescript = [[console.log('%insert_cursor bar')]],
+               javascriptreact = [[console.log('%insert_cursor')]],
+               typescriptreact = [[console.log('%insert_cursor')]],
             },
          },
+         batch_log_templates = {
+            default = {
+               javascript = [[console.log({ %repeat<'%log_target': %log_target><, > })]],
+               typescript = [[console.log({ %repeat<'%log_target baz': %log_target><, > })]],
+               javascriptreact = [[console.log({ %repeat<'%log_target': %log_target><, > })]],
+               typescriptreact = [[console.log({ %repeat<'%log_target': %log_target><, > })]],
+            },
+         },
+         keymaps = {
+            insert_log_below = "<leader>lj",
+            insert_log_above = "<leader>lk",
+            -- insert_plain_log_below = "glo",
+            -- insert_plain_log_above = "gl<S-o>",
+            -- insert_batch_log = "glb",
+            -- add_log_targets_to_batch = "gla",
+            -- insert_log_below_operator = "g<S-l>j",
+            -- insert_log_above_operator = "g<S-l>k",
+            -- insert_batch_log_operator = "g<S-l>b",
+            -- add_log_targets_to_batch_operator = "g<S-l>a",
+         },
+         default_keymaps_enabled = false,
       },
    },
 }
