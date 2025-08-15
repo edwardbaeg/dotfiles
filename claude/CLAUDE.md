@@ -12,6 +12,13 @@
 - Include confidence levels when identifying issues
 - Comments should focus on WHY something is done, not what it does (code should be self-documenting)
 
+### Function Renaming
+- **NEVER rename functions without updating ALL references**
+- When renaming a function, MUST also find and replace all LSP references throughout the codebase
+- Use Grep tool to find all occurrences before making changes
+- Update imports, function calls, and any other references in one operation
+- Don't make partial changes that leave broken references
+
 ## File Management
 - Do what has been asked; nothing more, nothing less
 - NEVER create files unless absolutely necessary for achieving your goal
