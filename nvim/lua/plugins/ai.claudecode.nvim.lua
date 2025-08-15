@@ -34,6 +34,11 @@ return {
          -- Diff management
          { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
          { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+         { "<leader>aq", function()
+            local claude = require("claudecode")
+            local success, port_or_error = claude.start()
+            vim.notify("Claude integration started: " .. (success and "on port " .. port_or_error or "failed: " .. port_or_error))
+         end, desc = "Start and close the claude session" },
       },
    },
 }
