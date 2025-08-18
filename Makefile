@@ -1,5 +1,5 @@
 # TODO: add marksman.toml
-# NOTE: a downside to stowing a dir to a dir is that the contents of the dir are linked, not the dir itself. so new files are not tracked.
+# NOTE: a downside to stowing a dir to a dir is that the contents of the dir are linked, not the dir itself. so new files are not tracked. A workaround to this would be to stow the containing dir. Eg, ~/.config/nvim instead of ~/nvim. But there are downsides to having hidden dirs.
 
 .PHONY: all clean test stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin
 

@@ -29,6 +29,7 @@ function reloadConfig()
    end)
 end
 
+-- TODO: create a submodal for this
 hs.hotkey.bind(hyperkey, "R", function()
    reloadConfig()
 end)
