@@ -6,6 +6,9 @@ return {
       keymaps = {
          close = { "<Esc>", "<c-c>" },
       },
+      layout = {
+         prompt_position = "top",
+      }
    },
    keys = {
       {
