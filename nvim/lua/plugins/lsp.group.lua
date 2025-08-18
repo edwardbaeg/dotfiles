@@ -516,6 +516,28 @@ return {
             size_ratio = 0.85, -- default is 0.65
          },
       },
+      init = function()
+         vim.api.nvim_create_user_command("OverlookSplit", function()
+            require("overlook.api").open_in_split()
+         end, { desc = "Overlook: Open popup in split" })
+         vim.api.nvim_create_user_command("PopupSplit", function()
+            require("overlook.api").open_in_split()
+         end, { desc = "Overlook: Open popup in split" })
+
+         vim.api.nvim_create_user_command("OverlookVSplit", function()
+            require("overlook.api").open_in_vsplit()
+         end, { desc = "Overlook: Open popup in vsplit" })
+         vim.api.nvim_create_user_command("PopupVSplit", function()
+            require("overlook.api").open_in_vsplit()
+         end, { desc = "Overlook: Open popup in vsplit" })
+
+         vim.api.nvim_create_user_command("OverlookOriginal", function()
+            require("overlook.api").open_in_original_window()
+         end, { desc = "Overlook: Open popup in original window" })
+         vim.api.nvim_create_user_command("PopupOriginal", function()
+            require("overlook.api").open_in_original_window()
+         end, { desc = "Overlook: Open popup in original window" })
+      end,
       keys = {
          {
             "gd",
