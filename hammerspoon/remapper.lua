@@ -19,7 +19,16 @@ sendKey(altShift, "L", { "alt" }, "RIGHT")
 
 -- Media controls
 sendSystemKey(cmdShift, ".", "NEXT")
-sendSystemKey(cmdShift, ",", "PREVIOUS")
+-- send media previous unless application is raycast
+hs.hotkey.bind(cmdShift, ",", function()
+   local frontmostApp = hs.application.frontmostApplication()
+   if frontmostApp and frontmostApp:name() == "Raycast" then
+      hs.eventtap.keyStroke(cmdShift, ",", frontmostApp)
+   else
+      hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
+      hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
+   end
+end)
 sendSystemKey(cmdShift, "/", "PLAY")
 sendSystemKey(cmdShift, "o", "SOUND_UP")
 sendSystemKey(cmdShift, "i", "SOUND_DOWN")

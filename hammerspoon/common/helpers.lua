@@ -17,8 +17,10 @@ function M.sendKey(modifiers, key, sendModifiers, sendKey)
    )
 end
 
+-- TODO: rename
 function M.sendSystemKey(modifiers, key, sendKey)
    hs.hotkey.bind(modifiers, key, function()
+      -- TODO: abstract this
       hs.eventtap.event.newSystemKeyEvent(sendKey, true):post()
       hs.eventtap.event.newSystemKeyEvent(sendKey, false):post()
    end)
