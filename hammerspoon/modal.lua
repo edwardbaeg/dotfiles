@@ -27,6 +27,33 @@ local function getToggleLabel(value, label)
    return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
 end
 
+---@class ModalConfig
+---@field entries ModalEntry[] The entries to display in the modal
+---@field fillColor table The background color for the modal
+
+---@param config ModalConfig Configuration object for the modal
+---@return string alertId The alert ID for closing the modal later
+local function showModal(config)
+   local mappedEntries = {}
+   for _, entry in ipairs(config.entries) do
+      if type(entry) == "string" then
+         table.insert(mappedEntries, entry)
+      elseif type(entry) == "table" and entry.key and entry.label then
+         local label = type(entry.label) == "function" and entry.label() or entry.label
+         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
+      end
+   end
+   local modalContent = table.concat(mappedEntries, "\n")
+   modalContent = modalContent .. "\n\n" .. "Esc/q: Exit"
+   ---@diagnostic disable-next-line: return-type-mismatch its right
+   return hs.alert.show(modalContent, {
+      fillColor = config.fillColor,
+      textFont = "0xProto",
+      textSize = 20,
+      radius = 16,
+   }, "indefinite")
+end
+
 ---@type ModalEntry[]
 local cursorSubModalEntries = {
    "--Cursor--",
@@ -71,23 +98,10 @@ local cursorSubModalEntries = {
 }
 
 function cursorSubmodal:entered()
-   local mappedEntries = {}
-   for _, entry in ipairs(cursorSubModalEntries) do
-      if type(entry) == "string" then
-         table.insert(mappedEntries, entry)
-      elseif type(entry) == "table" and entry.key and entry.label then
-         local label = type(entry.label) == "function" and entry.label() or entry.label
-         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
-      end
-   end
-   local modalContent = table.concat(mappedEntries, "\n")
-   modalContent = modalContent .. "\n\nEsc/q: Exit"
-   cursorSubmodalId = hs.alert.show(modalContent, {
+   cursorSubmodalId = showModal({
+      entries = cursorSubModalEntries,
       fillColor = require("common.constants").colors.lightBlue,
-      textFont = "0xProto",
-      textSize = 20,
-      radius = 16,
-   }, "indefinite")
+   })
 end
 
 function cursorSubmodal:exited()
@@ -134,23 +148,10 @@ local raycastSubModalEntries = {
 }
 
 function raycastSubmodal:entered()
-   local mappedEntries = {}
-   for _, entry in ipairs(raycastSubModalEntries) do
-      if type(entry) == "string" then
-         table.insert(mappedEntries, entry)
-      elseif type(entry) == "table" and entry.key and entry.label then
-         local label = type(entry.label) == "function" and entry.label() or entry.label
-         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
-      end
-   end
-   local modalContent = table.concat(mappedEntries, "\n")
-   modalContent = modalContent .. "\n\nEsc: Exit"
-   raycastSubmodalId = hs.alert.show(modalContent, {
+   raycastSubmodalId = showModal({
+      entries = raycastSubModalEntries,
       fillColor = require("common.constants").colors.orange,
-      textFont = "0xProto",
-      textSize = 20,
-      radius = 16,
-   }, "indefinite")
+   })
 end
 
 function raycastSubmodal:exited()
@@ -160,16 +161,6 @@ end
 ---@type ModalEntry[]
 local modalEntries = {
    "--Apps--",
-   {
-      key = "A",
-      label = "Raycast AI - Personal Extensions",
-      callback = function()
-         hs.urlevent.openURL(
-            "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D"
-         )
-         modal:exit()
-      end,
-   },
    {
       key = "L",
       label = "Linear",
@@ -245,26 +236,10 @@ local modalEntries = {
 }
 
 function modal:entered()
-   local mappedEntries = {}
-   for _, entry in ipairs(modalEntries) do
-      if type(entry) == "string" then
-         table.insert(mappedEntries, entry)
-      elseif type(entry) == "table" and entry.key and entry.label then
-         local label = type(entry.label) == "function" and entry.label() or entry.label
-         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
-      end
-   end
-   local modalContent = table.concat(mappedEntries, "\n")
-   modalContent = modalContent .. "\n\nEsc: Exit"
-   id = hs.alert.show(modalContent, {
-      -- strokeColor = { white = 1, alpha = 0.5 }, -- border color
+   id = showModal({
+      entries = modalEntries,
       fillColor = require("common.constants").colors.grey,
-      -- textColor = { white = 1 },
-      textFont = "0xProto",
-      -- textFont = "Helvetica",
-      textSize = 20,
-      radius = 16, -- Optional corner radius
-   }, "indefinite")
+   })
 end
 
 function modal:exited()
