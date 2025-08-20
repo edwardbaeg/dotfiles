@@ -33,10 +33,15 @@ function vim_files() {
 	files=($(fzf --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
 	IFS=' '
 	[[ -n "$files" ]] && {
-		local command="${EDITOR:-nvim} ${files[*]}"
+		local command="${EDITOR:-nvim}"
+		for file in "${files[@]}"; do
+			# Escape spaces in filename for display command
+			local escaped_file="${file// /\\ }"
+			command+=" $escaped_file"
+		done
 		print "$command"
 		print -s "$command"
-		eval $command
+		eval "$command"
 	}
 }
 
@@ -53,10 +58,18 @@ function vim_grep {
 	IFS=' '
 
 	if [[ ${#results[@]} -gt 0 ]]; then
-		local command="${EDITOR:-nvim} ${results[*]}"
+		local command="${EDITOR:-nvim}"
+		for result in "${results[@]}"; do
+			# Split on the last space to separate filename from +linenumber
+			local filename="${result% +*}"
+			local linenum="${result##* +}"
+			# Escape spaces in filename for display command
+			local escaped_filename="${filename// /\\ }"
+			command+=" $escaped_filename +$linenum"
+		done
 		print "$command"
 		print -s "$command"
-		eval $command
+		eval "$command"
 	fi
 }
 
