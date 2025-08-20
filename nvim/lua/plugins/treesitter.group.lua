@@ -337,13 +337,13 @@ return {
          log_templates = {
             default = {
                javascript = [[console.log('%log_target', %log_target)]],
-               typescript = [[console.log('%log_target foo', %log_target)]],
+               typescript = [[console.log('%log_target', %log_target)]],
                javascriptreact = [[console.log('%log_target', %log_target)]],
                typescriptreact = [[console.log('%log_target', %log_target)]],
             },
             plain = {
                javascript = [[console.log('%insert_cursor')]],
-               typescript = [[console.log('%insert_cursor bar')]],
+               typescript = [[console.log('%insert_cursor')]],
                javascriptreact = [[console.log('%insert_cursor')]],
                typescriptreact = [[console.log('%insert_cursor')]],
             },
@@ -351,7 +351,7 @@ return {
          batch_log_templates = {
             default = {
                javascript = [[console.log({ %repeat<'%log_target': %log_target><, > })]],
-               typescript = [[console.log({ %repeat<'%log_target baz': %log_target><, > })]],
+               typescript = [[console.log({ %repeat<'%log_target': %log_target><, > })]],
                javascriptreact = [[console.log({ %repeat<'%log_target': %log_target><, > })]],
                typescriptreact = [[console.log({ %repeat<'%log_target': %log_target><, > })]],
             },
