@@ -143,7 +143,8 @@ return {
       -- - ;a jump
       -- - ;p picker
       -- TODO: configure with session management with Dart.read_session(name)/Dart.write_session(name)
-      -- TODO: move pinned to front
+      -- dir = "~/dev/apps/dart.nvim",
+      -- name = "dart",
       "iofq/dart.nvim",
       opts = {
          -- pinned
@@ -156,6 +157,16 @@ return {
             next = "<leader>bn",
             prev = "<leader>bp",
             pick = ",p",
+         },
+         tabline = {
+            -- order pinned first
+            order = function(config)
+               local order = {}
+               for i, key in ipairs(vim.list_extend(vim.deepcopy(config.marklist), config.buflist)) do
+                  order[key] = i
+               end
+               return order
+            end,
          },
       },
       config = function(_, opts)
