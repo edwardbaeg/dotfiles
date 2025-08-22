@@ -12,9 +12,8 @@ return {
       local blended_color = util.blend(frappe.sapphire, 0.5, winsep_color)
 
       require("colorful-winsep").setup({
-         highlight = {
-            fg = blended_color,
-         },
+         -- this can be a string or function or use ColorfulWinSep
+         highlight = blended_color,
          animate = {
             enabled = "shift",
             shift = {
