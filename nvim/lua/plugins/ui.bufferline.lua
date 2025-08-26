@@ -146,17 +146,21 @@ return {
       -- dir = "~/dev/apps/dart.nvim",
       -- name = "dart",
       "iofq/dart.nvim",
+      lazy = false, -- don't lazy load due to keys
       opts = {
          -- pinned
-         marklist = { "q", "w", "e", "r" },
+         marklist = { "a", "s", "d", "f" },
+         -- marklist = { "q", "w", "e", "r" },
          -- recent
-         buflist = { "a", "s", "d", "f", "z", "x", "c" },
+         buflist = { "q", "w", "e", "r" },
+         -- buflist = { "q", "w", "e", "r", "z", "x", "c" },
+         -- buflist = { "a", "s", "d", "f", "z", "x", "c" },
          mappings = {
             mark = ",,",
             jump = ",",
             next = "<leader>bn",
             prev = "<leader>bp",
-            pick = ",p",
+            -- pick = ",p",
          },
          tabline = {
             -- order pinned first
@@ -167,6 +171,16 @@ return {
                end
                return order
             end,
+         },
+      },
+      -- this integrates with which-key, considering doing for all
+      keys = {
+         {
+            ",p",
+            function()
+               require("dart").pick()
+            end,
+            desc = "Dart pick",
          },
       },
       config = function(_, opts)
