@@ -104,6 +104,7 @@ local mappings = {
    { "return", "Kitty" },
    { "'", "Kitty" },
    { "8", "Slack" },
+   { "P", "Claude" },
    -- { "P", "Perplexity" },
 }
 
