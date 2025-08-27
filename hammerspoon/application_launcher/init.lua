@@ -11,6 +11,12 @@ local M = {}
 ---@param callback? function
 local function assignAppHotKey(modifiers, key, appName, callback)
    hs.hotkey.bind(modifiers, key, function()
+      local targetApp = hs.application.find(appName)
+      print("targetApp", targetApp)
+      -- NOTE: this doesnt always work for some applications
+      if targetApp == nil then
+         hs.alert("Launching " .. appName)
+      end
       local success = hs.application.launchOrFocus(appName)
       callback = callback or function() end
       if success then
