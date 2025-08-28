@@ -142,11 +142,10 @@ return {
       -- - ;; pin
       -- - ;a jump
       -- - ;p picker
-      -- TODO: configure with session management with Dart.read_session(name)/Dart.write_session(name)
       -- dir = "~/dev/apps/dart.nvim",
       -- name = "dart",
       "iofq/dart.nvim",
-      lazy = false, -- don't lazy load due to keys
+      lazy = false, -- don't lazy load for session stuff
       opts = {
          -- pinned
          marklist = { "a", "s", "d", "f" },
@@ -190,6 +189,11 @@ return {
 
          set("n", "<tab>", dart.next)
          set("n", "<s-tab>", dart.prev)
+
+         -- TODO: differnt highlight color for pinned/marked buffers
+
+         -- vim.api.nvim_set_hl(0, "DartCurrentLabel", { fg = "#1c1c1c" }) -- mark label for current buffer
+         vim.api.nvim_set_hl(0, "DartPickLabel", { fg = "#FFFFFF" }) -- this doesnt work?
       end,
    },
 }
