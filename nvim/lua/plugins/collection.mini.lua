@@ -1,7 +1,7 @@
 return {
    {
       -- a collection of mini 'submodules'
-      "echasnovski/mini.nvim",
+      "nvim-mini/mini.nvim",
       dependencies = {
          "folke/snacks.nvim", -- for mini.files lsp rename
       },
