@@ -185,6 +185,33 @@ local modalEntries = {
          modal:exit()
       end,
    },
+   {
+      key = "3",
+      label = "Arc Work Tab 3",
+      callback = function()
+         local currentApp = hs.application.frontmostApplication()
+         local wasArc = currentApp:name() == "Arc"
+
+         if not wasArc then
+            hs.application.launchOrFocus("Arc")
+         end
+         hs.timer.usleep(100000) -- Wait 0.1s for Arc to focus
+
+         -- switch to work
+         -- TODO: consider using existing helper
+         hs.eventtap.keyStroke({ "ctrl" }, "4")
+
+         -- switch to tab 3
+         hs.eventtap.keyStroke({ "cmd" }, "3")
+
+         if not wasArc then
+            hs.timer.usleep(100000) -- Wait 0.1s before switching back
+            currentApp:activate()
+         end
+
+         modal:exit()
+      end,
+   },
    "",
    "--System--",
    {
