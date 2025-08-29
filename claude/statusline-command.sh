@@ -4,13 +4,13 @@
 input=$(cat)
 
 # Color definitions (ANSI escape codes)
-# Using dimmed/muted colors that are easier on the eyes
-BLUE='\033[2;34m'        # Directory path (dim blue)
-PURPLE='\033[2;35m'      # Model name (dim purple)
-GREEN='\033[2;32m'       # Cost (dim green)
-YELLOW='\033[2;33m'      # Duration (dim yellow)
-CYAN='\033[2;36m'        # Additional info (dim cyan)
-RESET='\033[0m'          # Reset to default
+# Using standard colors
+BLUE='\033[34m'        # Directory path (blue)
+PURPLE='\033[35m'      # Model name (purple)
+GREEN='\033[32m'       # Cost (green)
+YELLOW='\033[33m'      # Duration (yellow)
+CYAN='\033[36m'        # Additional info (cyan)
+RESET='\033[0m'        # Reset to default
 
 # Helper function to get cost
 get_cost() {
@@ -44,21 +44,21 @@ duration=$(get_duration "$input")
 # Build colored status line
 status_line=""
 
-# Add current directory with blue color
-status_line+="${BLUE}${current_dir}${RESET}"
+# Add current directory with cyan color
+status_line+="${CYAN}${current_dir}${RESET}"
 
 # Add model name with green color and brackets
 status_line+=" ${GREEN}[${model_name}]${RESET}"
 
-# Add cost with purple color if available
+# Add cost with yellow color if available
 if [ -n "$cost" ]; then
-	status_line+=" ${PURPLE}${cost}${RESET}"
+	status_line+=" ${YELLOW}${cost}${RESET}"
 fi
 
-# Add duration with yellow color if available
-if [ -n "$duration" ]; then
-	status_line+=" ${YELLOW}${duration}${RESET}"
-fi
+# Add duration with purple color if available
+# if [ -n "$duration" ]; then
+# 	status_line+=" ${PURPLE}${duration}${RESET}"
+# fi
 
 # Print the final status line
 printf "%b" "$status_line"
