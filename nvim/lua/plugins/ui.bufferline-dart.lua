@@ -190,7 +190,8 @@ return {
          set("n", "<tab>", dart.next)
          set("n", "<s-tab>", dart.prev)
 
-         -- TODO: differnt highlight color for pinned/marked buffers
+         -- TODO: different highlight color for pinned/marked buffers
+         -- TODO: different color for the current and modified (unsaved) buffers
 
          -- vim.api.nvim_set_hl(0, "DartCurrentLabel", { fg = "#1c1c1c" }) -- mark label for current buffer
          vim.api.nvim_set_hl(0, "DartPickLabel", { fg = "#FFFFFF" }) -- this doesnt work?

@@ -292,14 +292,6 @@ return {
    },
 
    {
-      -- context aware indentation
-      -- NOTE: this is only active if treesitter indentation is disabled, so might not need this
-      "wurli/contextindent.nvim",
-      opts = { pattern = "*" },
-      dependencies = { "nvim-treesitter/nvim-treesitter" },
-   },
-
-   {
       -- Swap sibling nodes with treesitter
       -- Usage: <leader>. and <leader>,
       -- NOTE: setting this with lazy.opts/keys doesnt work well - cannot disable default keymaps and use lazy.keys at the same time
