@@ -1,3 +1,5 @@
+local set = require("config.keymaps").set
+
 return {
    {
       -- opens 'foo/bar' in github with gx
@@ -58,18 +60,18 @@ return {
       -- git actions and visual git signs
       "lewis6991/gitsigns.nvim",
       config = function()
-         require("gitsigns").setup({
+         local gitsigns = require("gitsigns")
+         gitsigns.setup({
             signs = {
                add = { text = "•" },
                change = { text = "•" },
                delete = { text = "•" },
                untracked = { text = "·" },
             },
+            preview_config = {
+               border = "rounded",
+            },
          })
-
-         -- test!
-         -- vim.keymap.set("n", "gh", ":Gitsigns next_hunk<cr>")
-         -- vim.keymap.set("n", "gH", ":Gitsigns prev_hunk<cr>")
 
          -- these highlight groups need to be loaded async?
          -- vim.defer_fn(function ()
@@ -79,8 +81,16 @@ return {
          vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff2222" })
          -- end, 0)
 
-         vim.keymap.set("n", "gh", ":Gitsigns next_hunk<cr>", { silent = true })
-         vim.keymap.set("n", "gH", ":Gitsigns prev_hunk<cr>", { silent = true })
+         set("n", "gh", function()
+            ---@diagnostic disable-next-line: param-type-mismatch it's correct
+            gitsigns.nav_hunk("next")
+         end)
+         set("n", "gH", function()
+            ---@diagnostic disable-next-line: param-type-mismatch it's correct
+            gitsigns.nav_hunk("prev")
+         end)
+         set("n", "<leader>hp", gitsigns.preview_hunk)
+         set("n", "<leader>hl", gitsigns.setloclist)
       end,
    },
 
@@ -101,18 +111,22 @@ return {
       -- Open remote github repos
       -- Usage: :GitDevOpen <url>
       "moyiz/git-dev.nvim",
-      event = "VeryLazy",
+      cmd = { "GitDevOpen" },
       opts = {},
    },
 
    {
       -- Github
-      "pwntester/octo.nvim",
       -- usage: :Octo
+      "pwntester/octo.nvim",
+      -- enabled = false,
+      cmd = { "Octo" },
       dependencies = {
          "nvim-lua/plenary.nvim",
          "folke/snacks.nvim",
          "nvim-tree/nvim-web-devicons",
+      },
+      opts = {
          picker = "snacks",
       },
    },
