@@ -89,8 +89,8 @@ return {
             ---@diagnostic disable-next-line: param-type-mismatch it's correct
             gitsigns.nav_hunk("prev")
          end)
-         set("n", "<leader>hp", gitsigns.preview_hunk)
-         set("n", "<leader>hl", gitsigns.setloclist)
+         set("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git hunk: [p]review" })
+         set("n", "<leader>hl", gitsigns.setloclist, { desc = "git hunk: [l]ist in location list" })
       end,
    },
 
