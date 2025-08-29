@@ -367,13 +367,17 @@ return {
       -- Popup with quick, interactive lsp navigation
       -- "SmiteshP/nvim-navbuddy",
       "hasansujon786/nvim-navbuddy", -- this is the updated fork?
-      event = "VeryLazy",
+      -- event = "VeryLazy",
       dependencies = {
          "neovim/nvim-lspconfig",
          "SmiteshP/nvim-navic",
          "MunifTanjim/nui.nvim", -- ui library
          "nvim-telescope/telescope.nvim", -- Optional
       },
+      keys = {
+         { "<leader>gn", "<cmd>Navbuddy<CR>", desc = "[N]avbuddy" },
+      },
+      cmd = { "Navbuddy" },
       config = function()
          require("nvim-navbuddy").setup({
             lsp = {
@@ -392,8 +396,6 @@ return {
                },
             },
          })
-
-         vim.keymap.set("n", "<leader>gn", "<cmd>Navbuddy<CR>", { desc = "[N]avbuddy" })
       end,
    },
 
