@@ -3,13 +3,13 @@ return {
       -- statusline
       "nvim-lualine/lualine.nvim",
       dependencies = {
-         {
-            -- display Claude Code
-            -- NOTE: requires `npm i -g ccusage`
-            "S1M0N38/ccusage.nvim",
-            version = "1.*",
-            opts = {},
-         },
+         -- {
+         --    -- display Claude Code
+         --    -- NOTE: requires `npm i -g ccusage`
+         --    "S1M0N38/ccusage.nvim",
+         --    version = "1.*",
+         --    opts = {},
+         -- },
          {
             -- Adds git blame line as virtual text or in the status bar
             "f-person/git-blame.nvim",
@@ -77,8 +77,8 @@ return {
                   -- },
                },
 
-               -- lualine_x = { "filetype" },
-               lualine_x = { "ccusage", "filetype" },
+               lualine_x = { "filetype" },
+               -- lualine_x = { "ccusage", "filetype" },
                -- lualine_x = {
                --    -- "encoding",
                --    -- "fileformat",
