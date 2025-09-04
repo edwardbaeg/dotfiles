@@ -16,7 +16,7 @@ vim.o.showbreak = "… " -- string added to the start of wrapped lines -- ellips
 -- vim.api.nvim_set_hl(0, "NonText", { fg = "grey30" }) -- highlights showbreak characters, slightly different than comment text -- NOTE: this is also used by snacks.picker for the directory
 
 vim.o.updatetime = 250 -- Decrease update time (ms), default is 4000 ms
-vim.o.signcolumn = "yes" -- always show sign column
+vim.o.signcolumn = "auto:1-3" -- minimum of 1, up to 3 in the signcolumn
 vim.o.completeopt = "menuone,noselect" -- better completion experience
 vim.o.mouse = "a" -- Enable mouse mode
 vim.o.cursorline = true -- highlight line with cursor
