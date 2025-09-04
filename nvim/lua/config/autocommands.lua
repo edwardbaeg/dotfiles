@@ -63,6 +63,7 @@ vim.api.nvim_create_autocmd("FileType", {
       "fugitiveblame", -- from vim-fugitive
       "git", -- from vim-fugitive
       "grug-far", -- from grug-far
+      "gitsigns-blame", -- from gitsigns
    },
    callback = function(event)
       vim.bo[event.buf].buflisted = false
