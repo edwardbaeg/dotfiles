@@ -62,6 +62,7 @@ return {
       config = function()
          local gitsigns = require("gitsigns")
          gitsigns.setup({
+            sign_priority = 10,
             signs = {
                add = { text = "•" },
                change = { text = "•" },
