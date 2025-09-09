@@ -120,13 +120,12 @@ function tmuxp_picker() {
 	fi
 }
 
-alias nf="npm_run_fuzzy"
-alias npmf="npm_run_fuzzy"
-function npm_run_fuzzy() {
+alias nsf="npm_run_script_fuzzy"
+function npm_run_script_fuzzy() {
 	if cat package.json >/dev/null 2>&1; then
 		# --tiebreak=begin to put higher score for matches at the beginning of the line
 		# TODO: update preview to match on matches closer to beginning of the line
-		scripts=$(jq .scripts package.json | sed '1d;$d' | fzf --height 40% --tiebreak=begin)
+		scripts=$(jq .scripts package.json | sed '1d;$d' | fzf --height 40% --tiebreak=begin --prompt="npm run > " --header="Select a script")
 
 		if [[ -n $scripts ]]; then
 			# Extract script name and remove all whitespace and quotes
@@ -135,12 +134,29 @@ function npm_run_fuzzy() {
 			print "$command"
 			# Add command to history and execute it
 			print -s "$command"
-			eval $command
+			eval "$command"
 		else
 			echo "Exit: No script selected."
 		fi
 	else
 		echo "Error: No package.json."
+	fi
+}
+
+alias npf="npm_package_fuzzy"
+function npm_package_fuzzy() {
+	if cat package.json >/dev/null 2>&1; then
+		# Extract both dependencies and devDependencies, format as "package: version"
+		packages=$(jq -r '(.dependencies // {}) + (.devDependencies // {}) | to_entries[] | "\(.key): \(.value)"' package.json |
+			fzf --height 40% --prompt="Package > " --header="Search for a package")
+
+		if [[ -n $packages ]]; then
+			echo "$packages"
+		else
+			echo "Exit: No package selected." >&2
+		fi
+	else
+		echo "Error: No package.json." >&2
 	fi
 }
 
