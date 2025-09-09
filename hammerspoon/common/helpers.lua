@@ -26,7 +26,7 @@ function M.sendSystemKey(modifiers, key, sendKey)
    end)
 end
 
-hs.hotkey.bind({ "cmd" }, "M", function()
+hs.hotkey.bind({ "cmd" }, "m", function()
    hs.alert("[ cmd + m ] disabled") -- minimizes the current window. Annoying because does not unminimize on focus
 end)
 
