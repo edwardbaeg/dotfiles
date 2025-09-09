@@ -6,6 +6,14 @@ local togglePersonalOverride = appLauncher.togglePersonalOverride
 
 local M = {}
 
+-- Configuration: set to "vscode" to use VSCode instead of Cursor
+-- local CODE_EDITOR = "cursor" -- "cursor" or "vscode"
+local CODE_EDITOR = "vscode" -- "cursor" or "vscode"
+
+local EDITOR_APP_NAME = CODE_EDITOR == "cursor" and "Cursor" or "Code"
+local EDITOR_DISPLAY_NAME = CODE_EDITOR == "cursor" and "--Cursor--" or "--VSCode--"
+local EDITOR_MODAL_LABEL = CODE_EDITOR == "cursor" and "Cursor: modal" or "VSCode: modal"
+
 ---@alias ModalEntry string | ModalEntryTable
 
 ---@class ModalEntryTable
@@ -17,8 +25,8 @@ local modal = hs.hotkey.modal.new({ "cmd", "ctrl" }, "d")
 local id
 
 -- TODO: abstract to different module?
-local cursorSubmodal = hs.hotkey.modal.new()
-local cursorSubmodalId
+local guiEditorSubmodal = hs.hotkey.modal.new()
+local guiEditorSubmodalId
 
 local raycastSubmodal = hs.hotkey.modal.new()
 local raycastSubmodalId
@@ -55,57 +63,57 @@ local function showModal(config)
 end
 
 ---@type ModalEntry[]
-local cursorSubModalEntries = {
-   "--Cursor--",
+local guiEditorSubModalEntries = {
+   EDITOR_DISPLAY_NAME,
    {
       key = "O",
       label = "Open",
       callback = function()
-         hs.application.launchOrFocus("Cursor")
-         cursorSubmodal:exit()
+         hs.application.launchOrFocus(EDITOR_APP_NAME)
+         guiEditorSubmodal:exit()
       end,
    },
    {
       key = "S",
       label = "Start debug server",
       callback = function()
-         local cursorApp = hs.application.find("Cursor")
-         if not cursorApp then
-            hs.alert("Cursor not running")
+         local app = hs.application.find(EDITOR_APP_NAME)
+         if not app then
+            hs.alert(EDITOR_APP_NAME .. " not running")
          else
             hs.timer.doAfter(1, function()
-               hs.eventtap.keyStroke({}, "F5", 0, hs.application.find("Cursor"))
+               hs.eventtap.keyStroke({}, "F5", 0, hs.application.find(EDITOR_APP_NAME))
             end)
          end
-         cursorSubmodal:exit()
+         guiEditorSubmodal:exit()
       end,
    },
    {
       key = "R",
       label = "Restart debug server",
       callback = function()
-         local cursorApp = hs.application.find("Cursor")
-         if not cursorApp then
-            hs.alert("Cursor not running")
+         local app = hs.application.find(EDITOR_APP_NAME)
+         if not app then
+            hs.alert(EDITOR_APP_NAME .. " not running")
          else
             hs.timer.doAfter(1, function()
-               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find("Cursor"))
+               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find(EDITOR_APP_NAME))
             end)
          end
-         cursorSubmodal:exit()
+         guiEditorSubmodal:exit()
       end,
    },
 }
 
-function cursorSubmodal:entered()
-   cursorSubmodalId = showModal({
-      entries = cursorSubModalEntries,
+function guiEditorSubmodal:entered()
+   guiEditorSubmodalId = showModal({
+      entries = guiEditorSubModalEntries,
       fillColor = require("common.constants").colors.lightBlue,
    })
 end
 
-function cursorSubmodal:exited()
-   hs.alert.closeSpecific(cursorSubmodalId, 0.1)
+function guiEditorSubmodal:exited()
+   hs.alert.closeSpecific(guiEditorSubmodalId, 0.1)
 end
 
 ---@type ModalEntry[]
@@ -254,10 +262,10 @@ local modalEntries = {
    },
    {
       key = "U",
-      label = "Cursor: modal",
+      label = EDITOR_MODAL_LABEL,
       callback = function()
          modal:exit()
-         cursorSubmodal:enter()
+         guiEditorSubmodal:enter()
       end,
    },
 }
@@ -284,10 +292,10 @@ function Start()
    end
 
    -- Create bindings for sub-modal entries
-   for _, entry in ipairs(cursorSubModalEntries) do
+   for _, entry in ipairs(guiEditorSubModalEntries) do
       -- Skip string entries (display-only)
       if type(entry) == "table" and entry.key and entry.callback then
-         cursorSubmodal:bind("", entry.key, entry.callback)
+         guiEditorSubmodal:bind("", entry.key, entry.callback)
       end
    end
 
@@ -311,7 +319,7 @@ function Start()
       modalInstance:bind("", "q", exitFunction)
    end
 
-   for _, modalInstance in ipairs({ modal, cursorSubmodal, raycastSubmodal }) do
+   for _, modalInstance in ipairs({ modal, guiEditorSubmodal, raycastSubmodal }) do
       bindExitKeys(modalInstance)
    end
 end
