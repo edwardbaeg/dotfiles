@@ -157,13 +157,14 @@ function Main()
       hs.alert("Deprecated. Use ;")
    end)
 
-   hs.hotkey.bind(hyperkey, "w", function()
-      -- NOTE: need to use full paths
-      -- TODO: consider auto attaching to a tmux session
-      hs.task
-         .new("/bin/bash", nil, { "-c", "cd $HOME/dev/dotfiles && /opt/homebrew/bin/kitten quick-access-terminal" })
-         :start()
-   end)
+   -- replaced with iterm2 hotkey window
+   -- hs.hotkey.bind(hyperkey, "w", function()
+   --    -- NOTE: need to use full paths
+   --    -- TODO: consider auto attaching to a tmux session
+   --    hs.task
+   --       .new("/bin/bash", nil, { "-c", "cd $HOME/dev/dotfiles && /opt/homebrew/bin/kitten quick-access-terminal" })
+   --       :start()
+   -- end)
 end
 
 Main()
