@@ -156,6 +156,14 @@ local raycastSubModalEntries = {
          raycastSubmodal:exit()
       end,
    },
+   {
+      key = "R",
+      label = "Reasonable size",
+      callback = function()
+         hs.execute("open -g raycast://extensions/raycast/window-management/reasonable-size")
+         raycastSubmodal:exit()
+      end,
+   },
 }
 
 function raycastSubmodal:entered()
