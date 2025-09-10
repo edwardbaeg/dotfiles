@@ -6,7 +6,7 @@
   pager = delta --diff-so-fancy
 [user]
   name = edwardbaeg
-  email = edwardbaeg9@gmail.com
+  email = 35383701+edwardbaeg@users.noreply.github.com
 [alias]
   co = checkout
   ci = commit

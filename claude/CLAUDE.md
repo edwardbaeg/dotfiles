@@ -31,6 +31,12 @@
 - The IDE integration provides context about which files are currently open and being worked on
 - **ALWAYS prioritize IDE context over git status or other file discovery methods when determining which file the user is referring to**
 
+## Security/Privacy
+- **Use $HOME instead of hardcoded paths**
+  - Replace `/Users/username/...` with `$HOME/...` in scripts and configs
+  - Prevents exposing usernames in public repositories
+  - Makes dotfiles portable across different systems
+
 ## Neovim
 
 ### Plugin Documentation

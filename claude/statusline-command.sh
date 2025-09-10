@@ -4,8 +4,8 @@
 input=$(cat)
 
 # Color definitions (ANSI escape codes)
-BLUE='\033[34m'
-PURPLE='\033[35m'
+# BLUE='\033[34m'
+# PURPLE='\033[35m'
 GREEN='\033[32m'
 YELLOW='\033[33m'
 CYAN='\033[36m'
