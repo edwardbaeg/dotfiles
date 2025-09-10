@@ -3,7 +3,7 @@ require("config_reloader") -- config watcher and reloader, load this first
 
 require("application_launcher") -- app launcher and switcher
 require("caffeine") -- force awake menubar
-require("modal") -- modal mode keymaps
+require("modals") -- modal mode keymaps
 require("remapper") -- simple system keymaps
 require("url_listeners") -- url listeners
 require("window_grid") -- grid window positions
