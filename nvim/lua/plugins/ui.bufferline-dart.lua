@@ -191,9 +191,22 @@ return {
          set("n", "<s-tab>", dart.prev)
 
          -- TODO: different highlight color for pinned/marked buffers
-         -- TODO: different color for the current and modified (unsaved) buffers
 
-         -- vim.api.nvim_set_hl(0, "DartCurrentLabel", { fg = "#1c1c1c" }) -- mark label for current buffer
+         -- Get Catppuccin colors
+         local catppuccin = require("catppuccin.palettes").get_palette()
+
+         -- Current buffer highlights
+         local themeBlue = catppuccin.blue
+         vim.api.nvim_set_hl(0, "DartCurrent", { fg = themeBlue, bold = true })
+         vim.api.nvim_set_hl(0, "DartCurrentLabel", { fg = themeBlue, bold = true })
+
+         -- Modified buffer highlights
+         local themeYellow = catppuccin.yellow
+         vim.api.nvim_set_hl(0, "DartVisibleModified", { fg = themeYellow })
+         vim.api.nvim_set_hl(0, "DartCurrentModified", { fg = themeYellow })
+         vim.api.nvim_set_hl(0, "DartVisibleLabelModified", { fg = themeYellow })
+         vim.api.nvim_set_hl(0, "DartCurrentLabelModified", { fg = themeYellow })
+
          vim.api.nvim_set_hl(0, "DartPickLabel", { fg = "#FFFFFF" }) -- this doesnt work?
       end,
    },
