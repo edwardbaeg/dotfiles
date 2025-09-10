@@ -35,7 +35,7 @@ return {
                style = {
                   {
                      -- fg = frappe.surface0,
-                     fg = "#222333"
+                     fg = "#222333",
                   },
                },
                exclude_filetypes = {

@@ -22,14 +22,14 @@ return {
          vim.api.nvim_create_autocmd("User", {
             pattern = "PersistenceLoadPost",
             callback = function()
-               require("dart").read_session('dart')
+               require("dart").read_session("dart")
             end,
          })
 
          vim.api.nvim_create_autocmd("User", {
             pattern = "PersistenceSavePost",
             callback = function()
-               require("dart").write_session('dart')
+               require("dart").write_session("dart")
             end,
          })
       end,

@@ -7,7 +7,7 @@ return {
    config = function()
       local frappe = require("catppuccin.palettes").get_palette("frappe")
       local util = require("tokyonight.util")
-      local winsep_hl = vim.api.nvim_get_hl(0, {name = "WinSeparator"})
+      local winsep_hl = vim.api.nvim_get_hl(0, { name = "WinSeparator" })
       local winsep_color = string.format("#%06x", winsep_hl.fg or 0x51576e)
       local blended_color = util.blend(frappe.sapphire, 0.5, winsep_color)
 

@@ -8,7 +8,7 @@ return {
       },
       layout = {
          prompt_position = "top",
-      }
+      },
    },
    keys = {
       {
