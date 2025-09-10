@@ -10,7 +10,7 @@ local M = {}
 -- local CODE_EDITOR = "cursor" -- "cursor" or "vscode"
 local CODE_EDITOR = "vscode" -- "cursor" or "vscode"
 
-local EDITOR_APP_NAME = CODE_EDITOR == "cursor" and "Cursor" or "Code"
+local EDITOR_APP_NAME = CODE_EDITOR == "cursor" and "Cursor" or "visual studio code"
 local EDITOR_DISPLAY_NAME = CODE_EDITOR == "cursor" and "--Cursor--" or "--VSCode--"
 local EDITOR_MODAL_LABEL = CODE_EDITOR == "cursor" and "Cursor: modal" or "VSCode: modal"
 
@@ -69,7 +69,10 @@ local guiEditorSubModalEntries = {
       key = "O",
       label = "Open",
       callback = function()
-         hs.application.launchOrFocus(EDITOR_APP_NAME)
+         local success = hs.application.launchOrFocus(EDITOR_APP_NAME)
+         if not success then
+            hs.alert(EDITOR_APP_NAME .. " cannot be opened")
+         end
          guiEditorSubmodal:exit()
       end,
    },
