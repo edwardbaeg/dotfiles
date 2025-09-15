@@ -52,4 +52,11 @@ function M.get_visual_selection()
    return selected_text
 end
 
+-- Convert decimal color to hex string. Useful for vim.api.nvim_get_hl
+---@param color number|nil decimal color value
+---@return string|nil hex color string with # prefix
+function M.to_hex(color)
+   return color and string.format("#%06x", color) or nil
+end
+
 return M
