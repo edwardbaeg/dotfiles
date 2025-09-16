@@ -12,6 +12,7 @@ local M = {}
 local CODE_EDITOR = "vscode" -- "cursor" or "vscode"
 
 local EDITOR_APP_NAME = CODE_EDITOR == "cursor" and "Cursor" or "visual studio code"
+local BACKUP_EDITOR_APP_NAME = CODE_EDITOR == "cursor" and "" or "code"
 local EDITOR_DISPLAY_NAME = CODE_EDITOR == "cursor" and "--Cursor--" or "--VSCode--"
 local EDITOR_MODAL_LABEL = CODE_EDITOR == "cursor" and "Cursor: modal" or "VSCode: modal"
 
@@ -41,11 +42,23 @@ local editorModalEntries = {
       label = "Start debug server",
       callback = function()
          local app = hs.application.find(EDITOR_APP_NAME)
+         local targetApp = EDITOR_APP_NAME
+
+         if not app and BACKUP_EDITOR_APP_NAME ~= "" then
+            app = hs.application.find(BACKUP_EDITOR_APP_NAME)
+            targetApp = BACKUP_EDITOR_APP_NAME
+         end
+
          if not app then
-            hs.alert(EDITOR_APP_NAME .. " not running")
+            local alertMsg = EDITOR_APP_NAME .. " not running"
+            if BACKUP_EDITOR_APP_NAME ~= "" then
+               alertMsg = alertMsg .. " (backup: " .. BACKUP_EDITOR_APP_NAME .. " also not running)"
+            end
+            hs.alert(alertMsg)
          else
             hs.timer.doAfter(1, function()
-               hs.eventtap.keyStroke({}, "F5", 0, hs.application.find(EDITOR_APP_NAME))
+               hs.alert("Starting debug server...")
+               hs.eventtap.keyStroke({}, "F5", 0, hs.application.find(targetApp))
             end)
          end
          editorModal:exit()
@@ -56,11 +69,23 @@ local editorModalEntries = {
       label = "Restart debug server",
       callback = function()
          local app = hs.application.find(EDITOR_APP_NAME)
+         local targetApp = EDITOR_APP_NAME
+
+         if not app and BACKUP_EDITOR_APP_NAME ~= "" then
+            app = hs.application.find(BACKUP_EDITOR_APP_NAME)
+            targetApp = BACKUP_EDITOR_APP_NAME
+         end
+
          if not app then
-            hs.alert(EDITOR_APP_NAME .. " not running")
+            local alertMsg = EDITOR_APP_NAME .. " not running"
+            if BACKUP_EDITOR_APP_NAME ~= "" then
+               alertMsg = alertMsg .. " (backup: " .. BACKUP_EDITOR_APP_NAME .. " also not running)"
+            end
+            hs.alert(alertMsg)
          else
             hs.timer.doAfter(1, function()
-               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find(EDITOR_APP_NAME))
+               hs.alert("Restarting debug server...")
+               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find(targetApp))
             end)
          end
          editorModal:exit()
