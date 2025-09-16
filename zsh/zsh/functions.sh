@@ -9,7 +9,7 @@ source "$(dirname "${BASH_SOURCE[0]:-$0}")/utils.sh"
 # checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 # https://github.com/junegunn/fzf/wiki/examples#git
 alias gcof="git_checkout_fuzzy"
-alias bf="git_checkout_fuzzy"
+# alias bf="git_checkout_fuzzy"
 function git_checkout_fuzzy() {
 	local branches branch
 	branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
@@ -246,4 +246,18 @@ function brew() {
 	else
 		command brew "$@"
 	fi
+}
+
+# print all aliases defined in this functions file
+alias fa="function_aliases"
+function function_aliases() {
+	local functions_file="${BASH_SOURCE[0]:-$HOME/dev/dotfiles/zsh/zsh/functions.sh}"
+	echo "Aliases defined in functions.sh:"
+	echo "=============================="
+	grep -n "^alias " "$functions_file" | while IFS=':' read -r line_num alias_line; do
+		# Extract alias name and command
+		alias_name=$(echo "$alias_line" | sed 's/alias \([^=]*\)=.*/\1/')
+		alias_command=$(echo "$alias_line" | sed 's/alias [^=]*="\?\([^"]*\)"\?/\1/')
+		printf "%-15s -> %s (line %s)\n" "$alias_name" "$alias_command" "$line_num"
+	done
 }
