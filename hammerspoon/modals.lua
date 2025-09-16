@@ -20,6 +20,29 @@ local function getToggleLabel(value, label)
    return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
 end
 
+local function runDebugCommand(keystroke, actionMsg)
+   local app = hs.application.find(EDITOR_APP_NAME)
+   local targetApp = EDITOR_APP_NAME
+
+   if not app and BACKUP_EDITOR_APP_NAME ~= "" then
+      app = hs.application.find(BACKUP_EDITOR_APP_NAME)
+      targetApp = BACKUP_EDITOR_APP_NAME
+   end
+
+   if not app then
+      local alertMsg = EDITOR_APP_NAME .. " not running"
+      if BACKUP_EDITOR_APP_NAME ~= "" then
+         alertMsg = alertMsg .. " (backup: " .. BACKUP_EDITOR_APP_NAME .. " also not running)"
+      end
+      hs.alert(alertMsg)
+   else
+      hs.timer.doAfter(1, function()
+         hs.alert(actionMsg)
+         hs.eventtap.keyStroke(keystroke.modifiers, keystroke.key, 0, hs.application.find(targetApp))
+      end)
+   end
+end
+
 -- Modal instances - will be created in Start()
 local mainModal, editorModal, raycastModal
 
@@ -41,26 +64,7 @@ local editorModalEntries = {
       key = "S",
       label = "Start debug server",
       callback = function()
-         local app = hs.application.find(EDITOR_APP_NAME)
-         local targetApp = EDITOR_APP_NAME
-
-         if not app and BACKUP_EDITOR_APP_NAME ~= "" then
-            app = hs.application.find(BACKUP_EDITOR_APP_NAME)
-            targetApp = BACKUP_EDITOR_APP_NAME
-         end
-
-         if not app then
-            local alertMsg = EDITOR_APP_NAME .. " not running"
-            if BACKUP_EDITOR_APP_NAME ~= "" then
-               alertMsg = alertMsg .. " (backup: " .. BACKUP_EDITOR_APP_NAME .. " also not running)"
-            end
-            hs.alert(alertMsg)
-         else
-            hs.timer.doAfter(1, function()
-               hs.alert("Starting debug server...")
-               hs.eventtap.keyStroke({}, "F5", 0, hs.application.find(targetApp))
-            end)
-         end
+         runDebugCommand({modifiers = {}, key = "F5"}, "Starting debug server...")
          editorModal:exit()
       end,
    },
@@ -68,26 +72,7 @@ local editorModalEntries = {
       key = "R",
       label = "Restart debug server",
       callback = function()
-         local app = hs.application.find(EDITOR_APP_NAME)
-         local targetApp = EDITOR_APP_NAME
-
-         if not app and BACKUP_EDITOR_APP_NAME ~= "" then
-            app = hs.application.find(BACKUP_EDITOR_APP_NAME)
-            targetApp = BACKUP_EDITOR_APP_NAME
-         end
-
-         if not app then
-            local alertMsg = EDITOR_APP_NAME .. " not running"
-            if BACKUP_EDITOR_APP_NAME ~= "" then
-               alertMsg = alertMsg .. " (backup: " .. BACKUP_EDITOR_APP_NAME .. " also not running)"
-            end
-            hs.alert(alertMsg)
-         else
-            hs.timer.doAfter(1, function()
-               hs.alert("Restarting debug server...")
-               hs.eventtap.keyStroke({ "cmd", "shift" }, "F5", 0, hs.application.find(targetApp))
-            end)
-         end
+         runDebugCommand({modifiers = {"cmd", "shift"}, key = "F5"}, "Restarting debug server...")
          editorModal:exit()
       end,
    },
