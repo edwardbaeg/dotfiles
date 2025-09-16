@@ -43,6 +43,21 @@ local function runDebugCommand(keystroke, actionMsg)
    end
 end
 
+local function openRaycastURL(url, modal)
+   hs.urlevent.openURL(url)
+   modal:exit()
+end
+
+local function executeRaycastURL(url, modal)
+   hs.execute("open -g " .. url)
+   modal:exit()
+end
+
+local function launchApp(appName, modal)
+   hs.application.launchOrFocus(appName)
+   modal:exit()
+end
+
 -- Modal instances - will be created in Start()
 local mainModal, editorModal, raycastModal
 
@@ -85,42 +100,38 @@ local raycastModalEntries = {
       key = "A",
       label = "AI - Personal Extensions",
       callback = function()
-         hs.urlevent.openURL(
-            "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D"
+         openRaycastURL(
+            "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
+            raycastModal
          )
-         raycastModal:exit()
       end,
    },
    {
       key = "S",
       label = "Snippets",
       callback = function()
-         hs.urlevent.openURL("raycast://extensions/raycast/snippets/search-snippets")
-         raycastModal:exit()
+         openRaycastURL("raycast://extensions/raycast/snippets/search-snippets", raycastModal)
       end,
    },
    {
       key = "E",
       label = "Emoji",
       callback = function()
-         hs.urlevent.openURL("raycast://extensions/raycast/emoji-symbols/search-emoji-symbols")
-         raycastModal:exit()
+         openRaycastURL("raycast://extensions/raycast/emoji-symbols/search-emoji-symbols", raycastModal)
       end,
    },
    {
       key = "C",
       label = "Clipboard",
       callback = function()
-         hs.urlevent.openURL("raycast://extensions/raycast/clipboard-history/clipboard-history")
-         raycastModal:exit()
+         openRaycastURL("raycast://extensions/raycast/clipboard-history/clipboard-history", raycastModal)
       end,
    },
    {
       key = "R",
       label = "Reasonable size",
       callback = function()
-         hs.execute("open -g raycast://extensions/raycast/window-management/reasonable-size")
-         raycastModal:exit()
+         executeRaycastURL("raycast://extensions/raycast/window-management/reasonable-size", raycastModal)
       end,
    },
 }
@@ -132,24 +143,21 @@ local mainModalEntries = {
       key = "L",
       label = "Linear",
       callback = function()
-         hs.application.launchOrFocus("Linear")
-         mainModal:exit()
+         launchApp("Linear", mainModal)
       end,
    },
    {
       key = "T",
       label = "Telegram",
       callback = function()
-         hs.application.launchOrFocus("Telegram")
-         mainModal:exit()
+         launchApp("Telegram", mainModal)
       end,
    },
    {
       key = "Z",
       label = "Zen",
       callback = function()
-         hs.application.launchOrFocus("zen")
-         mainModal:exit()
+         launchApp("zen", mainModal)
       end,
    },
    {
@@ -205,8 +213,7 @@ local mainModalEntries = {
       key = "S",
       label = "Sleep",
       callback = function()
-         hs.urlevent.openURL("raycast://extensions/raycast/system/sleep")
-         mainModal:exit()
+         openRaycastURL("raycast://extensions/raycast/system/sleep", mainModal)
       end,
    },
    "",
