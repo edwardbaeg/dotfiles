@@ -83,4 +83,22 @@ return {
       "vidocqh/auto-indent.nvim",
       opts = {},
    },
+
+   {
+      -- shows explanations for regex
+      -- Usage: Regexexplainer*
+      -- NOTE: requires treesitter `regex`
+      -- NOTE: can be configured to used images in kitty
+      "bennypowers/nvim-regexplainer",
+      lazy = true,
+      config = {
+         mappings = {
+            toggle = '<leader>gR'
+         }
+      },
+      requires = {
+         "nvim-treesitter/nvim-treesitter",
+         "MunifTanjim/nui.nvim",
+      },
+   },
 }
