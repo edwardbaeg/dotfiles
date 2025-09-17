@@ -265,19 +265,17 @@ function function_aliases() {
 # fuzzy find and edit zsh dotfiles
 alias vz="vim_zsh_files"
 function vim_zsh_files() {
-	local IFS=$'\n'
-	files=($(find ~/dev/dotfiles/zsh -type f \( -name "*.sh" -o -name "*.zsh" -o -name ".zshrc" -o -name ".zprofile" -o -name ".zshenv" \) |
-		fzf --query="$1" --multi --select-1 --exit-0 --preview 'bat --color=always {}' --preview-window '~3'))
-	IFS=' '
-	[[ -n "$files" ]] && {
-		local command="${EDITOR:-nvim}"
-		for file in "${files[@]}"; do
-			# Escape spaces in filename for display command
-			local escaped_file="${file// /\\ }"
-			command+=" $escaped_file"
-		done
-		print "$command"
-		print -s "$command"
-		eval "$command"
-	}
+	vim_files_in_dir ~/dev/dotfiles/zsh --query "$1"
+}
+
+# fuzzy find and edit hammerspoon files
+alias vh="vim_hammerspoon_files"
+function vim_hammerspoon_files() {
+	vim_files_in_dir ~/dev/dotfiles/hammerspoon --query "$1" --ignore "Spoons"
+}
+
+# fuzzy find and edit nvim files
+alias evf="vim_nvim_files"
+function vim_nvim_files() {
+	vim_files_in_dir ~/dev/dotfiles/nvim --query "$1"
 }
