@@ -154,6 +154,13 @@ local mainModalEntries = {
       end,
    },
    {
+      key = "F",
+      label = "Figma",
+      callback = function()
+         launchApp("Figma", mainModal)
+      end,
+   },
+   {
       key = "Z",
       label = "Zen",
       callback = function()
