@@ -262,20 +262,17 @@ function function_aliases() {
 	done
 }
 
-# fuzzy find and edit zsh dotfiles
-alias vz="vim_zsh_files"
-function vim_zsh_files() {
-	vim_files_in_dir ~/dev/dotfiles/zsh --query "$1"
+alias vz="zsh_files"
+function zsh_files() {
+	fuzzy_files_in_dir ~/dev/dotfiles/zsh --query "$1"
 }
 
-# fuzzy find and edit hammerspoon files
-alias vh="vim_hammerspoon_files"
-function vim_hammerspoon_files() {
-	vim_files_in_dir ~/dev/dotfiles/hammerspoon --query "$1" --ignore "Spoons"
+alias vh="hammerspoon_files"
+function hammerspoon_files() {
+	fuzzy_files_in_dir ~/dev/dotfiles/hammerspoon --query "$1" --ignore-directory "Spoons"
 }
 
-# fuzzy find and edit nvim files
-alias evf="vim_nvim_files"
-function vim_nvim_files() {
-	vim_files_in_dir ~/dev/dotfiles/nvim --query "$1"
+alias ev="nvim_files"
+function nvim_files() {
+	fuzzy_files_in_dir ~/dev/dotfiles/nvim/lua --query "$1" --ignore-file ".DS_Store"
 }

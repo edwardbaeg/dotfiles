@@ -1,14 +1,15 @@
 # Shell utility functions
 
 # Generic fuzzy file finder and editor opener
-# Usage: vim_files_in_dir <search_dir> [--patterns "pattern"] [--query "query"] [--ignore "dir1,dir2"]
-function vim_files_in_dir() {
+# Usage: fuzzy_files_in_dir <search_dir> [--patterns "pattern"] [--query "query"] [--ignore-directory "dir1,dir2"] [--ignore-file "file1,file2"]
+function fuzzy_files_in_dir() {
 	local search_dir="$1"
 	shift
 
 	local file_patterns=""
 	local query=""
 	local ignore_dirs=""
+	local ignore_files=""
 
 	# Parse flags
 	while [[ $# -gt 0 ]]; do
@@ -21,13 +22,17 @@ function vim_files_in_dir() {
 			query="$2"
 			shift 2
 			;;
-		--ignore)
+		--ignore-directory)
 			ignore_dirs="$2"
+			shift 2
+			;;
+		--ignore-file)
+			ignore_files="$2"
 			shift 2
 			;;
 		*)
 			echo "Error: Unknown option $1"
-			echo "Usage: vim_files_in_dir <search_dir> [--patterns \"pattern\"] [--query \"query\"] [--ignore \"dir1,dir2\"]"
+			echo "Usage: fuzzy_files_in_dir <search_dir> [--patterns \"pattern\"] [--query \"query\"] [--ignore-directory \"dir1,dir2\"] [--ignore-file \"file1,file2\"]"
 			return 1
 			;;
 		esac
@@ -35,7 +40,7 @@ function vim_files_in_dir() {
 
 	if [[ -z "$search_dir" ]]; then
 		echo "Error: Directory path required"
-		echo "Usage: vim_files_in_dir <search_dir> [--patterns \"pattern\"] [--query \"query\"] [--ignore \"dir1,dir2\"]"
+		echo "Usage: fuzzy_files_in_dir <search_dir> [--patterns \"pattern\"] [--query \"query\"] [--ignore-directory \"dir1,dir2\"] [--ignore-file \"file1,file2\"]"
 		return 1
 	fi
 
@@ -60,6 +65,21 @@ function vim_files_in_dir() {
 			# Trim whitespace
 			ignore_dir=$(echo "$ignore_dir" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 			find_cmd+=" -not -path '*/$ignore_dir/*'"
+		done
+	fi
+
+	# Add ignore files if provided
+	if [[ -n "$ignore_files" ]]; then
+		# Split ignore_files by comma and add -not -name for each
+		local IFS_OLD=$IFS
+		IFS=','
+		local ignore_file_array=($ignore_files)
+		IFS=$IFS_OLD
+
+		for ignore_file in "${ignore_file_array[@]}"; do
+			# Trim whitespace
+			ignore_file=$(echo "$ignore_file" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+			find_cmd+=" -not -name '$ignore_file'"
 		done
 	fi
 
