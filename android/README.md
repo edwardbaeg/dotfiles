@@ -3,14 +3,19 @@
 ## Setup notes
 
 - Decrease animation scale
-- Set up private DNS to NextDNS
+- Set up private DNS to NextDNS. See below for accompanying Quick Settings tile
+
+## Apps to improve usability
+
+- Edge gestures
+- Buzzkill
+- Niagara
 
 ## Sideload apps (outside of Play Store)
 
 - [PrivateDNSAndroid](https://github.com/karasevm/PrivateDNSAndroid/tree/v1.2) - Add quick toggle tile for private DNS
-- Revanced Manager
-- Coffee - screen always on
--
+- Revanced Manager - to patch YouTube
+- Coffee - keep screen awake quick settings toggle
 
 ## Notes
 
