@@ -1,4 +1,6 @@
 local set = require("config.keymaps").set
+local catppuccin = require("catppuccin.palettes").get_palette()
+local themeGreen = catppuccin.green
 
 return {
    {
@@ -162,6 +164,8 @@ return {
             -- pick = ",p",
          },
          tabline = {
+            label_fg = "orange",
+            label_marked_fg = themeGreen,
             -- order pinned first
             order = function(config)
                local order = {}
@@ -172,6 +176,7 @@ return {
             end,
          },
       },
+
       -- this integrates with which-key, considering doing for all
       keys = {
          {
@@ -183,9 +188,10 @@ return {
          },
       },
       config = function(_, opts)
-         require("dart").setup(opts)
-
          local dart = require("dart")
+         dart.setup(opts)
+
+         local to_hex = require("utils").to_hex
 
          set("n", "<tab>", dart.next)
          set("n", "<s-tab>", dart.prev)
@@ -195,19 +201,32 @@ return {
          -- Get Catppuccin colors
          local catppuccin = require("catppuccin.palettes").get_palette()
 
+         -- this is the default highlight for visible but not current
+         local tabLineHighight = vim.api.nvim_get_hl(0, { name = "TabLine" })
+
          -- Current buffer highlights
          local themeBlue = catppuccin.blue
          vim.api.nvim_set_hl(0, "DartCurrent", { fg = themeBlue, bold = true })
-         vim.api.nvim_set_hl(0, "DartCurrentLabel", { fg = themeBlue, bold = true })
-
-         -- Modified buffer highlights
+         vim.api.nvim_set_hl(0, "DartCurrentLabel", { fg = "orange", bg = "none", bold = true })
+         vim.api.nvim_set_hl(0, "DartMarkedCurrent", { fg = themeBlue, bold = true })
+         -- vim.api.nvim_set_hl(0, "DartCurrentLabel", { fg = themeBlue, bold = true })
+         --
+         -- -- Modified buffer highlights
          local themeYellow = catppuccin.yellow
-         vim.api.nvim_set_hl(0, "DartVisibleModified", { fg = themeYellow })
-         vim.api.nvim_set_hl(0, "DartCurrentModified", { fg = themeYellow })
-         vim.api.nvim_set_hl(0, "DartVisibleLabelModified", { fg = themeYellow })
-         vim.api.nvim_set_hl(0, "DartCurrentLabelModified", { fg = themeYellow })
-
-         vim.api.nvim_set_hl(0, "DartPickLabel", { fg = "#FFFFFF" }) -- this doesnt work?
+         vim.api.nvim_set_hl(0, "DartVisibleModified", { fg = themeYellow, bg = to_hex(tabLineHighight.bg) })
+         vim.api.nvim_set_hl(0, "DartCurrentModified", { fg = themeYellow, bg = "none" })
+         vim.api.nvim_set_hl(0, "DartMarkedModified", { fg = themeYellow, bg = to_hex(tabLineHighight.bg) })
+         vim.api.nvim_set_hl(0, "DartMarkedCurrentModified", { fg = themeYellow, bold = true })
+         vim.api.nvim_set_hl(0, "DartVisibleLabelModified", { fg = orange, bg = to_hex(tabLineHighight.bg) })
+         vim.api.nvim_set_hl(0, "DartCurrentLabelModified", { fg = orange, bg = "none" })
+         --
+         -- -- Marked buffer highlights
+         -- local themeGreen = catppuccin.green
+         -- -- vim.api.nvim_set_hl(0, "DartMarkedLabel", { bold = true, fg = themeGreen, bg = to_hex(tabLineHighight.bg) })
+         vim.api.nvim_set_hl(0, "DartMarkedCurrentLabel", { fg = themeGreen, bg = "none", bold = true })
+         -- vim.api.nvim_set_hl(0, "DartMarkedLabelModified", { fg = themeGreen, bold = true })
+         -- -- vim.api.nvim_set_hl(0, "DartMarkedCurrentLabelModified", { fg = themeGreen, bold = true })
+         -- -- vim.api.nvim_set_hl(0, "DartMarked", { fg = themeGreen })
       end,
    },
 }
