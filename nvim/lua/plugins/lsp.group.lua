@@ -51,7 +51,8 @@ return {
             end, { desc = "Format current buffer with LSP" })
          end
 
-         -- Automatically install these servers
+         -- Automatically install servers
+         -- source of truth: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
          local language_servers = {
             -- START TYPESCRIPT
             -- ----------------
@@ -67,6 +68,7 @@ return {
 
             -- other web stuff
             cssls = {},
+            -- css_variables = {},
             eslint = {},
 
             -- lua
