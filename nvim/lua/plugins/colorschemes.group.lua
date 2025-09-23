@@ -10,12 +10,16 @@ return {
       config = function()
          ---@type CatppuccinOptions -- how did the lsp load this by default?
          require("catppuccin").setup({
+            flavour = "frappe", -- default to use on startup
+            background = {
+               light = "latte",
+               dark = "frappe",
+            },
+            transparent_background = true,
             float = {
                transparent = true, -- enables transparency on floating windows
                solid = false,
             },
-            flavour = "frappe",
-            transparent_background = true,
             styles = {
                keywords = { "italic" },
                operators = { "italic" },
@@ -47,25 +51,26 @@ return {
                background = false,
             },
          })
-         -- vim.cmd([[colorscheme onedark]])
+         -- vim.cmd.colorscheme("onedark")
       end,
    },
 
    {
       -- colorscheme
+      -- the light version of this is tokyonight-day
       "folke/tokyonight.nvim",
       -- lazy = true,
       config = function()
          ---@diagnostic disable-next-line: missing-fields
          require("tokyonight").setup({
-            transparent = true, -- don't set a background color
+            -- transparent = true, -- don't set a background color
          })
          -- local tokyonight = require("tokyonight.colors").setup()
          -- local util = require("tokyonight.util")
          -- color = util.darken(tokyonight.orange, 0.5),
          -- color = util.darken(tokyonight.black, 0.5),
 
-         -- vim.cmd([[colorscheme tokyonight-night]])
+         -- vim.cmd.colorscheme("tokyonight-night")
       end,
    },
 
@@ -75,9 +80,25 @@ return {
    },
 
    {
+      -- removes backgrounds with highlight groups
       "xiyaowong/transparent.nvim",
+      enabled = false, -- disable for light mode
       config = function()
          require("transparent").setup({})
       end,
+   },
+
+   {
+      -- automatic light/dark mode based on OS settings
+      "f-person/auto-dark-mode.nvim",
+      opts = {
+         set_light_mode = function()
+            vim.api.nvim_set_option_value("background", "light", {})
+            require("catppuccin").setup({
+               transparent_background = false,
+            })
+            vim.cmd.colorscheme("catppuccin-latte")
+         end,
+      },
    },
 }
