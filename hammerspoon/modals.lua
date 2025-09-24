@@ -161,6 +161,13 @@ local mainModalEntries = {
       end,
    },
    {
+      key = "O",
+      label = "Obsidian",
+      callback = function()
+         launchApp("Obsidian", mainModal)
+      end,
+   },
+   {
       key = "Z",
       label = "Zen",
       callback = function()
