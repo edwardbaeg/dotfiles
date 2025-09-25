@@ -228,34 +228,43 @@ end
 function Modal:_executeSelected()
    local selectedEntry = self.entries[self.selectedIndex]
    if type(selectedEntry) == "table" and selectedEntry.callback then
-      local catppuccin = require("common.external.catpuccin-frappe")
+      -- Check if this is a submodal transition by looking for "modal" in the label
+      local isSubmodal = selectedEntry.label and type(selectedEntry.label) == "string" and
+                        (selectedEntry.label:lower():find("modal") or selectedEntry.label:lower():find(":"))
 
-      -- Show green flash first
-      if self.alertId then
-         hs.alert.closeSpecific(self.alertId, 0)
+      if isSubmodal then
+         -- For submodals, execute directly without flash
+         selectedEntry.callback()
+      else
+         -- For regular actions, show green flash
+         local catppuccin = require("common.external.catpuccin-frappe")
+
+         -- Show green flash first
+         if self.alertId then
+            hs.alert.closeSpecific(self.alertId, 0)
+         end
+         self.alertId = self:_showModalAlert(catppuccin.getRgbColor("green"))
+
+         -- Create a wrapper to prevent callback from exiting modal prematurely
+         local originalExit = self.exit
+         local exitCalled = false
+
+         -- Temporarily override exit to prevent callback from closing modal
+         self.exit = function()
+            exitCalled = true
+         end
+
+         -- Execute the callback right away
+         selectedEntry.callback()
+
+         -- Restore original exit function
+         self.exit = originalExit
+
+         -- Auto-dismiss modal after flash duration
+         hs.timer.doAfter(0.5, function()
+            self:exit()
+         end)
       end
-      self.alertId = self:_showModalAlert(catppuccin.getRgbColor("green"))
-
-      -- Create a wrapper to prevent callback from exiting modal prematurely
-      local originalExit = self.exit
-      local exitCalled = false
-
-      -- Temporarily override exit to prevent callback from closing modal
-      self.exit = function()
-         exitCalled = true
-      end
-
-      -- Execute the callback right away
-      selectedEntry.callback()
-
-      -- Restore original exit function
-      self.exit = originalExit
-
-      -- Auto-dismiss modal after flash duration (or immediately if exit was called)
-      local delay = exitCalled and 0.5 or 0.5
-      hs.timer.doAfter(delay, function()
-         self:exit()
-      end)
    end
 end
 
