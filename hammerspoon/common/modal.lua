@@ -3,6 +3,7 @@
 ---@field alertId string? The current alert ID for cleanup
 ---@field entries ModalEntry[] The modal entries to display
 ---@field fillColor table The background color for the modal
+---@field selectedIndex number The currently selected entry index
 local Modal = {}
 Modal.__index = Modal
 
@@ -34,6 +35,7 @@ function Modal.new(config)
    self.alertId = nil
    self.entries = config.entries
    self.fillColor = config.fillColor
+   self.selectedIndex = self:_getFirstSelectableIndex()
 
    -- Set up modal lifecycle callbacks
    self.modal.entered = function()
@@ -50,31 +52,64 @@ function Modal.new(config)
    -- Bind exit keys
    self:_bindExitKeys()
 
+   -- Bind navigation keys
+   self:_bindNavigationKeys()
+
    return self
 end
 
 ---Show the modal alert with formatted entries
 ---@return string alertId The alert ID for closing later
 function Modal:_showModalAlert()
-   local mappedEntries = {}
-   for _, entry in ipairs(self.entries) do
+   local styledText = hs.styledtext.new("")
+   local currentLine = 1
+
+   for i, entry in ipairs(self.entries) do
+      local entryText
+      local isSelectable = false
+
       if type(entry) == "string" then
-         table.insert(mappedEntries, entry)
+         entryText = entry
       elseif type(entry) == "table" and entry.key and entry.label then
          local label = type(entry.label) == "function" and entry.label() or entry.label
-         table.insert(mappedEntries, "[" .. entry.key .. "] " .. label)
+         entryText = "[" .. entry.key .. "] " .. label
+         isSelectable = true
+      end
+
+      if entryText then
+         if i > 1 then
+            styledText = styledText .. hs.styledtext.new("\n")
+            currentLine = currentLine + 1
+         end
+
+         local lineStyle = {
+            font = {name = "0xProto", size = 20}
+         }
+         if isSelectable and i == self.selectedIndex then
+            local catppuccin = require("common.external.catpuccin-frappe")
+            lineStyle.color = catppuccin.getRgbColor("red") -- Catppuccin red for selected
+         else
+            lineStyle.color = {white = 1} -- Default white
+         end
+
+         styledText = styledText .. hs.styledtext.new(entryText, lineStyle)
+         currentLine = currentLine + 1
       end
    end
 
-   local modalContent = table.concat(mappedEntries, "\n")
-   modalContent = modalContent .. "\n\n" .. "Esc/q: Exit"
+   styledText = styledText .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
+      color = {white = 0.7},
+      font = {name = "0xProto", size = 20}
+   })
 
    ---@diagnostic disable-next-line: return-type-mismatch
-   return hs.alert.show(modalContent, {
+   return hs.alert.show(styledText, {
       fillColor = self.fillColor,
       textFont = "0xProto",
-      textSize = 20,
+      -- textSize = 44,
       radius = 16,
+      fadeInDuration = 0,
+      fadeOutDuration = 0,
    }, "indefinite")
 end
 
@@ -86,7 +121,7 @@ end
 ---Internal callback for when modal is exited
 function Modal:_onExited()
    if self.alertId then
-      hs.alert.closeSpecific(self.alertId, 0.1)
+      hs.alert.closeSpecific(self.alertId, 0)
       self.alertId = nil
    end
 end
@@ -109,6 +144,89 @@ function Modal:_bindExitKeys()
    self.modal:bind("", "q", exitFunction)
 end
 
+---Bind navigation keys (arrows and enter)
+function Modal:_bindNavigationKeys()
+   -- Up arrow - navigate up
+   self.modal:bind("", "up", function()
+      self:_updateSelection(-1)
+   end)
+   self.modal:bind("", "k", function()
+      self:_updateSelection(-1)
+   end)
+
+   -- Down arrow - navigate down
+   self.modal:bind("", "down", function()
+      self:_updateSelection(1)
+   end)
+   self.modal:bind("", "j", function()
+      self:_updateSelection(1)
+   end)
+
+   -- Enter - execute selected command
+   self.modal:bind("", "return", function()
+      self:_executeSelected()
+   end)
+end
+
+---Find the first selectable entry index
+---@return number The index of the first selectable entry
+function Modal:_getFirstSelectableIndex()
+   for i, entry in ipairs(self.entries) do
+      if type(entry) == "table" and entry.key and entry.callback then
+         return i
+      end
+   end
+   return 1 -- fallback to first entry
+end
+
+---Get the next selectable index after current selection
+---@param direction number 1 for down, -1 for up
+---@return number The new selected index
+function Modal:_getNextSelectableIndex(direction)
+   local currentIndex = self.selectedIndex
+   local totalEntries = #self.entries
+
+   for i = 1, totalEntries do
+      currentIndex = currentIndex + direction
+
+      if currentIndex > totalEntries then
+         currentIndex = 1
+      elseif currentIndex < 1 then
+         currentIndex = totalEntries
+      end
+
+      local entry = self.entries[currentIndex]
+      if type(entry) == "table" and entry.key and entry.callback then
+         return currentIndex
+      end
+   end
+
+   return self.selectedIndex -- fallback to current if no other selectable found
+end
+
+---Update the selection and refresh the alert
+---@param direction number 1 for down, -1 for up
+function Modal:_updateSelection(direction)
+   self.selectedIndex = self:_getNextSelectableIndex(direction)
+   self:_refreshAlert()
+end
+
+---Refresh the alert display
+function Modal:_refreshAlert()
+   if self.alertId then
+      hs.alert.closeSpecific(self.alertId, 0)
+      self.alertId = self:_showModalAlert()
+   end
+end
+
+---Execute the currently selected command
+function Modal:_executeSelected()
+   local selectedEntry = self.entries[self.selectedIndex]
+   if type(selectedEntry) == "table" and selectedEntry.callback then
+      selectedEntry.callback()
+   end
+end
+
 ---Enter the modal
 function Modal:enter()
    self.modal:enter()
@@ -123,10 +241,10 @@ end
 ---@param entries ModalEntry[] New entries to display
 function Modal:updateEntries(entries)
    self.entries = entries
+   self.selectedIndex = self:_getFirstSelectableIndex()
    -- If modal is currently shown, refresh the alert
    if self.alertId then
-      self:_onExited() -- Close current alert
-      self:_onEntered() -- Show new alert
+      self:_refreshAlert()
    end
 end
 
