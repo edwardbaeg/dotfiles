@@ -61,6 +61,7 @@ end
 ---Show the modal alert with formatted entries
 ---@return string alertId The alert ID for closing later
 function Modal:_showModalAlert()
+   local catppuccin = require("common.external.catpuccin-frappe")
    local styledText = hs.styledtext.new("")
    local currentLine = 1
 
@@ -86,10 +87,9 @@ function Modal:_showModalAlert()
             font = {name = "0xProto", size = 20}
          }
          if isSelectable and i == self.selectedIndex then
-            local catppuccin = require("common.external.catpuccin-frappe")
             lineStyle.color = catppuccin.getRgbColor("red") -- Catppuccin red for selected
          else
-            lineStyle.color = {white = 1} -- Default white
+            lineStyle.color = catppuccin.getRgbColor("text") -- Catppuccin text color
          end
 
          styledText = styledText .. hs.styledtext.new(entryText, lineStyle)
@@ -98,7 +98,7 @@ function Modal:_showModalAlert()
    end
 
    styledText = styledText .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
-      color = {white = 0.7},
+      color = catppuccin.getRgbColor("subtext0"),
       font = {name = "0xProto", size = 20}
    })
 

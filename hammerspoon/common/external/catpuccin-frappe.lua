@@ -167,8 +167,9 @@ local catppuccin = {
 
 ---Get a Catppuccin color in Hammerspoon's normalized RGB format (0-1)
 ---@param colorName CatppuccinColor The name of the color to get
----@return table rgb A table with red, green, blue keys normalized to 0-1
-function catppuccin.getRgbColor(colorName)
+---@param alpha? number Optional alpha value (0-1), defaults to 1.0
+---@return table rgb A table with red, green, blue, alpha keys normalized to 0-1
+function catppuccin.getRgbColor(colorName, alpha)
    local color = catppuccin[colorName]
    if not color then
       error("Invalid Catppuccin color name: " .. tostring(colorName))
@@ -177,7 +178,8 @@ function catppuccin.getRgbColor(colorName)
    return {
       red = color.rgb[1] / 255,
       green = color.rgb[2] / 255,
-      blue = color.rgb[3] / 255
+      blue = color.rgb[3] / 255,
+      alpha = alpha or 1.0
    }
 end
 
