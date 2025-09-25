@@ -60,8 +60,9 @@ end
 
 ---Show the modal alert with formatted entries
 ---@param highlightColor? table Optional color to use for selected item highlighting
+---@param fadeOutDuration? number Optional fade out duration (defaults to 0)
 ---@return string alertId The alert ID for closing later
-function Modal:_showModalAlert(highlightColor)
+function Modal:_showModalAlert(highlightColor, fadeOutDuration)
    local catppuccin = require("common.external.catpuccin-frappe")
    local styledText = hs.styledtext.new("")
    local currentLine = 1
@@ -110,7 +111,7 @@ function Modal:_showModalAlert(highlightColor)
       -- textSize = 44,
       radius = 16,
       fadeInDuration = 0,
-      fadeOutDuration = 0,
+      fadeOutDuration = fadeOutDuration or 0,
    }, "indefinite")
 end
 
@@ -122,7 +123,7 @@ end
 ---Internal callback for when modal is exited
 function Modal:_onExited()
    if self.alertId then
-      hs.alert.closeSpecific(self.alertId, 0)
+      hs.alert.closeSpecific(self.alertId, 0.2) -- Fade out when exiting
       self.alertId = nil
    end
 end
@@ -233,17 +234,21 @@ function Modal:_executeSelected()
                         (selectedEntry.label:lower():find("modal") or selectedEntry.label:lower():find(":"))
 
       if isSubmodal then
-         -- For submodals, execute directly without flash
+         -- For submodals, show fade out effect and execute
+         if self.alertId then
+            hs.alert.closeSpecific(self.alertId, 0.2) -- Fade out over 0.2 seconds
+         end
+         -- Execute the callback right away (modal transition)
          selectedEntry.callback()
       else
-         -- For regular actions, show green flash
+         -- For regular actions, show green flash with fade out
          local catppuccin = require("common.external.catpuccin-frappe")
 
          -- Show green flash first
          if self.alertId then
             hs.alert.closeSpecific(self.alertId, 0)
          end
-         self.alertId = self:_showModalAlert(catppuccin.getRgbColor("green"))
+         self.alertId = self:_showModalAlert(catppuccin.getRgbColor("green"), 0.2) -- Use fade out
 
          -- Create a wrapper to prevent callback from exiting modal prematurely
          local originalExit = self.exit
@@ -260,9 +265,13 @@ function Modal:_executeSelected()
          -- Restore original exit function
          self.exit = originalExit
 
-         -- Auto-dismiss modal after flash duration
-         hs.timer.doAfter(0.5, function()
-            self:exit()
+         -- Auto-dismiss modal after flash duration with fade
+         hs.timer.doAfter(0.2, function()
+            if self.alertId then
+               hs.alert.closeSpecific(self.alertId, 0.2) -- Fade out
+               self.alertId = nil
+            end
+            self.modal:exit()
          end)
       end
    end
