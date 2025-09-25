@@ -59,8 +59,9 @@ function Modal.new(config)
 end
 
 ---Show the modal alert with formatted entries
+---@param highlightColor? table Optional color to use for selected item highlighting
 ---@return string alertId The alert ID for closing later
-function Modal:_showModalAlert()
+function Modal:_showModalAlert(highlightColor)
    local catppuccin = require("common.external.catpuccin-frappe")
    local styledText = hs.styledtext.new("")
    local currentLine = 1
@@ -87,7 +88,7 @@ function Modal:_showModalAlert()
             font = {name = "0xProto", size = 20}
          }
          if isSelectable and i == self.selectedIndex then
-            lineStyle.color = catppuccin.getRgbColor("red") -- Catppuccin red for selected
+            lineStyle.color = highlightColor or catppuccin.getRgbColor("red") -- Use highlight color or default red
          else
             lineStyle.color = catppuccin.getRgbColor("text") -- Catppuccin text color
          end
@@ -128,9 +129,13 @@ end
 
 ---Bind keys for modal entries
 function Modal:_bindKeys()
-   for _, entry in ipairs(self.entries) do
+   for i, entry in ipairs(self.entries) do
       if type(entry) == "table" and entry.key and entry.callback then
-         self.modal:bind("", entry.key, entry.callback)
+         self.modal:bind("", entry.key, function()
+            -- Set selection to this entry and execute with flash
+            self.selectedIndex = i
+            self:_executeSelected()
+         end)
       end
    end
 end
@@ -219,11 +224,38 @@ function Modal:_refreshAlert()
    end
 end
 
----Execute the currently selected command
+---Execute the currently selected command with flash highlight
 function Modal:_executeSelected()
    local selectedEntry = self.entries[self.selectedIndex]
    if type(selectedEntry) == "table" and selectedEntry.callback then
+      local catppuccin = require("common.external.catpuccin-frappe")
+
+      -- Show green flash first
+      if self.alertId then
+         hs.alert.closeSpecific(self.alertId, 0)
+      end
+      self.alertId = self:_showModalAlert(catppuccin.getRgbColor("green"))
+
+      -- Create a wrapper to prevent callback from exiting modal prematurely
+      local originalExit = self.exit
+      local exitCalled = false
+
+      -- Temporarily override exit to prevent callback from closing modal
+      self.exit = function()
+         exitCalled = true
+      end
+
+      -- Execute the callback right away
       selectedEntry.callback()
+
+      -- Restore original exit function
+      self.exit = originalExit
+
+      -- Auto-dismiss modal after flash duration (or immediately if exit was called)
+      local delay = exitCalled and 0.5 or 0.5
+      hs.timer.doAfter(delay, function()
+         self:exit()
+      end)
    end
 end
 
