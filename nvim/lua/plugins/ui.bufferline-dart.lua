@@ -156,12 +156,15 @@ return {
          buflist = { "q", "w", "e", "r" },
          -- buflist = { "q", "w", "e", "r", "z", "x", "c" },
          -- buflist = { "a", "s", "d", "f", "z", "x", "c" },
+
+         -- the defualt mappings use ; as a prefix. so, override them all
          mappings = {
             mark = ",,",
             jump = ",",
             next = "<leader>bn",
             prev = "<leader>bp",
-            -- pick = ",p",
+            pick = ",p",
+            unmark_all = ",u"
          },
          tabline = {
             label_fg = "orange",
