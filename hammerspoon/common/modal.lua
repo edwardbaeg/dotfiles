@@ -101,13 +101,27 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
       font = {name = "0xProto", size = 16}
    })
 
+   -- Calculate dynamic height based on content
+   local lineHeight = 24 -- Approximate line height for font size 20
+   local padding = 40    -- Top and bottom padding
+   local footerHeight = 48 -- Height for footer text (2 lines)
+
+   -- Count content lines
+   local contentLines = 0
+   for i, entry in ipairs(self.entries) do
+      if type(entry) == "string" or (type(entry) == "table" and entry.key and entry.label) then
+         contentLines = contentLines + 1
+      end
+   end
+
+   local modalHeight = (contentLines * lineHeight) + footerHeight + padding
+   local modalWidth = 600
+
    -- Calculate screen dimensions and position at top third
    local screen = hs.screen.mainScreen()
    local screenFrame = screen:frame()
-   local modalWidth = 600
-   local modalHeight = 500
    local x = (screenFrame.w - modalWidth) / 2  -- Center horizontally
-   local y = screenFrame.h / 3 - modalHeight / 2  -- Top third vertically
+   local y = screenFrame.h / 3 -- Top third vertically
 
    -- Create canvas for custom positioning
    local canvas = hs.canvas.new({
@@ -272,20 +286,8 @@ function Modal:_executeSelected()
          end
          self.canvas = self:_showModalAlert(catppuccin.getRgbColor("green"), 0.2) -- Use fade out
 
-         -- Create a wrapper to prevent callback from exiting modal prematurely
-         local originalExit = self.exit
-         local exitCalled = false
-
-         -- Temporarily override exit to prevent callback from closing modal
-         self.exit = function()
-            exitCalled = true
-         end
-
          -- Execute the callback right away
          selectedEntry.callback()
-
-         -- Restore original exit function
-         self.exit = originalExit
 
          -- Auto-dismiss modal after flash duration with fade
          hs.timer.doAfter(0.2, function()
