@@ -121,7 +121,7 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
    local screen = hs.screen.mainScreen()
    local screenFrame = screen:frame()
    local x = (screenFrame.w - modalWidth) / 2  -- Center horizontally
-   local y = screenFrame.h / 3 -- Top third vertically
+   local y = screenFrame.h / 3 - modalHeight / 2  -- Top third vertically
 
    -- Create canvas for custom positioning
    local canvas = hs.canvas.new({
@@ -261,6 +261,58 @@ function Modal:_refreshAlert()
    end
 end
 
+---Update canvas highlight color without recreating
+---@param highlightColor table Color to use for selected item highlighting
+function Modal:_updateCanvasHighlight(highlightColor)
+   if not self.canvas then return end
+
+   local catppuccin = require("common.external.catpuccin-frappe")
+   local styledText = hs.styledtext.new("")
+
+   for i, entry in ipairs(self.entries) do
+      local entryText
+      local isSelectable = false
+
+      if type(entry) == "string" then
+         entryText = entry
+      elseif type(entry) == "table" and entry.key and entry.label then
+         local label = type(entry.label) == "function" and entry.label() or entry.label
+         entryText = "[" .. entry.key .. "] " .. label
+         isSelectable = true
+      end
+
+      if entryText then
+         if i > 1 then
+            styledText = styledText .. hs.styledtext.new("\n")
+         end
+
+         local lineStyle = {
+            font = {name = "0xProto", size = 20}
+         }
+         if isSelectable and i == self.selectedIndex then
+            lineStyle.color = highlightColor
+         else
+            lineStyle.color = catppuccin.getRgbColor("text")
+         end
+
+         styledText = styledText .. hs.styledtext.new(entryText, lineStyle)
+      end
+   end
+
+   styledText = styledText .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
+      color = catppuccin.getRgbColor("subtext0"),
+      font = {name = "0xProto", size = 16}
+   })
+
+   -- Update the text element (index 2, after background rectangle)
+   self.canvas[2] = {
+      type = "text",
+      text = styledText,
+      textAlignment = "left",
+      frame = {x = 20, y = 20, w = 560, h = self.canvas:frame().h - 40}
+   }
+end
+
 ---Execute the currently selected command with flash highlight
 function Modal:_executeSelected()
    local selectedEntry = self.entries[self.selectedIndex]
@@ -271,8 +323,8 @@ function Modal:_executeSelected()
 
       if isSubmodal then
          -- For submodals, show fade out effect and execute
-         if self.alertId then
-            hs.alert.closeSpecific(self.alertId, 0.2) -- Fade out over 0.2 seconds
+         if self.canvas then
+            self.canvas:hide(0.2) -- Fade out over 0.2 seconds
          end
          -- Execute the callback right away (modal transition)
          selectedEntry.callback()
@@ -280,14 +332,23 @@ function Modal:_executeSelected()
          -- For regular actions, show green flash with fade out
          local catppuccin = require("common.external.catpuccin-frappe")
 
-         -- Show green flash first
-         if self.canvas then
-            self.canvas:hide(0)
+         -- Update canvas to show green highlight
+         self:_updateCanvasHighlight(catppuccin.getRgbColor("green"))
+
+         -- Create a wrapper to prevent callback from exiting modal prematurely
+         local originalExit = self.exit
+         local exitCalled = false
+
+         -- Temporarily override exit to prevent callback from closing modal
+         self.exit = function()
+            exitCalled = true
          end
-         self.canvas = self:_showModalAlert(catppuccin.getRgbColor("green"), 0.2) -- Use fade out
 
          -- Execute the callback right away
          selectedEntry.callback()
+
+         -- Restore original exit function
+         self.exit = originalExit
 
          -- Auto-dismiss modal after flash duration with fade
          hs.timer.doAfter(0.2, function()
