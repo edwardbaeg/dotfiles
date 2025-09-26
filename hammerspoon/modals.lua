@@ -1,6 +1,7 @@
 local appLauncher = require("application_launcher")
 local caffeine = require("caffeine")
 local Modal = require("common.modal")
+local helpers = require("common.helpers")
 
 local isPersonalOverride = appLauncher.isPersonalOverride
 local togglePersonalOverride = appLauncher.togglePersonalOverride
@@ -62,6 +63,7 @@ local function executeRaycastURL(url, modal)
    hs.execute("open -g " .. url)
    modal:exit()
 end
+
 
 local function launchApp(appName, modal)
    hs.application.launchOrFocus(appName)
@@ -188,26 +190,9 @@ local mainModalEntries = {
       key = "3",
       label = "Arc Work Tab 3",
       callback = function()
-         local currentApp = hs.application.frontmostApplication()
-         local wasArc = currentApp:name() == "Arc"
-
-         if not wasArc then
-            hs.application.launchOrFocus("Arc")
-         end
-         hs.timer.usleep(100000) -- Wait 0.1s for Arc to focus
-
-         -- switch to work
-         -- TODO: consider using existing helper
-         hs.eventtap.keyStroke({ "ctrl" }, "4")
-
-         -- switch to tab 3
-         hs.eventtap.keyStroke({ "cmd" }, "3")
-
-         if not wasArc then
-            hs.timer.usleep(100000) -- Wait 0.1s before switching back
-            currentApp:activate()
-         end
-
+         helpers.restoreAppFocus(function()
+            helpers.switchArcToWorkTab(3)
+         end)
          mainModal:exit()
       end,
    },
