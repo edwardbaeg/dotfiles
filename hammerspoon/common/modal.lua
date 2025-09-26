@@ -1,6 +1,6 @@
 ---@class Modal
 ---@field modal hs.hotkey.modal The Hammerspoon modal instance
----@field alertId string? The current alert ID for cleanup
+---@field canvas hs.canvas? The current canvas for cleanup
 ---@field entries ModalEntry[] The modal entries to display
 ---@field fillColor table The background color for the modal
 ---@field selectedIndex number The currently selected entry index
@@ -32,7 +32,7 @@ function Modal.new(config)
       self.modal = hs.hotkey.modal.new()
    end
 
-   self.alertId = nil
+   self.canvas = nil
    self.entries = config.entries
    self.fillColor = config.fillColor
    self.selectedIndex = self:_getFirstSelectableIndex()
@@ -58,14 +58,13 @@ function Modal.new(config)
    return self
 end
 
----Show the modal alert with formatted entries
+---Show the modal alert with formatted entries using custom canvas positioning
 ---@param highlightColor? table Optional color to use for selected item highlighting
 ---@param fadeOutDuration? number Optional fade out duration (defaults to 0)
----@return string alertId The alert ID for closing later
+---@return hs.canvas canvas The canvas object for closing later
 function Modal:_showModalAlert(highlightColor, fadeOutDuration)
    local catppuccin = require("common.external.catpuccin-frappe")
    local styledText = hs.styledtext.new("")
-   local currentLine = 1
 
    for i, entry in ipairs(self.entries) do
       local entryText
@@ -82,49 +81,72 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
       if entryText then
          if i > 1 then
             styledText = styledText .. hs.styledtext.new("\n")
-            currentLine = currentLine + 1
          end
 
          local lineStyle = {
             font = {name = "0xProto", size = 20}
          }
          if isSelectable and i == self.selectedIndex then
-            lineStyle.color = highlightColor or catppuccin.getRgbColor("red") -- Use highlight color or default red
+            lineStyle.color = highlightColor or catppuccin.getRgbColor("red")
          else
-            lineStyle.color = catppuccin.getRgbColor("text") -- Catppuccin text color
+            lineStyle.color = catppuccin.getRgbColor("text")
          end
 
          styledText = styledText .. hs.styledtext.new(entryText, lineStyle)
-         currentLine = currentLine + 1
       end
    end
 
    styledText = styledText .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
       color = catppuccin.getRgbColor("subtext0"),
-      font = {name = "0xProto", size = 20}
+      font = {name = "0xProto", size = 16}
    })
 
-   ---@diagnostic disable-next-line: return-type-mismatch
-   return hs.alert.show(styledText, {
+   -- Calculate screen dimensions and position at top third
+   local screen = hs.screen.mainScreen()
+   local screenFrame = screen:frame()
+   local modalWidth = 600
+   local modalHeight = 500
+   local x = (screenFrame.w - modalWidth) / 2  -- Center horizontally
+   local y = screenFrame.h / 3 - modalHeight / 2  -- Top third vertically
+
+   -- Create canvas for custom positioning
+   local canvas = hs.canvas.new({
+      x = x,
+      y = y,
+      w = modalWidth,
+      h = modalHeight
+   })
+
+   -- Add background rectangle
+   canvas:appendElements({
+      type = "rectangle",
+      action = "fill",
       fillColor = self.fillColor,
-      textFont = "0xProto",
-      -- textSize = 44,
-      radius = 16,
-      fadeInDuration = 0,
-      fadeOutDuration = fadeOutDuration or 0,
-   }, "indefinite")
+      roundedRectRadii = {xRadius = 16, yRadius = 16}
+   })
+
+   -- Add text
+   canvas:appendElements({
+      type = "text",
+      text = styledText,
+      textAlignment = "left",
+      frame = {x = 20, y = 20, w = modalWidth - 40, h = modalHeight - 40}
+   })
+
+   canvas:show(fadeOutDuration or 0)
+   return canvas
 end
 
 ---Internal callback for when modal is entered
 function Modal:_onEntered()
-   self.alertId = self:_showModalAlert()
+   self.canvas = self:_showModalAlert()
 end
 
 ---Internal callback for when modal is exited
 function Modal:_onExited()
-   if self.alertId then
-      hs.alert.closeSpecific(self.alertId, 0.2) -- Fade out when exiting
-      self.alertId = nil
+   if self.canvas then
+      self.canvas:hide(0.2) -- Fade out when exiting
+      self.canvas = nil
    end
 end
 
@@ -219,9 +241,9 @@ end
 
 ---Refresh the alert display
 function Modal:_refreshAlert()
-   if self.alertId then
-      hs.alert.closeSpecific(self.alertId, 0)
-      self.alertId = self:_showModalAlert()
+   if self.canvas then
+      self.canvas:hide(0)
+      self.canvas = self:_showModalAlert()
    end
 end
 
@@ -245,10 +267,10 @@ function Modal:_executeSelected()
          local catppuccin = require("common.external.catpuccin-frappe")
 
          -- Show green flash first
-         if self.alertId then
-            hs.alert.closeSpecific(self.alertId, 0)
+         if self.canvas then
+            self.canvas:hide(0)
          end
-         self.alertId = self:_showModalAlert(catppuccin.getRgbColor("green"), 0.2) -- Use fade out
+         self.canvas = self:_showModalAlert(catppuccin.getRgbColor("green"), 0.2) -- Use fade out
 
          -- Create a wrapper to prevent callback from exiting modal prematurely
          local originalExit = self.exit
@@ -267,9 +289,9 @@ function Modal:_executeSelected()
 
          -- Auto-dismiss modal after flash duration with fade
          hs.timer.doAfter(0.2, function()
-            if self.alertId then
-               hs.alert.closeSpecific(self.alertId, 0.2) -- Fade out
-               self.alertId = nil
+            if self.canvas then
+               self.canvas:hide(0.2) -- Fade out
+               self.canvas = nil
             end
             self.modal:exit()
          end)
@@ -293,7 +315,7 @@ function Modal:updateEntries(entries)
    self.entries = entries
    self.selectedIndex = self:_getFirstSelectableIndex()
    -- If modal is currently shown, refresh the alert
-   if self.alertId then
+   if self.canvas then
       self:_refreshAlert()
    end
 end
