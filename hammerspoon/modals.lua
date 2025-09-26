@@ -7,32 +7,42 @@ local togglePersonalOverride = appLauncher.togglePersonalOverride
 
 local M = {}
 
--- Configuration: set to "vscode" to use VSCode instead of Cursor
--- local CODE_EDITOR = "cursor" -- "cursor" or "vscode"
-local CODE_EDITOR = "vscode" -- "cursor" or "vscode"
+local EDITOR_CONFIGS = {
+   cursor = {
+      appName = "Cursor",
+      backupAppName = "",
+      displayName = "--Cursor--",
+      modalLabel = "Cursor: modal"
+   },
+   vscode = {
+      appName = "visual studio code",
+      backupAppName = "code",
+      displayName = "--VSCode--",
+      modalLabel = "VSCode: modal"
+   }
+}
 
-local EDITOR_APP_NAME = CODE_EDITOR == "cursor" and "Cursor" or "visual studio code"
-local BACKUP_EDITOR_APP_NAME = CODE_EDITOR == "cursor" and "" or "code"
-local EDITOR_DISPLAY_NAME = CODE_EDITOR == "cursor" and "--Cursor--" or "--VSCode--"
-local EDITOR_MODAL_LABEL = CODE_EDITOR == "cursor" and "Cursor: modal" or "VSCode: modal"
+---@type "cursor" | "vscode"
+local CODE_EDITOR_NAME = "vscode"
+local editorConfig = EDITOR_CONFIGS[CODE_EDITOR_NAME]
 
 local function getToggleLabel(value, label)
    return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
 end
 
-local function runDebugCommand(keystroke, actionMsg)
-   local app = hs.application.find(EDITOR_APP_NAME)
-   local targetApp = EDITOR_APP_NAME
+local function sendCodeEditorKey(keystroke, actionMsg)
+   local app = hs.application.find(editorConfig.appName)
+   local targetApp = editorConfig.appName
 
-   if not app and BACKUP_EDITOR_APP_NAME ~= "" then
-      app = hs.application.find(BACKUP_EDITOR_APP_NAME)
-      targetApp = BACKUP_EDITOR_APP_NAME
+   if not app and editorConfig.backupAppName ~= "" then
+      app = hs.application.find(editorConfig.backupAppName)
+      targetApp = editorConfig.backupAppName
    end
 
    if not app then
-      local alertMsg = EDITOR_APP_NAME .. " not running"
-      if BACKUP_EDITOR_APP_NAME ~= "" then
-         alertMsg = alertMsg .. " (backup: " .. BACKUP_EDITOR_APP_NAME .. " also not running)"
+      local alertMsg = editorConfig.appName .. " not running"
+      if editorConfig.backupAppName ~= "" then
+         alertMsg = alertMsg .. " (backup: " .. editorConfig.backupAppName .. " also not running)"
       end
       hs.alert(alertMsg)
    else
@@ -63,14 +73,14 @@ local mainModal, editorModal, raycastModal
 
 ---@type ModalEntry[]
 local editorModalEntries = {
-   EDITOR_DISPLAY_NAME,
+   editorConfig.displayName,
    {
       key = "O",
       label = "Open",
       callback = function()
-         local success = hs.application.launchOrFocus(EDITOR_APP_NAME)
+         local success = hs.application.launchOrFocus(editorConfig.appName)
          if not success then
-            hs.alert(EDITOR_APP_NAME .. " cannot be opened")
+            hs.alert(editorConfig.appName .. " cannot be opened")
          end
          editorModal:exit()
       end,
@@ -79,7 +89,7 @@ local editorModalEntries = {
       key = "S",
       label = "Start debug server",
       callback = function()
-         runDebugCommand({modifiers = {}, key = "F5"}, "Starting debug server...")
+         sendCodeEditorKey({ modifiers = {}, key = "F5" }, "Starting debug server...")
          editorModal:exit()
       end,
    },
@@ -87,7 +97,7 @@ local editorModalEntries = {
       key = "R",
       label = "Restart debug server",
       callback = function()
-         runDebugCommand({modifiers = {"cmd", "shift"}, key = "F5"}, "Restarting debug server...")
+         sendCodeEditorKey({ modifiers = { "cmd", "shift" }, key = "F5" }, "Restarting debug server...")
          editorModal:exit()
       end,
    },
@@ -242,7 +252,7 @@ local mainModalEntries = {
    },
    {
       key = "U",
-      label = EDITOR_MODAL_LABEL,
+      label = editorConfig.modalLabel,
       callback = function()
          mainModal:exit()
          editorModal:enter()
