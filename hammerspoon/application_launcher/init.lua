@@ -118,6 +118,7 @@ function Main()
    -- Initialize menu bar title based on saved state
    if personalOverrideMenuBar then
       personalOverrideMenuBar:setTitle(isPersonalOverride() and "P" or "-")
+      personalOverrideMenuBar:setClickCallback(M.togglePersonalOverride)
    end
 
    for _, pair in pairs(mappings) do
