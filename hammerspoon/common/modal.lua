@@ -121,7 +121,7 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
    local screen = hs.screen.mainScreen()
    local screenFrame = screen:frame()
    local x = (screenFrame.w - modalWidth) / 2  -- Center horizontally
-   local y = screenFrame.h / 3 - modalHeight / 2  -- Top third vertically
+   local y = screenFrame.h / 2 - modalHeight / 2  -- Center vertically
 
    -- Create canvas for custom positioning
    local canvas = hs.canvas.new({
