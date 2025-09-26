@@ -8,6 +8,14 @@ local togglePersonalOverride = appLauncher.togglePersonalOverride
 
 local M = {}
 
+local RAYCAST_URLS = {
+   ai_personal = "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
+   snippets = "raycast://extensions/raycast/snippets/search-snippets",
+   emoji = "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols",
+   clipboard = "raycast://extensions/raycast/clipboard-history/clipboard-history",
+   reasonable_size = "raycast://extensions/raycast/window-management/reasonable-size"
+}
+
 local EDITOR_CONFIGS = {
    cursor = {
       appName = "Cursor",
@@ -31,14 +39,20 @@ local function getToggleLabel(value, label)
    return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
 end
 
-local function sendCodeEditorKey(keystroke, actionMsg)
+local function findEditorApp()
    local app = hs.application.find(editorConfig.appName)
-   local targetApp = editorConfig.appName
+   local targetAppName = editorConfig.appName
 
    if not app and editorConfig.backupAppName ~= "" then
       app = hs.application.find(editorConfig.backupAppName)
-      targetApp = editorConfig.backupAppName
+      targetAppName = editorConfig.backupAppName
    end
+
+   return app, targetAppName
+end
+
+local function sendCodeEditorKey(keystroke, actionMsg)
+   local app, targetAppName = findEditorApp()
 
    if not app then
       local alertMsg = editorConfig.appName .. " not running"
@@ -49,7 +63,7 @@ local function sendCodeEditorKey(keystroke, actionMsg)
    else
       hs.timer.doAfter(1, function()
          hs.alert(actionMsg)
-         hs.eventtap.keyStroke(keystroke.modifiers, keystroke.key, 0, hs.application.find(targetApp))
+         hs.eventtap.keyStroke(keystroke.modifiers, keystroke.key, 0, hs.application.find(targetAppName))
       end)
    end
 end
@@ -112,44 +126,42 @@ local raycastModalEntries = {
       key = "A",
       label = "AI - Personal Extensions",
       callback = function()
-         openRaycastURL(
-            "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
-            raycastModal
-         )
+         openRaycastURL(RAYCAST_URLS.ai_personal, raycastModal)
       end,
    },
    {
       key = "S",
       label = "Snippets",
       callback = function()
-         openRaycastURL("raycast://extensions/raycast/snippets/search-snippets", raycastModal)
+         openRaycastURL(RAYCAST_URLS.snippets, raycastModal)
       end,
    },
    {
       key = "E",
       label = "Emoji",
       callback = function()
-         openRaycastURL("raycast://extensions/raycast/emoji-symbols/search-emoji-symbols", raycastModal)
+         openRaycastURL(RAYCAST_URLS.emoji, raycastModal)
       end,
    },
    {
       key = "C",
       label = "Clipboard",
       callback = function()
-         openRaycastURL("raycast://extensions/raycast/clipboard-history/clipboard-history", raycastModal)
+         openRaycastURL(RAYCAST_URLS.clipboard, raycastModal)
       end,
    },
    {
       key = "R",
       label = "Reasonable size",
       callback = function()
-         executeRaycastURL("raycast://extensions/raycast/window-management/reasonable-size", raycastModal)
+         executeRaycastURL(RAYCAST_URLS.reasonable_size, raycastModal)
       end,
    },
 }
 
 ---@type ModalEntry[]
 local mainModalEntries = {
+
    "--Apps--",
    {
       key = "L",
@@ -197,6 +209,7 @@ local mainModalEntries = {
       end,
    },
    "",
+
    "--System--",
    {
       key = "C",
@@ -226,6 +239,7 @@ local mainModalEntries = {
       end,
    },
    "",
+
    "--Submodals--",
    {
       key = "R",
