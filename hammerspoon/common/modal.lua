@@ -304,4 +304,5 @@ function Modal:getModal()
    return self.modal
 end
 
+
 return Modal

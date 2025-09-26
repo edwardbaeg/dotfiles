@@ -13,7 +13,7 @@ local RAYCAST_URLS = {
    snippets = "raycast://extensions/raycast/snippets/search-snippets",
    emoji = "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols",
    clipboard = "raycast://extensions/raycast/clipboard-history/clipboard-history",
-   reasonable_size = "raycast://extensions/raycast/window-management/reasonable-size"
+   reasonable_size = "raycast://extensions/raycast/window-management/reasonable-size",
 }
 
 local EDITOR_CONFIGS = {
@@ -21,14 +21,14 @@ local EDITOR_CONFIGS = {
       appName = "Cursor",
       backupAppName = "",
       displayName = "--Cursor--",
-      modalLabel = "Cursor: modal"
+      modalLabel = "Cursor: modal",
    },
    vscode = {
       appName = "visual studio code",
       backupAppName = "code",
       displayName = "--VSCode--",
-      modalLabel = "VSCode: modal"
-   }
+      modalLabel = "VSCode: modal",
+   },
 }
 
 ---@type "cursor" | "vscode"
@@ -78,7 +78,6 @@ local function executeRaycastURL(url, modal)
    modal:exit()
 end
 
-
 local function launchApp(appName, modal)
    hs.application.launchOrFocus(appName)
    modal:exit()
@@ -87,176 +86,120 @@ end
 -- Modal instances - will be created in Start()
 local mainModal, editorModal, raycastModal
 
+---@param key string
+---@param label string | function
+---@param callback function
+---@return ModalEntry
+local function createModalEntry(key, label, callback)
+   return {
+      key = key,
+      label = label,
+      callback = callback,
+   }
+end
+
+---@param key string
+---@param label string
+---@param appName string
+---@return ModalEntry
+local function launchModalEntry(key, label, appName)
+   return createModalEntry(key, label, function()
+      launchApp(appName, mainModal)
+   end)
+end
+
+---@param key string
+---@param label string
+---@param url string
+---@return ModalEntry
+local function openRaycastModalEntry(key, label, url)
+   return createModalEntry(key, label, function()
+      openRaycastURL(url, raycastModal)
+   end)
+end
+
+---@param key string
+---@param label string
+---@param url string
+---@return ModalEntry
+local function executeRaycastModalEntry(key, label, url)
+   return createModalEntry(key, label, function()
+      executeRaycastURL(url, raycastModal)
+   end)
+end
+
+
 ---@type ModalEntry[]
 local editorModalEntries = {
    editorConfig.displayName,
-   {
-      key = "O",
-      label = "Open",
-      callback = function()
-         local success = hs.application.launchOrFocus(editorConfig.appName)
-         if not success then
-            hs.alert(editorConfig.appName .. " cannot be opened")
-         end
-         editorModal:exit()
-      end,
-   },
-   {
-      key = "S",
-      label = "Start debug server",
-      callback = function()
-         sendCodeEditorKey({ modifiers = {}, key = "F5" }, "Starting debug server...")
-         editorModal:exit()
-      end,
-   },
-   {
-      key = "R",
-      label = "Restart debug server",
-      callback = function()
-         sendCodeEditorKey({ modifiers = { "cmd", "shift" }, key = "F5" }, "Restarting debug server...")
-         editorModal:exit()
-      end,
-   },
+   createModalEntry("O", "Open", function()
+      local success = hs.application.launchOrFocus(editorConfig.appName)
+      if not success then
+         hs.alert(editorConfig.appName .. " cannot be opened")
+      end
+      editorModal:exit()
+   end),
+   createModalEntry("S", "Start debug server", function()
+      sendCodeEditorKey({ modifiers = {}, key = "F5" }, "Starting debug server...")
+      editorModal:exit()
+   end),
+   createModalEntry("R", "Restart debug server", function()
+      sendCodeEditorKey({ modifiers = { "cmd", "shift" }, key = "F5" }, "Restarting debug server...")
+      editorModal:exit()
+   end),
 }
 
 ---@type ModalEntry[]
 local raycastModalEntries = {
    "--Raycast--",
-   {
-      key = "A",
-      label = "AI - Personal Extensions",
-      callback = function()
-         openRaycastURL(RAYCAST_URLS.ai_personal, raycastModal)
-      end,
-   },
-   {
-      key = "S",
-      label = "Snippets",
-      callback = function()
-         openRaycastURL(RAYCAST_URLS.snippets, raycastModal)
-      end,
-   },
-   {
-      key = "E",
-      label = "Emoji",
-      callback = function()
-         openRaycastURL(RAYCAST_URLS.emoji, raycastModal)
-      end,
-   },
-   {
-      key = "C",
-      label = "Clipboard",
-      callback = function()
-         openRaycastURL(RAYCAST_URLS.clipboard, raycastModal)
-      end,
-   },
-   {
-      key = "R",
-      label = "Reasonable size",
-      callback = function()
-         executeRaycastURL(RAYCAST_URLS.reasonable_size, raycastModal)
-      end,
-   },
+   openRaycastModalEntry("A", "AI - Personal Extensions", RAYCAST_URLS.ai_personal),
+   openRaycastModalEntry("S", "Snippets", RAYCAST_URLS.snippets),
+   openRaycastModalEntry("E", "Emoji", RAYCAST_URLS.emoji),
+   openRaycastModalEntry("C", "Clipboard", RAYCAST_URLS.clipboard),
+   executeRaycastModalEntry("R", "Reasonable size", RAYCAST_URLS.reasonable_size),
 }
 
 ---@type ModalEntry[]
 local mainModalEntries = {
-
    "--Apps--",
-   {
-      key = "L",
-      label = "Linear",
-      callback = function()
-         launchApp("Linear", mainModal)
-      end,
-   },
-   {
-      key = "T",
-      label = "Telegram",
-      callback = function()
-         launchApp("Telegram", mainModal)
-      end,
-   },
-   {
-      key = "F",
-      label = "Figma",
-      callback = function()
-         launchApp("Figma", mainModal)
-      end,
-   },
-   {
-      key = "O",
-      label = "Obsidian",
-      callback = function()
-         launchApp("Obsidian", mainModal)
-      end,
-   },
-   {
-      key = "Z",
-      label = "Zen",
-      callback = function()
-         launchApp("zen", mainModal)
-      end,
-   },
-   {
-      key = "3",
-      label = "Arc Work Tab 3",
-      callback = function()
-         helpers.restoreAppFocus(function()
-            helpers.switchArcToWorkTab(3)
-         end)
-         mainModal:exit()
-      end,
-   },
+   launchModalEntry("L", "Linear", "Linear"),
+   launchModalEntry("T", "Telegram", "Telegram"),
+   launchModalEntry("F", "Figma", "Figma"),
+   launchModalEntry("O", "Obsidian", "Obsidian"),
+   launchModalEntry("Z", "Zen", "zen"),
+   createModalEntry("3", "Arc Work Tab 3", function()
+      helpers.restoreAppFocus(function()
+         helpers.switchArcToWorkTab(3)
+      end)
+      mainModal:exit()
+   end),
    "",
-
    "--System--",
-   {
-      key = "C",
-      label = function()
-         return getToggleLabel(hs.caffeinate.get("displayIdle"), "C")
-      end,
-      callback = function()
-         caffeine.toggle()
-         mainModal:exit()
-      end,
-   },
-   {
-      key = "P",
-      label = function()
-         return getToggleLabel(isPersonalOverride(), "Arc personal")
-      end,
-      callback = function()
-         togglePersonalOverride()
-         mainModal:exit()
-      end,
-   },
-   {
-      key = "S",
-      label = "Sleep",
-      callback = function()
-         openRaycastURL("raycast://extensions/raycast/system/sleep", mainModal)
-      end,
-   },
+   createModalEntry("C", function()
+      return getToggleLabel(hs.caffeinate.get("displayIdle"), "C")
+   end, function()
+      caffeine.toggle()
+      mainModal:exit()
+   end),
+   createModalEntry("P", function()
+      return getToggleLabel(isPersonalOverride(), "Arc personal")
+   end, function()
+      togglePersonalOverride()
+      mainModal:exit()
+   end),
+   createModalEntry("S", "Sleep", function()
+      openRaycastURL("raycast://extensions/raycast/system/sleep", mainModal)
+   end),
    "",
-
    "--Submodals--",
-   {
-      key = "R",
-      label = "Raycast: modal",
-      callback = function()
-         mainModal:exit()
-         raycastModal:enter()
-      end,
-   },
-   {
-      key = "U",
-      label = editorConfig.modalLabel,
-      callback = function()
-         mainModal:exit()
-         editorModal:enter()
-      end,
-   },
+   createModalEntry("R", "Raycast: modal", function()
+      mainModal:exit()
+      raycastModal:enter()
+   end),
+   createModalEntry("U", editorConfig.modalLabel, function()
+      mainModal:exit()
+      editorModal:enter()
+   end),
 }
 
 function Start()
