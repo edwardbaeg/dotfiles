@@ -87,7 +87,7 @@ end)
 
 local function disablePersonalOverride()
    if personalOverrideMenuBar then
-      personalOverrideMenuBar:setTitle("-")
+      personalOverrideMenuBar:setTitle("-P")
    end
    hs.settings.set("isPersonalOverride", false)
    setupArcHotkeys()
@@ -117,7 +117,7 @@ local mappings = {
 function Main()
    -- Initialize menu bar title based on saved state
    if personalOverrideMenuBar then
-      personalOverrideMenuBar:setTitle(isPersonalOverride() and "P" or "-")
+      personalOverrideMenuBar:setTitle(isPersonalOverride() and "P" or "-P")
       personalOverrideMenuBar:setClickCallback(M.togglePersonalOverride)
    end
 
