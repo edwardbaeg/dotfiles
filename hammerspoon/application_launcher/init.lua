@@ -1,6 +1,7 @@
 ---@type Constants
 local constants = require("common/constants")
 local hyperkey, allkey = constants.hyperkey, constants.allkey
+local toggleFeature = require("common/toggle_feature")
 
 local M = {}
 
@@ -39,15 +40,34 @@ end
 local BROWSER_KEY = ";"
 -- local BROWSER_KEY = "9"
 
--- Function to get the current personal override state
-local function isPersonalOverride()
-   return hs.settings.get("isPersonalOverride") or false
+-- Forward declaration for setupArcHotkeys
+local setupArcHotkeys
+
+-- Create personal override toggle feature using the common abstraction
+local personalOverride = toggleFeature.new({
+   name = "personalOverride",
+   settingsKey = "isPersonalOverride",
+   menubar = {
+      enabledTitle = "P",
+      disabledTitle = "-P"
+   },
+   onEnable = function()
+      setupArcHotkeys()
+   end,
+   onDisable = function()
+      setupArcHotkeys()
+   end,
+   defaultState = false
+})
+
+-- Export for compatibility
+M.isPersonalOverride = function()
+   return personalOverride.isEnabled()
 end
-M.isPersonalOverride = isPersonalOverride
 
 -- Function to set up Arc hotkeys based on current state
 -- TODO: move out to module
-local function setupArcHotkeys()
+setupArcHotkeys = function()
    -- Clear existing Arc hotkeys
    hs.hotkey.disableAll(hyperkey, BROWSER_KEY)
    hs.hotkey.disableAll(allkey, BROWSER_KEY)
@@ -59,7 +79,7 @@ local function setupArcHotkeys()
       setArcProfile("4")
    end
 
-   if isPersonalOverride() then
+   if personalOverride.isEnabled() then
       assignAppHotKey(hyperkey, BROWSER_KEY, "Arc", setPersonal)
       assignAppHotKey(allkey, BROWSER_KEY, "Arc", setWork)
    elseif constants.isPersonal then
@@ -71,55 +91,21 @@ local function setupArcHotkeys()
    end
 end
 
-local personalOverrideMenuBar = hs.menubar.new()
-
-local function enablePersonalOverride()
-   if personalOverrideMenuBar then
-      personalOverrideMenuBar:setTitle("P")
-   end
-   hs.settings.set("isPersonalOverride", true)
-   setupArcHotkeys()
-end
-
-hs.urlevent.bind("enablePersonalOverride", function()
-   enablePersonalOverride()
-end)
-
-local function disablePersonalOverride()
-   if personalOverrideMenuBar then
-      personalOverrideMenuBar:setTitle("-P")
-   end
-   hs.settings.set("isPersonalOverride", false)
-   setupArcHotkeys()
-end
-
-hs.urlevent.bind("disablePersonalOverride", function()
-   disablePersonalOverride()
-end)
-
+-- Export toggle function for compatibility
 M.togglePersonalOverride = function()
-   if isPersonalOverride() then
-      disablePersonalOverride()
-   else
-      enablePersonalOverride()
-   end
+   personalOverride.toggle()
 end
 
 local mappings = {
    -- { "0", "Kitty" },
    { "return", "Kitty" },
    { "'", "Kitty" },
-   { "8", "Slack" },
+   -- { "8", "Slack" },
    { "P", "Claude" },
    -- { "P", "Perplexity" },
 }
 
 function Main()
-   -- Initialize menu bar title based on saved state
-   if personalOverrideMenuBar then
-      personalOverrideMenuBar:setTitle(isPersonalOverride() and "P" or "-P")
-      personalOverrideMenuBar:setClickCallback(M.togglePersonalOverride)
-   end
 
    for _, pair in pairs(mappings) do
       assignAppHotKey(hyperkey, pair[1], pair[2])

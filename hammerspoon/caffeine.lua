@@ -30,27 +30,6 @@ local caffeine = toggleFeature.new({
    defaultState = false
 })
 
--- Legacy URL support for backward compatibility
--- Usage: hammerspoon://toggleCaffeineState?state={true|false}
-hs.urlevent.bind("toggleCaffeineState", function(_eventName, params)
-   local state = params and params["state"]
-   if state then
-      if state == "true" then
-         caffeine.enable()
-      elseif state == "false" then
-         caffeine.disable()
-      else
-         hs.alert("state is invalid value")
-      end
-   else
-      caffeine.toggle()
-   end
-end)
-
--- Legacy URL support
-hs.urlevent.bind("enableCaffeine", caffeine.enable)
-hs.urlevent.bind("disableCaffeine", caffeine.disable)
-
 -- Toggle sleepmode for ryujinx
 local watchRyujinx = function(appName, eventType)
    if eventType == hs.application.watcher.activated then

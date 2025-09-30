@@ -1,30 +1,7 @@
 -- Reload Config ---------------------------------------------------------
 --------------------------------------------------------------------------
 local hyperkey = { "cmd", "ctrl" }
-
--- Settings key for persisting auto-reload state
-local AUTO_RELOAD_STATE_KEY = "autoReloadEnabled"
-
--- Create menubar item for auto-reload toggle
-local autoReloadMenuBar = hs.menubar.new()
-
--- Auto-reload state management
-local function isAutoReloadEnabled()
-   local state = hs.settings.get(AUTO_RELOAD_STATE_KEY)
-   return state == nil and true or state -- default to true if not set
-end
-
-local function setAutoReloadDisplay(state)
-   if autoReloadMenuBar then
-      if state then
-         autoReloadMenuBar:setTitle("AR") -- for Auto-Reload
-      else
-         autoReloadMenuBar:setTitle("✕R") -- for disabled
-      end
-      -- Save state to settings
-      hs.settings.set(AUTO_RELOAD_STATE_KEY, state)
-   end
-end
+local toggleFeature = require("common/toggle_feature")
 
 -- Pathwatcher for file changes
 ReloadWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/hammerspoon/", function(files)
@@ -43,6 +20,30 @@ ReloadWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/hammerspo
    end
 end)
 
+-- Create auto-reload toggle feature using the common abstraction
+local autoReload = toggleFeature.new({
+   name = "autoReload",
+   settingsKey = "autoReloadEnabled",
+   menubar = {
+      enabledTitle = "AR",
+      disabledTitle = "✕R"
+   },
+   onEnable = function()
+      ReloadWatcher:start()
+      -- Force immediate reload when enabling
+      hs.alert("Auto-reload enabled - reloading...")
+      hs.timer.doAfter(0.1, function()
+         hs.reload()
+      end)
+   end,
+   onDisable = function()
+      ReloadWatcher:stop()
+      hs.alert("Auto-reload disabled")
+   end,
+   defaultState = true
+})
+
+-- Manual reload function (separate from auto-reload)
 local function reloadConfig()
    -- NOTE: hs.reload() destroys current Lua interpreter so anything after it is ignored
    hs.alert("Reloading config...")
@@ -51,66 +52,21 @@ local function reloadConfig()
    end)
 end
 
-local function enableAutoReload()
-   ReloadWatcher:start()
-   setAutoReloadDisplay(true)
-   -- Force immediate reload when enabling
-   hs.alert("Auto-reload enabled - reloading...")
-   hs.timer.doAfter(0.1, function()
-      hs.reload()
-   end)
-end
-
-local function disableAutoReload()
-   ReloadWatcher:stop()
-   setAutoReloadDisplay(false)
-   hs.alert("Auto-reload disabled")
-end
-
-local function toggleAutoReload()
-   if isAutoReloadEnabled() then
-      disableAutoReload()
-   else
-      enableAutoReload()
-   end
-end
-
--- TODO: create a submodal for this
+-- Hotkey for manual reload
 hs.hotkey.bind(hyperkey, "R", function()
    reloadConfig()
 end)
 
+-- URL event for manual reload
 -- hammerspoon://reloadConfig
 hs.urlevent.bind("reloadConfig", function()
    reloadConfig()
 end)
 
--- URL event bindings for auto-reload control
--- TODO: abstract all of these
-hs.urlevent.bind("toggleAutoReload", function()
-   toggleAutoReload()
-end)
-
-hs.urlevent.bind("enableAutoReload", function()
-   enableAutoReload()
-end)
-
-hs.urlevent.bind("disableAutoReload", function()
-   disableAutoReload()
-end)
-
--- Initialize menubar and auto-reload state
--- TODO: abstract all of these
-if autoReloadMenuBar then
-   autoReloadMenuBar:setClickCallback(toggleAutoReload)
-
-   -- Initialize state from settings
-   local savedState = isAutoReloadEnabled()
-   if savedState then
-      ReloadWatcher:start()
-      setAutoReloadDisplay(true)
-   else
-      ReloadWatcher:stop()
-      setAutoReloadDisplay(false)
-   end
+-- Initialize auto-reload state from settings
+local savedState = autoReload.isEnabled()
+if savedState then
+   ReloadWatcher:start()
+else
+   ReloadWatcher:stop()
 end
