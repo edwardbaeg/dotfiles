@@ -184,9 +184,11 @@ local mainModalEntries = {
    "--Apps--",
    launchModalEntry("L", "Linear", "Linear"),
    launchModalEntry("T", "Telegram", "Telegram"),
+   launchModalEntry("Z", "Zen", "zen"),
+   launchModalEntry("S", "Slack", "Slack"),
+   launchModalEntry("I", "iMessage", "Messages"),
    launchModalEntry("F", "Figma", "Figma"),
    launchModalEntry("O", "Obsidian", "Obsidian"),
-   launchModalEntry("Z", "Zen", "zen"),
    createModalEntry("3", "Arc Work Tab 3", function()
       helpers.restoreAppFocus(function()
          helpers.switchArcToWorkTab(3)
@@ -199,7 +201,7 @@ local mainModalEntries = {
       mainModal:exit()
       raycastModal:enter()
    end),
-   createModalEntry("S", "System: modal", function()
+   createModalEntry("X", "System: modal", function()
       mainModal:exit()
       systemModal:enter()
    end),
