@@ -14,8 +14,13 @@
 ## Sideload apps (outside of Play Store)
 
 - [PrivateDNSAndroid](https://github.com/karasevm/PrivateDNSAndroid/tree/v1.2) - Add quick toggle tile for private DNS
-- Revanced Manager - to patch YouTube
-- Coffee - keep screen awake quick settings toggle
+- Revanced Manager - to patch apps
+- bypass-paywalls-firefox-clean extension - download and install manually
+
+### F-droid apps
+
+- breezy - weather app
+- coffee - quick settings tile keep display on
 
 ## Notes
 
