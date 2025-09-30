@@ -3,6 +3,7 @@
 My neovim and terminal (tmux in Kitty) based development setup. Always a work progress!
 
 <!-- TODO: replace with urls instead of assets -->
+
 ![screenshot](assets/main.png)
 
 ## Setup
@@ -18,6 +19,7 @@ make all
 Configuration: [init.lua](nvim/.config/nvim/init.lua)
 
 Key plugins:
+
 - **Plugin Manager**: lazy.nvim
 - **Colorscheme**: onedark/catppuccin
 - **Smarts**: Treesitter, LSP, completion, snippets, fuzzy finder
@@ -92,6 +94,7 @@ These are mostly brew packages.
 - `scrcpy` android screen mirror/recorder (requires adb)
 
 #### Fun
+
 - `fastfetch` display system info (replaces neofetch)
 
 #### Dependencies
@@ -104,6 +107,7 @@ These are mostly brew packages.
 - `zsh-completions` for zsh, command line autocompletions
 
 #### GUI
+
 - `kitty` (cask) terminal emulator
 - `emacs` (cask) text editor / environment / operating system
 
@@ -160,6 +164,11 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 <!-- TODO: consider flameshot, FOSS alternative -->
 - `Shottr`: screenshot tool
 - `Syncthing`: file sync
+
+#### Brew services
+
+- syncthing
+- borders
 
 ### oh-my-zsh
 
