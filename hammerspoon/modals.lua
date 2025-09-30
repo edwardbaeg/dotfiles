@@ -203,6 +203,7 @@ local mainModalEntries = {
    launchModalEntry("I", "iMessage", "Messages"),
    launchModalEntry("F", "Figma", "Figma"),
    launchModalEntry("O", "Obsidian", "Obsidian"),
+   launchModalEntry("P", "Spotify", "Spotify"),
    createModalEntry("3", "Arc Work Tab 3", function()
       helpers.restoreAppFocus(function()
          helpers.switchArcToWorkTab(3)
