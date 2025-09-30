@@ -1,9 +1,8 @@
 local appLauncher = require("application_launcher")
-local caffeine = require("caffeine")
 local Modal = require("common.modal")
 local helpers = require("common.helpers")
+local registry = require("common.feature_registry")
 
-local isPersonalOverride = appLauncher.isPersonalOverride
 local togglePersonalOverride = appLauncher.togglePersonalOverride
 
 local M = {}
@@ -163,13 +162,28 @@ local raycastModalEntries = {
 local systemModalEntries = {
    "--System--",
    createModalEntry("C", function()
-      return getToggleLabel(hs.caffeinate.get("displayIdle"), "C")
+      local caffeine = registry.get("caffeine")
+      return getToggleLabel(caffeine and caffeine.isEnabled() or false, "Caffeine")
    end, function()
-      caffeine.toggle()
+      local caffeine = registry.get("caffeine")
+      if caffeine then
+         caffeine.toggle()
+      end
+      systemModal:exit()
+   end),
+   createModalEntry("A", function()
+      local autoreload = registry.get("autoreload")
+      return getToggleLabel(autoreload and autoreload.isEnabled() or false, "Autoreload")
+   end, function()
+      local autoreload = registry.get("autoreload")
+      if autoreload then
+         autoreload.toggle()
+      end
       systemModal:exit()
    end),
    createModalEntry("P", function()
-      return getToggleLabel(isPersonalOverride(), "Arc personal")
+      local personalOverride = registry.get("personalOverride")
+      return getToggleLabel(personalOverride and personalOverride.isEnabled() or false, "Arc personal")
    end, function()
       togglePersonalOverride()
       systemModal:exit()

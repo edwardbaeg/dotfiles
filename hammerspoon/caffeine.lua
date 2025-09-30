@@ -16,18 +16,16 @@ local sleepType = "displayIdle"
 -- Create caffeine toggle feature using the common abstraction
 local caffeine = toggleFeature.new({
    name = "caffeine",
+   abbreviation = "C",
    settingsKey = "caffeineState",
-   menubar = {
-      enabledTitle = "A", -- for awake
-      disabledTitle = "S" -- for sleep
-   },
    onEnable = function()
       hs.caffeinate.set(sleepType, true)
    end,
    onDisable = function()
       hs.caffeinate.set(sleepType, false)
    end,
-   defaultState = false
+   defaultState = false,
+   registryName = "caffeine"
 })
 
 -- Toggle sleepmode for ryujinx

@@ -21,13 +21,10 @@ ReloadWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/dev/dotfiles/hammerspo
 end)
 
 -- Create auto-reload toggle feature using the common abstraction
-local autoReload = toggleFeature.new({
-   name = "autoReload",
-   settingsKey = "autoReloadEnabled",
-   menubar = {
-      enabledTitle = "AR",
-      disabledTitle = "✕R"
-   },
+local autoreload = toggleFeature.new({
+   name = "autoreload",
+   abbreviation = "AR",
+   settingsKey = "autoreloadEnabled",
    onEnable = function()
       ReloadWatcher:start()
       -- Force immediate reload when enabling
@@ -40,7 +37,8 @@ local autoReload = toggleFeature.new({
       ReloadWatcher:stop()
       hs.alert("Auto-reload disabled")
    end,
-   defaultState = true
+   defaultState = true,
+   registryName = "autoreload"
 })
 
 -- Manual reload function (separate from auto-reload)
@@ -64,7 +62,7 @@ hs.urlevent.bind("reloadConfig", function()
 end)
 
 -- Initialize auto-reload state from settings
-local savedState = autoReload.isEnabled()
+local savedState = autoreload.isEnabled()
 if savedState then
    ReloadWatcher:start()
 else

@@ -10,22 +10,19 @@ local M = {}
 
 -- Creates a new toggle feature instance
 -- @param config table Configuration object with the following fields:
---   - name: string - Used for URL event binding (e.g., "autoReload")
+--   - name: string - Used for URL event binding (e.g., "autoreload")
+--   - abbreviation: string - Abbreviation shown in menubar (e.g., "AR")
 --   - settingsKey: string - Key for hs.settings persistence
---   - menubar: table - Menubar configuration with:
---     - enabledTitle: string - Title shown when enabled
---     - disabledTitle: string - Title shown when disabled
 --   - onEnable: function - Called when feature is enabled
 --   - onDisable: function - Called when feature is disabled
 --   - defaultState: boolean - Default state if no saved setting (default: false)
+--   - registryName: string (optional) - If provided, auto-register with feature registry
 -- @return table - Toggle feature instance
 function M.new(config)
     -- Validate required config
     assert(config.name, "config.name is required")
+    assert(config.abbreviation, "config.abbreviation is required")
     assert(config.settingsKey, "config.settingsKey is required")
-    assert(config.menubar, "config.menubar is required")
-    assert(config.menubar.enabledTitle, "config.menubar.enabledTitle is required")
-    assert(config.menubar.disabledTitle, "config.menubar.disabledTitle is required")
     assert(config.onEnable, "config.onEnable is required")
     assert(config.onDisable, "config.onDisable is required")
 
@@ -43,7 +40,9 @@ function M.new(config)
     -- Update menubar display and save state
     local function setDisplay(state)
         if instance.menubar then
-            local title = state and config.menubar.enabledTitle or config.menubar.disabledTitle
+            -- Use standardized format: "ABBR ✓" or "ABBR ✗"
+            local status = state and "✓" or "✗"
+            local title = config.abbreviation .. " " .. status
             instance.menubar:setTitle(title)
             -- Save state to settings
             hs.settings.set(config.settingsKey, state)
@@ -99,6 +98,12 @@ function M.new(config)
     -- Initialize from saved state
     local savedState = instance.isEnabled()
     setDisplay(savedState)
+
+    -- Auto-register with feature registry if registryName provided
+    if config.registryName then
+        local registry = require("common.feature_registry")
+        registry.register(config.registryName, instance)
+    end
 
     return instance
 end

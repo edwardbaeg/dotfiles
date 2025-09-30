@@ -46,18 +46,16 @@ local setupArcHotkeys
 -- Create personal override toggle feature using the common abstraction
 local personalOverride = toggleFeature.new({
    name = "personalOverride",
+   abbreviation = "PO",
    settingsKey = "isPersonalOverride",
-   menubar = {
-      enabledTitle = "P",
-      disabledTitle = "-P"
-   },
    onEnable = function()
       setupArcHotkeys()
    end,
    onDisable = function()
       setupArcHotkeys()
    end,
-   defaultState = false
+   defaultState = false,
+   registryName = "personalOverride"
 })
 
 -- Export for compatibility
