@@ -84,7 +84,7 @@ local function launchApp(appName, modal)
 end
 
 -- Modal instances - will be created in Start()
-local mainModal, editorModal, raycastModal
+local mainModal, editorModal, raycastModal, systemModal
 
 ---@param key string
 ---@param label string | function
@@ -160,6 +160,26 @@ local raycastModalEntries = {
 }
 
 ---@type ModalEntry[]
+local systemModalEntries = {
+   "--System--",
+   createModalEntry("C", function()
+      return getToggleLabel(hs.caffeinate.get("displayIdle"), "C")
+   end, function()
+      caffeine.toggle()
+      systemModal:exit()
+   end),
+   createModalEntry("P", function()
+      return getToggleLabel(isPersonalOverride(), "Arc personal")
+   end, function()
+      togglePersonalOverride()
+      systemModal:exit()
+   end),
+   createModalEntry("S", "Sleep", function()
+      openRaycastURL("raycast://extensions/raycast/system/sleep", systemModal)
+   end),
+}
+
+---@type ModalEntry[]
 local mainModalEntries = {
    "--Apps--",
    launchModalEntry("L", "Linear", "Linear"),
@@ -174,27 +194,14 @@ local mainModalEntries = {
       mainModal:exit()
    end),
    "",
-   "--System--",
-   createModalEntry("C", function()
-      return getToggleLabel(hs.caffeinate.get("displayIdle"), "C")
-   end, function()
-      caffeine.toggle()
-      mainModal:exit()
-   end),
-   createModalEntry("P", function()
-      return getToggleLabel(isPersonalOverride(), "Arc personal")
-   end, function()
-      togglePersonalOverride()
-      mainModal:exit()
-   end),
-   createModalEntry("S", "Sleep", function()
-      openRaycastURL("raycast://extensions/raycast/system/sleep", mainModal)
-   end),
-   "",
    "--Submodals--",
    createModalEntry("R", "Raycast: modal", function()
       mainModal:exit()
       raycastModal:enter()
+   end),
+   createModalEntry("S", "System: modal", function()
+      mainModal:exit()
+      systemModal:enter()
    end),
    createModalEntry("U", editorConfig.modalLabel, function()
       mainModal:exit()
@@ -223,6 +230,12 @@ function Start()
    raycastModal = Modal.new({
       entries = raycastModalEntries,
       fillColor = require("common.constants").colors.orange,
+   })
+
+   -- Create System submodal
+   systemModal = Modal.new({
+      entries = systemModalEntries,
+      fillColor = require("common.constants").colors.purple,
    })
 end
 
