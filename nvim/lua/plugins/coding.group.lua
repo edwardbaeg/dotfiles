@@ -91,7 +91,7 @@ return {
       -- NOTE: can be configured to used images in kitty
       "bennypowers/nvim-regexplainer",
       lazy = true,
-      config = {
+      opts = {
          mappings = {
             toggle = '<leader>gR'
          }
