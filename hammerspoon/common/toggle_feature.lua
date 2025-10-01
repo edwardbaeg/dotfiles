@@ -40,9 +40,9 @@ function M.new(config)
     -- Update menubar display and save state
     local function setDisplay(state)
         if instance.menubar then
-            -- Use standardized format: "ABBR ✓" or "ABBR ✗"
+            -- Use standardized format: "ABBR✓" or "ABBR✗"
             local status = state and "✓" or "✗"
-            local title = config.abbreviation .. " " .. status
+            local title = config.abbreviation .. status
             instance.menubar:setTitle(title)
             -- Save state to settings
             hs.settings.set(config.settingsKey, state)
