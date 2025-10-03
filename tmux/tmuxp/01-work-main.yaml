@@ -20,3 +20,11 @@ windows:
       - shell_command: # pane no. 1
           - front
           - npm run dev:local
+
+  - window_name: servers
+    layout: even-vertical
+    panes:
+      - shell_command: # pane no. 1
+          - front
+          - npm run dev:local
+      -
