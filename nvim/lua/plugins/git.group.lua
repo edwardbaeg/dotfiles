@@ -82,16 +82,22 @@ return {
          vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff2222" })
          -- end, 0)
 
-         set("n", "gh", function()
+         -- Submode hunk navigation (via mini.clue)
+         -- TODO: consider creating a helper to generate standalone and submode mappings
+         -- Press <leader>g<space> then use j/k to navigate hunks, p to preview, i for inline
+         set("n", "<leader>g<space>j", function()
             ---@diagnostic disable-next-line: param-type-mismatch it's correct
             gitsigns.nav_hunk("next")
-         end)
-         set("n", "gH", function()
+         end, { desc = "Next hunk" })
+         set("n", "<leader>g<space>k", function()
             ---@diagnostic disable-next-line: param-type-mismatch it's correct
             gitsigns.nav_hunk("prev")
-         end)
-         set("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git hunk: [p]review" })
-         set("n", "<leader>hl", gitsigns.setloclist, { desc = "git hunk: [l]ist in location list" })
+         end, { desc = "Prev hunk" })
+         set("n", "<leader>g<space>p", gitsigns.preview_hunk, { desc = "Preview hunk" })
+         set("n", "<leader>g<space>i", gitsigns.preview_hunk_inline, { desc = "Preview inline" })
+
+         -- set("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git hunk: [p]review" })
+         -- set("n", "<leader>hl", gitsigns.setloclist, { desc = "git hunk: [l]ist in location list" })
       end,
    },
 

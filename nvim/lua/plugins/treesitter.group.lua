@@ -278,12 +278,6 @@ return {
          vim.keymap.set("n", "<leader>t<space>k", ":Treewalker Up<cr>", { silent = true, desc = "Up" })
          vim.keymap.set("n", "<leader>t<space>h", ":Treewalker Left<cr>", { silent = true, desc = "Left" })
          vim.keymap.set("n", "<leader>t<space>l", ":Treewalker Right<cr>", { silent = true, desc = "Right" })
-
-         -- Keep existing non-submode mappings
-         vim.keymap.set("n", "<leader>tj", ":Treewalker Down<cr>", { silent = true, desc = "Down" })
-         vim.keymap.set("n", "<leader>tk", ":Treewalker Up<cr>", { silent = true, desc = "Up" })
-         vim.keymap.set("n", "<leader>th", ":Treewalker Left<cr>", { silent = true, desc = "Left" })
-         vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true, desc = "Right" })
          -- FIXME: this doesn't work. Want the ability to exit hydramode without having to press <esc>
          vim.keymap.set("n", "<leader>tq", "<Esc>", { silent = true })
       end,

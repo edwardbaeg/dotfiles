@@ -228,6 +228,9 @@ return {
 
                -- TreeWalker submode
                { mode = "n", keys = "<leader>t<space>" },
+
+               -- Git hunk navigation submode
+               { mode = "n", keys = "<leader>g<space>" },
             },
 
             clues = {
@@ -252,6 +255,12 @@ return {
                { mode = "n", keys = "<leader>t<space>k", postkeys = "<leader>t<space>" },
                { mode = "n", keys = "<leader>t<space>h", postkeys = "<leader>t<space>" },
                { mode = "n", keys = "<leader>t<space>l", postkeys = "<leader>t<space>" },
+
+               -- Git hunk navigation submode clues
+               { mode = "n", keys = "<leader>g<space>j", postkeys = "<leader>g<space>" },
+               { mode = "n", keys = "<leader>g<space>k", postkeys = "<leader>g<space>" },
+               { mode = "n", keys = "<leader>g<space>p", postkeys = "<leader>g<space>" },
+               { mode = "n", keys = "<leader>g<space>i", postkeys = "<leader>g<space>" },
             },
 
          })
