@@ -187,53 +187,74 @@ return {
          -- icon provider
          -- require("mini.icons").setup() -- seems little buggy
 
-         -- local miniclue = require("mini.clue")
-         -- miniclue.setup({
-         --    window = {
-         --       delay = 500,
-         --    },
-         --    triggers = {
-         --       -- Leader triggers
-         --       { mode = "n", keys = "<Leader>" },
-         --       { mode = "x", keys = "<Leader>" },
-         --
-         --       -- Built-in completion
-         --       { mode = "i", keys = "<C-x>" },
-         --
-         --       -- `g` key
-         --       { mode = "n", keys = "g" },
-         --       { mode = "x", keys = "g" },
-         --
-         --       -- Marks
-         --       { mode = "n", keys = "'" },
-         --       { mode = "n", keys = "`" },
-         --       { mode = "x", keys = "'" },
-         --       { mode = "x", keys = "`" },
-         --
-         --       -- Registers
-         --       { mode = "n", keys = '"' },
-         --       { mode = "x", keys = '"' },
-         --       { mode = "i", keys = "<C-r>" },
-         --       { mode = "c", keys = "<C-r>" },
-         --
-         --       -- Window commands
-         --       { mode = "n", keys = "<C-w>" },
-         --
-         --       -- `z` key
-         --       { mode = "n", keys = "z" },
-         --       { mode = "x", keys = "z" },
-         --    },
-         --
-         --    clues = {
-         --       -- Enhance this by adding descriptions for <Leader> mapping groups
-         --       miniclue.gen_clues.builtin_completion(),
-         --       miniclue.gen_clues.g(),
-         --       miniclue.gen_clues.marks(),
-         --       miniclue.gen_clues.registers(),
-         --       miniclue.gen_clues.windows(),
-         --       miniclue.gen_clues.z(),
-         --    },
-         -- })
+         local miniclue = require("mini.clue")
+         miniclue.setup({
+            window = {
+               delay = 200,
+               config = {
+                  border = "rounded",
+               },
+            },
+            triggers = {
+               -- Leader triggers
+               { mode = "n", keys = "<Leader>" },
+               { mode = "x", keys = "<Leader>" },
+
+               -- Built-in completion
+               { mode = "i", keys = "<C-x>" },
+
+               -- `g` key
+               { mode = "n", keys = "g" },
+               { mode = "x", keys = "g" },
+
+               -- Marks
+               { mode = "n", keys = "'" },
+               { mode = "n", keys = "`" },
+               { mode = "x", keys = "'" },
+               { mode = "x", keys = "`" },
+
+               -- Registers
+               { mode = "n", keys = '"' },
+               { mode = "x", keys = '"' },
+               { mode = "i", keys = "<C-r>" },
+               { mode = "c", keys = "<C-r>" },
+
+               -- Window commands
+               { mode = "n", keys = "<C-w>" },
+
+               -- `z` key
+               { mode = "n", keys = "z" },
+               { mode = "x", keys = "z" },
+
+               -- TreeWalker submode
+               { mode = "n", keys = "<leader>t<space>" },
+            },
+
+            clues = {
+               -- Enhance this by adding descriptions for <Leader> mapping groups
+               miniclue.gen_clues.builtin_completion(),
+               miniclue.gen_clues.g(),
+               miniclue.gen_clues.marks(),
+               miniclue.gen_clues.registers(),
+               -- miniclue.gen_clues.windows({
+               --    submode_move = true,
+               --    submode_navigate = true,
+               --    submode_resize = true,
+               -- }),
+               miniclue.gen_clues.z(),
+               -- Custom group labels
+               { mode = "n", keys = "<leader>fg", desc = "+Fuzzy git" },
+               { mode = "n", keys = "<leader>a", desc = "+Claude Code" },
+               { mode = "n", keys = "<leader>ob", desc = "+Obsidian" },
+
+               -- TreeWalker submode clues
+               { mode = "n", keys = "<leader>t<space>j", postkeys = "<leader>t<space>" },
+               { mode = "n", keys = "<leader>t<space>k", postkeys = "<leader>t<space>" },
+               { mode = "n", keys = "<leader>t<space>h", postkeys = "<leader>t<space>" },
+               { mode = "n", keys = "<leader>t<space>l", postkeys = "<leader>t<space>" },
+            },
+
+         })
       end,
    },
 }

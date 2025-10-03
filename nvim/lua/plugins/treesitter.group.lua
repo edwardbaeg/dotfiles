@@ -263,7 +263,6 @@ return {
       -- Navigate with treesitter syntax context
       -- Also set up to move sibling nodes
       "aaronik/treewalker.nvim",
-      dependencies = "folke/which-key.nvim",
       opts = {
          highlight = true, -- highlight node after jumpting to it
       },
@@ -273,19 +272,18 @@ return {
          -- vim.keymap.set("n", "<leader>,", "<cmd>Treewalker SwapLeft<cr>")
          -- vim.keymap.set("n", "<leader>.", "<cmd>Treewalker SwapRight<cr>")
 
-         -- Hydra: Treewalker
-         vim.keymap.set("n", "<leader>t<space>", function()
-            ---@type wk.Filter
-            require("which-key").show({
-               keys = "<leader>t",
-               loop = true,
-               mode = "n",
-            })
-         end, { desc = "HYDRA: TreeWalker" })
-         vim.keymap.set("n", "<leader>tj", ":Treewalker Down<cr>", { silent = true })
-         vim.keymap.set("n", "<leader>tk", ":Treewalker Up<cr>", { silent = true })
-         vim.keymap.set("n", "<leader>th", ":Treewalker Left<cr>", { silent = true })
-         vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true })
+         -- Hydra: Treewalker submode (via mini.clue)
+         -- Press <leader>t<space> then use hjkl to navigate
+         vim.keymap.set("n", "<leader>t<space>j", ":Treewalker Down<cr>", { silent = true, desc = "Down" })
+         vim.keymap.set("n", "<leader>t<space>k", ":Treewalker Up<cr>", { silent = true, desc = "Up" })
+         vim.keymap.set("n", "<leader>t<space>h", ":Treewalker Left<cr>", { silent = true, desc = "Left" })
+         vim.keymap.set("n", "<leader>t<space>l", ":Treewalker Right<cr>", { silent = true, desc = "Right" })
+
+         -- Keep existing non-submode mappings
+         vim.keymap.set("n", "<leader>tj", ":Treewalker Down<cr>", { silent = true, desc = "Down" })
+         vim.keymap.set("n", "<leader>tk", ":Treewalker Up<cr>", { silent = true, desc = "Up" })
+         vim.keymap.set("n", "<leader>th", ":Treewalker Left<cr>", { silent = true, desc = "Left" })
+         vim.keymap.set("n", "<leader>tl", ":Treewalker Right<cr>", { silent = true, desc = "Right" })
          -- FIXME: this doesn't work. Want the ability to exit hydramode without having to press <esc>
          vim.keymap.set("n", "<leader>tq", "<Esc>", { silent = true })
       end,

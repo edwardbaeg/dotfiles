@@ -35,12 +35,6 @@ return {
       -- iwhite: ignore changes in the amount of whitespace
       vim.o.diffopt = "internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram,iwhite"
 
-      require("which-key").add({
-         {
-            "<leader>di",
-            diff_open_with_input,
-            desc = "Diffview [I]nput",
-         },
-      })
+      vim.keymap.set("n", "<leader>di", diff_open_with_input, { desc = "Diffview [I]nput" })
    end,
 }
