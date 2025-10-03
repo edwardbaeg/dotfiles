@@ -189,7 +189,9 @@ function shell_history_remove() {
 }
 
 # -- git
-function gbdm() {
+# delete branches merged into master
+alias gbdm="git_branch_delete_merged"
+function git_branch_delete_merged() {
 	git checkout -q master
 	git for-each-ref refs/heads/ "--format=%(refname:short)" | while read -r branch; do
 		mergeBase=$(git merge-base master "$branch")
@@ -197,6 +199,12 @@ function gbdm() {
 			git branch -D "$branch"
 		fi
 	done
+}
+
+# open file with merge conflicts
+alias vmc="git_merge_conflicts_open"
+function git_merge_conflicts_open() {
+	git diff --name-only --diff-filter=U | xargs $EDITOR
 }
 
 # -- other functions
