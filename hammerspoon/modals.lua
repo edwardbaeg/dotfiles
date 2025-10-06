@@ -2,6 +2,7 @@ local appLauncher = require("application_launcher")
 local Modal = require("common.modal")
 local helpers = require("common.helpers")
 local registry = require("common.feature_registry")
+local modalUtils = require("modals-utils")
 
 local togglePersonalOverride = appLauncher.togglePersonalOverride
 
@@ -67,35 +68,13 @@ local function sendCodeEditorKey(keystroke, actionMsg)
    end
 end
 
-local function openRaycastURL(url, modal)
-   hs.urlevent.openURL(url)
-   modal:exit()
-end
-
-local function executeRaycastURL(url, modal)
-   hs.execute("open -g " .. url)
-   modal:exit()
-end
-
-local function launchApp(appName, modal)
-   hs.application.launchOrFocus(appName)
-   modal:exit()
-end
-
 -- Modal instances - will be created in Start()
 local mainModal, editorModal, raycastModal, systemModal
 
----@param key string
----@param label string | function
----@param callback function
----@return ModalEntry
-local function createModalEntry(key, label, callback)
-   return {
-      key = key,
-      label = label,
-      callback = callback,
-   }
-end
+local createModalEntry = modalUtils.createModalEntry
+local openRaycastURL = modalUtils.openRaycastURL
+local executeRaycastURL = modalUtils.executeRaycastURL
+local launchApp = modalUtils.launchApp
 
 ---@param key string
 ---@param label string
