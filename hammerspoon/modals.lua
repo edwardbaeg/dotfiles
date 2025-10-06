@@ -2,15 +2,13 @@ local appLauncher = require("application_launcher")
 local Modal = require("common.modal")
 local helpers = require("common.helpers")
 local registry = require("common.feature_registry")
-local modalUtils = require("modals-utils")
 
 local togglePersonalOverride = appLauncher.togglePersonalOverride
 
 local M = {}
 
 local RAYCAST_URLS = {
-   ai_personal =
-   "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
+   ai_personal = "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
    snippets = "raycast://extensions/raycast/snippets/search-snippets",
    emoji = "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols",
    clipboard = "raycast://extensions/raycast/clipboard-history/clipboard-history",
@@ -35,6 +33,10 @@ local EDITOR_CONFIGS = {
 ---@type "cursor" | "vscode"
 local CODE_EDITOR_NAME = "vscode"
 local editorConfig = EDITOR_CONFIGS[CODE_EDITOR_NAME]
+
+local function getToggleLabel(value, label)
+   return (value and "●" or "○") .. " Toggle " .. label .. " " .. (value and "off" or "on") .. ""
+end
 
 local function findEditorApp()
    local app = hs.application.find(editorConfig.appName)
@@ -65,14 +67,65 @@ local function sendCodeEditorKey(keystroke, actionMsg)
    end
 end
 
-local createModalEntry = modalUtils.createModalEntry
-local openRaycastModalEntry = modalUtils.openRaycastModalEntry
-local executeRaycastModalEntry = modalUtils.executeRaycastModalEntry
-local openRaycastURL = modalUtils.openRaycastURL
-local launchModalEntry = modalUtils.launchModalEntry
+local function openRaycastURL(url, modal)
+   hs.urlevent.openURL(url)
+   modal:exit()
+end
+
+local function executeRaycastURL(url, modal)
+   hs.execute("open -g " .. url)
+   modal:exit()
+end
+
+local function launchApp(appName, modal)
+   hs.application.launchOrFocus(appName)
+   modal:exit()
+end
 
 -- Modal instances - will be created in Start()
 local mainModal, editorModal, raycastModal, systemModal
+
+---@param key string
+---@param label string | function
+---@param callback function
+---@return ModalEntry
+local function createModalEntry(key, label, callback)
+   return {
+      key = key,
+      label = label,
+      callback = callback,
+   }
+end
+
+---@param key string
+---@param label string
+---@param appName string
+---@return ModalEntry
+local function launchModalEntry(key, label, appName)
+   return createModalEntry(key, label, function()
+      launchApp(appName, mainModal)
+   end)
+end
+
+---@param key string
+---@param label string
+---@param url string
+---@return ModalEntry
+local function openRaycastModalEntry(key, label, url)
+   return createModalEntry(key, label, function()
+      openRaycastURL(url, raycastModal)
+   end)
+end
+
+---@param key string
+---@param label string
+---@param url string
+---@return ModalEntry
+local function executeRaycastModalEntry(key, label, url)
+   return createModalEntry(key, label, function()
+      executeRaycastURL(url, raycastModal)
+   end)
+end
 
 ---@type ModalEntry[]
 local editorModalEntries = {
@@ -103,8 +156,6 @@ local raycastModalEntries = {
    openRaycastModalEntry("C", "Clipboard", RAYCAST_URLS.clipboard),
    executeRaycastModalEntry("R", "Reasonable size", RAYCAST_URLS.reasonable_size),
 }
-
-local getToggleLabel = modalUtils.getToggleLabel
 
 ---@type ModalEntry[]
 local systemModalEntries = {
