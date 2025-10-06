@@ -13,13 +13,14 @@ windows:
           - front
 
   - window_name: worktree
-    layout: even-vertical
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
     panes:
       - shell_command: # pane no. 1
           - work
       - shell_command: # pane no. 1
-          - front
-          - npm run dev:local
+          - work
 
   - window_name: servers
     layout: even-vertical
@@ -27,4 +28,4 @@ windows:
       - shell_command: # pane no. 1
           - front
           - npm run dev:local
-      -
+      - front
