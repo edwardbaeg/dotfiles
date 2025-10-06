@@ -127,7 +127,6 @@ local function executeRaycastModalEntry(key, label, url)
    end)
 end
 
-
 ---@type ModalEntry[]
 local editorModalEntries = {
    editorConfig.displayName,
@@ -204,6 +203,7 @@ local mainModalEntries = {
    launchModalEntry("F", "Figma", "Figma"),
    launchModalEntry("O", "Obsidian", "Obsidian"),
    launchModalEntry("P", "Spotify", "Spotify"),
+   launchModalEntry("A", "Arc Browser", "Arc"),
    createModalEntry("3", "Arc Work Tab 3", function()
       helpers.restoreAppFocus(function()
          helpers.switchArcToWorkTab(3)
