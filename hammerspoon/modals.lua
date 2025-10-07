@@ -156,7 +156,7 @@ local function systemModalEntries(m)
    }
 end
 
-local function mainModalEntries(m, raycastModal, systemModal, editorModal)
+local function mainModalEntries(m, submodals)
    return {
       "--Apps--",
       createModalEntry("L", "Linear", function()
@@ -196,44 +196,40 @@ local function mainModalEntries(m, raycastModal, systemModal, editorModal)
       "--Submodals--",
       createModalEntry("R", "Raycast: modal", function()
          m:exit()
-         raycastModal:enter()
+         submodals.raycast:enter()
       end),
       createModalEntry("X", "System: modal", function()
          m:exit()
-         systemModal:enter()
+         submodals.system:enter()
       end),
       createModalEntry("U", editorConfig.modalLabel, function()
          m:exit()
-         editorModal:enter()
+         submodals.editor:enter()
       end),
    }
 end
 
 function Start()
    -- Create submodals first (they don't depend on other modals)
-
-   -- Create GUI editor submodal
-   local editorModal = Modal.new({
-      entries = editorModalEntries,
-      fillColor = require("common.constants").colors.lightBlue,
-   })
-
-   -- Create Raycast submodal
-   local raycastModal = Modal.new({
-      entries = raycastModalEntries,
-      fillColor = require("common.constants").colors.orange,
-   })
-
-   -- Create System submodal
-   local systemModal = Modal.new({
-      entries = systemModalEntries,
-      fillColor = require("common.constants").colors.purple,
-   })
+   local submodals = {
+      editor = Modal.new({
+         entries = editorModalEntries,
+         fillColor = require("common.constants").colors.lightBlue,
+      }),
+      raycast = Modal.new({
+         entries = raycastModalEntries,
+         fillColor = require("common.constants").colors.orange,
+      }),
+      system = Modal.new({
+         entries = systemModalEntries,
+         fillColor = require("common.constants").colors.purple,
+      }),
+   }
 
    -- Create main modal with hotkey binding (depends on submodals)
-   local mainModal = Modal.new({
+   Modal.new({
       entries = function(m)
-         return mainModalEntries(m, raycastModal, systemModal, editorModal)
+         return mainModalEntries(m, submodals)
       end,
       fillColor = require("common.constants").colors.grey,
       hotkey = {
