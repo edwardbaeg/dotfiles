@@ -74,13 +74,16 @@ return {
             },
          })
 
-         -- these highlight groups need to be loaded async?
-         -- vim.defer_fn(function ()
+         -- NOTE: previously, these highlight groups need to be loaded async
          vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = "#009900" })
          vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "#bbbb00" })
          vim.api.nvim_set_hl(0, "GitSignsUntracked", { fg = "#626880" })
          vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff2222" })
-         -- end, 0)
+
+         set("n", "gh", function() -- NOTE: the default mapping for gh is start select mode
+            ---@diagnostic disable-next-line: param-type-mismatch it's correct
+            gitsigns.nav_hunk("next")
+         end, { desc = "Next hunk" })
 
          -- Submode hunk navigation (via mini.clue)
          -- TODO: consider creating a helper to generate standalone and submode mappings
