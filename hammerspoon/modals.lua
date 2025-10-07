@@ -68,170 +68,178 @@ local function sendCodeEditorKey(keystroke, actionMsg)
    end
 end
 
--- Modal instances - will be created in Start()
-local mainModal, editorModal, raycastModal, systemModal
-
 local createModalEntry = modalUtils.createModalEntry
 local openRaycastURL = modalUtils.openRaycastURL
 local executeRaycastURL = modalUtils.executeRaycastURL
-local launchApp = modalUtils.launchApp
+local launchAppAndExit = modalUtils.launchAppAndExit
 
----@param key string
----@param label string
----@param appName string
----@return ModalEntry
-local function launchModalEntry(key, label, appName)
-   return createModalEntry(key, label, function()
-      launchApp(appName, mainModal)
-   end)
+local function editorModalEntries(m)
+   return {
+      editorConfig.displayName,
+      createModalEntry("O", "Open", function()
+         local success = hs.application.launchOrFocus(editorConfig.appName)
+         if not success then
+            hs.alert(editorConfig.appName .. " cannot be opened")
+         end
+         m:exit()
+      end),
+      createModalEntry("S", "Start debug server", function()
+         sendCodeEditorKey({ modifiers = {}, key = "F5" }, "Starting debug server...")
+         m:exit()
+      end),
+      createModalEntry("R", "Restart debug server", function()
+         sendCodeEditorKey({ modifiers = { "cmd", "shift" }, key = "F5" }, "Restarting debug server...")
+         m:exit()
+      end),
+   }
 end
 
----@param key string
----@param label string
----@param url string
----@return ModalEntry
-local function openRaycastModalEntry(key, label, url)
-   return createModalEntry(key, label, function()
-      openRaycastURL(url, raycastModal)
-   end)
+local function raycastModalEntries(m)
+   return {
+      "--Raycast--",
+      createModalEntry("A", "AI - Personal Extensions", function()
+         openRaycastURL(RAYCAST_URLS.ai_personal, m)
+         m:exit()
+      end),
+      createModalEntry("S", "Snippets", function()
+         openRaycastURL(RAYCAST_URLS.snippets, m)
+         m:exit()
+      end),
+      createModalEntry("E", "Emoji", function()
+         openRaycastURL(RAYCAST_URLS.emoji, m)
+         m:exit()
+      end),
+      createModalEntry("C", "Clipboard", function()
+         openRaycastURL(RAYCAST_URLS.clipboard, m)
+         m:exit()
+      end),
+      createModalEntry("R", "Reasonable size", function()
+         executeRaycastURL(RAYCAST_URLS.reasonable_size, m)
+         m:exit()
+      end),
+   }
 end
 
----@param key string
----@param label string
----@param url string
----@return ModalEntry
-local function executeRaycastModalEntry(key, label, url)
-   return createModalEntry(key, label, function()
-      executeRaycastURL(url, raycastModal)
-   end)
+local function systemModalEntries(m)
+   return {
+      "--System--",
+      createModalEntry("C", function()
+         local caffeine = registry.get("caffeine")
+         return getToggleLabel(caffeine and caffeine.isEnabled() or false, "Caffeine")
+      end, function()
+         local caffeine = registry.get("caffeine")
+         if caffeine then
+            caffeine.toggle()
+         end
+         m:exit()
+      end),
+      createModalEntry("A", function()
+         local autoreload = registry.get("autoreload")
+         return getToggleLabel(autoreload and autoreload.isEnabled() or false, "Autoreload")
+      end, function()
+         local autoreload = registry.get("autoreload")
+         if autoreload then
+            autoreload.toggle()
+         end
+         m:exit()
+      end),
+      createModalEntry("P", function()
+         local personalOverride = registry.get("personalOverride")
+         return getToggleLabel(personalOverride and personalOverride.isEnabled() or false, "Arc personal")
+      end, function()
+         togglePersonalOverride()
+         m:exit()
+      end),
+      createModalEntry("S", "Sleep", function()
+         openRaycastURL("raycast://extensions/raycast/system/sleep", m)
+      end),
+   }
 end
 
----@type ModalEntry[]
-local editorModalEntries = {
-   editorConfig.displayName,
-   createModalEntry("O", "Open", function()
-      local success = hs.application.launchOrFocus(editorConfig.appName)
-      if not success then
-         hs.alert(editorConfig.appName .. " cannot be opened")
-      end
-      editorModal:exit()
-   end),
-   createModalEntry("S", "Start debug server", function()
-      sendCodeEditorKey({ modifiers = {}, key = "F5" }, "Starting debug server...")
-      editorModal:exit()
-   end),
-   createModalEntry("R", "Restart debug server", function()
-      sendCodeEditorKey({ modifiers = { "cmd", "shift" }, key = "F5" }, "Restarting debug server...")
-      editorModal:exit()
-   end),
-}
-
----@type ModalEntry[]
-local raycastModalEntries = {
-   "--Raycast--",
-   openRaycastModalEntry("A", "AI - Personal Extensions", RAYCAST_URLS.ai_personal),
-   openRaycastModalEntry("S", "Snippets", RAYCAST_URLS.snippets),
-   openRaycastModalEntry("E", "Emoji", RAYCAST_URLS.emoji),
-   openRaycastModalEntry("C", "Clipboard", RAYCAST_URLS.clipboard),
-   executeRaycastModalEntry("R", "Reasonable size", RAYCAST_URLS.reasonable_size),
-}
-
----@type ModalEntry[]
-local systemModalEntries = {
-   "--System--",
-   createModalEntry("C", function()
-      local caffeine = registry.get("caffeine")
-      return getToggleLabel(caffeine and caffeine.isEnabled() or false, "Caffeine")
-   end, function()
-      local caffeine = registry.get("caffeine")
-      if caffeine then
-         caffeine.toggle()
-      end
-      systemModal:exit()
-   end),
-   createModalEntry("A", function()
-      local autoreload = registry.get("autoreload")
-      return getToggleLabel(autoreload and autoreload.isEnabled() or false, "Autoreload")
-   end, function()
-      local autoreload = registry.get("autoreload")
-      if autoreload then
-         autoreload.toggle()
-      end
-      systemModal:exit()
-   end),
-   createModalEntry("P", function()
-      local personalOverride = registry.get("personalOverride")
-      return getToggleLabel(personalOverride and personalOverride.isEnabled() or false, "Arc personal")
-   end, function()
-      togglePersonalOverride()
-      systemModal:exit()
-   end),
-   createModalEntry("S", "Sleep", function()
-      openRaycastURL("raycast://extensions/raycast/system/sleep", systemModal)
-   end),
-}
-
----@type ModalEntry[]
-local mainModalEntries = {
-   "--Apps--",
-   launchModalEntry("L", "Linear", "Linear"),
-   launchModalEntry("T", "Telegram", "Telegram"),
-   launchModalEntry("Z", "Zen", "zen"),
-   launchModalEntry("S", "Slack", "Slack"),
-   launchModalEntry("I", "iMessage", "Messages"),
-   launchModalEntry("F", "Figma", "Figma"),
-   launchModalEntry("O", "Obsidian", "Obsidian"),
-   launchModalEntry("P", "Spotify", "Spotify"),
-   launchModalEntry("A", "Arc Browser", "Arc"),
-   createModalEntry("3", "Arc Work Tab 3", function()
-      helpers.restoreAppFocus(function()
-         helpers.switchArcToWorkTab(3)
-      end)
-      mainModal:exit()
-   end),
-   "",
-   "--Submodals--",
-   createModalEntry("R", "Raycast: modal", function()
-      mainModal:exit()
-      raycastModal:enter()
-   end),
-   createModalEntry("X", "System: modal", function()
-      mainModal:exit()
-      systemModal:enter()
-   end),
-   createModalEntry("U", editorConfig.modalLabel, function()
-      mainModal:exit()
-      editorModal:enter()
-   end),
-}
+local function mainModalEntries(m, raycastModal, systemModal, editorModal)
+   return {
+      "--Apps--",
+      createModalEntry("L", "Linear", function()
+         launchAppAndExit("Linear", m)
+      end),
+      createModalEntry("T", "Telegram", function()
+         launchAppAndExit("Telegram", m)
+      end),
+      createModalEntry("Z", "Zen", function()
+         launchAppAndExit("zen", m)
+      end),
+      createModalEntry("S", "Slack", function()
+         launchAppAndExit("Slack", m)
+      end),
+      createModalEntry("I", "iMessage", function()
+         launchAppAndExit("Messages", m)
+      end),
+      createModalEntry("F", "Figma", function()
+         launchAppAndExit("Figma", m)
+      end),
+      createModalEntry("O", "Obsidian", function()
+         launchAppAndExit("Obsidian", m)
+      end),
+      createModalEntry("P", "Spotify", function()
+         launchAppAndExit("Spotify", m)
+      end),
+      createModalEntry("A", "Arc Browser", function()
+         launchAppAndExit("Arc", m)
+      end),
+      createModalEntry("3", "Arc Work Tab 3", function()
+         helpers.restoreAppFocus(function()
+            helpers.switchArcToWorkTab(3)
+         end)
+         m:exit()
+      end),
+      "",
+      "--Submodals--",
+      createModalEntry("R", "Raycast: modal", function()
+         m:exit()
+         raycastModal:enter()
+      end),
+      createModalEntry("X", "System: modal", function()
+         m:exit()
+         systemModal:enter()
+      end),
+      createModalEntry("U", editorConfig.modalLabel, function()
+         m:exit()
+         editorModal:enter()
+      end),
+   }
+end
 
 function Start()
-   -- Create main modal with hotkey binding
-   mainModal = Modal.new({
-      entries = mainModalEntries,
-      fillColor = require("common.constants").colors.grey,
-      hotkey = {
-         modifiers = { "cmd", "ctrl" },
-         key = "d",
-      },
-   })
+   -- Create submodals first (they don't depend on other modals)
 
    -- Create GUI editor submodal
-   editorModal = Modal.new({
+   local editorModal = Modal.new({
       entries = editorModalEntries,
       fillColor = require("common.constants").colors.lightBlue,
    })
 
    -- Create Raycast submodal
-   raycastModal = Modal.new({
+   local raycastModal = Modal.new({
       entries = raycastModalEntries,
       fillColor = require("common.constants").colors.orange,
    })
 
    -- Create System submodal
-   systemModal = Modal.new({
+   local systemModal = Modal.new({
       entries = systemModalEntries,
       fillColor = require("common.constants").colors.purple,
+   })
+
+   -- Create main modal with hotkey binding (depends on submodals)
+   local mainModal = Modal.new({
+      entries = function(m)
+         return mainModalEntries(m, raycastModal, systemModal, editorModal)
+      end,
+      fillColor = require("common.constants").colors.grey,
+      hotkey = {
+         modifiers = { "cmd", "ctrl" },
+         key = "d",
+      },
    })
 end
 

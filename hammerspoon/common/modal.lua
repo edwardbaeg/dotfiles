@@ -15,7 +15,7 @@ Modal.__index = Modal
 ---@field callback function The function to call when the key is pressed
 
 ---@class ModalConfig
----@field entries ModalEntry[] The entries to display in the modal
+---@field entries ModalEntry[] | fun(modal: Modal): ModalEntry[] The entries to display in the modal (can be an array or a function that receives the modal instance)
 ---@field fillColor table The background color for the modal
 ---@field hotkey table? Optional hotkey configuration {modifiers, key}
 
@@ -33,7 +33,8 @@ function Modal.new(config)
    end
 
    self.canvas = nil
-   self.entries = config.entries
+   -- If entries is a function, call it with the modal instance
+   self.entries = type(config.entries) == "function" and config.entries(self) or config.entries
    self.fillColor = config.fillColor
    self.selectedIndex = self:_getFirstSelectableIndex()
 
