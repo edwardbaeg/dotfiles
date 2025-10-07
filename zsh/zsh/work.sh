@@ -25,16 +25,11 @@ decrypt-prod() {
 
 decrypt-default() {
 	pushd ~/dev/oneadvisory/backend/ || return 1
-	# export AWS_PROFILE=oa-prod # aws profile with `prod` acccess
-	# ensure_sso
-	# CRYPTO_PRIMARY_KEY_SECRET=$(chamber read -q prod/auth CRYPTO_PRIMARY_KEY_SECRET)
-	# export CRYPTO_PRIMARY_KEY_SECRET
-	# CRYPTO_PRIMARY_KEY_ID=$(chamber read -q prod/auth CRYPTO_PRIMARY_KEY_ID)
-	# export CRYPTO_PRIMARY_KEY_ID
+	ensure_sso
 	if [ $# -eq 0 ]; then
-		./bin/dispatch crypto decrypt "$(pbpaste)" | jq | tee >(pbcopy)
+		dispatch crypto decrypt "$(pbpaste)" | jq | tee >(pbcopy)
 	else
-		./bin/dispatch crypto decrypt "$@" | jq | tee >(pbcopy)
+		dispatch crypto decrypt "$@" | jq | tee >(pbcopy)
 	fi
 	popd || return
 }
