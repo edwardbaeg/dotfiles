@@ -72,23 +72,24 @@ return {
             eslint = {},
 
             -- lua
-            lua_ls = { -- aka lua-language-server
-               Lua = {
-                  workspace = {
-                     checkThirdParty = false,
-                     library = {
-                        string.format("%s/.hammerspoon/Spoons/EmmyLua.spoon/annotations", os.getenv("HOME")),
-                     },
-                  },
-                  telemetry = { enable = false },
-                  -- lua_ls comes with a builtin formatter by EmmyLuaCodeStyle
-                  -- https://luals.github.io/wiki/formatter/
-                  format = {
-                     enable = true,
-                     align_continuous_inline_comment = false, -- default true
-                  },
-               },
-            },
+            emmylua_ls = {}, -- https://github.com/EmmyLuaLs/emmylua-analyzer-rust
+            -- lua_ls = { -- aka lua-language-server
+            --    Lua = {
+            --       workspace = {
+            --          checkThirdParty = false,
+            --          library = {
+            --             string.format("%s/.hammerspoon/Spoons/EmmyLua.spoon/annotations", os.getenv("HOME")),
+            --          },
+            --       },
+            --       telemetry = { enable = false },
+            --       -- lua_ls comes with a builtin formatter by EmmyLuaCodeStyle
+            --       -- https://luals.github.io/wiki/formatter/
+            --       format = {
+            --          enable = true,
+            --          align_continuous_inline_comment = false, -- default true
+            --       },
+            --    },
+            -- },
 
             -- shell
             bashls = {
