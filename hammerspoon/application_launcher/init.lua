@@ -55,7 +55,7 @@ local personalOverride = toggleFeature.new({
       setupArcHotkeys()
    end,
    defaultState = false,
-   registryName = "personalOverride"
+   registryName = "personalOverride",
 })
 
 -- Export for compatibility
@@ -104,7 +104,6 @@ local mappings = {
 }
 
 function Main()
-
    for _, pair in pairs(mappings) do
       assignAppHotKey(hyperkey, pair[1], pair[2])
    end

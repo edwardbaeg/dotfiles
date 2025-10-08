@@ -85,7 +85,7 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
          end
 
          local lineStyle = {
-            font = {name = "0xProto", size = 20}
+            font = { name = "0xProto", size = 20 },
          }
          if isSelectable and i == self.selectedIndex then
             lineStyle.color = highlightColor or catppuccin.getRgbColor("red")
@@ -97,19 +97,20 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
       end
    end
 
-   styledText = styledText .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
-      color = catppuccin.getRgbColor("subtext0"),
-      font = {name = "0xProto", size = 16}
-   })
+   styledText = styledText
+      .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
+         color = catppuccin.getRgbColor("subtext0"),
+         font = { name = "0xProto", size = 16 },
+      })
 
    -- Calculate dynamic height based on content
    local lineHeight = 24 -- Approximate line height for font size 20
-   local padding = 40    -- Top and bottom padding
+   local padding = 40 -- Top and bottom padding
    local footerHeight = 48 -- Height for footer text (2 lines)
 
    -- Count content lines
    local contentLines = 0
-   for i, entry in ipairs(self.entries) do
+   for _i, entry in ipairs(self.entries) do
       if type(entry) == "string" or (type(entry) == "table" and entry.key and entry.label) then
          contentLines = contentLines + 1
       end
@@ -121,15 +122,15 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
    -- Calculate screen dimensions and position at top third
    local screen = hs.screen.mainScreen()
    local screenFrame = screen:frame()
-   local x = (screenFrame.w - modalWidth) / 2  -- Center horizontally
-   local y = screenFrame.h / 2 - modalHeight / 2  -- Center vertically
+   local x = (screenFrame.w - modalWidth) / 2 -- Center horizontally
+   local y = screenFrame.h / 2 - modalHeight / 2 -- Center vertically
 
    -- Create canvas for custom positioning
    local canvas = hs.canvas.new({
       x = x,
       y = y,
       w = modalWidth,
-      h = modalHeight
+      h = modalHeight,
    })
 
    -- Add background rectangle
@@ -137,7 +138,7 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
       type = "rectangle",
       action = "fill",
       fillColor = self.fillColor,
-      roundedRectRadii = {xRadius = 16, yRadius = 16}
+      roundedRectRadii = { xRadius = 16, yRadius = 16 },
    })
 
    -- Add text
@@ -145,7 +146,7 @@ function Modal:_showModalAlert(highlightColor, fadeOutDuration)
       type = "text",
       text = styledText,
       textAlignment = "left",
-      frame = {x = 20, y = 20, w = modalWidth - 40, h = modalHeight - 40}
+      frame = { x = 20, y = 20, w = modalWidth - 40, h = modalHeight - 40 },
    })
 
    canvas:show(fadeOutDuration or 0)
@@ -229,7 +230,7 @@ function Modal:_getNextSelectableIndex(direction)
    local currentIndex = self.selectedIndex
    local totalEntries = #self.entries
 
-   for i = 1, totalEntries do
+   for _i = 1, totalEntries do
       currentIndex = currentIndex + direction
 
       if currentIndex > totalEntries then
@@ -265,7 +266,9 @@ end
 ---Update canvas highlight color without recreating
 ---@param highlightColor table Color to use for selected item highlighting
 function Modal:_updateCanvasHighlight(highlightColor)
-   if not self.canvas then return end
+   if not self.canvas then
+      return
+   end
 
    local catppuccin = require("common.external.catpuccin-frappe")
    local styledText = hs.styledtext.new("")
@@ -288,7 +291,7 @@ function Modal:_updateCanvasHighlight(highlightColor)
          end
 
          local lineStyle = {
-            font = {name = "0xProto", size = 20}
+            font = { name = "0xProto", size = 20 },
          }
          if isSelectable and i == self.selectedIndex then
             lineStyle.color = highlightColor
@@ -300,17 +303,18 @@ function Modal:_updateCanvasHighlight(highlightColor)
       end
    end
 
-   styledText = styledText .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
-      color = catppuccin.getRgbColor("subtext0"),
-      font = {name = "0xProto", size = 16}
-   })
+   styledText = styledText
+      .. hs.styledtext.new("\n\nEsc/q: Exit | jk/↑↓: Navigate | Enter: Execute", {
+         color = catppuccin.getRgbColor("subtext0"),
+         font = { name = "0xProto", size = 16 },
+      })
 
    -- Update the text element (index 2, after background rectangle)
    self.canvas[2] = {
       type = "text",
       text = styledText,
       textAlignment = "left",
-      frame = {x = 20, y = 20, w = 560, h = self.canvas:frame().h - 40}
+      frame = { x = 20, y = 20, w = 560, h = self.canvas:frame().h - 40 },
    }
 end
 
@@ -319,8 +323,9 @@ function Modal:_executeSelected()
    local selectedEntry = self.entries[self.selectedIndex]
    if type(selectedEntry) == "table" and selectedEntry.callback then
       -- Check if this is a submodal transition by looking for "modal" in the label
-      local isSubmodal = selectedEntry.label and type(selectedEntry.label) == "string" and
-                        (selectedEntry.label:lower():find("modal") or selectedEntry.label:lower():find(":"))
+      local isSubmodal = selectedEntry.label
+         and type(selectedEntry.label) == "string"
+         and (selectedEntry.label:lower():find("modal") or selectedEntry.label:lower():find(":"))
 
       if isSubmodal then
          -- For submodals, show fade out effect and execute
@@ -341,6 +346,7 @@ function Modal:_executeSelected()
          local exitCalled = false
 
          -- Temporarily override exit to prevent callback from closing modal
+         ---@diagnostic disable-next-line: duplicate-set-field
          self.exit = function()
             exitCalled = true
          end
@@ -389,6 +395,5 @@ end
 function Modal:getModal()
    return self.modal
 end
-
 
 return Modal

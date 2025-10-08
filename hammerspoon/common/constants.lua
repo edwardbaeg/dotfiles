@@ -37,11 +37,11 @@ M.screenPadding = 5
 local catppuccin = require("common.external.catpuccin-frappe")
 
 M.colors = {
-   orange = catppuccin.getRgbColor("base", 0.9),      -- Very dark for Raycast modal
-   grey = catppuccin.getRgbColor("surface0", 0.9),    -- Keep main modal as is
-   lightBlue = catppuccin.getRgbColor("base", 0.9),   -- Very dark for Editor modal
-   purple = catppuccin.getRgbColor("base", 0.9),      -- Very dark for purple modal
-   navy = catppuccin.getRgbColor("mantle", 0.9),      -- Darkest for navy
+   orange = catppuccin.getRgbColor("base", 0.9), -- Very dark for Raycast modal
+   grey = catppuccin.getRgbColor("surface0", 0.9), -- Keep main modal as is
+   lightBlue = catppuccin.getRgbColor("base", 0.9), -- Very dark for Editor modal
+   purple = catppuccin.getRgbColor("base", 0.9), -- Very dark for purple modal
+   navy = catppuccin.getRgbColor("mantle", 0.9), -- Darkest for navy
 }
 
 return M

@@ -5,18 +5,24 @@
 function Main()
    local function linearCopyUrl()
       local linearApp = hs.application.find("Linear")
-      if linearApp then
-         linearApp:activate()
-         hs.eventtap.keyStroke({ "cmd", "shift" }, "c", linearApp)
+
+      if linearApp == nil then
+         return
       end
+
+      linearApp:activate()
+      hs.eventtap.keyStroke({ "cmd", "shift" }, "c", linearApp)
    end
 
    local function linearCopyBranchName()
       local linearApp = hs.application.find("Linear")
-      if linearApp then
-         linearApp:activate()
-         hs.eventtap.keyStroke({ "cmd", "shift" }, ".", linearApp)
+
+      if linearApp == nil then
+         return
       end
+
+      linearApp:activate()
+      hs.eventtap.keyStroke({ "cmd", "shift" }, ".", linearApp)
    end
 
    -- usage: hammerspoon://linearCopyUrl

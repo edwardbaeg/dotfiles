@@ -38,7 +38,7 @@ local autoreload = toggleFeature.new({
       hs.alert("Auto-reload disabled")
    end,
    defaultState = true,
-   registryName = "autoreload"
+   registryName = "autoreload",
 })
 
 -- Manual reload function (separate from auto-reload)

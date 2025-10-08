@@ -25,7 +25,7 @@ local caffeine = toggleFeature.new({
       hs.caffeinate.set(sleepType, false)
    end,
    defaultState = false,
-   registryName = "caffeine"
+   registryName = "caffeine",
 })
 
 -- Toggle sleepmode for ryujinx

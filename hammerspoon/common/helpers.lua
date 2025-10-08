@@ -46,9 +46,9 @@ function M.switchArcToWorkTab(tabIndex)
    hs.application.launchOrFocus("Arc")
 
    -- Wait for operations to complete
-   hs.timer.usleep(100000)                              -- 0.1s
+   hs.timer.usleep(100000) -- 0.1s
 
-   hs.eventtap.keyStroke({ "ctrl" }, "4")               -- switch to work
+   hs.eventtap.keyStroke({ "ctrl" }, "4") -- switch to work
    hs.eventtap.keyStroke({ "cmd" }, tostring(tabIndex)) -- switch to tab
 end
 
