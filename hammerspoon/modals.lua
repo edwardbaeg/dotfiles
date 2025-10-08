@@ -99,23 +99,23 @@ local function raycastModalEntries(m)
    return {
       "--Raycast--",
       createModalEntry("A", "AI - Personal Extensions", function()
-         openRaycastURL(RAYCAST_URLS.ai_personal, m)
+         openRaycastURL(RAYCAST_URLS.ai_personal)
          m:exit()
       end),
       createModalEntry("S", "Snippets", function()
-         openRaycastURL(RAYCAST_URLS.snippets, m)
+         openRaycastURL(RAYCAST_URLS.snippets)
          m:exit()
       end),
       createModalEntry("E", "Emoji", function()
-         openRaycastURL(RAYCAST_URLS.emoji, m)
+         openRaycastURL(RAYCAST_URLS.emoji)
          m:exit()
       end),
       createModalEntry("C", "Clipboard", function()
-         openRaycastURL(RAYCAST_URLS.clipboard, m)
+         openRaycastURL(RAYCAST_URLS.clipboard)
          m:exit()
       end),
       createModalEntry("R", "Reasonable size", function()
-         executeRaycastURL(RAYCAST_URLS.reasonable_size, m)
+         executeRaycastURL(RAYCAST_URLS.reasonable_size)
          m:exit()
       end),
    }
@@ -152,7 +152,7 @@ local function systemModalEntries(m)
          m:exit()
       end),
       createModalEntry("S", "Sleep", function()
-         openRaycastURL("raycast://extensions/raycast/system/sleep", m)
+         openRaycastURL("raycast://extensions/raycast/system/sleep")
       end),
    }
 end

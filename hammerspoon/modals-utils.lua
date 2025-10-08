@@ -13,16 +13,20 @@ local function createModalEntry(key, label, callback)
 end
 M.createModalEntry = createModalEntry
 
-local function openRaycastURL(url, modal)
+---@param url string
+local function openRaycastURL(url)
    hs.urlevent.openURL(url)
 end
 M.openRaycastURL = openRaycastURL
 
-local function executeRaycastURL(url, modal)
+---@param url string
+local function executeRaycastURL(url)
    hs.execute("open -g " .. url)
 end
 M.executeRaycastURL = executeRaycastURL
 
+---@param appName string
+---@param modal Modal
 local function launchAppAndExit(appName, modal)
    hs.application.launchOrFocus(appName)
    modal:exit()
