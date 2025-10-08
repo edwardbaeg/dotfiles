@@ -68,6 +68,7 @@ local function sendCodeEditorKey(keystroke, actionMsg)
    end
 end
 
+-- util helpers
 local createModalEntry = modalUtils.createModalEntry
 local openRaycastURL = modalUtils.openRaycastURL
 local executeRaycastURL = modalUtils.executeRaycastURL
@@ -209,35 +210,32 @@ local function mainModalEntries(m, submodals)
    }
 end
 
-function Start()
-   -- Create submodals first (they don't depend on other modals)
-   local submodals = {
-      editor = Modal.new({
-         entries = editorModalEntries,
-         fillColor = require("common.constants").colors.lightBlue,
-      }),
-      raycast = Modal.new({
-         entries = raycastModalEntries,
-         fillColor = require("common.constants").colors.orange,
-      }),
-      system = Modal.new({
-         entries = systemModalEntries,
-         fillColor = require("common.constants").colors.purple,
-      }),
-   }
+-- Create submodals first (they don't depend on other modals)
+M.submodals = {
+   editor = Modal.new({
+      entries = editorModalEntries,
+      fillColor = require("common.constants").colors.lightBlue,
+   }),
+   raycast = Modal.new({
+      entries = raycastModalEntries,
+      fillColor = require("common.constants").colors.orange,
+   }),
+   system = Modal.new({
+      entries = systemModalEntries,
+      fillColor = require("common.constants").colors.purple,
+   }),
+}
 
-   -- Create main modal with hotkey binding (depends on submodals)
-   Modal.new({
-      entries = function(m)
-         return mainModalEntries(m, submodals)
-      end,
-      fillColor = require("common.constants").colors.grey,
-      hotkey = {
-         modifiers = { "cmd", "ctrl" },
-         key = "d",
-      },
-   })
-end
+-- Create main modal with hotkey binding (depends on submodals)
+M.mainModal = Modal.new({
+   entries = function(m)
+      return mainModalEntries(m, M.submodals)
+   end,
+   fillColor = require("common.constants").colors.grey,
+   hotkey = {
+      modifiers = { "cmd", "ctrl" },
+      key = "d",
+   },
+})
 
-M.Start = Start
-M.Start()
+return M
