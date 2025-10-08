@@ -1,5 +1,11 @@
 local M = {}
 
+--- Set keymap
+M.set = function(mode, lhs, rhs, opts)
+   opts = vim.tbl_extend("force", { silent = true }, opts or {})
+   vim.keymap.set(mode, lhs, rhs, opts)
+end
+
 --- Combine two tables
 ---@param t1 table
 ---@param t2 table

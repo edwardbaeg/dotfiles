@@ -1,4 +1,4 @@
-local set = require("config.keymaps").set
+local set = require("utils").set
 
 return {
    {
@@ -81,7 +81,6 @@ return {
          vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff2222" })
 
          set("n", "gh", function() -- NOTE: the default mapping for gh is start select mode
-            ---@diagnostic disable-next-line: param-type-mismatch it's correct
             gitsigns.nav_hunk("next")
          end, { desc = "Next hunk" })
 
@@ -89,11 +88,9 @@ return {
          -- TODO: consider creating a helper to generate standalone and submode mappings
          -- Press <leader>g<space> then use j/k to navigate hunks, p to preview, i for inline
          set("n", "<leader>g<space>j", function()
-            ---@diagnostic disable-next-line: param-type-mismatch it's correct
             gitsigns.nav_hunk("next")
          end, { desc = "Next hunk" })
          set("n", "<leader>g<space>k", function()
-            ---@diagnostic disable-next-line: param-type-mismatch it's correct
             gitsigns.nav_hunk("prev")
          end, { desc = "Prev hunk" })
          set("n", "<leader>g<space>p", gitsigns.preview_hunk, { desc = "Preview hunk" })

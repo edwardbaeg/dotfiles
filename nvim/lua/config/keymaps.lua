@@ -3,13 +3,7 @@
 -- TODO: break up into modules or something with more structure
 -- also consider better organization for legibility
 
-local M = {}
-
-local set = function(mode, lhs, rhs, opts)
-   opts = vim.tbl_extend("force", { silent = true }, opts or {})
-   vim.keymap.set(mode, lhs, rhs, opts)
-end
-M.set = set
+local set = require("utils").set
 
 -- Escaping
 set("i", "jk", "<Esc>") -- leave insert mode
@@ -187,5 +181,3 @@ vim.cmd([[
 
 -- TODO? try to extend so that it also tries gD (or the tag equivalent)
 set("n", "<CR>", "gf", { silent = true })
-
-return M

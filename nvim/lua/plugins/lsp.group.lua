@@ -1,5 +1,5 @@
----@diagnostic disable: missing-fields
 -- LSP, completion, snippets
+local set = require("utils").set
 return {
    {
       -- LSP, formatter, and linter config and plugins

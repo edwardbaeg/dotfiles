@@ -1,9 +1,8 @@
 return {
    -- shows available keybinds, hydra mode
    -- NOTE: this can prevent reactive.nvim from working for operators if triggered
-   -- Replaced with mini.clue
    "folke/which-key.nvim",
-   enabled = false,
+   enabled = false, -- replaced with mini.clue
    -- dependencies = {
    --    "aaronik/treewalker.nvim", -- move around in a syntax aware manner with treesitter
    -- },

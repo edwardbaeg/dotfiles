@@ -1,4 +1,4 @@
-local set = require("config.keymaps").set
+local set = require("utils").set
 local catppuccin = require("catppuccin.palettes").get_palette()
 local themeGreen = catppuccin.green
 
