@@ -15,7 +15,8 @@ return {
          -- this can be a string or function or use ColorfulWinSep
          highlight = blended_color,
          animate = {
-            enabled = "shift",
+            -- enabled = "shift",
+            enabled = false,
             shift = {
                delta_time = 0.1,
                smooth_speed = 1,
