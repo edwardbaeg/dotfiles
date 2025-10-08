@@ -1,6 +1,10 @@
 local M = {}
 
 --- Set keymap
+---@param mode string|string[]
+---@param lhs string
+---@param rhs string|function
+---@param opts? vim.keymap.set.Opts
 M.set = function(mode, lhs, rhs, opts)
    opts = vim.tbl_extend("force", { silent = true }, opts or {})
    vim.keymap.set(mode, lhs, rhs, opts)

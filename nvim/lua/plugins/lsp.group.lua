@@ -1,5 +1,6 @@
 -- LSP, completion, snippets
 local set = require("utils").set
+
 return {
    {
       -- LSP, formatter, and linter config and plugins
@@ -20,22 +21,20 @@ return {
          "saghen/blink.cmp", -- completion engine
       },
       config = function()
-         local keymap = vim.keymap.set
-
          -- Floating window signature and hover
          -- NOTE!!: noice will overwrite the hover handler
-         keymap("n", "K", function()
+         set("n", "K", function()
             vim.lsp.buf.hover({
                border = "rounded", -- floating window border
             })
          end, { desc = "Hover documentation" })
 
-         vim.keymap.set({ "n" }, "<leader>K", function()
+         set({ "n" }, "<leader>K", function()
             vim.lsp.buf.signature_help({
                border = "rounded", -- floating window border
             })
          end, { silent = true, noremap = true, desc = "Hover signature" })
-         vim.keymap.set({ "n" }, "gK", function()
+         set({ "n" }, "gK", function()
             vim.lsp.buf.signature_help({
                border = "rounded", -- floating window border
             })
@@ -162,14 +161,14 @@ return {
          })
 
          -- NOTE: these are specific to typescript-tools
-         vim.keymap.set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true })
-         vim.keymap.set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true })
+         set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true })
+         set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true })
          -- END TYPESCRIPT TOOLS
 
          -- This command comes from the eslint lsp server
          -- FIXME?: this doesnt seem to be attached to typescript files, just typescriptreact?
          -- https://github.com/neovim/nvim-lspconfig/blob/master/lsp/eslint.lua#L43
-         vim.keymap.set("n", "<leader>es", ":LspEslintFixAll<cr>", { silent = true })
+         set("n", "<leader>es", ":LspEslintFixAll<cr>", { silent = true })
 
          -- END LSP CONFIG
          -----------------
@@ -325,22 +324,20 @@ return {
                -- jump_num_shortcut = false,
             },
          })
-         local keymap = vim.keymap.set
-
          -- lsp saga keymaps
-         -- keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>") -- consider replacing with builtin lsp code action (gra)
-         -- keymap("n", "<leader>cr", "<cmd>Lspsaga rename<cr>") -- replaced with builtin, grr
-         -- keymap("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]> -- replaced with overlook
-         -- keymap("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
-         -- keymap("n", "gr", "<cmd>Lspsaga finder<cr>") -- conflicts with builtin gr* mappings
-         -- keymap("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
-         keymap("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
-         keymap("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
-         keymap("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
-         keymap("n", "ge", "<cmd>Lspsaga diagnostic_jump_next<cr>")
-         keymap("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
-         -- keymap('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
-         -- keymap("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" }) -- replaced with builtin lsp signature_help
+         -- set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>") -- consider replacing with builtin lsp code action (gra)
+         -- set("n", "<leader>cr", "<cmd>Lspsaga rename<cr>") -- replaced with builtin, grr
+         -- set("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]> -- replaced with overlook
+         -- set("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
+         -- set("n", "gr", "<cmd>Lspsaga finder<cr>") -- conflicts with builtin gr* mappings
+         -- set("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
+         set("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
+         set("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
+         set("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
+         set("n", "ge", "<cmd>Lspsaga diagnostic_jump_next<cr>")
+         set("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
+         -- set('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
+         -- set("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" }) -- replaced with builtin lsp signature_help
       end,
    },
 
@@ -388,6 +385,7 @@ return {
             },
             window = {
                border = "rounded",
+               -- LSP has issue with this field, but its valid
                size = { height = "60%", width = "60%" },
                sections = {
                   left = {
@@ -506,7 +504,7 @@ return {
          },
       },
       init = function()
-         vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+         set({ "n", "x" }, "<leader>ca", function()
             ---@diagnostic disable-next-line: missing-parameter it's correct
             require("tiny-code-action").code_action()
          end, { desc = "[C]ode [A]ction", silent = true, noremap = true })
