@@ -157,9 +157,38 @@ local function systemModalEntries(m)
    }
 end
 
+local function browserModalEntries(m)
+   return {
+      "--Browser--",
+      createModalEntry("1", "Arc Work Tab 1", function()
+         helpers.switchArcToWorkTab(1)
+         m:exit()
+      end),
+      createModalEntry("3", "Arc Work Tab 3", function()
+         helpers.switchArcToWorkTab(3)
+         m:exit()
+      end),
+      createModalEntry("2", "Arc Work Tab 2", function()
+         helpers.switchArcToWorkTab(2)
+         m:exit()
+      end),
+      createModalEntry("P", "GitHub PRs", function()
+         hs.urlevent.openURL("https://github.com/oneadvisory/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+")
+         m:exit()
+      end),
+      createModalEntry("A", "GitHub Actions", function()
+         hs.urlevent.openURL("https://github.com/oneadvisory/frontend/actions")
+         m:exit()
+      end),
+   }
+end
+
 local function mainModalEntries(m, submodals)
    return {
       "--Apps--",
+      createModalEntry("A", "Arc Browser", function()
+         launchAppAndExit("Arc", m)
+      end),
       createModalEntry("L", "Linear", function()
          launchAppAndExit("Linear", m)
       end),
@@ -184,28 +213,30 @@ local function mainModalEntries(m, submodals)
       createModalEntry("P", "Spotify", function()
          launchAppAndExit("Spotify", m)
       end),
-      createModalEntry("A", "Arc Browser", function()
-         launchAppAndExit("Arc", m)
-      end),
       createModalEntry("3", "Arc Work Tab 3", function()
          helpers.restoreAppFocus(function()
             helpers.switchArcToWorkTab(3)
          end)
          m:exit()
       end),
+
       "",
       "--Submodals--",
+      createModalEntry("B", "Browser: modal", function()
+         m:exit()
+         submodals.browser:enter()
+      end),
       createModalEntry("R", "Raycast: modal", function()
          m:exit()
          submodals.raycast:enter()
       end),
-      createModalEntry("X", "System: modal", function()
-         m:exit()
-         submodals.system:enter()
-      end),
       createModalEntry("U", editorConfig.modalLabel, function()
          m:exit()
          submodals.editor:enter()
+      end),
+      createModalEntry("X", "System: modal", function()
+         m:exit()
+         submodals.system:enter()
       end),
    }
 end
@@ -223,6 +254,10 @@ M.submodals = {
    system = Modal.new({
       entries = systemModalEntries,
       fillColor = require("common.constants").colors.purple,
+   }),
+   browser = Modal.new({
+      entries = browserModalEntries,
+      fillColor = require("common.constants").colors.navy,
    }),
 }
 
