@@ -213,6 +213,9 @@ local function mainModalEntries(m, submodals)
       createModalEntry("P", "Spotify", function()
          launchAppAndExit("Spotify", m)
       end),
+      createModalEntry("N", "Notion", function()
+         launchAppAndExit("Notion", m)
+      end),
       createModalEntry("3", "Arc Work Tab 3", function()
          helpers.restoreAppFocus(function()
             helpers.switchArcToWorkTab(3)
