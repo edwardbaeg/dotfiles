@@ -30,7 +30,7 @@ return {
       -- live scratchpad
       -- doesn't seem to work?
       "metakirby5/codi.vim",
-      -- enabled = false,
+      enabled = false,
       init = function()
          vim.cmd([[ let g:codi#rightalign=1 ]])
       end,
@@ -38,7 +38,9 @@ return {
 
    {
       -- live lua scratchpad
+      -- Usage: :Luapad
       "rafcamlet/nvim-luapad",
+      cmd = "Luapad",
       config = function()
          require("luapad").setup({})
       end,
@@ -47,7 +49,7 @@ return {
    {
       -- toggle persistent terminal
       "akinsho/toggleterm.nvim",
-      lazy = false, -- don't lazy load to set up the mapping
+      lazy = false, -- don't lazy load to set up the mappings
       keys = { [[<c-\>]] },
       config = function()
          require("toggleterm").setup({
