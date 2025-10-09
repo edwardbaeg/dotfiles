@@ -12,14 +12,16 @@ CYAN='\033[36m'
 RESET='\033[0m'
 
 get_cost() {
-	local cost_val=$(echo "$1" | jq -r '.cost.total_cost_usd // empty')
+	local cost_val
+	cost_val=$(echo "$1" | jq -r '.cost.total_cost_usd // empty')
 	if [ -n "$cost_val" ] && [ "$cost_val" != "null" ]; then
 		printf "$%.2f" "$cost_val"
 	fi
 }
 
 get_duration() {
-	local duration_ms=$(echo "$1" | jq -r '.cost.total_duration_ms // empty')
+	local duration_ms
+	duration_ms=$(echo "$1" | jq -r '.cost.total_duration_ms // empty')
 	if [ -n "$duration_ms" ] && [ "$duration_ms" != "null" ]; then
 		local duration_s=$((duration_ms / 1000))
 		echo "${duration_s}s"
@@ -34,7 +36,7 @@ get_lines_removed() { echo "$input" | jq -r '.cost.total_lines_removed'; }
 current_dir=$(echo "$input" | jq -r '.workspace.current_dir' | sed "s|$HOME|~|")
 model_name=$(echo "$input" | jq -r '.model.display_name')
 cost=$(get_cost "$input")
-duration=$(get_duration "$input")
+_duration=$(get_duration "$input")
 
 status_line=""
 
@@ -42,7 +44,7 @@ status_line=""
 status_line+="${CYAN}${current_dir}${RESET}"
 
 # Add model name
-status_line+=" ${GREEN}[${model_name}]${RESET}"
+status_line+=" ${GREEN}${model_name}${RESET}"
 
 # Add cost
 if [ -n "$cost" ]; then
