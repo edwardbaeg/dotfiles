@@ -1,0 +1,12 @@
+# Ghostty Configuration
+
+# Font
+font-family = 0xProto
+font-size = 16
+
+# Padding
+window-padding-x = 10
+window-padding-y = 10
+
+# Keybinds
+keybind = super+shift+ctrl+comma=reload_config
