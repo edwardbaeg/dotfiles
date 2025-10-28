@@ -5,6 +5,7 @@ alias gcm2="git checkout master2 && git reset --hard origin/master"
 alias front="cd ~/dev/oneadvisory/frontend"
 alias work="cd ~/dev/oneadvisory/frontend-worktree"
 alias back="cd ~/dev/oneadvisory/backend"
+alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
 
 # decrypts argument or clipboard, outputs result and copies to clipboard
 decrypt-prod() {
