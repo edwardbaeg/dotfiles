@@ -235,6 +235,7 @@ Keyboard layers (0-index), global keyboard bindings are managed through ZSA Oryx
 
 - Create ssh key for git (press enter for default file location)
 - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+<!-- NOTE: might need to update this to use ed25519 -->
 
 ```
 ssh-keygen -t rsa -b 4096 -C "youremail@domain.com"
@@ -262,6 +263,13 @@ echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa
 
 ```
 pbcopy < ~/.ssh/id_rsa.pub
+```
+
+### SSH key authentication
+
+```
+ssh-add ~/.ssh/id_ed25519
+ssh-copy-id <username>@<hostname>
 ```
 
 ### Mods
