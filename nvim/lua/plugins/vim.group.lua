@@ -192,7 +192,7 @@ return {
       "rachartier/tiny-glimmer.nvim",
       -- event = "TextYankPost",
       opts = {
-         refresh_interval_ms = 10,
+         refresh_interval_ms = 8,
          transparency_color = "#021818",
 
          animations = {
