@@ -14,6 +14,7 @@ local RAYCAST_URLS = {
    emoji = "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols",
    clipboard = "raycast://extensions/raycast/clipboard-history/clipboard-history",
    reasonable_size = "raycast://extensions/raycast/window-management/reasonable-size",
+   center = "raycast://extensions/raycast/window-management/center",
 }
 
 local EDITOR_CONFIGS = {
@@ -110,8 +111,12 @@ local function raycastModalEntries(m)
          openRaycastURL(RAYCAST_URLS.emoji)
          m:exit()
       end),
-      createModalEntry("C", "Clipboard", function()
+      createModalEntry("V", "Clipboard", function()
          openRaycastURL(RAYCAST_URLS.clipboard)
+         m:exit()
+      end),
+      createModalEntry("C", "Center window", function()
+         executeRaycastURL(RAYCAST_URLS.center)
          m:exit()
       end),
       createModalEntry("R", "Reasonable size", function()
