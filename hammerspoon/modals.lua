@@ -22,13 +22,13 @@ local EDITOR_CONFIGS = {
       appName = "Cursor",
       backupAppName = "",
       displayName = "--Cursor--",
-      modalLabel = "Cursor: modal",
+      modalLabel = "Cursor",
    },
    vscode = {
       appName = "visual studio code",
       backupAppName = "code",
       displayName = "--VSCode--",
-      modalLabel = "VSCode: modal",
+      modalLabel = "VSCode",
    },
 }
 
@@ -126,9 +126,9 @@ local function raycastModalEntries(m)
    }
 end
 
-local function systemModalEntries(m)
+local function hammerspoonModalEntries(m)
    return {
-      "--System--",
+      "--Hammerspoon--",
       createModalEntry("C", function()
          local caffeine = registry.get("caffeine")
          return getToggleLabel(caffeine and caffeine.isEnabled() or false, "Caffeine")
@@ -156,6 +156,19 @@ local function systemModalEntries(m)
          togglePersonalOverride()
          m:exit()
       end),
+      createModalEntry("R", "Reload config", function()
+         hs.alert("Reloading config...")
+         hs.timer.doAfter(0.1, function()
+            hs.reload()
+         end)
+         m:exit()
+      end),
+   }
+end
+
+local function systemModalEntries(m)
+   return {
+      "--System--",
       createModalEntry("S", "Sleep", function()
          openRaycastURL("raycast://extensions/raycast/system/sleep")
       end),
@@ -230,19 +243,23 @@ local function mainModalEntries(m, submodals)
 
       "",
       "--Submodals--",
-      createModalEntry("B", "Browser: modal", function()
+      createModalEntry("B", "Browser", function()
          m:exit()
          submodals.browser:enter()
       end),
-      createModalEntry("R", "Raycast: modal", function()
+      createModalEntry("R", "Raycast", function()
          m:exit()
          submodals.raycast:enter()
+      end),
+      createModalEntry("H", "Hammerspoon", function()
+         m:exit()
+         submodals.hammerspoon:enter()
       end),
       createModalEntry("U", editorConfig.modalLabel, function()
          m:exit()
          submodals.editor:enter()
       end),
-      createModalEntry("X", "System: modal", function()
+      createModalEntry("X", "System", function()
          m:exit()
          submodals.system:enter()
       end),
@@ -258,6 +275,10 @@ M.submodals = {
    raycast = Modal.new({
       entries = raycastModalEntries,
       fillColor = require("common.constants").colors.orange,
+   }),
+   hammerspoon = Modal.new({
+      entries = hammerspoonModalEntries,
+      fillColor = require("common.constants").colors.grey,
    }),
    system = Modal.new({
       entries = systemModalEntries,
