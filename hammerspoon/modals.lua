@@ -225,8 +225,8 @@ local function mainModalEntries(m, submodals)
       createModalEntry("F", "Figma", function()
          launchAppAndExit("Figma", m)
       end),
-      createModalEntry("O", "Obsidian", function()
-         launchAppAndExit("Obsidian", m)
+      createModalEntry("O", "Todoist", function()
+         launchAppAndExit("Todoist", m)
       end),
       createModalEntry("P", "Spotify", function()
          launchAppAndExit("Spotify", m)
