@@ -27,5 +27,5 @@ windows:
     panes:
       - shell_command: # pane no. 1
           - front
-          - npm run dev:local
+          - npm run dev
       - front
