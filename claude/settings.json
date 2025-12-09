@@ -30,7 +30,7 @@
     "command": "~/.claude/statusline-command.sh",
     "padding": 0
   },
-  "alwaysThinkingEnabled": false,
+  "alwaysThinkingEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
   }
