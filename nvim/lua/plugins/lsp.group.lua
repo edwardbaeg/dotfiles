@@ -365,8 +365,8 @@ return {
 
    {
       -- Popup with quick, interactive lsp navigation
-      -- "SmiteshP/nvim-navbuddy",
-      "hasansujon786/nvim-navbuddy", -- this is the updated fork?
+      "hasansujon786/nvim-navbuddy", -- this is the updated fork
+      -- "SmiteshP/nvim-navbuddy", -- this is deprecated original
       -- event = "VeryLazy",
       dependencies = {
          "neovim/nvim-lspconfig",
@@ -386,7 +386,7 @@ return {
             window = {
                border = "rounded",
                -- LSP has issue with this field, but its valid
-               size = { height = "60%", width = "60%" },
+               size = { height = "60%", width = "80%" },
                sections = {
                   left = {
                      size = "25%",
