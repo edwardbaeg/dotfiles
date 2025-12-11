@@ -302,4 +302,10 @@ M.mainModal = Modal.new({
    },
 })
 
+-- Bind shift+O to send cmd+shift+t
+M.mainModal:getModal():bind("shift", "o", function()
+   hs.eventtap.keyStroke({"cmd", "ctrl"}, "t")
+   M.mainModal:exit()
+end)
+
 return M
