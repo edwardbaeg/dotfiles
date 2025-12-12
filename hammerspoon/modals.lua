@@ -9,7 +9,8 @@ local togglePersonalOverride = appLauncher.togglePersonalOverride
 local M = {}
 
 local RAYCAST_URLS = {
-   ai_personal = "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
+   ai_personal =
+   "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
    snippets = "raycast://extensions/raycast/snippets/search-snippets",
    emoji = "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols",
    clipboard = "raycast://extensions/raycast/clipboard-history/clipboard-history",
@@ -70,222 +71,191 @@ local function sendCodeEditorKey(keystroke, actionMsg)
 end
 
 -- util helpers
-local createModalEntry = modalUtils.createModalEntry
-local openRaycastURL = modalUtils.openRaycastURL
-local executeRaycastURL = modalUtils.executeRaycastURL
-local launchAppAndExit = modalUtils.launchAppAndExit
+local processSimpleEntries = modalUtils.processSimpleEntries
 
-local function editorModalEntries(m)
-   return {
-      editorConfig.displayName,
-      createModalEntry("O", "Open", function()
+---@type SimpleModalItem[]
+local editorModalEntries = {
+   editorConfig.displayName,
+   {
+      type = "custom",
+      "O",
+      "Open",
+      function()
          local success = hs.application.launchOrFocus(editorConfig.appName)
          if not success then
             hs.alert(editorConfig.appName .. " cannot be opened")
          end
-         m:exit()
-      end),
-      createModalEntry("S", "Start debug server", function()
+      end,
+   },
+   {
+      type = "custom",
+      "S",
+      "Start debug server",
+      function()
          sendCodeEditorKey({ modifiers = {}, key = "F5" }, "Starting debug server...")
-         m:exit()
-      end),
-      createModalEntry("R", "Restart debug server", function()
+      end,
+   },
+   {
+      type = "custom",
+      "R",
+      "Restart debug server",
+      function()
          sendCodeEditorKey({ modifiers = { "cmd", "shift" }, key = "F5" }, "Restarting debug server...")
-         m:exit()
-      end),
-   }
-end
+      end,
+   },
+}
 
-local function raycastModalEntries(m)
-   return {
-      "--Raycast--",
-      createModalEntry("A", "AI - Personal Extensions", function()
-         openRaycastURL(RAYCAST_URLS.ai_personal)
-         m:exit()
-      end),
-      createModalEntry("S", "Snippets", function()
-         openRaycastURL(RAYCAST_URLS.snippets)
-         m:exit()
-      end),
-      createModalEntry("E", "Emoji", function()
-         openRaycastURL(RAYCAST_URLS.emoji)
-         m:exit()
-      end),
-      createModalEntry("V", "Clipboard", function()
-         openRaycastURL(RAYCAST_URLS.clipboard)
-         m:exit()
-      end),
-      createModalEntry("C", "Center window", function()
-         executeRaycastURL(RAYCAST_URLS.center)
-         m:exit()
-      end),
-      createModalEntry("R", "Reasonable size", function()
-         executeRaycastURL(RAYCAST_URLS.reasonable_size)
-         m:exit()
-      end),
-   }
-end
+---@type SimpleModalItem[]
+local raycastModalEntries = {
+   "--Raycast--",
+   { type = "url", "A", "AI - Personal Extensions", RAYCAST_URLS.ai_personal },
+   { type = "url", "S", "Snippets", RAYCAST_URLS.snippets },
+   { type = "url", "E", "Emoji", RAYCAST_URLS.emoji },
+   { type = "url", "V", "Clipboard", RAYCAST_URLS.clipboard },
+   { type = "url_bg", "C", "Center window", RAYCAST_URLS.center },
+   { type = "url_bg", "R", "Reasonable size", RAYCAST_URLS.reasonable_size },
+}
 
-local function hammerspoonModalEntries(m)
-   return {
-      "--Hammerspoon--",
-      createModalEntry("C", function()
+---@type SimpleModalItem[]
+local hammerspoonModalEntries = {
+   "--Hammerspoon--",
+   {
+      type = "custom",
+      "C",
+      function()
          local caffeine = registry.get("caffeine")
          return getToggleLabel(caffeine and caffeine.isEnabled() or false, "Caffeine")
-      end, function()
+      end,
+      function()
          local caffeine = registry.get("caffeine")
          if caffeine then
             caffeine.toggle()
          end
-         m:exit()
-      end),
-      createModalEntry("A", function()
+      end,
+   },
+   {
+      type = "custom",
+      "A",
+      function()
          local autoreload = registry.get("autoreload")
          return getToggleLabel(autoreload and autoreload.isEnabled() or false, "Autoreload")
-      end, function()
+      end,
+      function()
          local autoreload = registry.get("autoreload")
          if autoreload then
             autoreload.toggle()
          end
-         m:exit()
-      end),
-      createModalEntry("P", function()
+      end,
+   },
+   {
+      type = "custom",
+      "P",
+      function()
          local personalOverride = registry.get("personalOverride")
          return getToggleLabel(personalOverride and personalOverride.isEnabled() or false, "Arc personal")
-      end, function()
+      end,
+      function()
          togglePersonalOverride()
-         m:exit()
-      end),
-      createModalEntry("R", "Reload config", function()
+      end,
+   },
+   {
+      type = "custom",
+      "R",
+      "Reload config",
+      function()
          hs.alert("Reloading config...")
          hs.timer.doAfter(0.1, function()
             hs.reload()
          end)
-         m:exit()
-      end),
-   }
-end
+      end,
+   },
+}
 
-local function systemModalEntries(m)
-   return {
-      "--System--",
-      createModalEntry("S", "Sleep", function()
-         openRaycastURL("raycast://extensions/raycast/system/sleep")
-      end),
-   }
-end
+---@type SimpleModalItem[]
+local systemModalEntries = {
+   "--System--",
+   { type = "url", "S", "Sleep", "raycast://extensions/raycast/system/sleep" },
+}
 
-local function browserModalEntries(m)
-   return {
-      "--Browser--",
-      createModalEntry("1", "Arc Work Tab 1", function()
-         helpers.switchArcToWorkTab(1)
-         m:exit()
-      end),
-      createModalEntry("3", "Arc Work Tab 3", function()
-         helpers.switchArcToWorkTab(3)
-         m:exit()
-      end),
-      createModalEntry("2", "Arc Work Tab 2", function()
-         helpers.switchArcToWorkTab(2)
-         m:exit()
-      end),
-      createModalEntry("P", "GitHub PRs", function()
-         hs.urlevent.openURL("https://github.com/oneadvisory/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+")
-         m:exit()
-      end),
-      createModalEntry("A", "GitHub Actions", function()
-         hs.urlevent.openURL("https://github.com/oneadvisory/frontend/actions")
-         m:exit()
-      end),
-   }
-end
+---@type SimpleModalItem[]
+local browserModalEntries = {
+   "--Browser--",
+   { type = "custom", "1", "Arc Work Tab 1", function()
+      helpers.switchArcToWorkTab(1)
+   end },
+   { type = "custom", "3", "Arc Work Tab 3", function()
+      helpers.switchArcToWorkTab(3)
+   end },
+   { type = "custom", "2", "Arc Work Tab 2", function()
+      helpers.switchArcToWorkTab(2)
+   end },
+   { type = "url", "P", "GitHub PRs", "https://github.com/oneadvisory/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+" },
+   { type = "url", "A", "GitHub Actions", "https://github.com/oneadvisory/frontend/actions" },
+}
 
-local function mainModalEntries(m, submodals)
-   return {
-      "--Apps--",
-      createModalEntry("A", "Arc Browser", function()
-         launchAppAndExit("Arc", m)
-      end),
-      createModalEntry("L", "Linear", function()
-         launchAppAndExit("Linear", m)
-      end),
-      createModalEntry("T", "Telegram", function()
-         launchAppAndExit("Telegram", m)
-      end),
-      createModalEntry("Z", "Zen", function()
-         launchAppAndExit("zen", m)
-      end),
-      createModalEntry("S", "Slack", function()
-         launchAppAndExit("Slack", m)
-      end),
-      createModalEntry("I", "iMessage", function()
-         launchAppAndExit("Messages", m)
-      end),
-      createModalEntry("F", "Figma", function()
-         launchAppAndExit("Figma", m)
-      end),
-      createModalEntry("O", "Todoist", function()
-         launchAppAndExit("Todoist", m)
-      end),
-      createModalEntry("P", "Spotify", function()
-         launchAppAndExit("Spotify", m)
-      end),
-      createModalEntry("N", "Notion", function()
-         launchAppAndExit("Notion", m)
-      end),
-      createModalEntry("3", "Arc Work Tab 3", function()
+---@type SimpleModalItem[]
+local mainModalEntries = {
+   "--Apps--",
+   { type = "app", "A", "Arc Browser", "Arc" },
+   { type = "app", "L", "Linear",      "Linear" },
+   { type = "app", "T", "Telegram",    "Telegram" },
+   { type = "app", "Z", "Zen",         "zen" },
+   { type = "app", "S", "Slack",       "Slack" },
+   { type = "app", "I", "iMessage",    "Messages" },
+   { type = "app", "F", "Figma",       "Figma" },
+   { type = "app", "O", "Todoist",     "Todoist" },
+   { type = "app", "P", "Spotify",     "Spotify" },
+   { type = "app", "N", "Notion",      "Notion" },
+   {
+      type = "custom",
+      "3",
+      "Arc Work Tab 3",
+      function()
          helpers.restoreAppFocus(function()
             helpers.switchArcToWorkTab(3)
          end)
-         m:exit()
-      end),
+      end,
+   },
 
-      "",
-      "--Submodals--",
-      createModalEntry("B", "Browser", function()
-         m:exit()
-         submodals.browser:enter()
-      end),
-      createModalEntry("R", "Raycast", function()
-         m:exit()
-         submodals.raycast:enter()
-      end),
-      createModalEntry("H", "Hammerspoon", function()
-         m:exit()
-         submodals.hammerspoon:enter()
-      end),
-      createModalEntry("U", editorConfig.modalLabel, function()
-         m:exit()
-         submodals.editor:enter()
-      end),
-      createModalEntry("X", "System", function()
-         m:exit()
-         submodals.system:enter()
-      end),
-   }
-end
+   "",
+   "--Submodals--",
+   { type = "submodal", "B", "Browser",               "browser" },
+   { type = "submodal", "R", "Raycast",               "raycast" },
+   { type = "submodal", "H", "Hammerspoon",           "hammerspoon" },
+   { type = "submodal", "U", editorConfig.modalLabel, "editor" },
+   { type = "submodal", "X", "System",                "system" },
+}
 
--- Create submodals first (they don't depend on other modals)
+-- Create submodals first
 M.submodals = {
    editor = Modal.new({
-      entries = editorModalEntries,
+      entries = function(m)
+         return processSimpleEntries(editorModalEntries, m, {})
+      end,
       fillColor = require("common.constants").colors.lightBlue,
    }),
    raycast = Modal.new({
-      entries = raycastModalEntries,
+      entries = function(m)
+         return processSimpleEntries(raycastModalEntries, m, {})
+      end,
       fillColor = require("common.constants").colors.orange,
    }),
    hammerspoon = Modal.new({
-      entries = hammerspoonModalEntries,
+      entries = function(m)
+         return processSimpleEntries(hammerspoonModalEntries, m, {})
+      end,
       fillColor = require("common.constants").colors.grey,
    }),
    system = Modal.new({
-      entries = systemModalEntries,
+      entries = function(m)
+         return processSimpleEntries(systemModalEntries, m, {})
+      end,
       fillColor = require("common.constants").colors.purple,
    }),
    browser = Modal.new({
-      entries = browserModalEntries,
+      entries = function(m)
+         return processSimpleEntries(browserModalEntries, m, {})
+      end,
       fillColor = require("common.constants").colors.navy,
    }),
 }
@@ -293,7 +263,7 @@ M.submodals = {
 -- Create main modal with hotkey binding (depends on submodals)
 M.mainModal = Modal.new({
    entries = function(m)
-      return mainModalEntries(m, M.submodals)
+      return processSimpleEntries(mainModalEntries, m, M.submodals)
    end,
    fillColor = require("common.constants").colors.grey,
    hotkey = {
@@ -304,7 +274,7 @@ M.mainModal = Modal.new({
 
 -- Bind shift+O to send cmd+shift+t
 M.mainModal:getModal():bind("shift", "o", function()
-   hs.eventtap.keyStroke({"cmd", "ctrl"}, "t")
+   hs.eventtap.keyStroke({ "cmd", "cttrl" }, "t")
    M.mainModal:exit()
 end)
 
