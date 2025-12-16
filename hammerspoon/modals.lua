@@ -194,6 +194,12 @@ local browserModalEntries = {
 }
 
 ---@type SimpleModalItem[]
+local dispatchModalEntries = {
+   "--Dispatch--",
+   { type = "url", "P", "FE PRs", "https://github.com/oneadvisory/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+" },
+}
+
+---@type SimpleModalItem[]
 local mainModalEntries = {
    "--Apps--",
    { type = "app", "A", "Arc Browser", "Arc" },
@@ -220,6 +226,7 @@ local mainModalEntries = {
    "",
    "--Submodals--",
    { type = "submodal", "B", "Browser",               "browser" },
+   { type = "submodal", "D", "Dispatch",              "dispatch" },
    { type = "submodal", "R", "Raycast",               "raycast" },
    { type = "submodal", "H", "Hammerspoon",           "hammerspoon" },
    { type = "submodal", "U", editorConfig.modalLabel, "editor" },
@@ -257,6 +264,12 @@ M.submodals = {
          return processSimpleEntries(browserModalEntries, m, {})
       end,
       fillColor = require("common.constants").colors.navy,
+   }),
+   dispatch = Modal.new({
+      entries = function(m)
+         return processSimpleEntries(dispatchModalEntries, m, {})
+      end,
+      fillColor = require("common.constants").colors.purple,
    }),
 }
 
