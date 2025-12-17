@@ -17,12 +17,13 @@ if not vim.g.disable_plugins then
    })
 end
 
--- load settings after plugins
-require("config.settings")
+-- load options after plugins
+require("config.options")
 
 --[[ TODO
 
 - PLUGINS:
+- an extension that enables a "table of contents" navigation for a file based on markdown style comments
 - an extenion for bufferline to reorder the list of buffers?
 - add a custom % motion (endwise?) thing for START and END comments
 - determine a way to open *.stories or *.test for the given file - maybe a plugin? or extension of snacks.picker?

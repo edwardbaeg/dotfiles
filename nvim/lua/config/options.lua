@@ -5,6 +5,8 @@
 
 -- TODO: create new sections or files for autocommands and user commands
 
+-- ## Nvim options
+
 vim.o.number = true -- Make line numbers default
 -- vim.o.relativenumber = true -- show relative line numbers
 
@@ -49,6 +51,9 @@ vim.o.splitbelow = true -- open splits on the bottom
 -- vim.o.cmdheight = 2 -- number of screen lines for command-line
 vim.o.cmdheight = 1 -- number of screen lines for command-line
 vim.o.showmode = false --whether to show -- INSERT -- in command-line
+
+-- fancy empy diffs
+vim.opt.fillchars:append("diff:╱")
 
 -- vim.o.showmatch = true -- briefly flash matching bracket -- replaced with vim-matchup
 -- vim.o.matchtime = 2 = multiple of 100ms
