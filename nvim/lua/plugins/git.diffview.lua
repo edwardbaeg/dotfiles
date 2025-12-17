@@ -4,7 +4,25 @@ return {
    "sindrets/diffview.nvim",
    event = "VeryLazy",
    config = function()
-      require("diffview").setup()
+      require("diffview").setup({
+         -- try to make it more similar to vscode
+         -- hooks = {
+         --    diff_buf_win_enter = function(bufnr, winid, ctx)
+         --       if ctx.layout_name:match("^diff2") then
+         --          if ctx.symbol == "a" then
+         --             vim.opt_local.winhl = table.concat({
+         --                "DiffAdd:DiffviewDiffAddAsDelete",
+         --                "DiffDelete:DiffviewDiffDelete",
+         --             }, ",")
+         --          elseif ctx.symbol == "b" then
+         --             vim.opt_local.winhl = table.concat({
+         --                "DiffDelete:DiffviewDiffDelete",
+         --             }, ",")
+         --          end
+         --       end
+         --    end,
+         -- },
+      })
 
       vim.keymap.set("n", "<leader>do", "<cmd>DiffviewOpen<cr>", { noremap = true })
       vim.keymap.set("n", "<leader>dc", "<cmd>DiffviewClose<cr>", { noremap = true })
@@ -20,6 +38,14 @@ return {
       vim.keymap.set("n", "<leader>gdn", actions.next_conflict, { noremap = true, desc = "[n]ext conflict" })
       vim.keymap.set("n", "<leader>dp", actions.prev_conflict, { noremap = true, desc = "[p]revious conflict" })
       vim.keymap.set("n", "<leader>gdp", actions.prev_conflict, { noremap = true, desc = "[p]revious conflict" })
+
+      -- prettier highlights
+      vim.api.nvim_set_hl(0, "DiffAdd", {bg = "#20303b"})
+      vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#191010" })
+      vim.api.nvim_set_hl(0, "DiffChange", {bg = "#1f2231"})
+      vim.api.nvim_set_hl(0, "DiffText", {bg = "#394b70"})
+
+      vim.api.nvim_set_hl(0, 'DiffviewDiffDelete', { fg = "#4a2d3a" })
 
       local function diff_open_with_input()
          -- local user_input = vim.fn.input("Revision to Open: ")
