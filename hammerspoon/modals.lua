@@ -291,4 +291,10 @@ M.mainModal:getModal():bind("shift", "o", function()
    M.mainModal:exit()
 end)
 
+-- Bind cmd+ctrl+D to open dispatch modal directly
+M.mainModal:getModal():bind({ "cmd", "ctrl" }, "d", function()
+   M.mainModal:exit()
+   M.submodals.dispatch:enter()
+end)
+
 return M
