@@ -150,6 +150,7 @@
   "vim-sleuth": { "branch": "master", "commit": "be69bff86754b1aa5adcbb527d7fcd1635a84080" },
   "vim-tmux-navigator": { "branch": "master", "commit": "c45243dc1f32ac6bcf6068e5300f3b2b237e576a" },
   "visimatch.nvim": { "branch": "main", "commit": "4334be61a9d3a6b268179144c6354349e445eb89" },
+  "vscode-diff.nvim": { "branch": "main", "commit": "1af62a52bf7cfbaebd9e765092575daaff5f68fe" },
   "wezterm-types": { "branch": "main", "commit": "bba4eacfdce545a9d5c29c69d20bbb9c90189224" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
   "yankbank-nvim": { "branch": "main", "commit": "0d97b474bc2be2583bcc3d66a7fb020d30065693" },
