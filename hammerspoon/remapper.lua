@@ -44,3 +44,13 @@ sendKey({ "alt", "ctrl" }, "j", {}, "pagedown")
 hs.hotkey.bind(constants.hyperkey, "=", function()
    hs.execute("open -g raycast://extensions/raycast/window-management/make-larger")
 end)
+
+-- Todoist: cmd+n -> q (quick add)
+hs.hotkey.bind({ "cmd" }, "n", function()
+   local frontmostApp = hs.application.frontmostApplication()
+   if frontmostApp and frontmostApp:name() == "Todoist" then
+      hs.eventtap.keyStroke({}, "q", frontmostApp)
+   else
+      hs.eventtap.keyStroke({ "cmd" }, "n", frontmostApp)
+   end
+end)
