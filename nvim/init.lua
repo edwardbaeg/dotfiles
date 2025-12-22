@@ -29,6 +29,7 @@ require("config.options")
 - determine a way to open *.stories or *.test for the given file - maybe a plugin? or extension of snacks.picker?
 
 - OTHER:
+- fix using two lua lsps
 - migrate to vim.lsp
 - use exported `set` keymap function from config.keymaps
 - rewrite all vimscript stuff to lua
