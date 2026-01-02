@@ -98,6 +98,7 @@ return {
                transparent_background = true,
             })
             vim.cmd.colorscheme("catppuccin-latte")
+            vim.api.nvim_set_hl(0, "CursorLine", { bg = "#ffffff" }) -- also set with reactive.nvim
          end,
       },
    },

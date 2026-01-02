@@ -154,8 +154,9 @@ vim.api.nvim_create_user_command("Bda", "bufdo bd", { desc = "Close all buffers"
 -- vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#546178" }) -- border of floating windows -- this is set by some plugins
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#101010" })
 -- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#141414" })
--- vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- set with reactive.nvim
-vim.api.nvim_set_hl(0, "CursorLine", { bg = "#0A2222" }) -- set with reactive.nvim
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "grey9" }) -- also set with reactive.nvim
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#0A2222" }) -- also set with reactive.nvim
+-- vim.api.nvim_set_hl(0, "CursorLine", { bg = "#ffffff" }) -- also set with reactive.nvim
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#ffffff" }) -- make matching parens easier to see
 
 -- TODO: only highlight trailing whitespace

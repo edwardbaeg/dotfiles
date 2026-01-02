@@ -21,7 +21,8 @@ return {
                -- hl is global and winhl is only for the current window
                hl = {
                   -- NOTE: cursorline also needs to be set in settings so it won't be overwritten
-                  CursorLine = { bg = "#0A2222" },
+                  -- CursorLine = { bg = "#0A2222" },
+                  CursorLine = { bg = "#ffffff" },
                   CursorLineNr = { bg = "black" },
                   -- CursorLineNr = { bg = "gray1" },
                   -- CursorLine = { bg = "gray7" },
