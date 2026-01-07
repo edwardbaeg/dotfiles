@@ -136,3 +136,14 @@ hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
       win:move(win:frame():toUnitRect(screen:frame()), screen:next(), true, 0)
    end)
 end)
+
+-- Window hints ----------------------------------
+--------------------------------------------------
+
+-- Set hints to vimperator style
+-- Hints will start with the first character of the window title
+hs.hints.style = "vimperator"
+
+hs.hotkey.bind(hyperkey, "W", function()
+   hs.hints.windowHints()
+end)

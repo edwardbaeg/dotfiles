@@ -160,6 +160,14 @@ local hammerspoonModalEntries = {
    },
    {
       type = "custom",
+      "W",
+      "Window hints",
+      function()
+         hs.hints.windowHints()
+      end,
+   },
+   {
+      type = "custom",
       "R",
       "Reload config",
       function()
