@@ -57,3 +57,32 @@ export ECR_AWS_PROFILE=oa-dev
 
 # to run dc locally
 # AWS_PROFILE=dispatch-dev01 CHAMBER_TENANT=develop/ npx yarn dev:services
+
+# Override tsc command to warn when running in frontend directory
+tsc() {
+	# Check if current directory contains /frontend and first arg is -b
+	if [[ "$PWD" == *"/frontend"* ]] && [[ "$1" == "-b" ]]; then
+		echo "⚠️  Warning: You're running 'tsc -b' in a frontend directory."
+		echo "Did you mean to run 'npx tsc -b' instead?"
+		echo -n "Continue with 'tsc -b'? (y/N/Esc to cancel): "
+		read -k 1 REPLY
+		echo
+
+		# Check if ESC was pressed (character code 27)
+		if [[ $REPLY == $'\e' ]]; then
+			echo "Cancelled."
+			return 0
+		elif [[ $REPLY =~ ^[Yy]$ ]]; then
+			# User pressed 'y', run the actual tsc command
+			command tsc "$@"
+		else
+			# User pressed anything else, run npx tsc
+			echo "Running 'npx tsc $*' instead..."
+			command npx tsc "$@"
+		fi
+		return $?
+	fi
+
+	# Run the actual tsc command
+	command tsc "$@"
+}
