@@ -110,7 +110,9 @@ export DISABLE_AUTO_TITLE='true'
 
 # Load zgen
 # https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
-# NOTE: After adding plugins, run `zgen reset` and then source
+# Usage:
+# - zgen reset - run after removing or adding plugins, then source
+# - zgen update - update all plugins
 source "${HOME}/.zgen/zgen.zsh"
 
 # If the init script doesn't exist
@@ -124,6 +126,7 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/colored-man-pages
     # zgen oh-my-zsh plugins/tmux
     zgen oh-my-zsh plugins/alias-finder # says if command has an alias
+    zgen oh-my-zsh plugins/asdf # add asdf completion
 
     # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
     zgen load zdharma-continuum/fast-syntax-highlighting
@@ -230,6 +233,10 @@ fi
 
 # run this command to add awscli autocompletion
 # complete -C aws_completer aws
+
+# asdf
+# add shims directory to path
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
