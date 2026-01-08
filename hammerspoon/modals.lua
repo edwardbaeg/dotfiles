@@ -220,6 +220,7 @@ local mainModalEntries = {
    { type = "app", "O", "Todoist",     "Todoist" },
    { type = "app", "P", "Spotify",     "Spotify" },
    { type = "app", "N", "Notion",      "Notion" },
+   { type = "app", "V", "Zoom",      "zoom.us" },
    {
       type = "custom",
       "3",
