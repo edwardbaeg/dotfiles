@@ -142,7 +142,7 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 
 ##### Menubar
 
-- `Bartender`: menubar management
+- `Ice`: menubar management (FOSS, replaces Bartender)
 - `Dato`: menubar calendar and meetings
 - `Meteorologist`: weather in menubar
 - `Monitor Control`: menubar monitor brightness

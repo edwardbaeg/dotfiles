@@ -1,6 +1,9 @@
-tap "FelixKratz/formulae"
-brew "borders"
-
+# CLI tools
 brew "eza"
 brew "tlrc"
 brew "gdu"
+
+# GUI applications
+cask "jordanbaird-ice" # menubar manager
+tap "FelixKratz/formulae"
+brew "borders" # colored borders for active windows
