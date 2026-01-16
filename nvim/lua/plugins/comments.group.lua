@@ -7,6 +7,7 @@ return {
       -- HACK
       -- BUG
       "folke/todo-comments.nvim",
+      -- TODO: figure out how to make it not italics
       config = function()
          require("todo-comments").setup({
             signs = false,

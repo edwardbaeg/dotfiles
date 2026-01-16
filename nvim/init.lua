@@ -3,6 +3,7 @@
 require("config.lazy") -- bootstrap lazy
 require("config.keymaps")
 require("config.autocommands")
+require("config.filetype")
 
 if not vim.g.disable_plugins then
    -- load plugins
@@ -94,6 +95,14 @@ require("config.options")
   - tmux cannot distinguish between <c-i> and <tab>
     - see :help CTRL-I
     - https://github.com/tmux/tmux/issues/2705
+
+- Diffview
+  - from :h diffview-merge-tool
+    - `<leader>co`: Choose the OURS version of the conflict.
+    - `<leader>ct`: Choose the THEIRS version of the conflict.
+    - `<leader>cb`: Choose the BASE version of the conflict.
+    - `<leader>ca`: Choose all versions of the conflict (effectively just deletes the markers, leaving all the content).
+    - `dx`: Choose none of the versions of the conflict (delete the conflict region).
 ]]
 
 --[[ KEYMAP GUIDE
