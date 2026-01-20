@@ -243,4 +243,3 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
 
 export PATH=$PATH:/Users/edwardbaeg/.spicetify
-export PATH="/opt/homebrew/opt/node@20/bin:$PATH"
