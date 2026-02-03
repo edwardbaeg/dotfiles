@@ -217,7 +217,27 @@ local mainModalEntries = {
    { type = "app", "S", "Slack",       "Slack" },
    { type = "app", "I", "iMessage",    "Messages" },
    { type = "app", "F", "Figma",       "Figma" },
-   { type = "app", "O", "Todoist",     "Todoist" },
+   {
+      type = "custom",
+      "O",
+      "Todoist",
+      function()
+         local constants = require("common/constants")
+         local personalOverride = registry.get("personalOverride")
+         local isPersonal = constants.isPersonal
+
+         -- If personalOverride is enabled, invert the behavior
+         if personalOverride and personalOverride.isEnabled() then
+            isPersonal = not isPersonal
+         end
+
+         if isPersonal then
+            hs.application.launchOrFocus("Todoist")
+         else
+            hs.urlevent.openURL("todoist://project?id=work-6fhMfJp63x2pVhjX")
+         end
+      end,
+   },
    { type = "app", "P", "Spotify",     "Spotify" },
    { type = "app", "N", "Notion",      "Notion" },
    { type = "app", "V", "Zoom",      "zoom.us" },
