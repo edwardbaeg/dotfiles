@@ -17,9 +17,9 @@ decrypt-prod() {
 	CRYPTO_PRIMARY_KEY_ID=$(chamber read -q prod/auth CRYPTO_PRIMARY_KEY_ID)
 	export CRYPTO_PRIMARY_KEY_ID
 	if [ $# -eq 0 ]; then
-		./bin/dispatch crypto decrypt "$(pbpaste)" | jq | tee >(pbcopy)
+		./bin/dispatch --profile prod crypto decrypt "$(pbpaste)" | jq | tee >(pbcopy)
 	else
-		./bin/dispatch crypto decrypt "$@" | jq | tee >(pbcopy)
+		./bin/dispatch --profile prod crypto decrypt "$@" | jq | tee >(pbcopy)
 	fi
 	popd || return
 }
@@ -28,9 +28,9 @@ decrypt-default() {
 	pushd ~/dev/oneadvisory/backend/ || return 1
 	ensure_sso
 	if [ $# -eq 0 ]; then
-		dispatch crypto decrypt "$(pbpaste)" | jq | tee >(pbcopy)
+		dispatch -p prod crypto decrypt "$(pbpaste)" | jq | tee >(pbcopy)
 	else
-		dispatch crypto decrypt "$@" | jq | tee >(pbcopy)
+		dispatch -p prod crypto decrypt "$@" | jq | tee >(pbcopy)
 	fi
 	popd || return
 }
