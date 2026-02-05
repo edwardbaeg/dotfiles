@@ -68,7 +68,7 @@ return {
    {
       -- jump to any location
       -- this is currently only used for its remote operations -- this could be replaced with Flash's remote
-      "ggandor/leap.nvim",
+      url = "https://codeberg.org/andyg/leap.nvim", -- this is the updated repo location
       config = function()
          require("leap").setup({})
       end,
