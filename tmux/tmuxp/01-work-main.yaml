@@ -28,4 +28,7 @@ windows:
       - shell_command: # pane no. 1
           - front
           - npm run dev
+      - shell_command: # pane no. 2
+          - front
+          - npm run build:packages:watch
       - front
