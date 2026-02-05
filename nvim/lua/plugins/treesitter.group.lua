@@ -7,15 +7,18 @@ return {
       -- NOTE: Do NOT lazy load -- TODO: validate this
       lazy = false,
       dependencies = {
-         "nvim-treesitter/nvim-treesitter-textobjects", -- adds more text objects for treesitter
+         -- NOTE: master branch is old; newer main branch requires main branch for nvim-treesitter
+         { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" }, -- adds more text objects for treesitter
          "windwp/nvim-ts-autotag", -- autoclose and autorename html tags using treesitter
          "RRethy/nvim-treesitter-endwise", -- wisely add "end" in lua, vimscript, ruby, etc
          "andymass/vim-matchup", -- extend % matching, with opt in treesitter integration. Also highlights matches -- TODO: add END and START comment matching
       },
       -- NOTE: Run :TSInstall tsx after initial install
-      build = function()
-         pcall(require("nvim-treesitter.install").update({ with_sync = true }))
-      end,
+      -- build = function()
+      --    pcall(require("nvim-treesitter.install").update({ with_sync = true }))
+      -- end,
+      branch = "master", -- this is the old branch. new default branch "main" requires breaking changes, eg no incremental_selection
+      build = ":TSUpdate",
       config = function()
          ---@diagnostic disable-next-line: missing-fields
          require("nvim-treesitter.configs").setup({
