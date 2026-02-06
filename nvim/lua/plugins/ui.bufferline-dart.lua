@@ -201,9 +201,6 @@ return {
 
          -- TODO: different highlight color for pinned/marked buffers
 
-         -- Get Catppuccin colors
-         local catppuccin = require("catppuccin.palettes").get_palette()
-
          -- this is the default highlight for visible but not current
          local tabLineHighight = vim.api.nvim_get_hl(0, { name = "TabLine" })
 

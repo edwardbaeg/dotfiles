@@ -23,14 +23,14 @@ return {
    },
    keys = {
       {
-         "<leader>ff", -- try it if you didn't it is a banger keybinding for a picker
+         "<c-p>",
          function()
             require("fff").find_files()
          end,
          desc = "Toggle FFF",
       },
       {
-         "<c-p>",
+         "<leader>ff",
          function()
             require("fff").find_files()
          end,
