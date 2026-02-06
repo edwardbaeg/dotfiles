@@ -2,6 +2,8 @@
 return {
    {
       -- Highlight, edit, and navigate code
+      -- TODO: add auto install capability
+      -- Update all with :TSUpdate
       -- Uninstall with :TSUninstall
       "nvim-treesitter/nvim-treesitter",
       -- NOTE: Do NOT lazy load -- TODO: validate this
@@ -14,13 +16,11 @@ return {
          "andymass/vim-matchup", -- extend % matching, with opt in treesitter integration. Also highlights matches -- TODO: add END and START comment matching
       },
       -- NOTE: Run :TSInstall tsx after initial install
-      -- build = function()
-      --    pcall(require("nvim-treesitter.install").update({ with_sync = true }))
-      -- end,
       branch = "master", -- this is the old branch. new default branch "main" requires breaking changes, eg no incremental_selection
+      -- consider using https://github.com/MeanderingProgrammer/treesitter-modules.nvim
       build = ":TSUpdate",
       config = function()
-         ---@diagnostic disable-next-line: missing-fields
+         ---@diagnostic disable-next-line: missing-fields, param-type-mismatch
          require("nvim-treesitter.configs").setup({
             incremental_selection = {
                enable = true,
