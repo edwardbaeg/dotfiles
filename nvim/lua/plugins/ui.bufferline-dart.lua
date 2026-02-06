@@ -217,8 +217,8 @@ return {
          vim.api.nvim_set_hl(0, "DartCurrentModified", { fg = themeYellow, bg = "none" })
          vim.api.nvim_set_hl(0, "DartMarkedModified", { fg = themeYellow, bg = to_hex(tabLineHighight.bg) })
          vim.api.nvim_set_hl(0, "DartMarkedCurrentModified", { fg = themeYellow, bold = true })
-         vim.api.nvim_set_hl(0, "DartVisibleLabelModified", { fg = orange, bg = to_hex(tabLineHighight.bg) })
-         vim.api.nvim_set_hl(0, "DartCurrentLabelModified", { fg = orange, bg = "none" })
+         vim.api.nvim_set_hl(0, "DartVisibleLabelModified", { fg = "orange", bg = to_hex(tabLineHighight.bg) })
+         vim.api.nvim_set_hl(0, "DartCurrentLabelModified", { fg = "orange", bg = "none" })
          --
          -- -- Marked buffer highlights
          -- local themeGreen = catppuccin.green
