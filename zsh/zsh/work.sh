@@ -9,7 +9,8 @@ alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
 
 alias nid="npm ci && npm run dev" # for frontend
 alias nis="npm ci && npm run start" # for fe interviews
-alias niss="npm ci && npm run seed && npm run start" # for fs interviews
+alias nisd="npm ci && npm run seed && npm run dev" # for fs interviews
+alias start_fs="nisd"
 
 # decrypts argument or clipboard, outputs result and copies to clipboard
 decrypt-prod() {
