@@ -10,12 +10,13 @@ return {
    end,
    opts = {
       debug = {
-         enabled = true,     -- we expect your collaboration at least during the beta
-         show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+         enabled = true,
+         show_scores = true,
       },
       prompt = " ▶ ", -- Input prompt symbol
       keymaps = {
-         close = { "<Esc>", "<c-c>" },
+         close = { "<Esc>", "<c-c>" }, -- default is "<Esc>"
+         -- send_to_quickfix = { "<C-q>", "<CR>" }, -- default is "<C-q>"
       },
       layout = {
          prompt_position = "top",
