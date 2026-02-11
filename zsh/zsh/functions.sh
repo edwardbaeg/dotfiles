@@ -124,16 +124,27 @@ function npm_run_script_fuzzy() {
 	if cat package.json >/dev/null 2>&1; then
 		# --tiebreak=begin to put higher score for matches at the beginning of the line
 		# TODO: update preview to match on matches closer to beginning of the line
-		scripts=$(jq .scripts package.json | sed '1d;$d' | fzf --height 40% --tiebreak=begin --prompt="npm run > " --header="Select a script")
+		# --expect=ctrl-e allows alternate key to put command in CLI for editing
+		output=$(jq .scripts package.json | sed '1d;$d' | fzf --height 40% --tiebreak=begin --prompt="npm run > " --header="Enter=run, Ctrl-E=edit" --expect=ctrl-e)
+
+		# First line is the key pressed, second line is the selection
+		key=$(echo "$output" | head -1)
+		scripts=$(echo "$output" | tail -1)
 
 		if [[ -n $scripts ]]; then
 			# Extract script name and remove all whitespace and quotes
 			script_name=$(echo $scripts | awk -F ': ' '{gsub(/[" ]/, "", $1); print $1}' | tr -d '[:space:]')
 			command="npm run $script_name"
-			print "$command"
-			# Add command to history and execute it
-			print -s "$command"
-			eval "$command"
+
+			if [[ $key == "ctrl-e" ]]; then
+				# Put command in CLI buffer for editing
+				print -z "$command"
+			else
+				# Add command to history and execute it
+				print "$command"
+				print -s "$command"
+				eval "$command"
+			fi
 		else
 			echo "Exit: No script selected."
 		fi
