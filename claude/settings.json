@@ -25,16 +25,16 @@
       }
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline-command.sh",
-    "padding": 0
-  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "command -v bunx >/dev/null 2>&1 && bunx -y ccstatusline@latest || npx -y ccstatusline@latest",
+    "padding": 0
   }
 }
