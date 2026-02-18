@@ -30,11 +30,11 @@
     "command": "~/.claude/statusline-command.sh",
     "padding": 0
   },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
   "alwaysThinkingEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
-  },
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true
   }
 }
