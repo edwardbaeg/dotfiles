@@ -243,3 +243,10 @@ export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
 
 export PATH=$PATH:/Users/edwardbaeg/.spicetify
+
+# bun completions
+[ -s "/Users/edwardbaeg/.bun/_bun" ] && source "/Users/edwardbaeg/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
