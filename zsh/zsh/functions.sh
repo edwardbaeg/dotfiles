@@ -219,6 +219,16 @@ function git_merge_conflicts_open() {
 
 # -- other functions
 
+# use bunx if bun is available, otherwise fallback to npx
+function npx() {
+	if command -v bun &>/dev/null; then
+		echo "using bunx"
+		command bunx "$@"
+	else
+		command npx "$@"
+	fi
+}
+
 # alias for npm leaves to list globally installed packages
 function npm() {
 	if [[ "$*" == "leaves" ]] || [[ "$*" == "ls" ]]; then
