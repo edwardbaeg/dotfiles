@@ -223,8 +223,11 @@ export FZF_DEFAULT_OPTS='
 eval "$(zoxide init zsh)"
 
 # setup thefuck
-eval $(thefuck --alias)
 alias f=fuck
+# lazy load thefuck instead of loading it every shell startup
+function fuck() {
+    eval $(thefuck --alias) && fuck "$@"
+}
 
 # To install shell completions, add this to your profile:
 if command -v ngrok &>/dev/null; then
