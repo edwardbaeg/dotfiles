@@ -155,12 +155,6 @@ zstyle ':omz:plugins:alias-finder' longer yes # disabled by default
 zstyle ':omz:plugins:alias-finder' exact yes # disabled by default
 zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
 
-# fix setting fzf keymaps after zsh-vi-mode
-# https://github.com/jeffreytse/zsh-vi-mode/issues/4#issuecomment-757234569
-function zvm_after_init() {
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-}
-
 alias sz="exec zsh" # do not source .zshrc
 # -- Aliases -------------------------------------------------------------------
 if [[ -f "$HOME/zsh/aliases.sh" ]]; then
@@ -198,9 +192,11 @@ function vv() {
 
 # -- Post install --------------------------------------------------------------
 
-# fzf
-# Load fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fix setting fzf keymaps after zsh-vi-mode
+# https://github.com/jeffreytse/zsh-vi-mode/issues/4
+function zvm_after_init() {
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+}
 
 # Use rg for fzf
 # FZF_DEFAULT_COMMAND='rg -g ""'
