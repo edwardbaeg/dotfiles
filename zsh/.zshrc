@@ -27,7 +27,7 @@ if [[ -f $work_zsh_path ]]; then
 fi
 
 # -- Core ----------------------------------------------------------------------
-GITSTATUS_LOG_LEVEL=DEBUG
+# GITSTATUS_LOG_LEVEL=DEBUG
 
 # Improve colors
 export TERM="xterm-256color"
@@ -82,7 +82,9 @@ set -o ignoreeof # disable ctr-d from exiting shell, used with tmux
 # Configure completions with zsh from `brew zsh-completions`
 # This must be called before compinit and oh-my-zsh.sh
 if type brew &>/dev/null; then
-    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+    FPATH=/opt/homebrew/share/zsh/site-functions:$FPATH
+    # below is slower- it spawns a new process
+    # FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
 
     autoload -Uz compinit
     # compinit
