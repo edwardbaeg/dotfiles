@@ -5,7 +5,7 @@
   ; pager = diff-so-fancy | less --tabs=4 -RFX #TODO: check if `diff-so-fancy` is a valid command first
   pager = delta --diff-so-fancy
 [user]
-  name = edwardbaeg
+  name = Edward
   email = 35383701+edwardbaeg@users.noreply.github.com
 [alias]
   co = checkout
