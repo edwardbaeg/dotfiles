@@ -7,16 +7,21 @@ alias work="cd ~/dev/oneadvisory/frontend-worktree"
 alias back="cd ~/dev/oneadvisory/backend"
 alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
 
-alias run_frontend="npm ci && npm run dev" # for frontend
-alias run_fe_interview="npm ci && npm run start" # for fe interviews
+alias run_frontend="npm ci && npm run dev"                     # for frontend
+alias run_fe_interview="npm ci && npm run start"               # for fe interviews
 alias run_fs_interview="npm ci && npm run seed && npm run dev" # for fs interviews
 
 # -- Functions
 
 # cd to git worktree directories
 workf() {
+	local dir=~/dev/oneadvisory/worktrees
+	[[ -d "$dir" ]] || {
+		echo "worktrees directory not found: $dir"
+		return 1
+	}
 	local selected
-	selected=$(ls -d ~/dev/oneadvisory/worktrees/*/ 2>/dev/null | fzf --prompt="worktree: ")
+	selected=$(ls -d "$dir"/*/ 2>/dev/null | fzf --prompt="worktree: ")
 	[[ -n "$selected" ]] && cd "$selected"
 }
 
@@ -62,7 +67,7 @@ ensure_sso() {
 # -- TODO?: migrate to .env and setup direnv?
 # export AWS_PROFILE=aws-dispatch-dev01 # use this for forms building
 # export AWS_PROFILE=oa-prod # use this for forms building # use this for decrypt
-export AWS_PROFILE=dispatch-dev01  # use this for development
+export AWS_PROFILE=dispatch-dev01 # use this for development
 # export AWS_PROFILE=oa-dev
 # export AWS_PROFILE=duplo
 export AWS_REGION=us-east-1
