@@ -11,6 +11,15 @@ alias run_frontend="npm ci && npm run dev" # for frontend
 alias run_fe_interview="npm ci && npm run start" # for fe interviews
 alias run_fs_interview="npm ci && npm run seed && npm run dev" # for fs interviews
 
+# -- Functions
+
+# cd to git worktree directories
+workf() {
+	local selected
+	selected=$(ls -d ~/dev/oneadvisory/worktrees/*/ 2>/dev/null | fzf --prompt="worktree: ")
+	[[ -n "$selected" ]] && cd "$selected"
+}
+
 # decrypts argument or clipboard, outputs result and copies to clipboard
 decrypt-prod() {
 	pushd ~/dev/oneadvisory/backend/ || return 1
