@@ -7,10 +7,9 @@ alias work="cd ~/dev/oneadvisory/frontend-worktree"
 alias back="cd ~/dev/oneadvisory/backend"
 alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
 
-alias nid="npm ci && npm run dev" # for frontend
-alias nis="npm ci && npm run start" # for fe interviews
-alias nisd="npm ci && npm run seed && npm run dev" # for fs interviews
-alias start_fs="nisd"
+alias run_frontend="npm ci && npm run dev" # for frontend
+alias run_fe_interview="npm ci && npm run start" # for fe interviews
+alias run_fs_interview="npm ci && npm run seed && npm run dev" # for fs interviews
 
 # decrypts argument or clipboard, outputs result and copies to clipboard
 decrypt-prod() {
