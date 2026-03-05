@@ -10,8 +10,8 @@ return {
    end,
    opts = {
       debug = {
-         enabled = true,
-         show_scores = true,
+         -- enabled = true,
+         -- show_scores = true,
       },
       prompt = " ▶ ", -- Input prompt symbol
       keymaps = {
