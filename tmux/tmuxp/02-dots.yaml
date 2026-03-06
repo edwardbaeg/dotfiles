@@ -55,3 +55,8 @@ windows:
         focus: true
       - shell_command:
         - cd ~/dev/dotfiles/zsh/
+
+  - window_name: obsidian
+    panes:
+      - shell_command:
+        - cd ~/Sync/Obsidian\ Vault/
