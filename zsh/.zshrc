@@ -251,3 +251,6 @@ export PATH=$PATH:/Users/edwardbaeg/.spicetify
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# I think this is for claude-code
+export PATH="$PATH:$HOME/.local/bin"
