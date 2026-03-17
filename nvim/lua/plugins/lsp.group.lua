@@ -181,6 +181,7 @@ return {
                "shfmt", -- shell files
                "eslint",
                "taplo", -- toml
+               "biome",
 
                -- Linters
                "shellcheck", -- linter for sh
@@ -198,6 +199,7 @@ return {
                null_ls.builtins.formatting.prettier,
                null_ls.builtins.formatting.stylua,
                null_ls.builtins.formatting.shfmt,
+               null_ls.builtins.formatting.biome,
 
                null_ls.builtins.diagnostics.checkmake,
                -- null_ls.builtins.diagnostics.dotenv_linter,
