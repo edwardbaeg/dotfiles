@@ -31,7 +31,7 @@
     "command": "command -v bunx >/dev/null 2>&1 && bunx -y ccstatusline@latest || npx -y ccstatusline@latest",
     "padding": 0
   },
-  "allowedTools": ["Grep"],
+  "allowedTools": ["Grep", "Ls"],
   "permissions": {
     "allow": [
       "Bash(grep:*)",
