@@ -222,7 +222,8 @@ local dispatchModalEntries = {
 ---@type SimpleModalItem[]
 local mainModalEntries = {
    "--Apps--",
-   { type = "app", "B", "Browser (Arc)", "Arc" },
+   { type = "app", "A", "AI Chat (Claude)", "Claude" },
+   { type = "app", "B", "Browser (Arc)",   "Arc" },
    { type = "app", "L", "Linear",      "Linear" },
    { type = "app", "T", "Telegram",    "Telegram" },
    { type = "app", "Z", "Zen",         "zen" },
