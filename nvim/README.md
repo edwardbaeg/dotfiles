@@ -42,18 +42,18 @@ LSP is configured via [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 
 ### Servers
 
-| Language | Server |
-|---|---|
+| Language                | Server                            |
+| ----------------------- | --------------------------------- |
 | TypeScript / JavaScript | typescript-tools.nvim (see below) |
-| CSS | cssls |
-| Lua | emmylua_ls |
-| Shell (sh, zsh) | bashls |
-| JSON | jsonls |
-| YAML | yamlls |
-| TOML | taplo |
-| Terraform | terraformls |
-| Markdown | marksman |
-| Linting | eslint |
+| CSS                     | cssls                             |
+| Lua                     | emmylua_ls                        |
+| Shell (sh, zsh)         | bashls                            |
+| JSON                    | jsonls                            |
+| YAML                    | yamlls                            |
+| TOML                    | taplo                             |
+| Terraform               | terraformls                       |
+| Markdown                | marksman                          |
+| Linting                 | eslint                            |
 
 ### TypeScript
 
@@ -99,30 +99,30 @@ Leader is `<Space>`, local leader is `,`. Keymaps are defined in `lua/config/key
 
 ### Leader namespace conventions
 
-| Prefix | Purpose |
-|---|---|
-| `<leader>f` | Fuzzy finders / pickers |
-| `<leader>g` | Go-to / git |
-| `<leader>e` | Edit config files |
-| `<leader>b` | Buffer operations |
-| `<leader>t` | Tabs / toggles |
-| `<leader>w` | Window (`<C-w>` alias) |
-| `<leader>a` | Claude Code (AI) |
-| `<leader>ob` | Obsidian |
+| Prefix       | Purpose                 |
+| ------------ | ----------------------- |
+| `<leader>f`  | Fuzzy finders / pickers |
+| `<leader>g`  | Go-to / git             |
+| `<leader>e`  | Edit config files       |
+| `<leader>b`  | Buffer operations       |
+| `<leader>t`  | Tabs / toggles          |
+| `<leader>w`  | Window (`<C-w>` alias)  |
+| `<leader>a`  | Claude Code (AI)        |
+| `<leader>ob` | Obsidian                |
 
 ### Notable global keymaps
 
-| Key | Action |
-|---|---|
-| `jk` | Exit insert mode |
-| `H` / `L` | Start / end of line |
-| `<C-f>` | Format buffer |
-| `Q` | Record macro (replaces `q`) |
-| `<CR>` | `gf` — open file under cursor |
-| `gD` | Go to definition via tag stack (`<C-t>` to return) |
-| `g>>` / `g>d` | Go to definition in vertical split |
-| `<leader><space>` | Clear search highlights |
-| `_` | Black hole register shortcut |
+| Key               | Action                                             |
+| ----------------- | -------------------------------------------------- |
+| `jk`              | Exit insert mode                                   |
+| `H` / `L`         | Start / end of line                                |
+| `<C-f>`           | Format buffer                                      |
+| `Q`               | Record macro (replaces `q`)                        |
+| `<CR>`            | `gf` — open file under cursor                      |
+| `gD`              | Go to definition via tag stack (`<C-t>` to return) |
+| `g>>` / `g>d`     | Go to definition in vertical split                 |
+| `<leader><space>` | Clear search highlights                            |
+| `_`               | Black hole register shortcut                       |
 
 ## UI
 
