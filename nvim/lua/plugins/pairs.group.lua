@@ -34,20 +34,13 @@ return {
          -- vim.keymap.set("o", "ia", "i<")
          -- vim.keymap.set("o", "aa", "a<")
 
+         vim.g.nvim_surround_no_mappings = true
+         vim.keymap.set("n", "sa", "<Plug>(nvim-surround-normal)", { desc = "Add surrounding pair around motion" })
+         vim.keymap.set("x", "s", "<Plug>(nvim-surround-visual)", { desc = "Add surrounding pair around selection" })
+         vim.keymap.set("n", "ds", "<Plug>(nvim-surround-delete)", { desc = "Delete surrounding pair" }) -- default is ds, alt: sd
+         vim.keymap.set("n", "cs", "<Plug>(nvim-surround-change)", { desc = "Change surrounding pair" }) -- default is cs, alt: sc
+
          require("nvim-surround").setup({
-            keymaps = {
-               insert = false,
-               insert_line = false,
-               normal = "sa", -- default is ys
-               normal_cur = false,
-               normal_line = false,
-               normal_cur_line = false,
-               visual = "s", -- default is S
-               -- visual = "a", -- default is S
-               visual_line = false,
-               -- delete = "sd", -- default is ds
-               -- change = "sc", -- default is cs
-            },
             aliases = {
                ["b"] = { ")", "}", "]" }, -- adds the other brackets
             },
