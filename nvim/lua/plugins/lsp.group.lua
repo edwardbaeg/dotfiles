@@ -38,13 +38,9 @@ return {
 
          -- START LSP CONFIG
          -------------------
-         --  This function gets run when an LSP connects to a particular buffer.
-         local on_attach = function(_, bufnr)
-            -- Create a command `:Format` local to the LSP buffer
-            vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-               require("conform").format({ bufnr = bufnr, lsp_format = "fallback" })
-            end, { desc = "Format current buffer with conform" })
-         end
+         vim.api.nvim_create_user_command("Format", function()
+            require("conform").format({ lsp_format = "fallback" })
+         end, { desc = "Format current buffer with conform" })
 
          -- Automatically install servers
          -- source of truth: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
@@ -120,7 +116,6 @@ return {
 
          local capabilities = require("blink.cmp").get_lsp_capabilities()
          vim.lsp.config("*", {
-            on_attach = on_attach,
             capabilities = capabilities,
          })
 
@@ -142,7 +137,6 @@ return {
 
          -- START TYPESCRIPT TOOLS
          require("typescript-tools").setup({
-            on_attach = on_attach,
             settings = {
                tsserver_file_preferences = {
                   -- enable inlay hints (vim.lsp.inlay_hint.enable())
@@ -265,7 +259,7 @@ return {
             markdown = { "prettier" },
             sh = { "shfmt" },
             zsh = { "shfmt" },
-            make = { "bake" },
+            make = { "bake" }, -- this doesn't seem to work? I think the issue is with the formatter; it doesnt do anything when run from the cli. and running ConformInfo is properly showing that it is attached
          },
       },
    },
