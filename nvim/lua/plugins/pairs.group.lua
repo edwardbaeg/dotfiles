@@ -27,24 +27,24 @@ return {
    {
       -- adds motions for surrounding, has preview highlight
       "kylechui/nvim-surround",
-      config = function()
-         -- add operator maps for [r]ight angle braces and [a]ngle brances -- replaced with mini.ai
-         -- vim.keymap.set("o", "ir", "i[")
-         -- vim.keymap.set("o", "ar", "a[")
-         -- vim.keymap.set("o", "ia", "i<")
-         -- vim.keymap.set("o", "aa", "a<")
-
+      -- add operator maps for [r]ight angle braces and [a]ngle brances -- replaced with mini.ai
+      -- vim.keymap.set("o", "ir", "i[")
+      -- vim.keymap.set("o", "ar", "a[")
+      -- vim.keymap.set("o", "ia", "i<")
+      -- vim.keymap.set("o", "aa", "a<")
+      init = function()
          vim.g.nvim_surround_no_mappings = true
-         vim.keymap.set("n", "sa", "<Plug>(nvim-surround-normal)", { desc = "Add surrounding pair around motion" })
-         vim.keymap.set("x", "s", "<Plug>(nvim-surround-visual)", { desc = "Add surrounding pair around selection" })
-         vim.keymap.set("n", "ds", "<Plug>(nvim-surround-delete)", { desc = "Delete surrounding pair" }) -- default is ds, alt: sd
-         vim.keymap.set("n", "cs", "<Plug>(nvim-surround-change)", { desc = "Change surrounding pair" }) -- default is cs, alt: sc
-
-         require("nvim-surround").setup({
-            aliases = {
-               ["b"] = { ")", "}", "]" }, -- adds the other brackets
-            },
-         })
       end,
+      keys = {
+         { "sa", "<Plug>(nvim-surround-normal)", desc = "Add surrounding pair around motion" },
+         { "s", "<Plug>(nvim-surround-visual)", mode = "x", desc = "Add surrounding pair around selection" },
+         { "ds", "<Plug>(nvim-surround-delete)", desc = "Delete surrounding pair" }, -- default is ds, alt: sd
+         { "cs", "<Plug>(nvim-surround-change)", desc = "Change surrounding pair" }, -- default is cs, alt: sc
+      },
+      opts = {
+         aliases = {
+            ["b"] = { ")", "}", "]", "<" }, -- adds the other brackets
+         },
+      },
    },
 }
