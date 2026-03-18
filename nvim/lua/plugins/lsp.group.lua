@@ -282,7 +282,7 @@ return {
             "biome",
             "prettier",
             "taplo", -- toml
-            "bake", -- makefile formatter/linter
+            "mbake", -- makefile formatter/linter
 
             -- LSP / linters
             "eslint",
