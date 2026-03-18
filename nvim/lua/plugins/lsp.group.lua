@@ -5,15 +5,11 @@ return {
    {
       -- LSP, formatter, and linter config and plugins
       -- NOTE: do not lazy load
-      -- TODO: consider replacing nonels with conform.nvim
       "neovim/nvim-lspconfig",
       enabled = not vim.g.vscode,
       dependencies = {
          "mason-org/mason.nvim", -- package manager for external editor tools (LSP, DAP, linters, formatters)
          "mason-org/mason-lspconfig.nvim", -- Automatically install LSPs -- TODO: this can be replaced with nvim.lsp.config
-         "nvimtools/none-ls.nvim", -- set up formatters and linters (null-ls replacement)
-         "jay-babu/mason-null-ls.nvim", -- automatically install linters and formatters
-
          "pmizio/typescript-tools.nvim", -- native lua typescript support
 
          "nvimdev/lspsaga.nvim", -- pretty lsp ui
@@ -46,8 +42,8 @@ return {
          local on_attach = function(_, bufnr)
             -- Create a command `:Format` local to the LSP buffer
             vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-               vim.lsp.buf.format()
-            end, { desc = "Format current buffer with LSP" })
+               require("conform").format({ bufnr = bufnr, lsp_format = "fallback" })
+            end, { desc = "Format current buffer with conform" })
          end
 
          -- Automatically install servers
@@ -173,52 +169,6 @@ return {
          -- END LSP CONFIG
          -----------------
 
-         -- Set up formatting
-         require("mason-null-ls").setup({
-            ensure_installed = {
-               -- Formatters
-               "stylua",
-               "shfmt", -- shell files
-               "eslint",
-               "taplo", -- toml
-               "biome",
-
-               -- Linters
-               "shellcheck", -- linter for sh
-               -- "dotenv-linter", -- linter for .env files -- doesn't seem to work...
-               "checkmake", -- linter for makefiles
-            },
-         })
-
-         local null_ls = require("null-ls")
-         -- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-         -- TODO: check why it seems that there are multiple formatters running for :Format
-         -- example: long chain of multiline foo && bar && baz
-         require("null-ls").setup({
-            sources = {
-               null_ls.builtins.formatting.prettier,
-               null_ls.builtins.formatting.stylua,
-               null_ls.builtins.formatting.shfmt,
-               null_ls.builtins.formatting.biome,
-
-               null_ls.builtins.diagnostics.checkmake,
-               -- null_ls.builtins.diagnostics.dotenv_linter,
-               -- null_ls.builtins.diagnostics.shellcheck, -- this is throwing errors
-            },
-            -- on_attach = function(client, bufnr) -- format on save
-            --    if client.supports_method("textDocument/formatting") then
-            --       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-            --       vim.api.nvim_create_autocmd("BufWritePre", {
-            --          group = augroup,
-            --          buffer = bufnr,
-            --          callback = function()
-            --             vim.lsp.buf.format()
-            --          end,
-            --       })
-            --    end
-            -- end,
-         })
-
          -- START visual diagnostics
          --------
 
@@ -266,6 +216,79 @@ return {
          -- END visual diagnostics
          --------
       end,
+   },
+
+   {
+      -- format on save; replaces none-ls formatting sources
+      "stevearc/conform.nvim",
+      event = "BufWritePre",
+      opts = {
+         format_on_save = {
+            timeout_ms = 500,
+            lsp_format = "fallback", -- use LSP if no conform formatter matches
+         },
+         formatters_by_ft = {
+            lua = { "stylua" },
+            javascript = {
+               -- "biome",
+               "prettier",
+               stop_after_first = true,
+            },
+            javascriptreact = {
+               -- "biome",
+               "prettier",
+               stop_after_first = true,
+            },
+            typescript = {
+               -- "biome",
+               "prettier",
+               stop_after_first = true,
+            },
+            typescriptreact = {
+               -- "biome",
+               "prettier",
+               stop_after_first = true,
+            },
+            json = {
+               -- "biome",
+               "prettier",
+               stop_after_first = true,
+            },
+            jsonc = {
+               -- "biome",
+               "prettier",
+               stop_after_first = true,
+            },
+            css = { "prettier" },
+            html = { "prettier" },
+            yaml = { "prettier" },
+            markdown = { "prettier" },
+            sh = { "shfmt" },
+            zsh = { "shfmt" },
+            make = { "bake" },
+         },
+      },
+   },
+
+   {
+      -- install mason packages (formatters, linters) independent of null-ls
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      dependencies = { "mason-org/mason.nvim" },
+      opts = {
+         ensure_installed = {
+            -- Formatters (used by conform.nvim)
+            "stylua",
+            "shfmt",
+            "biome",
+            "prettier",
+            "taplo", -- toml
+            "bake", -- makefile formatter/linter
+
+            -- LSP / linters
+            "eslint",
+            "shellcheck",
+         },
+      },
    },
 
    {
