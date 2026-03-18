@@ -1,7 +1,9 @@
 return {
    "dmtrKovalenko/fff.nvim",
+   -- enabled = false,
    lazy = false, -- plugin automatically lazy loads
    -- if build fails, navigate to plugin dir and run `cargo build --release` ($HOME/.local/share/nvim/lazy/fff.nvim)
+   -- if that doesn't work, run `rm -rf ~/.local/share/nvim/lazy/fff.nvim` to force a reintall
    -- build = "cargo build --release",
    build = function()
       -- this will download prebuild binary or try to use existing rustup toolchain to build from source
