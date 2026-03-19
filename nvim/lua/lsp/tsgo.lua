@@ -1,0 +1,14 @@
+-- Currently using nvim-lspconfig for sensible defaults
+-- local lspconfig = require("lspconfig")
+--
+-- lspconfig.tsgo.setup({
+--    cmd = { "tsgo", "--stdio" }, -- Command to start the tsgo language server
+--    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+--    -- Optional: Add on_attach function for keymaps or other settings
+--    -- on_attach = function(client, bufnr)
+--    --     -- your keymaps or autocmds here
+--    -- end,
+--    settings = {
+--       -- specific settings for tsgo can go here
+--    },
+-- })
