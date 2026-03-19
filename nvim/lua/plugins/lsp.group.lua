@@ -48,12 +48,20 @@ return {
             -- START TYPESCRIPT
             -- ----------------
             -- Options for typescript:
-            -- - ts_ls: tsserver wrapper
-            -- - typescript-tools: (plugin) drop in lua replacement
-            -- - vtsls: wrapper for vscode extension for typescript
 
+            -- tsserver wrapper
             -- ts_ls = {},
+
+            -- wrapper for vscode extension for typescript
             -- vtsls = {},
+            -- - tsgo: rewrite of typescript in go
+
+            -- go rewrite of typescript
+            -- tsgo = {},
+
+            -- typescript-tools: (plugin) drop in lua replacement
+            -- see below for plugin setup
+
             -- END TYPESCRIPT
             -- ----------------
 
@@ -62,8 +70,11 @@ return {
             -- css_variables = {},
             eslint = {},
 
-            -- lua
-            emmylua_ls = {}, -- https://github.com/EmmyLuaLs/emmylua-analyzer-rust
+            -- LUA
+            -- https://github.com/EmmyLuaLs/emmylua-analyzer-rust
+            -- newer, faster (rust), potentially buggy
+            emmylua_ls = {},
+
             -- lua_ls = { -- aka lua-language-server
             --    Lua = {
             --       workspace = {
@@ -106,6 +117,25 @@ return {
             --    },
             -- },
          }
+         -- START TYPESCRIPT TOOLS
+         require("typescript-tools").setup({
+            settings = {
+               tsserver_file_preferences = {
+                  -- enable inlay hints (vim.lsp.inlay_hint.enable())
+                  includeInlayParameterNameHints = "all",
+                  includeInlayEnumMemberValueHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayVariableTypeHints = true,
+               },
+            },
+         })
+
+         -- NOTE: these are specific to typescript-tools
+         set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true })
+         set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true })
+         -- END TYPESCRIPT TOOLS
 
          require("mason").setup() -- register commands
          local mason_lspconfig = require("mason-lspconfig")
@@ -134,26 +164,6 @@ return {
          for lsp, settings in pairs(language_servers) do
             vim.lsp.config(lsp, { settings = settings })
          end
-
-         -- START TYPESCRIPT TOOLS
-         require("typescript-tools").setup({
-            settings = {
-               tsserver_file_preferences = {
-                  -- enable inlay hints (vim.lsp.inlay_hint.enable())
-                  includeInlayParameterNameHints = "all",
-                  includeInlayEnumMemberValueHints = true,
-                  includeInlayFunctionLikeReturnTypeHints = true,
-                  includeInlayFunctionParameterTypeHints = true,
-                  includeInlayPropertyDeclarationTypeHints = true,
-                  includeInlayVariableTypeHints = true,
-               },
-            },
-         })
-
-         -- NOTE: these are specific to typescript-tools
-         set("n", "<leader>tsm", ":TSToolsAddMissingImports<cr>", { silent = true })
-         set("n", "<leader>tsr", ":TSToolsRemoveUnusedImports<cr>", { silent = true })
-         -- END TYPESCRIPT TOOLS
 
          -- This command comes from the eslint lsp server
          -- FIXME?: this doesnt seem to be attached to typescript files, just typescriptreact?
@@ -271,16 +281,16 @@ return {
       opts = {
          ensure_installed = {
             -- Formatters (used by conform.nvim)
-            "stylua",
-            "shfmt",
-            "biome",
-            "prettier",
+            "stylua", -- lua
+            "shfmt", -- bash
+            -- "biome", - js/ts
+            "prettier", -- js/ts
             "taplo", -- toml
             "mbake", -- makefile formatter/linter
 
             -- LSP / linters
-            "eslint",
-            "shellcheck",
+            "eslint", -- js/ts
+            "shellcheck", -- bash
          },
       },
    },
