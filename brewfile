@@ -9,6 +9,7 @@ brew "ripgrep" # better grep
 brew "scrcpy" # android screen sharing
 brew "stow" # symlink manager
 brew "tlrc" # quick reference; better tldr
+brew "tmux" # terminal multiplexer
 brew "tmuxp" # tmux session manager
 brew "witr" # why is this running
 brew "yazi" # file finder
