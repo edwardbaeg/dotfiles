@@ -82,7 +82,6 @@ These are mostly brew packages.
 - `lazygit` git interface
 - `nchat` telegram
 - `neovim` better vim (async, community developed)
-- `ranger` file manager (install with `pip install ranger-fm`)
 - `tmux` terminal multiplexer
 - `tmuxp` terminal session manager
 - `yazi` file manager, seemingly faster than ranger
@@ -271,16 +270,6 @@ pbcopy < ~/.ssh/id_rsa.pub
 ssh-add ~/.ssh/id_ed25519
 ssh-copy-id <username>@<hostname>
 ```
-
-### Mods
-
-- Spicetify: theme Spotify
-  - install cli tool, install marketplace, restart app
-    ```
-    spicetify --config
-    spicetify backup apply
-    spicetify update
-    ```
 
 ## RaspberryPi Setup
 
