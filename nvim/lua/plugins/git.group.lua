@@ -96,6 +96,9 @@ return {
          set("n", "<leader>g<space>p", gitsigns.preview_hunk, { desc = "Preview hunk" })
          set("n", "<leader>g<space>i", gitsigns.preview_hunk_inline, { desc = "Preview inline" })
 
+         set("n", "<leader>gsp", gitsigns.preview_hunk, { desc = "Preview hunk" })
+         set("n", "<leader>gsi", gitsigns.preview_hunk_inline, { desc = "Preview inline" })
+
          -- set("n", "<leader>hp", gitsigns.preview_hunk, { desc = "git hunk: [p]review" })
          -- set("n", "<leader>hl", gitsigns.setloclist, { desc = "git hunk: [l]ist in location list" })
       end,
