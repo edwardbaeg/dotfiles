@@ -19,8 +19,8 @@ return {
          path = {
             filter = function(_filename)
                return true
-            end
-         }
-      }
+            end,
+         },
+      },
    },
 }
