@@ -20,6 +20,7 @@ return {
       },
       hide = {
          cursorline = true, -- hide if on the same line as cursor
+         only_win = true, -- hide when only one window is open
       },
       render = function(props)
          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
