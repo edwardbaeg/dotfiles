@@ -42,7 +42,8 @@ return {
             require("conform").format({ lsp_format = "fallback" })
          end, { desc = "Format current buffer with conform" })
 
-         -- Automatically install servers
+         -- Servers automatically installed by Mason
+         -- NOTE: to uninstall a server, it is not sufficient to remove the entry here; they must be uninstalled from Mason
          -- source of truth: https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
          local language_servers = {
             -- START TYPESCRIPT
