@@ -6,9 +6,11 @@ My neovim and terminal (tmux in Kitty) based development setup. Always a work pr
 
 ![screenshot](assets/main.png)
 
-## Setup
+## Quick Start
 
-Copy over configuration files with `stow`
+Copy over configuration files with `stow`.
+
+WARNING: this does not include all dependencies.
 
 ```
 make all
@@ -67,7 +69,11 @@ These are mostly brew packages.
 
 #### Tools
 
+<!-- - TODO: consider adding mise as a version manager -->
+
+- `asdf` version manager
 - `bat` better cat (syntax highlighting and pager)
+- `direnv` load and unload environment variables based on directory
 - `eza` better ls
 - `fd` better find (fd-find for `apt`)
 - `fzf` fuzzy finder
