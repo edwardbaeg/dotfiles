@@ -297,8 +297,9 @@ return {
 
    {
       -- pretty lsp ui
-      -- TODO: replace some with builtins. See :help lsp-defaults
-      --   - for example, grn for lsp.buf.rename()
+      -- currently, this is mainly being used for diagnostics
+      -- TODO: replace with different diangnostics UI plugin
+      -- - options: builtin vim.diagnostic, folke/trouble, tiny-inline-diagnostic
       "nvimdev/lspsaga.nvim",
       dependencies = {
          "neovim/nvim-lspconfig",
@@ -354,17 +355,19 @@ return {
             },
          })
          -- lsp saga keymaps
+         set("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
+         -- set("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
+         -- set("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
+         set("n", "ge", "<cmd>Lspsaga diagnostic_jump_next<cr>")
+         set("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
+
+         -- DEPRECATED; replaced
          -- set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<cr>") -- consider replacing with builtin lsp code action (gra)
          -- set("n", "<leader>cr", "<cmd>Lspsaga rename<cr>") -- replaced with builtin, grr
          -- set("n", "gd", "<cmd>Lspsaga peek_definition<cr>") -- replace with <ctrl-]> -- replaced with overlook
          -- set("n", "gD", "<cmd>Lspsaga goto_definition<cr>")
          -- set("n", "gr", "<cmd>Lspsaga finder<cr>") -- conflicts with builtin gr* mappings
          -- set("n", "gh", "<cmd>Lspsaga incoming_calls<cr>", { desc = "Lspsaga [h]ierarchy" })
-         set("n", "sl", "<cmd>Lspsaga show_line_diagnostics<cr>")
-         set("n", "sc", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
-         set("n", "sb", "<cmd>Lspsaga show_buf_diagnostics<cr>")
-         set("n", "ge", "<cmd>Lspsaga diagnostic_jump_next<cr>")
-         set("n", "gE", "<cmd>Lspsaga diagnostic_jump_prev<cr>")
          -- set('n', 'so', '<cmd>Lspsaga outline<cr>', { desc = '[LSP] [S]how [O]utline'})
          -- set("n", "K", "<cmd>Lspsaga hover_doc<cr>", { desc = "" }) -- replaced with builtin lsp signature_help
       end,
@@ -496,7 +499,7 @@ return {
    {
       -- shows diagnostic messages with wrapping for the current line
       "rachartier/tiny-inline-diagnostic.nvim",
-      enabled = false, -- looks to show errors that aren't showing for the other TS lsp server?
+      -- enabled = false, -- looks to show errors that aren't showing for the other TS lsp server?
       event = "VeryLazy", -- Or `LspAttach`
       priority = 1000, -- needs to be loaded in first
       opts = {
