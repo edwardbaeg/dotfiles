@@ -16,7 +16,8 @@ return {
          "andymass/vim-matchup", -- extend % matching, with opt in treesitter integration. Also highlights matches -- TODO: add END and START comment matching
       },
       -- NOTE: Run :TSInstall tsx after initial install
-      branch = "master", -- this is the old branch. new default branch "main" requires breaking changes, eg no incremental_selection
+      branch = "master", -- this is the old branch, and compatible up to 0.11.
+      -- new default branch "main" has breaking changes, eg no incremental_selection, is compatible with 0.12
       -- consider using https://github.com/MeanderingProgrammer/treesitter-modules.nvim
       build = ":TSUpdate",
       config = function()
