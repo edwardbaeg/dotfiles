@@ -1,6 +1,7 @@
 return {
    -- Quick access marks
    "cbochs/grapple.nvim",
+   enabled = false, -- unused, functionality replaced with dart
    dependencies = {
       "WolfeCub/harpeek.nvim", -- show options in persistent window
    },
