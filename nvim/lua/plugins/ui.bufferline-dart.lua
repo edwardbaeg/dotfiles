@@ -150,10 +150,10 @@ return {
       lazy = false, -- don't lazy load for session stuff
       opts = {
          -- pinned
-         marklist = { "a", "s", "d", "f" },
+         marklist = { "a", "s", "d", "f", "g" },
          -- marklist = { "q", "w", "e", "r" },
          -- recent
-         buflist = { "q", "w", "e", "r" },
+         buflist = { "q", "w", "e", "r", "t" },
          -- buflist = { "q", "w", "e", "r", "z", "x", "c" },
          -- buflist = { "a", "s", "d", "f", "z", "x", "c" },
 
@@ -164,7 +164,7 @@ return {
             next = "<leader>bn",
             prev = "<leader>bp",
             pick = ",p",
-            unmark_all = ",u"
+            unmark_all = ",u",
          },
          tabline = {
             label_fg = "orange",
