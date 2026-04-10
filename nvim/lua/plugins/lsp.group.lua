@@ -25,6 +25,12 @@ return {
             })
          end, { desc = "Hover documentation" })
 
+         -- These are all for signature help in a floating window
+         set({ "n" }, "<leader>k", function()
+            vim.lsp.buf.signature_help({
+               border = "rounded", -- floating window border
+            })
+         end, { silent = true, noremap = true, desc = "Hover signature" })
          set({ "n" }, "<leader>K", function()
             vim.lsp.buf.signature_help({
                border = "rounded", -- floating window border
