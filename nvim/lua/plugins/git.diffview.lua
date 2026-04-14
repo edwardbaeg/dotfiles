@@ -40,12 +40,12 @@ return {
       vim.keymap.set("n", "<leader>gdp", actions.prev_conflict, { noremap = true, desc = "[p]revious conflict" })
 
       -- prettier highlights
-      vim.api.nvim_set_hl(0, "DiffAdd", {bg = "#20303b"})
+      vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#20303b" })
       vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#191010" })
-      vim.api.nvim_set_hl(0, "DiffChange", {bg = "#1f2231"})
-      vim.api.nvim_set_hl(0, "DiffText", {bg = "#394b70"})
+      vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231" })
+      vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70" })
 
-      vim.api.nvim_set_hl(0, 'DiffviewDiffDelete', { fg = "#4a2d3a" })
+      vim.api.nvim_set_hl(0, "DiffviewDiffDelete", { fg = "#4a2d3a" })
 
       local function diff_open_with_input()
          -- local user_input = vim.fn.input("Revision to Open: ")

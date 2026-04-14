@@ -9,8 +9,7 @@ local togglePersonalOverride = appLauncher.togglePersonalOverride
 local M = {}
 
 local RAYCAST_URLS = {
-   ai_personal =
-   "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
+   ai_personal = "raycast://extensions/raycast/raycast-ai/ai-chat?context=%7B%22preset%22:%2264DC923F-8179-4BA9-A27E-B8F2A2229FE1%22%7D",
    snippets = "raycast://extensions/raycast/snippets/search-snippets",
    emoji = "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols",
    clipboard = "raycast://extensions/raycast/clipboard-history/clipboard-history",
@@ -188,20 +187,40 @@ local systemModalEntries = {
 ---@type SimpleModalItem[]
 local browserModalEntries = {
    "--Browser--",
-   { type = "app", "A", "Arc",    "Arc" },
-   { type = "app", "Z", "Zen",    "zen" },
+   { type = "app", "A", "Arc", "Arc" },
+   { type = "app", "Z", "Zen", "zen" },
    { type = "app", "S", "Safari", "Safari" },
    "",
-   { type = "custom", "1", "Arc Work Tab 1", function()
-      helpers.switchArcToWorkTab(1)
-   end },
-   { type = "custom", "3", "Arc Work Tab 3", function()
-      helpers.switchArcToWorkTab(3)
-   end },
-   { type = "custom", "2", "Arc Work Tab 2", function()
-      helpers.switchArcToWorkTab(2)
-   end },
-   { type = "url", "P", "GitHub PRs", "https://github.com/oneadvisory/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+" },
+   {
+      type = "custom",
+      "1",
+      "Arc Work Tab 1",
+      function()
+         helpers.switchArcToWorkTab(1)
+      end,
+   },
+   {
+      type = "custom",
+      "3",
+      "Arc Work Tab 3",
+      function()
+         helpers.switchArcToWorkTab(3)
+      end,
+   },
+   {
+      type = "custom",
+      "2",
+      "Arc Work Tab 2",
+      function()
+         helpers.switchArcToWorkTab(2)
+      end,
+   },
+   {
+      type = "url",
+      "P",
+      "GitHub PRs",
+      "https://github.com/oneadvisory/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+",
+   },
    { type = "url", "G", "GitHub Actions", "https://github.com/oneadvisory/frontend/actions" },
 }
 
@@ -209,31 +228,51 @@ local browserModalEntries = {
 local dispatchModalEntries = {
    "--Dispatch--",
    -- { type = "url", "P", "FE PRs", "https://github.com/oneadvisory/frontend/pulls?q=is%3Apr+is%3Aopen+draft%3Afalse+" },
-   { type = "custom", "p", "Type phone number", function()
-      hs.eventtap.keyStrokes("5555555555")
-   end },
-   { type = "custom", "s", "Type SSN", function()
-      hs.eventtap.keyStrokes("613121212")
-   end },
-   { type = "custom", "5", "Type 12345", function()
-      hs.eventtap.keyStrokes("12345")
-   end },
-   { type = "custom", "8", "Type 1234578", function()
-      hs.eventtap.keyStrokes("1234578")
-   end },
+   {
+      type = "custom",
+      "p",
+      "Type phone number",
+      function()
+         hs.eventtap.keyStrokes("5555555555")
+      end,
+   },
+   {
+      type = "custom",
+      "s",
+      "Type SSN",
+      function()
+         hs.eventtap.keyStrokes("613121212")
+      end,
+   },
+   {
+      type = "custom",
+      "5",
+      "Type 12345",
+      function()
+         hs.eventtap.keyStrokes("12345")
+      end,
+   },
+   {
+      type = "custom",
+      "8",
+      "Type 1234578",
+      function()
+         hs.eventtap.keyStrokes("1234578")
+      end,
+   },
 }
 
 ---@type SimpleModalItem[]
 local mainModalEntries = {
    "--Apps--",
    { type = "app", "A", "AI Chat (Claude)", "Claude" },
-   { type = "app", "B", "Browser (Arc)",   "Arc" },
-   { type = "app", "L", "Linear",      "Linear" },
-   { type = "app", "T", "Telegram",    "Telegram" },
-   { type = "app", "Z", "Zen",         "zen" },
-   { type = "app", "S", "Slack",       "Slack" },
-   { type = "app", "I", "iMessage",    "Messages" },
-   { type = "app", "F", "Figma",       "Figma" },
+   -- { type = "app", "B", "Browser (Arc)",   "Arc" },
+   { type = "app", "L", "Linear", "Linear" },
+   { type = "app", "T", "Telegram", "Telegram" },
+   { type = "app", "Z", "Zen", "zen" },
+   { type = "app", "S", "Slack", "Slack" },
+   { type = "app", "I", "iMessage", "Messages" },
+   { type = "app", "F", "Figma", "Figma" },
    {
       type = "custom",
       "O",
@@ -255,9 +294,9 @@ local mainModalEntries = {
          end
       end,
    },
-   { type = "app", "P", "Spotify",     "Spotify" },
-   { type = "app", "N", "Notion",      "Notion" },
-   { type = "app", "V", "Zoom",      "zoom.us" },
+   { type = "app", "P", "Spotify", "Spotify" },
+   { type = "app", "N", "Notion", "Notion" },
+   { type = "app", "V", "Zoom", "zoom.us" },
    {
       type = "custom",
       "3",
@@ -271,12 +310,12 @@ local mainModalEntries = {
 
    "",
    "--Submodals--",
-   { type = "submodal", "B", "Browser",               "browser" },
-   { type = "submodal", "D", "Dispatch",              "dispatch" },
-   { type = "submodal", "R", "Raycast",               "raycast" },
-   { type = "submodal", "H", "Hammerspoon",           "hammerspoon" },
+   { type = "submodal", "B", "Browser", "browser" },
+   { type = "submodal", "D", "Dispatch", "dispatch" },
+   { type = "submodal", "R", "Raycast", "raycast" },
+   { type = "submodal", "H", "Hammerspoon", "hammerspoon" },
    { type = "submodal", "U", editorConfig.modalLabel, "editor" },
-   { type = "submodal", "X", "System",                "system" },
+   { type = "submodal", "X", "System", "system" },
 }
 
 -- Create submodals first

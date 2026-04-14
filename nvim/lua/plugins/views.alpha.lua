@@ -40,6 +40,5 @@ return { -- start page for nvim
       --       -- element.opts.val.position = "right"
       --    end
       -- end
-
    end,
 }

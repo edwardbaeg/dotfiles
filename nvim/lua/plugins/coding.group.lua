@@ -93,8 +93,8 @@ return {
       lazy = true,
       opts = {
          mappings = {
-            toggle = '<leader>gR'
-         }
+            toggle = "<leader>gR",
+         },
       },
       requires = {
          "nvim-treesitter/nvim-treesitter",

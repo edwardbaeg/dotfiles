@@ -1,5 +1,5 @@
 vim.filetype.add({
-  filename = {
-    ['Brewfile'] = 'ruby',
-  }
+   filename = {
+      ["Brewfile"] = "ruby",
+   },
 })
