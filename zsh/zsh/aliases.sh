@@ -2,8 +2,8 @@
 # -- [neo]vim aliases
 alias vim="nvim"
 alias v="nvim"
-alias oldvim="/usr/bin/vim"
-alias ovim="oldvim"
+# alias oldvim="/usr/bin/vim" # use `\vim` instead or `command vim`
+# alias ovim="oldvim"
 
 # -- open configuration files
 # v* for shell, e* for within nvim
@@ -36,6 +36,7 @@ alias vsr="nvim -c \"lua require('persistence').load()\""
 alias vsl="nvim -c \"lua require('persistence').load()\""
 alias vla="nvim -c \"lua require('lazy').home()\""
 alias ve="nvim -c \"enew\"" # open empty buffer
+alias vdo="nvim -c \"lua require('diffview').open()\""
 alias leet="nvim leetcode.nvim"
 
 # -- obsidian
