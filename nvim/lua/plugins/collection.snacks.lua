@@ -8,7 +8,7 @@ return {
    ---@type snacks.Config
    opts = {
       -- NOTE: use <c-q> to add files to quickfix (default for grep)
-      ---@class snacks.picker.Config
+      -- ---@type snacks.picker.Config
       picker = {
          formatters = {
             file = {
@@ -20,7 +20,7 @@ return {
          },
          sources = {
             explorer = {
-               hidden = true, -- show hidden files
+               hidden = true,
                win = {
                   list = {
                      keys = {

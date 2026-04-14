@@ -7,6 +7,9 @@ local M = {}
 ---@param opts? vim.keymap.set.Opts
 M.set = function(mode, lhs, rhs, opts)
    opts = vim.tbl_extend("force", { silent = true }, opts or {})
+   if opts.desc == nil and type(rhs) == "string" then
+      opts.desc = rhs
+   end
    vim.keymap.set(mode, lhs, rhs, opts)
 end
 
