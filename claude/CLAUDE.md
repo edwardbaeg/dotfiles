@@ -37,6 +37,12 @@
   - Prevents exposing usernames in public repositories
   - Makes dotfiles portable across different systems
 
+## Dotfiles / Stow
+
+- After any filesystem changes (adding files, creating subdirectories, deleting files), symlinks in the target location must be updated
+- Run `make stow-<target>` from `~/dev/dotfiles` — e.g. `make stow-hammerspoon` after hammerspoon changes
+- The Makefile at `~/dev/dotfiles/Makefile` has a target for each package
+
 ## Neovim
 
 ### Plugin Documentation
