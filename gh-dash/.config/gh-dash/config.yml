@@ -1,8 +1,9 @@
+# yaml-language-server: $schema=https://gh-dash.dev/schema.json
 prSections:
   - title: Dispatch FE
     filters: repo:oneadvisory/frontend is:open
   - title: My Pull Requests
-    filters: is:open author:@me
+    filters: is:open author:@me repo:oneadvisory/frontend
     type: null
   # - title: Needs My Review
   #   filters: is:open review-requested:@me
@@ -57,7 +58,9 @@ defaults:
 keybindings:
   universal: []
   issues: []
-  prs: []
+  prs:
+    - key: A
+      command: gh enhance -R {{.RepoName}} {{.PrNumber}}
   branches: []
 repoPaths: {}
 theme:

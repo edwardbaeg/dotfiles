@@ -32,3 +32,12 @@ windows:
           - front
           - npm run build:packages:watch
       - front
+
+  - window_name: gh-dash
+    layout: main-vertical
+    panes:
+      - shell_command: # pane no. 1
+          - front
+          - gh dash
+      - shell_command: # pane no. 2
+          - front
