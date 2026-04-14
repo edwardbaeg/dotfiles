@@ -66,9 +66,10 @@ set("n", "<leader>cl", require("utils.coding").smart_print_word, { desc = "[L]og
 -- Tabs
 -- set("n", "<leader>tn", "<cmd>tabnext<cr>") -- next tab
 -- set("n", "<leader>tp", "<cmd>tabprevious<cr>") -- previous tab
-set("n", "<leader>Tn", "<cmd>tabnext<cr>") -- next tab
-set("n", "<leader>Tp", "<cmd>tabprevious<cr>") -- previous tab
-set("n", "<leader>TN", "<cmd>tabnew<cr>") -- next tab
+set("n", "<leader>Tn", "<cmd>tabnext<cr>", { desc = "[t]ab [n]ext" }) -- next tab
+set("n", "<leader>Tp", "<cmd>tabprevious<cr>", { desc = "[t]ab [p]revious" }) -- previous tab
+set("n", "<leader>TN", "<cmd>tabnew<cr>", { desc = "[t]ab [n]ew" }) -- next tab
+set("n", "<leader>Tc", "<cmd>tabclose<cr>", { desc = "[t]ab [c]lose" }) -- next tab
 
 -- Commands
 set("n", "<leader>ew", "<cmd>w<cr>", { desc = "[w]rite changes" }) -- save

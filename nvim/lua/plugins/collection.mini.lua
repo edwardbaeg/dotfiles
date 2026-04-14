@@ -249,6 +249,7 @@ return {
                { mode = "n", keys = "<leader>fg", desc = "+Fuzzy git" },
                { mode = "n", keys = "<leader>a", desc = "+Claude Code" },
                { mode = "n", keys = "<leader>ob", desc = "+Obsidian" },
+               { mode = "n", keys = "<leader>T", desc = "+Tabs" },
 
                -- TreeWalker submode clues
                { mode = "n", keys = "<leader>t<space>j", postkeys = "<leader>t<space>" },
@@ -262,7 +263,6 @@ return {
                { mode = "n", keys = "<leader>g<space>p", postkeys = "<leader>g<space>" },
                { mode = "n", keys = "<leader>g<space>i", postkeys = "<leader>g<space>" },
             },
-
          })
       end,
    },
