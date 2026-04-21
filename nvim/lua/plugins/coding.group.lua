@@ -40,9 +40,16 @@ return {
    {
       -- color highlighter
       -- :ColorizerToggle
-      -- #FFF, #FFF000
-      "NvChad/nvim-colorizer.lua",
-      opts = {},
+      -- #FFF, #FFF000, red
+      -- "NvChad/nvim-colorizer.lua", -- old repo
+      "catgoose/nvim-colorizer.lua",
+      opts = {
+         parsers = {
+            names = {
+               enable = false,
+            },
+         },
+      },
    },
 
    {
