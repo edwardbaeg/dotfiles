@@ -7,6 +7,8 @@ prSections:
   - title: My Pull Requests
     filters: is:open author:@me repo:oneadvisory/frontend
     type: null
+  - title: Team Bee
+    filters: repo:oneadvisory/frontend is:open author:bradleyfalk author:howdy-remy author:zpatrick author:jmmills author:peterchappy
   # - title: Needs My Review
   #   filters: is:open review-requested:@me
   #   type: null
