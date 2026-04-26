@@ -28,7 +28,8 @@ repo:
 defaults:
   preview:
     open: true
-    width: 50
+    # width: 50
+    grow: true
   prsLimit: 20
   issuesLimit: 20
   view: prs
