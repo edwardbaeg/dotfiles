@@ -62,5 +62,7 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
-  }
+  },
+  "editorMode": "vim",
+  "preferredNotifChannel": "terminal_bell"
 }
