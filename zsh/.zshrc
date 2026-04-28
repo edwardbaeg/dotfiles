@@ -128,7 +128,8 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/colored-man-pages
     # zgen oh-my-zsh plugins/tmux
     zgen oh-my-zsh plugins/alias-finder # says if command has an alias
-    zgen oh-my-zsh plugins/asdf # add asdf completion
+    zgen oh-my-zsh plugins/asdf         # add asdf completion
+    zgen oh-my-zsh plugins/globalias    # type space to expand aliases
 
     # zgen load Aloxaf/fzf-tab # doesn't appear to work with zgen
     zgen load zdharma-continuum/fast-syntax-highlighting
@@ -149,13 +150,13 @@ fi
 # NOTE: use `vv` to edit in vim
 ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_USER_DEFAULT
 ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK # show blinking cursor in normal mode
-ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT # always start in insert mode (default is ZVM_MODE_LAST)
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT               # always start in insert mode (default is ZVM_MODE_LAST)
 
 # Configure alias-finder
 zstyle ':omz:plugins:alias-finder' autoload yes # disabled by default
-zstyle ':omz:plugins:alias-finder' longer yes # disabled by default
-zstyle ':omz:plugins:alias-finder' exact yes # disabled by default
-zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
+zstyle ':omz:plugins:alias-finder' longer yes   # disabled by default
+zstyle ':omz:plugins:alias-finder' exact yes    # disabled by default
+zstyle ':omz:plugins:alias-finder' cheaper yes  # disabled by default
 
 alias sz="exec zsh" # do not source .zshrc
 # -- Aliases -------------------------------------------------------------------
