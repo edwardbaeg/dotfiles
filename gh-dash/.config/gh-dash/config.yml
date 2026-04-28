@@ -9,9 +9,9 @@ prSections:
     type: null
   - title: Team Bee
     filters: repo:oneadvisory/frontend is:open author:bradleyfalk author:howdy-remy author:zpatrick author:jmmills author:peterchappy
-  # - title: Needs My Review
-  #   filters: is:open review-requested:@me
-  #   type: null
+  - title: Requested My Review
+    filters: is:open review-requested:@me
+    type: null
   - title: Involved
     filters: is:open involves:@me -author:@me
     type: null
