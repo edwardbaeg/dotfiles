@@ -1,0 +1,13 @@
+session_name: interviews
+windows:
+  - window_name: interview
+    layout: main-vertical
+    options:
+      main-pane-width: 50%
+    panes:
+      - shell_command: # pane no. 1
+          - cd ~/dev/oneadvisory/interviews
+      - shell_command: # pane no. 2
+          - cd ~/dev/oneadvisory/interviews
+      - shell_command: # pane no. 2
+          - cd ~/dev/oneadvisory/interviews
