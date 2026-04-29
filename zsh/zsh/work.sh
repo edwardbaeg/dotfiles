@@ -22,8 +22,8 @@ workf() {
 		return 1
 	}
 	local selected
-	selected=$(ls -d "$dir"/*/ 2>/dev/null | fzf --prompt="worktree: ")
-	[[ -n "$selected" ]] && cd "$selected"
+	selected=$(find "$dir" -mindepth 1 -maxdepth 1 -type d | fzf --prompt="worktree: ")
+	[[ -n "$selected" ]] && cd "$selected" || exit
 }
 
 # decrypts argument or clipboard, outputs result and copies to clipboard
@@ -84,7 +84,7 @@ tsc() {
 		echo "⚠️  Warning: You're running 'tsc -b' in a frontend directory."
 		echo "Did you mean to run 'npx tsc -b' instead?"
 		echo -n "Continue with 'tsc -b'? (y/N/Esc to cancel): "
-		read -k 1 REPLY
+		read -r -k 1 REPLY
 		echo
 
 		# Check if ESC was pressed (character code 27)
