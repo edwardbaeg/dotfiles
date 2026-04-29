@@ -2,9 +2,10 @@
 
 # -- Aliases
 alias gcm2="git checkout master2 && git reset --hard origin/master"
-alias front="cd ~/dev/oneadvisory/frontend"
-alias work="cd ~/dev/oneadvisory/frontend-worktree"
-alias back="cd ~/dev/oneadvisory/backend"
+alias grom="git reset --hard origin/master"
+alias front="cd ~/dev/oneadvisory/frontend/"
+alias work="cd ~/dev/oneadvisory/worktrees/worktree1/"
+alias back="cd ~/dev/oneadvisory/backend/"
 alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
 
 alias run_frontend="npm ci && npm run dev"                     # for frontend
