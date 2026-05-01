@@ -1,13 +1,11 @@
 session_name: interviews
 windows:
   - window_name: interview
+    start_directory: ~/dev/oneadvisory/interviews
     layout: main-vertical
     options:
       main-pane-width: 50%
     panes:
-      - shell_command: # pane no. 1
-          - cd ~/dev/oneadvisory/interviews
-      - shell_command: # pane no. 2
-          - cd ~/dev/oneadvisory/interviews
-      - shell_command: # pane no. 2
-          - cd ~/dev/oneadvisory/interviews
+      - focus: true
+      - shell_command: []
+      - shell_command: []

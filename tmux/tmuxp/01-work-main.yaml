@@ -1,45 +1,39 @@
 session_name: dispatch
 windows:
   - window_name: main
+    start_directory: ~/dev/oneadvisory/frontend/
     layout: main-vertical
     options:
       main-pane-width: 66%
-      # shell_command_before:
-      #   - cd ~/ # run as a first command in all panes
     panes:
-      - shell_command: # pane no. 1
-          - front
-      - shell_command: # pane no. 2
-          - front
+      - focus: true
+      - shell_command: []
 
   - window_name: worktree
+    start_directory: ~/dev/oneadvisory/worktrees/worktree1/
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command: # pane no. 1
-          - work
-      - shell_command: # pane no. 1
-          - work
+      - focus: true
+      - shell_command: []
 
   - window_name: servers
+    start_directory: ~/dev/oneadvisory/frontend/
     layout: even-vertical
     panes:
-      - shell_command: # pane no. 1
-          - front
+      - shell_command:
           - npm run dev
-      - shell_command: # pane no. 2
-          - front
+      - shell_command:
           - npm run build:packages:watch
-      - front
+      - shell_command: []
 
   - window_name: gh-dash
+    start_directory: ~/dev/oneadvisory/frontend/
     layout: main-horizontal
     options:
       main-pane-height: 66%
     panes:
-      - shell_command: # pane no. 1
-          - front
+      - shell_command:
           - gh dash
-      - shell_command: # pane no. 2
-          - front
+      - shell_command: []
