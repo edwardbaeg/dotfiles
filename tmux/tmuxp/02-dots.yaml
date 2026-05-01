@@ -1,62 +1,51 @@
 session_name: dotfiles
 windows:
   - window_name: dotfiles root
+    start_directory: ~/dev/dotfiles/
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command:
-          - cd ~/dev/dotfiles/
-        focus: true
-      - shell_command:
-          - cd ~/dev/dotfiles/
+      - focus: true
+      - shell_command: []
 
   - window_name: neovim
+    start_directory: ~/dev/dotfiles/nvim/
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command:
-        - cd ~/dev/dotfiles/nvim/
-        focus: true
-      - shell_command:
-        - cd ~/dev/dotfiles/nvim/
+      - focus: true
+      - shell_command: []
 
   - window_name: hammerspoon
+    start_directory: ~/dev/dotfiles/hammerspoon/
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command:
-          - cd ~/dev/dotfiles/hammerspoon/
-        focus: true
-      - shell_command:
-          - cd ~/dev/dotfiles/hammerspoon/
+      - focus: true
+      - shell_command: []
 
   - window_name: tmux
+    start_directory: ~/dev/dotfiles/tmux/
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command:
-          - cd ~/dev/dotfiles/tmux/
-        focus: true
-      - shell_command:
-          - cd ~/dev/dotfiles/tmux/
-
+      - focus: true
+      - shell_command: []
 
   - window_name: zsh
+    start_directory: ~/dev/dotfiles/zsh/
     layout: main-vertical
     options:
       main-pane-width: 66%
     panes:
-      - shell_command:
-        - cd ~/dev/dotfiles/zsh/
-        focus: true
-      - shell_command:
-        - cd ~/dev/dotfiles/zsh/
+      - focus: true
+      - shell_command: []
 
   - window_name: obsidian
+    start_directory: "~/Sync/Obsidian Vault/"
     panes:
-      - shell_command:
-        - cd ~/Sync/Obsidian\ Vault/
+      - shell_command: []
