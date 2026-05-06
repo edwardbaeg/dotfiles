@@ -24,17 +24,5 @@ hs.loadSpoon("EmmyLua")
 -- Use Spotlight to find alternative application names for hs.application.find (and similar)
 hs.application.enableSpotlightForNameSearches(true)
 
---[[ NOTES
-Created ojects should be captured in gloal variables.
-Otherwise, they will be garbage collected.
-https://www.hammerspoon.org/go/ "A quick aside about variable lifecycles"
-
-Get the name of screens
-  hs.screen.allScreens()[1]:name()
-
-Get the name of running apps
-  hs.fnutils.each(hs.application.runningApplications(), function(app) print(app:title()) end)
---]]
-
 -- Run this last
 hs.alert("Config loaded!")
