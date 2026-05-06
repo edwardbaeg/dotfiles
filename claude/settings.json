@@ -58,7 +58,10 @@
   "effortLevel": "xhigh",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
-  "allowedTools": ["Grep", "Ls"],
+  "allowedTools": [
+    "Grep",
+    "Ls"
+  ],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
   }
