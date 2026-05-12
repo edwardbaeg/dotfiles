@@ -13,12 +13,14 @@ local M = {}
 ---@param key string
 ---@param label string | function
 ---@param callback function
+---@param isSubmodal? boolean
 ---@return ModalEntry
-local function createModalEntry(key, label, callback)
+local function createModalEntry(key, label, callback, isSubmodal)
    return {
       key = key,
       label = label,
       callback = callback,
+      isSubmodal = isSubmodal or false,
    }
 end
 M.createModalEntry = createModalEntry
@@ -61,7 +63,7 @@ local function processSimpleEntry(entry, modal, submodals)
       return createModalEntry(key, label, function()
          modal:exit()
          submodals[value]:enter()
-      end)
+      end, true)
    elseif entry.type == "url" then
       return createModalEntry(key, label, function()
          hs.urlevent.openURL(value)

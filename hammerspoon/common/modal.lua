@@ -155,13 +155,25 @@ end
 
 ---Internal callback for when modal is entered
 function Modal:_onEntered()
+   if self._exitTimer then
+      self._exitTimer:stop()
+      self._exitTimer = nil
+   end
+   if self.canvas then
+      self.canvas:hide(0)
+      self.canvas = nil
+   end
    self.canvas = self:_showModalAlert()
 end
 
 ---Internal callback for when modal is exited
 function Modal:_onExited()
+   if self._exitTimer then
+      self._exitTimer:stop()
+      self._exitTimer = nil
+   end
    if self.canvas then
-      self.canvas:hide(0.2) -- Fade out when exiting
+      self.canvas:hide(0.2)
       self.canvas = nil
    end
 end
@@ -322,10 +334,7 @@ end
 function Modal:_executeSelected()
    local selectedEntry = self.entries[self.selectedIndex]
    if type(selectedEntry) == "table" and selectedEntry.callback then
-      -- Check if this is a submodal transition by looking for "modal" in the label
-      local isSubmodal = selectedEntry.label
-         and type(selectedEntry.label) == "string"
-         and (selectedEntry.label:lower():find("modal") or selectedEntry.label:lower():find(":"))
+      local isSubmodal = selectedEntry.isSubmodal == true
 
       if isSubmodal then
          -- For submodals, show fade out effect and execute
@@ -358,9 +367,13 @@ function Modal:_executeSelected()
          self.exit = originalExit
 
          -- Auto-dismiss modal after flash duration with fade
-         hs.timer.doAfter(0.2, function()
+         if self._exitTimer then
+            self._exitTimer:stop()
+         end
+         self._exitTimer = hs.timer.doAfter(0.2, function()
+            self._exitTimer = nil
             if self.canvas then
-               self.canvas:hide(0.2) -- Fade out
+               self.canvas:hide(0.2)
                self.canvas = nil
             end
             self.modal:exit()
