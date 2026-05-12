@@ -32,3 +32,14 @@ customCommands:
     command: git commit --no-verify
     context: "global"
     output: terminal
+  - key: "<c-a>"
+    context: "localBranches"
+    description: "View PR [A]ctions with gh enhance"
+    command: 'gh enhance "$(gh pr view {{.SelectedLocalBranch.Name}} --json number -q .number)"'
+    output: terminal
+    loadingText: "Looking up PR…"
+  - key: "<c-g>"
+    context: "global"
+    description: "Open [G]itHub dashboard (gh-dash)"
+    command: gh dash
+    output: terminal
