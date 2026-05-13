@@ -38,8 +38,13 @@ customCommands:
     command: 'gh enhance "$(gh pr view {{.SelectedLocalBranch.Name}} --json number -q .number)"'
     output: terminal
     loadingText: "Looking up PR…"
+  # - key: "<c-g>"
+  #   context: "global"
+  #   description: "Open [G]itHub dashboard (gh-dash)"
+  #   command: gh dash
+  #   output: terminal
   - key: "<c-g>"
-    context: "global"
-    description: "Open [G]itHub dashboard (gh-dash)"
-    command: gh dash
-    output: terminal
+    context: "localBranches"
+    description: "View PR details"
+    command: 'gh pr view {{.SelectedLocalBranch.Name}}'
+    output: popup
