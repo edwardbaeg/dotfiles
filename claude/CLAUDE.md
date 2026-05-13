@@ -19,6 +19,10 @@
 - Update imports, function calls, and any other references in one operation
 - Don't make partial changes that leave broken references
 
+## Git
+- **NEVER run `git commit` or `git push` without explicit user instruction**
+- After completing code changes, report what was done and stop — wait for the user to ask before committing or pushing
+
 ## File Management
 - Do what has been asked; nothing more, nothing less
 - NEVER create files unless absolutely necessary for achieving your goal
