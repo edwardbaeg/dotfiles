@@ -64,5 +64,6 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
-  }
+  },
+  "skipAutoPermissionPrompt": true
 }
