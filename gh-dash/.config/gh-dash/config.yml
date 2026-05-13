@@ -49,6 +49,12 @@ defaults:
         hidden: true
       lines:
         width: 15
+      reviewStatus:
+        width: 12
+      ci:
+        width: 5
+      numComments:
+        width: 5
     issues:
       updatedAt:
         width: 5
@@ -64,7 +70,7 @@ keybindings:
   universal: []
   issues: []
   prs:
-    - key: A
+    - key: ctrl+a
       command: gh enhance -R {{.RepoName}} {{.PrNumber}}
   branches: []
 repoPaths: {}
