@@ -2,13 +2,13 @@ local Modal = require("common.modal")
 local colors = require("common.constants").colors
 local processSimpleEntries = require("modals.utils").processSimpleEntries
 
-local mainModalEntries    = require("modals.main")
-local editorEntries       = require("modals.submodals.editor")
-local raycastEntries      = require("modals.submodals.raycast")
-local hammerspoonEntries  = require("modals.submodals.hammerspoon")
-local systemEntries       = require("modals.submodals.system")
-local browserEntries      = require("modals.submodals.browser")
-local dispatchEntries     = require("modals.submodals.dispatch")
+local mainModalEntries = require("modals.main")
+local editorEntries = require("modals.submodals.editor")
+local raycastEntries = require("modals.submodals.raycast")
+local hammerspoonEntries = require("modals.submodals.hammerspoon")
+local systemEntries = require("modals.submodals.system")
+local browserEntries = require("modals.submodals.browser")
+local dispatchEntries = require("modals.submodals.dispatch")
 
 local M = {}
 
