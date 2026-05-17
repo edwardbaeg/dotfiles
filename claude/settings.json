@@ -52,18 +52,19 @@
     "lua-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "notion@claude-plugins-official": true
+    "notion@claude-plugins-official": true,
+    "figma@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
+  "skipAutoPermissionPrompt": true,
   "allowedTools": [
     "Grep",
     "Ls"
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
-  },
-  "skipAutoPermissionPrompt": true
+  }
 }
