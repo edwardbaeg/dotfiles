@@ -3,20 +3,18 @@ brew "bat" # better cat
 brew "eza" # better ls; better exa
 brew "fd" # better find
 brew "gdu" # file/directory size checker; better ncdu
-brew "qrcp" # qr code generator for file transfer
 brew "lazygit" # git TUI
+brew "qrcp" # qr code generator for file transfer
 brew "ripgrep" # better grep
 brew "scrcpy" # android screen sharing
 brew "stow" # symlink manager
+brew "thaw" # menubar manager
 brew "tlrc" # quick reference; better tldr
 brew "tmux" # terminal multiplexer
 brew "tmuxp" # tmux session manager
 brew "witr" # why is this running
 brew "yazi" # file finder
 brew "zoxide" # better cd
-
-# GUI applications
-cask "jordanbaird-ice" # menubar manager
 
 tap "FelixKratz/formulae" # required for janky borders
 brew "borders" # colored borders for active windows
