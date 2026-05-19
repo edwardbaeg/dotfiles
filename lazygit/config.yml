@@ -2,7 +2,7 @@
 # + and _ -> cycle through layouts: normal, half, full
 
 os:
-  editPreset: 'nvim-remote'
+  editPreset: "nvim-remote" # use remote when within neovim
 
 gui:
   showIcons: true # enable nerd fonts
@@ -49,5 +49,5 @@ customCommands:
   - key: "<c-g>"
     context: "localBranches"
     description: "View PR details"
-    command: 'gh pr view {{.SelectedLocalBranch.Name}}'
+    command: "gh pr view {{.SelectedLocalBranch.Name}}"
     output: popup
