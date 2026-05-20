@@ -14,6 +14,21 @@ alias run_fs_interview="npm ci && npm run seed && npm run dev" # for fs intervie
 
 # -- Functions
 
+# checkout the worktree's branch and reset it to origin/master
+alias gcmw="git_checkout_master_worktree"
+git_checkout_master_worktree() {
+	local worktrees_dir=~/dev/oneadvisory/worktrees
+	if [[ "$(dirname "$PWD")" != "$worktrees_dir" ]]; then
+		echo "gcmw: must be run from a worktree root under $worktrees_dir"
+		return 1
+	fi
+	local branch
+	branch=$(basename "$PWD")
+	git fetch origin master || return 1
+	git checkout -B "$branch" || return 1
+	git reset --hard origin/master
+}
+
 # cd to git worktree directories
 workf() {
 	local dir=~/dev/oneadvisory/worktrees
