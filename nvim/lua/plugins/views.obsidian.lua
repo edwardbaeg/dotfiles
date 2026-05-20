@@ -6,6 +6,7 @@ return {
    version = "*", -- recommended, use latest release instead of latest commit
    lazy = true,
    -- only load on obsidian .md files, replaces ft = "markdown",
+   -- TODO: update so that it also loads if in the obsidian vault dir
    event = {
       "BufReadPre " .. home_path .. "/Sync/Obsidian Vault/*.md",
       "BufNewFile  " .. home_path .. "/Sync/Obsidian Vault/*.md",
@@ -94,6 +95,10 @@ return {
       --    vim.cmd("edit ~/Sync/Obsidian\\ Vault/")
       -- end, {})
       -- vim.keymap.set("n", "<leader>eo", ":OpenObsidianVault<CR>", { noremap = true, silent = true })
+
+      vim.api.nvim_create_user_command("ObsidianNewDaily", function()
+         vim.cmd("ObsidianDaily")
+      end, {})
 
       vim.keymap.set("n", "<leader>obs", "<cmd>Obsidian<cr>", { noremap = true, silent = true })
       vim.keymap.set("n", "<leader>obb", "<cmd>Obsidian backlinks<cr>", { noremap = true, silent = true })
