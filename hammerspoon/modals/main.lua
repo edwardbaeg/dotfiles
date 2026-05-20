@@ -6,12 +6,12 @@ local registry = require("common.feature_registry")
 return {
    "--Apps--",
    { type = "app", "A", "AI Chat (Claude)", "Claude" },
+   { type = "app", "F", "Figma", "Figma" },
+   { type = "app", "I", "iMessage", "Messages" },
    { type = "app", "L", "Linear", "Linear" },
+   { type = "app", "S", "Slack", "Slack" },
    { type = "app", "T", "Telegram", "Telegram" },
    { type = "app", "Z", "Zen", "zen" },
-   { type = "app", "S", "Slack", "Slack" },
-   { type = "app", "I", "iMessage", "Messages" },
-   { type = "app", "F", "Figma", "Figma" },
    {
       type = "custom",
       "O",
