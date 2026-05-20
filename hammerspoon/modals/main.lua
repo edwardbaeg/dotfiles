@@ -6,7 +6,6 @@ local registry = require("common.feature_registry")
 return {
    "--Apps--",
    { type = "app", "A", "AI Chat (Claude)", "Claude" },
-   { type = "app", "B", "Browser (Arc)", "Arc" },
    { type = "app", "L", "Linear", "Linear" },
    { type = "app", "T", "Telegram", "Telegram" },
    { type = "app", "Z", "Zen", "zen" },
