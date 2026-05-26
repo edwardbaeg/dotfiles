@@ -24,6 +24,12 @@ git_checkout_master_worktree() {
 	fi
 	local branch
 	branch=$(basename "$PWD")
+	if ! git diff --quiet || ! git diff --cached --quiet; then
+		echo "gcmw: working tree is dirty. Continue? (y/N) "
+		read -r -k 1 REPLY
+		echo
+		[[ $REPLY =~ ^[Yy]$ ]] || return 1
+	fi
 	git fetch origin master || return 1
 	git checkout -B "$branch" || return 1
 	git reset --hard origin/master
