@@ -8,8 +8,9 @@ source "$(dirname "${BASH_SOURCE[0]:-$0}")/utils.sh"
 # fuzzy search git branches
 # checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
 # https://github.com/junegunn/fzf/wiki/examples#git
-alias gcof="git_checkout_fuzzy"
-function git_checkout_fuzzy() {
+alias gcof="fuzzy_git_checkout"
+alias fgco="fuzzy_git_checkout"
+function fuzzy_git_checkout() {
 	local branches branch
 	branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
 		branch=$(echo "$branches" |
@@ -96,10 +97,11 @@ function tmux_attach() {
 }
 
 # Fuzzy picker for tmuxp files
-alias tp="tmuxp_picker"
-alias tmuxpf="tmuxp_picker"
+alias tp="fuzzy_tmuxp_picker"
+alias tmuxpf="fuzzy_tmuxp_picker"
+alias ftmuxp="fuzzy_tmuxp_picker"
 
-function tmuxp_picker() {
+function fuzzy_tmuxp_picker() {
 	local IFS=$'\n'
 	local files
 	files=($(find ~/dev/dotfiles/tmux/tmuxp -type f -name '*.yaml' |
@@ -119,8 +121,9 @@ function tmuxp_picker() {
 	fi
 }
 
-alias nsf="npm_run_script_fuzzy"
-function npm_run_script_fuzzy() {
+alias nsf="fuzzy_npm_run_script"
+alias fns="fuzzy_npm_run_script"
+function fuzzy_npm_run_script() {
 	if cat package.json >/dev/null 2>&1; then
 		# --tiebreak=begin to put higher score for matches at the beginning of the line
 		# TODO: update preview to match on matches closer to beginning of the line
@@ -153,8 +156,9 @@ function npm_run_script_fuzzy() {
 	fi
 }
 
-alias npf="npm_package_fuzzy"
-function npm_package_fuzzy() {
+alias npf="fuzzy_npm_package"
+alias fnp="fuzzy_npm_package"
+function fuzzy_npm_package() {
 	if cat package.json >/dev/null 2>&1; then
 		# Extract both dependencies and devDependencies, format as "package: version"
 		packages=$(jq -r '(.dependencies // {}) + (.devDependencies // {}) | to_entries[] | "\(.key): \(.value)"' package.json |
@@ -171,8 +175,9 @@ function npm_package_fuzzy() {
 }
 
 # Fuzzy picker for shell history removal
-alias histf="shell_history_remove"
-function shell_history_remove() {
+alias histf="fuzzy_history_removal"
+alias fhist="fuzzy_history_removal"
+function fuzzy_history_removal() {
 	local history_count=25
 	local selected_lines
 	selected_lines=($(tail -$history_count ~/.zsh_history | nl -b a | sort -nr |

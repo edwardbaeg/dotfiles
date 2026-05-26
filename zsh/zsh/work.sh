@@ -36,7 +36,9 @@ git_checkout_master_worktree() {
 }
 
 # cd to git worktree directories
-workf() {
+alias workf="fuzzy_worktree_cd"
+alias fwork="fuzzy_worktree_cd"
+fuzzy_worktree_cd() {
 	local dir=~/dev/oneadvisory/worktrees
 	[[ -d "$dir" ]] || {
 		echo "worktrees directory not found: $dir"
