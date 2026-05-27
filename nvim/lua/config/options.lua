@@ -144,6 +144,21 @@ vim.api.nvim_create_user_command("Pwf", "echo @%", { desc = "Show the path for t
 
 vim.api.nvim_create_user_command("Bda", "bufdo bd", { desc = "Close all buffers" })
 
+-- add modified files to quickfix, filtered to cwd
+vim.api.nvim_create_user_command("ModifiedQuickfix", function()
+   local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+   local cwd = vim.fn.getcwd()
+   local files = vim.fn.systemlist("git diff HEAD --name-only")
+   local filtered = vim.tbl_filter(function(f)
+      local abs = git_root .. "/" .. f
+      return abs:sub(1, #cwd) == cwd
+   end, files)
+   vim.fn.setqflist(vim.tbl_map(function(f)
+      return { filename = git_root .. "/" .. f, lnum = 1 }
+   end, filtered))
+   vim.cmd("copen")
+end, {})
+
 -- [[ Highlights ]]
 -- NOTE: a number of these highlights are set after plugins are loaded -- so we load this file after plugins
 
