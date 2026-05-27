@@ -4,9 +4,11 @@ require("config.lazy") -- bootstrap lazy
 require("config.keymaps")
 require("config.autocommands")
 require("config.filetype")
+require("config.user_commands")
 
 if not vim.g.disable_plugins then
    -- load plugins
+   ---@diagnostic disable-next-line: missing-fields, param-type-mismatch
    require("lazy").setup("plugins", {
       -- automatically watch for config file changes and reload ui
       change_detection = {
