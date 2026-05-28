@@ -35,6 +35,17 @@ git_checkout_master_worktree() {
 	git reset --hard origin/master
 }
 
+# fuzzy select *.test.* files and run them with npm run test:unit
+alias fut="fuzzy_unit_test"
+fuzzy_unit_test() {
+	local selected
+	selected=$(find . -type f -name "*.test.*" -not -path "*/node_modules/*" | fzf --prompt="test: " --multi)
+	if [[ -n "$selected" ]]; then
+		local files=("${(@f)selected}")
+		npm run test:unit -- "${files[@]}"
+	fi
+}
+
 # cd to git worktree directories
 alias workf="fuzzy_worktree_cd"
 alias fwork="fuzzy_worktree_cd"
