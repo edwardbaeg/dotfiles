@@ -42,7 +42,7 @@ sendKey({ "alt", "ctrl" }, "j", {}, "pagedown")
 -- This remap is specific for apple based keyboards
 -- TODO: consider if remapping to cmd+ctrl+shift+= is more performant
 hs.hotkey.bind(constants.hyperkey, "=", function()
-   hs.execute("open -g raycast://extensions/raycast/window-management/make-larger")
+   hs.execute("open -g raycast-x://extensions/raycast/window-management/make-larger")
 end)
 
 -- Todoist: cmd+n -> q (quick add)
