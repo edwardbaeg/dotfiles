@@ -2,7 +2,7 @@
 return {
    {
       -- Highlight comments, examples:
-      -- TODO
+      -- TODO:
       -- FIXME
       -- HACK
       -- BUG
@@ -11,8 +11,13 @@ return {
       config = function()
          require("todo-comments").setup({
             signs = false,
+            gui_style = {
+               -- bg = "NONE",
+            },
             highlight = {
-               keyword = "fg",
+               -- before = "",
+               -- keyword = "",
+               keyword = "bg",
                after = "",
                pattern = [[.*<(KEYWORDS)\s*]], -- removed the `:` from the default pattern
             },
@@ -26,6 +31,15 @@ return {
          -- vim.api.nvim_set_hl(0, "shTodo", { bg = "#1c1c1c" })
          -- vim.api.nvim_set_hl(0, "zshTodo", { bg = "#1c1c1c" })
          -- vim.api.nvim_set_hl(0, "luaTodo", { bg = "#1c1c1c" })
+      end,
+   },
+
+   {
+      -- shows age of todo comments with virtual text
+      "kuri-sun/todoage.nvim",
+      init = function()
+         vim.api.nvim_set_hl(0, "TodoageAge", { fg = "#5f5f5f", italic = false })
+         vim.api.nvim_set_hl(0, "TodoageUncommitted", { fg = "#5f5f5f", italic = false })
       end,
    },
 
