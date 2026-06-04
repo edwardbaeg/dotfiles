@@ -217,9 +217,18 @@ function git_branch_delete_merged() {
 }
 
 # open file with merge conflicts
-alias vmc="git_merge_conflicts_open"
-function git_merge_conflicts_open() {
+alias vmc="vim_merge_conflicts"
+function vim_merge_conflicts() {
 	git diff --name-only --diff-filter=U | xargs $EDITOR
+}
+
+# open files with changes
+alias vgd="vim_git_dirty"
+function vim_git_dirty() {
+	local root files
+	root=$(git rev-parse --show-toplevel) || return 1
+	files=($(git status --porcelain | awk -v root="$root" '{print root "/" $NF}'))
+	[[ ${#files[@]} -gt 0 ]] && ${EDITOR:-nvim} "${files[@]}"
 }
 
 # -- other functions
