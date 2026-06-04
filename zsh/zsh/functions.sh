@@ -226,8 +226,10 @@ function vim_merge_conflicts() {
 alias vgd="vim_git_dirty"
 function vim_git_dirty() {
 	local root files
+	# resolve repo root so paths work from any subdirectory
 	root=$(git rev-parse --show-toplevel) || return 1
-	files=($(git status --porcelain | awk -v root="$root" '{print root "/" $NF}'))
+	# porcelain format: "XY filename" — skip lines with D in status (deleted files), prefix remainder with root
+	files=($(git status --porcelain | awk -v root="$root" '$1 !~ /D/ {print root "/" $NF}'))
 	[[ ${#files[@]} -gt 0 ]] && ${EDITOR:-nvim} "${files[@]}"
 }
 
