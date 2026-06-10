@@ -81,8 +81,12 @@ return {
          vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "#ff2222" })
 
          set("n", "gh", function() -- NOTE: the default mapping for gh is start select mode
-            gitsigns.nav_hunk("next")
+            gitsigns.nav_hunk("next", { target = "all" }) -- default is target = "unstaged"
          end, { desc = "Next hunk" })
+
+         set("n", "gH", function()
+            gitsigns.nav_hunk("prev", { target = "all" })
+         end, { desc = "Previous hunk" })
 
          -- Submode hunk navigation (via mini.clue)
          -- TODO: consider creating a helper to generate standalone and submode mappings
