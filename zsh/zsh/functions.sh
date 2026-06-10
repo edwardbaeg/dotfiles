@@ -267,7 +267,7 @@ function vim_git_dirty_qf() {
 	done < <(git status --porcelain)
 
 	if [[ -s "$tmpfile" ]]; then
-		nvim -q "$tmpfile"
+		nvim -q "$tmpfile" -c "copen"
 	else
 		echo "No dirty files."
 	fi
