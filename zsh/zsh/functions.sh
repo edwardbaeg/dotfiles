@@ -222,8 +222,9 @@ function vim_merge_conflicts() {
 	git diff --name-only --diff-filter=U | xargs $EDITOR
 }
 
-# open files with changes
+# open all files with changes as buffers
 alias vgd="vim_git_dirty"
+alias vdc="vim_git_dirty" # vim dirty changes
 function vim_git_dirty() {
 	local root files
 	# resolve repo root so paths work from any subdirectory
@@ -231,6 +232,47 @@ function vim_git_dirty() {
 	# porcelain format: "XY filename" — skip lines with D in status (deleted files), prefix remainder with root
 	files=($(git status --porcelain | awk -v root="$root" '$1 !~ /D/ {print root "/" $NF}'))
 	[[ ${#files[@]} -gt 0 ]] && ${EDITOR:-nvim} "${files[@]}"
+}
+
+# open dirty files in nvim quickfix list, each at its first changed line
+alias vgdq="vim_git_dirty_qf"
+function vim_git_dirty_qf() {
+	local root
+	root=$(git rev-parse --show-toplevel) || return 1
+
+	local tmpfile
+	tmpfile=$(mktemp /tmp/nvim_qf.XXXXXX)
+
+	while IFS= read -r line; do
+		local xy="${line:0:2}" # two-char porcelain status: index + worktree
+		local file="${line:3}" # filename starts at char 4 (after "XY ")
+
+		# skip deleted files
+		[[ "$xy" =~ D ]] && continue
+
+		local abs="$root/$file"
+		local lnum=1
+
+		# untracked files (??) have no diff — use line 1
+		# for all others, parse the first @@ hunk header to find the first changed line
+		if [[ "$xy" != "??" ]]; then
+			local first
+			# --unified=0 suppresses context lines so the @@ header is easier to parse
+			# hunk header format: "@@ -old +new,count @@" — extract the new-file line number
+			first=$(git diff HEAD --unified=0 -- "$abs" | awk '/^@@/{gsub(/.*\+/,""); gsub(/[^0-9].*/,""); print; exit}')
+			[[ -n "$first" ]] && lnum=$first
+		fi
+
+		printf '%s:%s:1:\n' "$abs" "$lnum" >>"$tmpfile"
+	done < <(git status --porcelain)
+
+	if [[ -s "$tmpfile" ]]; then
+		nvim -q "$tmpfile"
+	else
+		echo "No dirty files."
+	fi
+
+	rm -f "$tmpfile"
 }
 
 # -- other functions
