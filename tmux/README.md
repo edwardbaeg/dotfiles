@@ -17,6 +17,7 @@
 - Move window to different session: `<prefix> .` `[<position> | <session>:<position>]`
 - Rename current window: `<prefix> ,`
 - Rename current session: `<prefix> $`
+- Go to last window: `<prefix> L` (uppercase)
 
 ## Misc notes
 
