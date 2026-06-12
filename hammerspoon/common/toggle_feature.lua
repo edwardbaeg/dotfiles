@@ -81,7 +81,7 @@ function M.new(config)
    end
 
    -- Set up URL event handler with parameter-based actions
-   hs.urlevent.bind(config.name, function(_eventName, params)
+   hs.urlevent.bind(config.name:lower(), function(_eventName, params)
       local action = params and params.action or "toggle"
 
       if action == "enable" then
