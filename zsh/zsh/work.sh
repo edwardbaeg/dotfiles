@@ -9,6 +9,8 @@ alias back="cd ~/dev/oneadvisory/backend/"
 alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
 
 alias run_frontend="npm ci && npm run dev"                     # for frontend
+alias run_build_frontend="npm ci && npm run build:packages && npm run dev"             # for frontend
+
 alias run_fe_interview="npm ci && npm run start"               # for fe interviews
 alias run_fs_interview="npm ci && npm run seed && npm run dev" # for fs interviews
 
@@ -36,8 +38,8 @@ git_checkout_master_worktree() {
 }
 
 # fuzzy select *.test.* files and run them with npm run test:unit
-alias fut="fuzzy_unit_test"
-fuzzy_unit_test() {
+alias tuf="test_unit_fuzzy"
+test_unit_fuzzy() {
 	local selected
 	selected=$(find . -type f -name "*.test.*" -not -path "*/node_modules/*" | fzf --prompt="test: " --multi)
 	if [[ -n "$selected" ]]; then
