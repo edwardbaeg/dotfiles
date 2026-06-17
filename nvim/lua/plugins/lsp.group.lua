@@ -105,6 +105,9 @@ return {
                filetypes = { "sh", "zsh" }, -- this doesn't seem to work for zsh files?
             },
 
+            -- python
+            basedpyright = {},
+
             terraformls = {},
             jsonls = {},
             yamlls = {},
