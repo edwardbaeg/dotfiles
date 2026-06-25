@@ -182,7 +182,8 @@ alias nvim_no_plugins="nvim +'let g:disable_plugins=1'"
 alias vlazy='NVIM_APPNAME=nvim-lazyvim nvim' # LazyVim
 
 ## fuzzy finder for launching nvim configs
-function vv() {
+alias vf="vim_fuzzy"
+function vim_fuzzy() {
     # Assumes all configs exist in directories named ~/.config/nvim-*
     local config=$(fd --max-depth 1 --glob 'nvim*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
 
