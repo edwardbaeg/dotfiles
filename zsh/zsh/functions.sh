@@ -251,6 +251,15 @@ function vim_git_dirty_qf() {
 		[[ "$xy" =~ D ]] && continue
 
 		local abs="$root/$file"
+
+		# untracked directory — expand to individual files
+		if [[ "$xy" == "??" && "$file" == */ ]]; then
+			while IFS= read -r f; do
+				printf '%s:1:1:\n' "$f" >>"$tmpfile"
+			done < <(find "$abs" -type f | sort)
+			continue
+		fi
+
 		local lnum=1
 
 		# untracked files (??) have no diff — use line 1
