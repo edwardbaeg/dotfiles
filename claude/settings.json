@@ -59,6 +59,7 @@
   "effortLevel": "xhigh",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
+  "autoCompactEnabled": true,
   "skipAutoPermissionPrompt": true,
   "allowedTools": [
     "Grep",
@@ -66,5 +67,6 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
-  }
+  },
+  "tui": "fullscreen"
 }
