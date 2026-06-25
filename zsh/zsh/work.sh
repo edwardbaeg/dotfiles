@@ -41,10 +41,13 @@ git_checkout_master_worktree() {
 alias tuf="test_unit_fuzzy"
 test_unit_fuzzy() {
 	local selected
-	selected=$(find . -type f -name "*.test.*" -not -path "*/node_modules/*" | fzf --prompt="test: " --multi)
+	selected=$(find . -type f -name "*.test.*" -not -path "*/node_modules/*" -not -path "./.*" -not -path "*/dist/*" -not -path "*/build/*" | fzf --prompt="test: " --multi)
 	if [[ -n "$selected" ]]; then
 		local files=("${(@f)selected}")
-		npm run test:unit -- "${files[@]}"
+		local command="npm run test:unit -- ${files[@]}"
+		print "$command"
+		print -s "$command"
+		eval "$command"
 	fi
 }
 
