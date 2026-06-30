@@ -31,9 +31,10 @@ return {
          vim.g.gitblame_display_virtual_text = 0 -- don't show virtual text
 
          local function shorten(text, _, max_length)
-            local substring_length = math.floor((max_length or 30) / 2)
-            if #text > substring_length then
-               return text:sub(1, substring_length) .. "[…]" .. text:sub(-substring_length)
+            max_length = max_length or 30
+            local substring_length = math.floor(max_length / 2)
+            if #text > max_length then
+               return text:sub(1, substring_length) .. "…" .. text:sub(-substring_length)
             end
             return text
          end
