@@ -41,7 +41,7 @@ git_checkout_master_worktree() {
 alias tuf="test_unit_fuzzy"
 test_unit_fuzzy() {
 	local selected
-	selected=$(find . -type f -name "*.test.*" -not -path "*/node_modules/*" -not -path "./.*" -not -path "*/dist/*" -not -path "*/build/*" | fzf --prompt="test: " --multi)
+	selected=$(fd --type f --glob "*.test.*" | fzf --prompt="test: " --multi)
 	if [[ -n "$selected" ]]; then
 		local files=("${(@f)selected}")
 		local command="npm run test:unit -- ${files[@]}"
@@ -61,7 +61,7 @@ fuzzy_worktree_cd() {
 		return 1
 	}
 	local selected
-	selected=$(find "$dir" -mindepth 1 -maxdepth 1 -type d | fzf --prompt="worktree: ")
+	selected=$(fd --type d --max-depth 1 . "$dir" | fzf --prompt="worktree: ")
 	[[ -n "$selected" ]] && cd "$selected" || exit
 }
 

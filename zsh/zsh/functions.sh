@@ -104,7 +104,7 @@ alias ftmuxp="fuzzy_tmuxp_picker"
 function fuzzy_tmuxp_picker() {
 	local IFS=$'\n'
 	local files
-	files=($(find ~/dev/dotfiles/tmux/tmuxp -type f -name '*.yaml' |
+	files=($(fd --type f --glob '*.yaml' ~/dev/dotfiles/tmux/tmuxp |
 		fzf --prompt="tmuxp > " --height=40% --border --multi \
 			--preview="head -40 {}" --preview-window=right:40%))
 	IFS=' '
