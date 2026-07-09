@@ -45,12 +45,22 @@ hs.hotkey.bind(constants.hyperkey, "=", function()
    hs.execute("open -g raycast-x://extensions/raycast/window-management/make-larger")
 end)
 
--- Todoist: cmd+n -> q (quick add)
-hs.hotkey.bind({ "cmd" }, "n", function()
+-- Todoist: cmd+n -> q (quick add). Todoist does not have builtin support to remap.
+-- NOTE: use eventtap to so that the keymap can be passed through. Using hs.hotkey
+-- fails for things like raycast notes, where the app with keyboard focus is not
+-- the frontmost app.
+todoistQuickAdd = hs.eventtap.new({ hs.eventtap.event.types.keyDown }, function(event)
+   local isCmdN = event:getKeyCode() == hs.keycodes.map["n"] and event:getFlags():containExactly({ "cmd" })
+   if not isCmdN then
+      return false
+   end
+
    local frontmostApp = hs.application.frontmostApplication()
    if frontmostApp and frontmostApp:name() == "Todoist" then
       hs.eventtap.keyStroke({}, "q", frontmostApp)
-   else
-      hs.eventtap.keyStroke({ "cmd" }, "n", frontmostApp)
+      return true
    end
+
+   return false
 end)
+todoistQuickAdd:start()
