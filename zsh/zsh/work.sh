@@ -37,6 +37,54 @@ git_checkout_master_worktree() {
 	git reset --hard origin/master
 }
 
+# checkout each release branch and fetch/pull the latest
+git_pull_release_branches() {
+	local branches=(release/staging release/demo release/prod)
+	local branch
+	for branch in "${branches[@]}"; do
+		echo "-- $branch"
+		git checkout "$branch" || return 1
+		git fetch || return 1
+		git pull || return 1
+	done
+}
+
+# check whether merging release/demo or release/prod into release/staging
+# would change staging, without touching the working tree
+git_test_release_branches() {
+	local target="release/staging"
+	local sources=(release/demo release/prod)
+	git fetch origin "$target" "${sources[@]}" || return 1
+
+	local base_tree
+	base_tree=$(git rev-parse "origin/$target^{tree}") || return 1
+
+	local src merged rc merged_tree
+	for src in "${sources[@]}"; do
+		echo "-- origin/$src -> origin/$target"
+		merged=$(git merge-tree --write-tree "origin/$target" "origin/$src")
+		rc=$?
+		if [[ $rc -gt 1 ]]; then
+			echo "   error: merge-tree failed"
+			continue
+		fi
+		[[ $rc -eq 1 ]] && echo "   ⚠️  merge would CONFLICT"
+		merged_tree=${merged%%$'\n'*}
+		if [[ "$merged_tree" == "$base_tree" ]]; then
+			echo "   no changes to $target"
+		else
+			echo "   would change $target:"
+			git diff --stat "$base_tree" "$merged_tree"
+		fi
+	done
+}
+
+# pull the latest release branches, then test the merges into staging
+git_pull_and_test_release_branches() {
+	git_pull_release_branches || return 1
+	git_test_release_branches
+}
+
 # fuzzy select *.test.* files and run them with npm run test:unit
 alias tuf="test_unit_fuzzy"
 test_unit_fuzzy() {
