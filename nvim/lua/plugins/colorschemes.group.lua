@@ -4,11 +4,10 @@ return {
       -- colorscheme
       "catppuccin/nvim",
       name = "catppuccin",
-      version = "1.x", -- v2 introduces some poor highlighting -- https://github.com/catppuccin/nvim/discussions/903#discussioncomment-13981361
+      -- version = "1.x", -- v2 introduces some poor highlighting -- https://github.com/catppuccin/nvim/discussions/903#discussioncomment-13981361
       lazy = false, -- load main colorscheme during startup
       priority = 1000, -- load before other plugins change highlights
       config = function()
-         ---@type CatppuccinOptions -- how did the lsp load this by default?
          require("catppuccin").setup({
             float = {
                transparent = true, -- enables transparency on floating windows
