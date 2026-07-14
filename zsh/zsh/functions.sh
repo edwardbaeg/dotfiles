@@ -203,6 +203,57 @@ function fuzzy_history_removal() {
 	fi
 }
 
+# List yt-dlp formats for a url, pick one with fzf, and download it
+# Tab to multi-select a video and an audio format to merge them (eg 137 + 140)
+function yt() {
+	local url="$1"
+	if [[ -z "$url" ]]; then
+		echo "Usage: yt <url>"
+		return 1
+	fi
+
+	local formats selected format_ids
+	# strip yt-dlp log lines, keep only the format table (header row onward)
+	formats=$(yt-dlp -F "$url" | sed -n '/^ID/,$p')
+	if [[ -z "$formats" ]]; then
+		echo "Error: no formats found."
+		return 1
+	fi
+
+	selected=$(echo "$formats" | fzf --multi --header-lines=2 --reverse \
+		--prompt="format > " --header="Enter=download, Tab=multi-select to merge video+audio")
+	if [[ -z "$selected" ]]; then
+		echo "Exit: No format selected."
+		return 1
+	fi
+
+	# if a single video-only or audio-only format was picked, offer the complement to merge
+	if [[ $(echo "$selected" | wc -l) -eq 1 ]]; then
+		local complement=""
+		if echo "$selected" | grep -q "video only"; then
+			complement=$(echo "$formats" | grep "audio only")
+		elif echo "$selected" | grep -q "audio only"; then
+			complement=$(echo "$formats" | grep "video only")
+		fi
+
+		if [[ -n "$complement" ]]; then
+			local table_header second
+			table_header=$(echo "$formats" | head -2)
+			second=$(printf '%s\n%s\n' "$table_header" "$complement" | fzf --header-lines=2 --reverse \
+				--prompt="merge with > " --header="Enter=merge, Esc=download alone")
+			[[ -n "$second" ]] && selected=$(printf '%s\n%s\n' "$selected" "$second")
+		fi
+	fi
+
+	# join ids with '+' so a video+audio pair gets merged by yt-dlp
+	format_ids=$(echo "$selected" | awk '{print $1}' | paste -sd '+' -)
+
+	local command="yt-dlp -f \"$format_ids\" \"$url\""
+	print "$command"
+	print -s "$command"
+	eval "$command"
+}
+
 # -- git
 # delete branches merged into master
 alias gbdm="git_branch_delete_merged"
