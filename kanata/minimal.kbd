@@ -5,6 +5,9 @@ What this config does:
 - grv       -> tap: backtick/grave; hold: activate the `arrows` layer
 - hjkl      -> left/down/up/right, but only while the `arrows` layer is active
 - q + w     -> esc, when pressed together within 50ms
+- asdf      -> tap: themselves; hold: option/control/cmd/shift
+- jkl;      -> tap: themselves; hold: shift/cmd/control/option (mirrors asdf)
+              tap then re-press within 200ms to hold the letter and auto-repeat
 |#
 
 ;; Text after double-semicolons are single-line comments.
@@ -31,25 +34,59 @@ configuration entries.
 )
 
 (defsrc
-  caps grv
-  h    j    k    l
-  lsft rsft
+  caps   grv
+  a      s      d      f      h    j      k      l      ;
+  lsft   rsft
 )
 
 (deflayer default
-  lctl @grv
-  _    _    _    _
-  _    _
+  lctl   @grv
+  @a-alt @s-ctl @d-cmd @f-sft _    @j-sft @k-cmd @l-ctl @scln-alt
+  _      _
 )
 
 (deflayer arrows
-  _    _
-  left down up   rght
-  _    _
+  _      _
+  _      _      _      _      left down   up     rght   _
+  _      _
+)
+
+#|
+Which hand each key belongs to, so the home row mods below can tell an
+intentional cross-hand chord apart from a same-hand typing roll.
+|#
+(defhands
+  (left  q w e r t a s d f g z x c v b)
+  (right y u i o p h j k l ; n m , . /)
+)
+
+#|
+The hold resolves to a modifier only when a key from the *opposite* hand
+interrupts it, so same-hand rolls like "as" or "df" stay literal. Three tweaks on
+top of that: require-prior-idle suppresses the modifier entirely mid-burst,
+(timeout hold) keeps hold-then-click gestures like cmd+click working (holding a
+key alone would otherwise settle on the tap), and tap-repress-timeout skips the
+hold decision on a quick re-press so tap-then-hold still auto-repeats the letter.
+|#
+(deftemplate hrm (key mod)
+  (tap-hold-opposite-hand 200 $key $mod
+    (timeout hold)
+    (require-prior-idle 150)
+    (tap-repress-timeout 200))
 )
 
 (defalias
   grv (tap-hold-press 200 200 grv (layer-toggle arrows))
+
+  a-alt    (t! hrm a lalt)
+  s-ctl    (t! hrm s lctl)
+  d-cmd    (t! hrm d lmet)
+  f-sft    (t! hrm f lsft)
+
+  j-sft    (t! hrm j rsft)
+  k-cmd    (t! hrm k rmet)
+  l-ctl    (t! hrm l rctl)
+  scln-alt (t! hrm ; ralt)
 )
 
 #|
