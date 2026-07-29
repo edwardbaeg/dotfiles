@@ -1,7 +1,7 @@
 #|
 This minimal config changes Caps Lock to act as Caps Lock on quick tap, but
 if held, it will act as Left Ctrl. It also changes the backtick/grave key to
-act as backtick/grave on quick tap, but change ijkl keys to arrow keys on hold.
+act as backtick/grave on quick tap, but change hjkl keys to arrow keys on hold.
 
 This text between the two pipe+octothorpe sequences is a multi-line comment.
 |#
@@ -27,20 +27,20 @@ configuration entries.
 )
 
 (defsrc
-  caps grv         i
-              j    k    l
+  caps grv
+  h    j    k    l
   lsft rsft
 )
 
 (deflayer default
-  @cap @grv        _
-              _    _    _
+  @cap @grv
+  _    _    _    _
   _    _
 )
 
 (deflayer arrows
-  _    _           up
-              left down rght
+  _    _
+  left down up   rght
   _    _
 )
 
