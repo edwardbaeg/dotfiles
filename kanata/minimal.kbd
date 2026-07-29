@@ -8,6 +8,7 @@ What this config does:
 - asdf      -> tap: themselves; hold: option/control/cmd/shift
 - jkl;      -> tap: themselves; hold: shift/cmd/control/option (mirrors asdf)
               tap then re-press within 200ms to hold the letter and auto-repeat
+              same-hand pairs stack (hold j+k past 200ms for cmd+shift)
 |#
 
 ;; Text after double-semicolons are single-line comments.
@@ -61,17 +62,24 @@ intentional cross-hand chord apart from a same-hand typing roll.
 )
 
 #|
-The hold resolves to a modifier only when a key from the *opposite* hand
-interrupts it, so same-hand rolls like "as" or "df" stay literal. Three tweaks on
-top of that: require-prior-idle suppresses the modifier entirely mid-burst,
-(timeout hold) keeps hold-then-click gestures like cmd+click working (holding a
-key alone would otherwise settle on the tap), and tap-repress-timeout skips the
-hold decision on a quick re-press so tap-then-hold still auto-repeats the letter.
+A hold commits to its modifier once an opposite-hand key is pressed *and
+released* while it is still down. Waiting for that release is what keeps typing
+safe: rolling "aj" releases the a before the j, which resolves as a plain tap,
+while deliberately holding a and tapping j gives option+j.
+
+(same-hand ignore) is what lets same-hand pairs like j+k stack into cmd+shift —
+a same-hand press neither commits nor cancels the decision, it just keeps
+waiting, so both keys reach their timeout and (timeout hold) turns both into
+modifiers. A quick same-hand roll still types letters because both keys release
+well before 200ms elapses.
+
+tap-repress-timeout skips the hold decision on a quick re-press, so tap-then-hold
+auto-repeats the letter.
 |#
 (deftemplate hrm (key mod)
-  (tap-hold-opposite-hand 200 $key $mod
+  (tap-hold-opposite-hand-release 200 $key $mod
     (timeout hold)
-    (require-prior-idle 150)
+    (same-hand ignore)
     (tap-repress-timeout 200))
 )
 
