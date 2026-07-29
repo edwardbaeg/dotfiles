@@ -1,14 +1,28 @@
 #|
 What this config does:
 
+Remaps:
+
 - caps      -> Left Ctrl (plain remap, no tap/hold behavior)
 - grv       -> tap: backtick/grave; hold: activate the `arrows` layer
 - hjkl      -> left/down/up/right, but only while the `arrows` layer is active
-- q + w     -> esc, when pressed together within 50ms
+
+Home row mods:
+
 - asdf      -> tap: themselves; hold: option/control/cmd/shift
 - jkl;      -> tap: themselves; hold: shift/cmd/control/option (mirrors asdf)
-              tap then re-press within 200ms to hold the letter and auto-repeat
-              same-hand pairs stack (hold j+k past 200ms for cmd+shift)
+
+  Tap then re-press within 200ms to hold the letter and auto-repeat instead.
+  Same-hand pairs stack: hold j+k past 200ms for cmd+shift.
+
+Chords, each pressed together within 50ms:
+
+- q + w     -> esc
+- x + c     -> cmd+c
+- c + v     -> cmd+v
+- h + j     -> +          (inactive on the arrows layer)
+- , + .     -> backtick
+- tab + q   -> shift+tab
 |#
 
 ;; Text after double-semicolons are single-line comments.
@@ -98,10 +112,18 @@ auto-repeats the letter.
 )
 
 #|
-Chords fire before layer handling, so q and w don't need to be in defsrc —
-process-unmapped-keys already routes them through kanata. The 50ms window is
-tight on purpose: it keeps a fast "qwerty" roll from firing esc.
+Chords fire before layer handling, so these keys don't need to be in defsrc —
+process-unmapped-keys already routes them through kanata. That ordering is also
+why h+j beats the home row mod on j. The 50ms windows are tight on purpose: they
+keep ordinary rolls (a fast "qwerty", or "cv" in "cvs") from firing a chord.
+
+h+j is disabled on the arrows layer, where those two keys are left and down.
 |#
 (defchordsv2
-  (q w) esc 50 first-release ()
+  (q w)   esc   50 first-release ()
+  (x c)   M-c   50 first-release ()
+  (c v)   M-v   50 first-release ()
+  (h j)   +     50 first-release (arrows)
+  (, .)   grv   50 first-release ()
+  (tab q) S-tab 50 first-release ()
 )
