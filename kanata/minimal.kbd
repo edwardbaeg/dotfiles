@@ -4,6 +4,7 @@ What this config does:
 - caps      -> Left Ctrl (plain remap, no tap/hold behavior)
 - grv       -> tap: backtick/grave; hold: activate the `arrows` layer
 - hjkl      -> left/down/up/right, but only while the `arrows` layer is active
+- q + w     -> esc, when pressed together within 50ms
 |#
 
 ;; Text after double-semicolons are single-line comments.
@@ -24,6 +25,9 @@ configuration entries.
   file while unmapping lctl and ralt from defsrc.
   |#
   process-unmapped-keys yes
+
+  ;; Kanata refuses to start with defchordsv2 unless this is enabled.
+  concurrent-tap-hold yes
 )
 
 (defsrc
@@ -46,4 +50,13 @@ configuration entries.
 
 (defalias
   grv (tap-hold-press 200 200 grv (layer-toggle arrows))
+)
+
+#|
+Chords fire before layer handling, so q and w don't need to be in defsrc —
+process-unmapped-keys already routes them through kanata. The 50ms window is
+tight on purpose: it keeps a fast "qwerty" roll from firing esc.
+|#
+(defchordsv2
+  (q w) esc 50 first-release ()
 )
