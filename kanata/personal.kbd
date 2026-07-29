@@ -6,6 +6,12 @@ Remaps:
 - caps      -> Left Ctrl (plain remap, no tap/hold behavior)
 - grv       -> tap: backtick/grave; hold: activate the `arrows` layer
 - hjkl      -> left/down/up/right, but only while the `arrows` layer is active
+- z         -> tap: z; hold: activate the `numbers` layer, a right-hand numpad
+
+              uio -> 789
+              jkl -> 456
+              m,. -> 123
+              n   -> 0
 
 Home row mods:
 
@@ -50,19 +56,37 @@ configuration entries.
 
 (defsrc
   caps   grv
+  u      i      o
   a      s      d      f      h    j      k      l      ;
+  z      n      m      ,      .
   lsft   rsft
 )
 
 (deflayer default
   lctl   @grv
+  _      _      _
   @a-alt @s-ctl @d-cmd @f-sft _    @j-sft @k-cmd @l-ctl @scln-alt
+  @z-num _      _      _      _
   _      _
 )
 
 (deflayer arrows
   _      _
+  _      _      _
   _      _      _      _      left down   up     rght   _
+  _      _      _      _      _
+  _      _
+)
+
+#|
+A numpad on the right hand, so the digits land in the familiar 789/456/123 grid
+instead of in reading order.
+|#
+(deflayer numbers
+  _      _
+  7      8      9
+  _      _      _      _      _    4      5      6      _
+  _      0      1      2      3
   _      _
 )
 
@@ -97,8 +121,17 @@ auto-repeats the letter.
     (tap-repress-timeout 200))
 )
 
+#|
+Unlike grv, z is a letter that gets typed mid-word, so it can't use
+tap-hold-press: that commits the hold on any interrupting key, and "puzzle" would
+come out as "puzz6e". Waiting for the interrupting key's release means a rolled
+"zl" resolves as a tap, since z lifts first. require-prior-idle covers the other
+direction — a z pressed mid-burst and then held past the timeout stays a letter.
+|#
 (defalias
-  grv (tap-hold-press 200 200 grv (layer-toggle arrows))
+  grv   (tap-hold-press 200 200 grv (layer-toggle arrows))
+  z-num (tap-hold-release 200 200 z (layer-toggle numbers)
+          (require-prior-idle 150))
 
   a-alt    (t! hrm a lalt)
   s-ctl    (t! hrm s lctl)
@@ -117,13 +150,14 @@ process-unmapped-keys already routes them through kanata. That ordering is also
 why h+j beats the home row mod on j. The 50ms windows are tight on purpose: they
 keep ordinary rolls (a fast "qwerty", or "cv" in "cvs") from firing a chord.
 
-h+j is disabled on the arrows layer, where those two keys are left and down.
+The trailing list disables a chord on layers where its keys mean something else,
+so h+j doesn't shadow left/down or 4, and ,+. doesn't shadow 3.
 |#
 (defchordsv2
   (q w)   esc   50 first-release ()
   (x c)   M-c   50 first-release ()
   (c v)   M-v   50 first-release ()
-  (h j)   +     50 first-release (arrows)
-  (, .)   grv   50 first-release ()
+  (h j)   +     50 first-release (arrows numbers)
+  (, .)   grv   50 first-release (numbers)
   (tab q) S-tab 50 first-release ()
 )
