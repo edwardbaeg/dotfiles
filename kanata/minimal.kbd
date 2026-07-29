@@ -1,9 +1,9 @@
 #|
-This minimal config changes Caps Lock to act as Caps Lock on quick tap, but
-if held, it will act as Left Ctrl. It also changes the backtick/grave key to
-act as backtick/grave on quick tap, but change hjkl keys to arrow keys on hold.
+What this config does:
 
-This text between the two pipe+octothorpe sequences is a multi-line comment.
+- caps      -> Left Ctrl (plain remap, no tap/hold behavior)
+- grv       -> tap: backtick/grave; hold: activate the `arrows` layer
+- hjkl      -> left/down/up/right, but only while the `arrows` layer is active
 |#
 
 ;; Text after double-semicolons are single-line comments.
@@ -33,7 +33,7 @@ configuration entries.
 )
 
 (deflayer default
-  @cap @grv
+  lctl @grv
   _    _    _    _
   _    _
 )
@@ -45,6 +45,5 @@ configuration entries.
 )
 
 (defalias
-  cap (tap-hold-press 200 200 caps lctl)
   grv (tap-hold-press 200 200 grv (layer-toggle arrows))
 )
