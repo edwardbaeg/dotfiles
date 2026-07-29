@@ -388,6 +388,7 @@ function wttr() {
 # always pipe brew leaves to fzf
 function brew() {
 	if [[ "$*" == "leaves" ]]; then
+		echo "piping result to fzf"
 		command brew leaves | fzf
 	else
 		command brew "$@"
