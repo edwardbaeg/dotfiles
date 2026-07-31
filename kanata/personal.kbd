@@ -35,6 +35,8 @@ Function row (macOS delivers these as f1-f12, so they are remapped back):
 - f1 f2     -> brightness down/up
 - f7 f8 f9  -> prev / play-pause / next
 - f10 f11 f12 -> mute / volume down/up
+
+  Hold fn to get literal F-keys instead, as macOS does by default.
 |#
 
 ;; Text after double-semicolons are single-line comments.
@@ -77,7 +79,7 @@ out of defsrc, so they pass through unchanged.
   u      i      o
   a      s      d      f      h    j      k      l      ;
   z      n      m      ,      .
-  lsft   rsft
+  fn     lsft   rsft
 )
 
 (deflayer default
@@ -86,7 +88,7 @@ out of defsrc, so they pass through unchanged.
   _      _      _
   @a-alt @s-ctl @d-cmd @f-sft _    @j-sft @k-cmd @l-ctl @scln-alt
   @z-num _      _      _      _
-  _      _
+  @fn-fk _      _
 )
 
 (deflayer arrows
@@ -95,7 +97,7 @@ out of defsrc, so they pass through unchanged.
   _      _      _
   _      _      _      _      left down   up     rght   _
   _      _      _      _      _
-  _      _
+  _      _      _
 )
 
 #|
@@ -108,7 +110,24 @@ instead of in reading order.
   7      8      9
   _      _      _      _      _    4      5      6      _
   _      0      1      2      3
+  _      _      _
+)
+
+#|
+Holding fn swaps the f-row back to literal F-keys, restoring the stock macOS
+behavior. fn is still emitted alongside the layer toggle, so its other duties —
+fn+arrows for page up/down, forward delete, the emoji picker — keep working.
+
+f3-f6 are absent from defsrc and pass straight through, so fn+F3 already yields
+F3 without needing an entry here.
+|#
+(deflayer fkeys
+  f1     f2     f7     f8     f9     f10    f11    f12
   _      _
+  _      _      _
+  _      _      _      _      _    _      _      _      _
+  _      _      _      _      _
+  _      _      _
 )
 
 #|
@@ -150,6 +169,7 @@ come out as "puzz6e". Waiting for the interrupting key's release means a rolled
 direction — a z pressed mid-burst and then held past the timeout stays a letter.
 |#
 (defalias
+  fn-fk (multi fn (layer-toggle fkeys))
   grv   (tap-hold-press 200 200 grv (layer-toggle arrows))
   z-num (tap-hold-release 200 200 z (layer-toggle numbers)
           (require-prior-idle 150))
