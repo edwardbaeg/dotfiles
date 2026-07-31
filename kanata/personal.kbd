@@ -29,6 +29,12 @@ Chords, each pressed together within 50ms:
 - h + j     -> +          (inactive on the arrows layer)
 - , + .     -> backtick
 - tab + q   -> shift+tab
+
+Function row (macOS delivers these as f1-f12, so they are remapped back):
+
+- f1 f2     -> brightness down/up
+- f7 f8 f9  -> prev / play-pause / next
+- f10 f11 f12 -> mute / volume down/up
 |#
 
 ;; Text after double-semicolons are single-line comments.
@@ -54,7 +60,19 @@ configuration entries.
   concurrent-tap-hold yes
 )
 
+#|
+macOS delivers the fn-row media keys to kanata as plain f1-f12, not as media
+events, and kanata then emits plain f1-f12 — which macOS does nothing with, so
+the keys go dead. Naming them in defsrc and mapping them back to the real media
+actions is the documented fix (jtroo/kanata#1141).
+
+Consequence: by the time kanata sees the key, the volume key and fn+F12 are
+indistinguishable, so the f-row can no longer produce literal F-keys. f3-f6
+(Mission Control, Spotlight, dictation) have no kanata equivalent and are left
+out of defsrc, so they pass through unchanged.
+|#
 (defsrc
+  f1     f2     f7     f8     f9     f10    f11    f12
   caps   grv
   u      i      o
   a      s      d      f      h    j      k      l      ;
@@ -63,6 +81,7 @@ configuration entries.
 )
 
 (deflayer default
+  brdn   brup   prev   pp     next   mute   vold   volu
   lctl   @grv
   _      _      _
   @a-alt @s-ctl @d-cmd @f-sft _    @j-sft @k-cmd @l-ctl @scln-alt
@@ -71,6 +90,7 @@ configuration entries.
 )
 
 (deflayer arrows
+  _      _      _      _      _      _      _      _
   _      _
   _      _      _
   _      _      _      _      left down   up     rght   _
@@ -83,6 +103,7 @@ A numpad on the right hand, so the digits land in the familiar 789/456/123 grid
 instead of in reading order.
 |#
 (deflayer numbers
+  _      _      _      _      _      _      _      _
   _      _
   7      8      9
   _      _      _      _      _    4      5      6      _

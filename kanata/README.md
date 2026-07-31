@@ -12,6 +12,10 @@ This is a powerful keyboard remapper.
 - TODO: set up as daemon so doesnt have to run each time
 - run as `sudo kanata --cfg <file>`
 
+## Configuration notes
+
+- issue with media/special keys: https://github.com/jtroo/kanata/issues/1141#issuecomment-2231437088
+
 ## TODO
 
 - add layer for special characters
