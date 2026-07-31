@@ -11,3 +11,7 @@ This is a powerful keyboard remapper.
   - https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice
 - TODO: set up as daemon so doesnt have to run each time
 - run as `sudo kanata --cfg <file>`
+
+## TODO
+
+- add layer for special characters
