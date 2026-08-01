@@ -78,6 +78,7 @@ These are mostly brew packages.
 - `fd` better find (fd-find for `apt`)
 - `fzf` fuzzy finder
 - `gdu` better ncdu, disk usage viewer
+- `kanata` cross platform keyboard layout manager
 - `ripgrep` better grep (and faster than ag)
 - `stow` symlink manager
 - `tlrc` community written short man pages (command is tldr; tlrc is rust client of tldr)
