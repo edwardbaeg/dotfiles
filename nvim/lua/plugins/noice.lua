@@ -23,7 +23,7 @@ return {
       require("noice").setup({
          -- shows messages (in cmdheight area) in different view, uses notify if available, oherwise fallback to Noice.mini
          messages = {
-            enabled = true,
+            enabled = false, -- stop noice from intercepting messages so :messages works
             -- view = "notify",
             -- view_error = "notify",
             -- view_warn = "notify",
