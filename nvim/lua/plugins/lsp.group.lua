@@ -408,6 +408,7 @@ return {
    {
       -- Popup with quick, interactive lsp navigation
       "hasansujon786/nvim-navbuddy", -- this is the updated fork
+      -- enabled = false, -- not working in 0.12
       -- "SmiteshP/nvim-navbuddy", -- this is deprecated original
       -- event = "VeryLazy",
       dependencies = {
@@ -626,6 +627,14 @@ return {
          --    end,
          --    desc = "Overlook: Restore popup",
          -- },
+      },
+   },
+
+   {
+      "nemanjamalesija/ts-expand-hover.nvim",
+      ft = { "typescript", "typescriptreact" },
+      opts = {
+         keymaps = { hover = "<leader>th" },
       },
    },
 }
