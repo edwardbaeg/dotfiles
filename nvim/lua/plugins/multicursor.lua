@@ -38,8 +38,8 @@ return {
       -- end)
 
       -- Rotate the main cursor.
-      set({ "n", "v" }, "<left>", mc.nextCursor)
-      set({ "n", "v" }, "<right>", mc.prevCursor)
+      -- set({ "n", "v" }, "<left>", mc.nextCursor)
+      -- set({ "n", "v" }, "<right>", mc.prevCursor)
 
       -- Delete the main cursor.
       set({ "n", "v" }, "<leader>x", mc.deleteCursor)
