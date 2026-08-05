@@ -7,7 +7,7 @@
 
 # Optional parameters:
 # @raycast.icon ⌨️
-# @raycast.argument1 { "type": "dropdown", "placeholder": "hardware", "data": [{"title": "Moonlander", "value": "moonlander"}, {"title": "Voyager", "value": "voyager"}] }
+# @raycast.argument1 { "type": "dropdown", "placeholder": "select hardware....", "data": [{"title": "Moonlander", "value": "moonlander"}, {"title": "Voyager", "value": "voyager"}] }
 
 # Documentation:
 # @raycast.author dwrdbg
