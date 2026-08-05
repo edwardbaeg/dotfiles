@@ -98,6 +98,23 @@ configuration entries.
 
   ;; Kanata refuses to start with defchordsv2 unless this is enabled.
   concurrent-tap-hold yes
+
+  #|
+  Without a filter kanata grabs every keyboard it detects, but the f-row and fn
+  mappings below are Apple-specific — on a board that sends real F-keys they turn
+  F1 into brightness-down with no fn key to escape with. The Moonlander also does
+  its own remapping in firmware, so it wants nothing from kanata.
+
+  Names must match `kanata --list` output exactly; partial matches and regexes are
+  not supported. One entry covers both of the Moonlander's HID interfaces.
+
+  Device filters are read only at startup — `lrld` does not apply changes here, so
+  editing this list requires restarting kanata. Same reason a keyboard connected
+  after kanata starts is never grabbed at all.
+  |#
+;;  macos-dev-names-exclude (
+;;    "Moonlander Mark I"
+;;  )
 )
 
 #|
