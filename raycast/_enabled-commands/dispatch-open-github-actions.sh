@@ -6,7 +6,7 @@
 # @raycast.mode compact
 
 # Optional parameters:
-# @raycast.icon 🐙
+# @raycast.icon https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/250px-Octicons-mark-github.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail
 # @raycast.argument1 { "type": "dropdown", "placeholder": "select view...", "data": [{"title": "all (root)", "value": "all"}, {"title": "workflow: release dev → staging", "value": "release-stage"}, {"title": "branch: release/prod", "value": "branch-prod"}, {"title": "workflow: rebuild forms", "value": "build-forms"}] }
 
 # Documentation:
