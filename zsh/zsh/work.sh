@@ -52,8 +52,8 @@ git_pull_release_branches() {
 # check whether merging release/demo or release/prod into release/staging
 # would change staging, without touching the working tree
 git_test_release_branches() {
-	local target="release/staging"
-	local sources=(release/demo release/prod)
+	local target="master"
+	local sources=(release/staging release/demo release/prod)
 	git fetch origin "$target" "${sources[@]}" || return 1
 
 	local base_tree
