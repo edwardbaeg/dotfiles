@@ -49,3 +49,9 @@ windows:
     start_directory: "~/Sync/Obsidian Vault/"
     panes:
       - shell_command: []
+
+  - window_name: servers
+    start_directory: "~/dev/dotfiles/"
+    panes:
+      - shell_command:
+          - sudo kanata --cfg ~/dev/dotfiles/kanata/personal.kbd
