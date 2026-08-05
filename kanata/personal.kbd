@@ -1,42 +1,80 @@
 #|
 What this config does:
 
-Remaps:
+## Remaps
 
-- caps      -> Left Ctrl (plain remap, no tap/hold behavior)
-- grv       -> tap: backtick/grave; hold: activate the `arrows` layer
-- hjkl      -> left/down/up/right, but only while the `arrows` layer is active
-- z         -> tap: z; hold: activate the `numbers` layer, a right-hand numpad
+| Key  | Output    |
+| ---- | --------- |
+| caps | Left Ctrl |
 
-              uio -> 789
-              jkl -> 456
-              m,. -> 123
-              n   -> 0
+A plain remap, so holding caps just holds Left Ctrl. The other two are tap/hold:
 
-Home row mods:
+| Key | Tap            | Hold                                |
+| --- | -------------- | ----------------------------------- |
+| grv | backtick/grave | `arrows` layer                      |
+| z   | z              | `numbers` layer, a right-hand numpad|
 
-- asdf      -> tap: themselves; hold: option/control/cmd/shift
-- jkl;      -> tap: themselves; hold: shift/cmd/control/option (mirrors asdf)
+### arrows layer
 
-  Tap then re-press within 200ms to hold the letter and auto-repeat instead.
-  Same-hand pairs stack: hold j+k past 200ms for cmd+shift.
+| Key | Output |
+| --- | ------ |
+| h   | left   |
+| j   | down   |
+| k   | up     |
+| l   | right  |
 
-Chords, each pressed together within 50ms:
+### numbers layer
 
-- q + w     -> esc
-- x + c     -> cmd+c
-- c + v     -> cmd+v
-- h + j     -> +          (inactive on the arrows layer)
-- , + .     -> backtick
-- tab + q   -> shift+tab
+| Keys | Digits |
+| ---- | ------ |
+| uio  | 789    |
+| jkl  | 456    |
+| m,.  | 123    |
+| n    | 0      |
 
-Function row (macOS delivers these as f1-f12, so they are remapped back):
+## Home row mods
 
-- f1 f2     -> brightness down/up
-- f7 f8 f9  -> prev / play-pause / next
-- f10 f11 f12 -> mute / volume down/up
+Every key taps itself; the two hands mirror each other.
 
-  Hold fn to get literal F-keys instead, as macOS does by default.
+| Left | Hold    | Right | Hold    |
+| ---- | ------- | ----- | ------- |
+| a    | option  | ;     | option  |
+| s    | control | l     | control |
+| d    | cmd     | k     | cmd     |
+| f    | shift   | j     | shift   |
+
+Tap then re-press within 200ms to hold the letter and auto-repeat instead.
+Same-hand pairs stack: hold j+k past 200ms for cmd+shift.
+
+## Chords
+
+Each is pressed together within 50ms.
+
+| Chord   | Output    | Inactive on     |
+| ------- | --------- | --------------- |
+| q + w   | esc       |                 |
+| x + c   | cmd+c     |                 |
+| c + v   | cmd+v     |                 |
+| h + j   | +         | arrows, numbers |
+| , + .   | backtick  | numbers         |
+| tab + q | shift+tab |                 |
+
+## Function row
+
+macOS delivers these as f1-f12, so they are remapped back.
+
+| Key | Output          |
+| --- | --------------- |
+| f1  | brightness down |
+| f2  | brightness up   |
+| f7  | previous track  |
+| f8  | play/pause      |
+| f9  | next track      |
+| f10 | mute            |
+| f11 | volume down     |
+| f12 | volume up       |
+
+Hold fn to get literal F-keys instead, as macOS does by default.
 |#
 
 ;; Text after double-semicolons are single-line comments.
