@@ -1,5 +1,7 @@
 #|
-What this config does:
+What this config does.
+
+The Moonlander is excluded in defcfg, so it passes through kanata untouched.
 
 ## Remaps
 
@@ -25,12 +27,13 @@ A plain remap, so holding caps just holds Left Ctrl. The other two are tap/hold:
 
 ### numbers layer
 
-| Keys | Digits |
-| ---- | ------ |
-| uio  | 789    |
-| jkl  | 456    |
-| m,.  | 123    |
-| n    | 0      |
+| Keys | Output              |
+| ---- | ------------------- |
+| uio  | 789                 |
+| jkl  | 456                 |
+| m,.  | 123                 |
+| n    | 0                   |
+| r    | live reload (`lrld`)|
 
 ## Home row mods
 
@@ -131,7 +134,7 @@ out of defsrc, so they pass through unchanged.
 (defsrc
   f1     f2     f7     f8     f9     f10    f11    f12
   caps   grv
-  u      i      o
+  r      u      i      o
   a      s      d      f      h    j      k      l      ;
   z      n      m      ,      .
   fn     lsft   rsft
@@ -140,7 +143,7 @@ out of defsrc, so they pass through unchanged.
 (deflayer default
   brdn   brup   prev   pp     next   mute   vold   volu
   lctl   @grv
-  _      _      _
+  _      _      _      _
   @a-alt @s-ctl @d-cmd @f-sft _    @j-sft @k-cmd @l-ctl @scln-alt
   @z-num _      _      _      _
   @fn-fk _      _
@@ -149,7 +152,7 @@ out of defsrc, so they pass through unchanged.
 (deflayer arrows
   _      _      _      _      _      _      _      _
   _      _
-  _      _      _
+  _      _      _      _
   _      _      _      _      left down   up     rght   _
   _      _      _      _      _
   _      _      _
@@ -158,11 +161,15 @@ out of defsrc, so they pass through unchanged.
 #|
 A numpad on the right hand, so the digits land in the familiar 789/456/123 grid
 instead of in reading order.
+
+r is the odd one out: lrld re-parses this file in place, and reaching it needs a
+150ms idle plus a 200ms hold before the layer even exists, so it can't fire from
+a typing roll. Note that a reload leaves the defcfg device filter untouched.
 |#
 (deflayer numbers
   _      _      _      _      _      _      _      _
   _      _
-  7      8      9
+  lrld   7      8      9
   _      _      _      _      _    4      5      6      _
   _      0      1      2      3
   _      _      _
@@ -179,7 +186,7 @@ F3 without needing an entry here.
 (deflayer fkeys
   f1     f2     f7     f8     f9     f10    f11    f12
   _      _
-  _      _      _
+  _      _      _      _
   _      _      _      _      _    _      _      _      _
   _      _      _      _      _
   _      _      _
