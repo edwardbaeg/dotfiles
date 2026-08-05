@@ -10,6 +10,16 @@ This is a powerful keyboard remapper.
 - install driver, the specific version in the release notes
   - https://github.com/pqrs-org/Karabiner-DriverKit-VirtualHIDDevice
 - run as `sudo kanata --cfg <file>`
+  - optional: configure to run without sudo password
+
+    ```bash
+    sudo visudo
+    ```
+
+    ```sudoers
+    # in the file
+    username ALL=(ALL) NOPASSWD: <path to kanata> --cfg <path to config file>
+    ```
 
 ## Configuration notes
 
