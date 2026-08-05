@@ -3,3 +3,9 @@ vim.filetype.add({
       ["Brewfile"] = "ruby",
    },
 })
+
+vim.filetype.add({
+   extension = {
+      kbd = "lisp",
+   },
+})
