@@ -7,7 +7,7 @@
 
 # Optional parameters:
 # @raycast.icon https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/250px-Octicons-mark-github.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail
-# @raycast.argument1 { "type": "dropdown", "placeholder": "select view...", "data": [{"title": "all (root)", "value": "all"}, {"title": "workflow: release dev → staging", "value": "release-stage"}, {"title": "branch: release/prod", "value": "branch-prod"}, {"title": "workflow: rebuild forms", "value": "build-forms"}] }
+# @raycast.argument1 { "type": "dropdown", "placeholder": "select view...", "data": [{"title": "all (root)", "value": "all"}, {"title": "branch: release/prod", "value": "branch-prod"}, {"title": "workflow: rebuild forms", "value": "build-forms"}, {"title": "workflow: release dev → staging", "value": "release-stage"}] }
 
 # Documentation:
 # @raycast.description Opens a GitHub Actions view for oneadvisory/frontend
@@ -26,14 +26,14 @@ open_browser() {
 }
 
 case "$1" in
-release-stage)
-	open_browser "$ACTIONS_URL/workflows/release-to-stage.yaml"
+build-forms)
+	open_browser "$ACTIONS_URL/workflows/build-forms.yaml"
 	;;
 branch-prod)
 	open_browser "$ACTIONS_URL?query=branch%3Arelease%2Fprod"
 	;;
-build-forms)
-	open_browser "$ACTIONS_URL/workflows/build-forms.yaml"
+release-stage)
+	open_browser "$ACTIONS_URL/workflows/release-to-stage.yaml"
 	;;
 all)
 	open_browser "$ACTIONS_URL"
