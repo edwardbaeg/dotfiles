@@ -29,7 +29,23 @@ const weekNumber = Math.ceil(
   ((Number(today) - Number(onejan)) / 86400000 + onejan.getDay() + 1) / 7,
 );
 
-const monthName = today.toLocaleString('default', { month: 'long' });
+// Avoid Intl/toLocaleString: V8's ICU locale-set init can hang here, leaving the
+// process alive forever instead of exiting.
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+const monthName = MONTHS[today.getMonth()];
 
 const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 const daysToSubtract = dayOfWeek === 0 ? 7 : dayOfWeek - 1;
