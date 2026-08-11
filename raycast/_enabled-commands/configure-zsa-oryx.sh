@@ -2,7 +2,7 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Configure ZSA ORYX Keyboard Layout: Voayger, Moonlander
+# @raycast.title Configure ZSA ORYX Keyboard Layout: Voyager, Moonlander
 # @raycast.mode compact
 
 # Optional parameters:
