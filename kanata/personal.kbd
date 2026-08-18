@@ -115,9 +115,9 @@ configuration entries.
   editing this list requires restarting kanata. Same reason a keyboard connected
   after kanata starts is never grabbed at all.
   |#
-;;  macos-dev-names-exclude (
-;;    "Moonlander Mark I"
-;;  )
+ macos-dev-names-exclude (
+   "Moonlander Mark I"
+ )
 )
 
 #|
