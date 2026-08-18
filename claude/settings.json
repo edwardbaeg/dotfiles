@@ -69,5 +69,8 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
   },
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "worktree": {
+    "bgIsolation": "none"
+  }
 }
