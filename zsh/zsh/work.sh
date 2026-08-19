@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
 # -- Aliases
+alias lo="linear issue view -a"
+alias linear-open="linear issue view -a"
+alias back="cd ~/dev/oneadvisory/backend/"
+alias front="cd ~/dev/oneadvisory/frontend/"
 alias gcm2="git checkout master2 && git reset --hard origin/master"
 alias grom="git reset --hard origin/master"
-alias front="cd ~/dev/oneadvisory/frontend/"
-alias work="cd ~/dev/oneadvisory/worktrees/worktree1/"
-alias back="cd ~/dev/oneadvisory/backend/"
 alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
+alias work="cd ~/dev/oneadvisory/worktrees/worktree1/"
 
 alias run_frontend="npm ci && npm run dev"                     # for frontend
 alias run_build_frontend="npm ci && npm run build:packages && npm run dev"             # for frontend
