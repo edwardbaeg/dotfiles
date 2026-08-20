@@ -36,28 +36,27 @@ When filling an issue that already has content:
 
 1. **Understand it** — read the current description and work out what it is actually asking.
 2. **Judge useful vs slop** — decide whether it was thoughtfully added or carelessly dumped. If useful, preserve every key detail in the result; never drop signal. If slop, discard it freely.
-3. **Detect prior skill output** — if the existing issue looks like it was written by this skill (the template structure above), switch to **editing mode**: refine and tighten the existing issue in place rather than rewriting from scratch.
+3. **Detect prior skill output** — if the existing issue looks like it was written by this skill (the template structure above), switch to **editing mode**: refine and tighten the existing issue in place rather than rewriting from scratch. Make those edits with `save_issue`'s `patch` operations rather than resending a whole `description`, so the sections you aren't touching stay byte-identical.
 
 ## When the issue lacks detail
 
 If the issue isn't already fleshed out (empty, a one-liner, or vague), don't guess — do discovery first:
 
-1. **Turn effort up** — operate at high or ultra-high reasoning effort for the rest of the flow, and spawn the exploration subagent at high effort too.
-2. **Enough to explore on?** If the issue doesn't point at a concrete feature or area of code, stop and ask the user for a few clarifying pieces (which surface/flow, the rough goal, any constraints) before going further.
-3. **Spawn a subagent to explore** the relevant part of the codebase. Task it to:
+1. **Enough to explore on?** If the issue doesn't point at a concrete feature or area of code, stop and ask the user for a few clarifying pieces (which surface/flow, the rough goal, any constraints) before going further.
+2. **Spawn a subagent to explore** the relevant part of the codebase, told to search thoroughly — its summary is what the issue gets built on. Task it to:
    - Understand the code as-is.
    - Surface confusing parts, gaps, and rough edges.
    - Propose a pragmatic scope that walks the line between "leave the campsite cleaner than you found it" and "done in reasonable time at reasonable risk."
    - Report back a clear, concise summary of what the issue is about — not a file dump.
-4. **Synthesize** — take the subagent's summary, apply your own judgment, and craft (or refine) the issue in the template.
+3. **Synthesize** — take the subagent's summary, apply your own judgment, and craft (or refine) the issue in the template.
 
 ## Workflow
 
-1. **Read/gather.** Existing issue → `get_issue` for title, milestone/project, and current description, then apply "Handling existing content." New issue → gather title/team/project from the user.
+1. **Read/gather.** Existing issue → `get_issue` with `includeRelations: true` for title, milestone/project, current description, and any existing blocked-by/blocks relations (relations are omitted by default), then apply "Handling existing content." New issue → gather title/team/project from the user.
 2. **Gauge detail.** If the issue is already well-specified, source any extra context from what the user provides (reference doc, title, conversation) and lightly search the codebase to sharpen understanding — write accurate high-level direction, don't transcribe exact paths and line numbers. If it's sparse or vague, run "When the issue lacks detail" first.
 3. **Resolve every open question with the user first.** Only draft the description once nothing is unresolved.
 4. **Preview the draft in chat and wait for approval.** Do not write to Linear unsupervised.
-5. On approval, `save_issue` to create (needs `title` + `team`) or update (by `id`). Set `estimate` / `milestone` / `blockedBy` / `blocks` only if the user asks.
+5. On approval, `save_issue` to create (needs `title` + `team`) or update (by `id`). In editing mode pass `patch` in place of `description`: each anchor string must match the current content exactly once, and one failing operation aborts the whole save. Set `estimate` / `milestone` / `blockedBy` / `blocks` only if the user asks — those append rather than replace, so don't re-send relations `get_issue` already reported.
 6. **Refine the title.** With the body final, reassess whether an outsider could tell what the work is from the title alone. If not, update it — a follow-up edit after saving the body is fine, since the finished issue usually points at a clearer title than the one you started with.
 
 ## Notes
