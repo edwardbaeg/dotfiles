@@ -44,6 +44,7 @@ stow-bin:
 	stow --verbose --restow -t ~/bin bin
 
 stow-claude:
+	mkdir -p ~/.claude/skills
 	stow --verbose --restow -t ~/.claude claude
 
 stow-ghostty:
