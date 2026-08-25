@@ -132,6 +132,8 @@ return {
          })
 
          vim.g.matchup_matchparen_deferred = 1 -- deferred highlighting to improve cursor movement performance
+         vim.g.matchup_matchparen_offscreen = { method = "" } -- disabled
+         -- vim.g.matchup_matchparen_offscreen = { method = "popup" } -- show popup (nvim floating window) for offscreen matches
          -- vim.api.nvim_set_hl(0, 'MatchParen', {
          --    -- ctermbg = 'blue',
          --    -- bg = 'lightgrey',
