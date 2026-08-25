@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # -- Aliases
-alias lo="linear issue view -a"
+alias lop="linear issue view -a"
 alias linear-open="linear issue view -a"
 alias back="cd ~/dev/oneadvisory/backend/"
 alias front="cd ~/dev/oneadvisory/frontend/"
