@@ -115,6 +115,19 @@ fuzzy_worktree_cd() {
 	[[ -n "$selected" ]] && cd "$selected" || exit
 }
 
+# cd to the frontend repo's claude code worktree directories
+alias claudewf="fuzzy_frontend_claude_worktree_cd"
+fuzzy_frontend_claude_worktree_cd() {
+	local dir=~/dev/oneadvisory/frontend/.claude/worktrees
+	[[ -d "$dir" ]] || {
+		echo "worktrees directory not found: $dir"
+		return 1
+	}
+	local selected
+	selected=$(fd --type d --max-depth 1 . "$dir" | fzf --prompt="frontend worktree: ")
+	[[ -n "$selected" ]] && cd "$selected" || return 1
+}
+
 # decrypts argument or clipboard, outputs result and copies to clipboard
 decrypt-prod() {
 	pushd ~/dev/oneadvisory/backend/ || return 1
