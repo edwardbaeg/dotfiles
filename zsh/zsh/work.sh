@@ -116,7 +116,9 @@ fuzzy_worktree_cd() {
 }
 
 # cd to the frontend repo's claude code worktree directories
-alias claudewf="fuzzy_frontend_claude_worktree_cd"
+alias cf="fuzzy_frontend_claude_worktree_cd"
+alias cwf="fuzzy_frontend_claude_worktree_cd"
+alias claude_workflow_fuzzy="fuzzy_frontend_claude_worktree_cd"
 fuzzy_frontend_claude_worktree_cd() {
 	local dir=~/dev/oneadvisory/frontend/.claude/worktrees
 	[[ -d "$dir" ]] || {
