@@ -9,7 +9,9 @@ local altShift = constants.altShift
 
 -- Arrow keys
 sendKey(cmdShift, "J", {}, "DOWN")
+sendKey(cmdShift, "N", {}, "DOWN")
 sendKey(cmdShift, "K", {}, "UP")
+sendKey(cmdShift, "P", {}, "UP")
 sendKey(cmdShift, "H", {}, "LEFT")
 sendKey(cmdShift, "L", {}, "RIGHT")
 
