@@ -130,6 +130,11 @@ return {
          -- START TYPESCRIPT TOOLS
          require("typescript-tools").setup({
             settings = {
+               -- single tsserver: the separate diagnostics server duplicates the full
+               -- project graph, which doubled memory on the oneadvisory monorepo
+               separate_diagnostic_server = false,
+               -- guardrail against runaway growth; "auto" passes no --max-old-space-size at all
+               tsserver_max_memory = 4096,
                tsserver_file_preferences = {
                   -- enable inlay hints (vim.lsp.inlay_hint.enable())
                   includeInlayParameterNameHints = "all",
