@@ -131,3 +131,18 @@ vim.api.nvim_create_autocmd("FileType", {
 --       end
 --    end,
 -- })
+
+-- Make `gf` (and <CR>) follow JS/TS module specifiers: tsconfig `paths` aliases
+-- and node_modules packages, not just relative paths.
+vim.api.nvim_create_autocmd("FileType", {
+   group = augroup("js_ts_goto_file"),
+   pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+   desc = "Resolve import aliases for gf",
+   callback = function(event)
+      -- Default 'isfname' reads `@` as "alphabetic chars", so <cfile> would drop
+      -- the leading @ of `@common/...` and the alias could never be matched.
+      vim.opt_local.isfname:append("@-@")
+      vim.opt_local.suffixesadd:append({ ".ts", ".tsx", ".d.ts", ".js", ".jsx", ".mjs", ".cjs", ".json" })
+      vim.bo[event.buf].includeexpr = "v:lua.require'utils.ts_resolve'.resolve(v:fname)"
+   end,
+})
