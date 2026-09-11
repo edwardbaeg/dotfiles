@@ -1,0 +1,12 @@
+session_name: gh-dash
+
+windows:
+  - window_name: gh-dash
+    start_directory: ~/dev/oneadvisory/frontend/
+    layout: main-horizontal
+    options:
+      main-pane-height: 66%
+    panes:
+      - shell_command:
+          - gh dash
+      - shell_command: []
