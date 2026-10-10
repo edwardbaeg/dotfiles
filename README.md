@@ -69,7 +69,7 @@ These are mostly brew packages.
 
 #### Tools
 
-<!-- - TODO: consider adding mise as a version manager -->
+<!-- - TODO: consider adding mise as a version manager, and instructions for setup -->
 
 - `asdf` version manager
 - `bat` better cat (syntax highlighting and pager)
@@ -156,7 +156,9 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 ##### Utilities
 
 - `BetterTouchTool`: add shortcuts; 3 finger tap -> middle click
+
 <!-- TODO: replace with browserosaurus, FOSS alternative -->
+
 - `Choosy`: browser launcher
 - `Dropover`: drag & drop temporary file shelf
 - `Hammerspoon`: mac scripting
@@ -166,7 +168,9 @@ defaults write -g ApplePressAndHoldEnabled -bool false
 - `Mac Mouse Fix`: invert mouse scrolling, fancy remaps, add smooth scrolling
 - `Raycast`: launcher
 - `Shortcat`: keyboard shortcuts everywhere
+
 <!-- TODO: consider flameshot, FOSS alternative -->
+
 - `Shottr`: screenshot tool
 - `Syncthing`: file sync
 
@@ -240,6 +244,7 @@ Keyboard layers (0-index), global keyboard bindings are managed through ZSA Oryx
 
 - Create ssh key for git (press enter for default file location)
 - https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
 <!-- NOTE: might need to update this to use ed25519 -->
 
 ```
