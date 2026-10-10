@@ -41,6 +41,7 @@ stow-borders:
 	stow --verbose --restow -t ~/.config/borders borders
 
 stow-bin:
+	mkdir -p ~/bin
 	stow --verbose --restow -t ~/bin bin
 
 stow-claude:
