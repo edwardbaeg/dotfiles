@@ -256,3 +256,4 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # I think this is for claude-code
 export PATH="$PATH:$HOME/.local/bin"
+eval "$(mise activate zsh)"
