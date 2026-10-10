@@ -1,8 +1,11 @@
+# install with brew bundle
+
 # CLI tools
 brew "bat" # better cat
 brew "eza" # better ls; better exa
 brew "fd" # better find
 brew "gdu" # file/directory size checker; better ncdu
+brew "fzf" # fuzzy finder
 brew "lazygit" # git TUI
 brew "qrcp" # qr code generator for file transfer
 brew "ripgrep" # better grep
