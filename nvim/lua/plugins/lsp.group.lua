@@ -286,6 +286,13 @@ return {
             zsh = { "shfmt" },
             make = { "bake" }, -- this doesn't seem to work? I think the issue is with the formatter; it doesnt do anything when run from the cli. and running ConformInfo is properly showing that it is attached
          },
+         formatters = {
+            prettier = {
+               -- prettier 3 defaults to also honoring .gitignore, silently returning gitignored files
+               -- (e.g. local notes/plans) unformatted; restore v2 behavior of only using .prettierignore
+               prepend_args = { "--ignore-path", ".prettierignore" },
+            },
+         },
       },
    },
 
