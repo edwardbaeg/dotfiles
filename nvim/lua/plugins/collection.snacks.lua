@@ -135,8 +135,12 @@ return {
                   -- ["<c-b>"] = { "preview_scroll_up", mode = { "i", "n" } },
                   -- ["<c-f>"] = { "preview_scroll_down", mode = { "i", "n" } },
                },
+               -- fix weird cursor position on start
+               -- https://github.com/folke/snacks.nvim/issues/2810#issuecomment-4200243035
+               wo = {
+                  virtualedit = "all",
+               },
             },
-
             -- result list window
             list = {
                keys = {
