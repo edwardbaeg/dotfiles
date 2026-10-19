@@ -10,3 +10,24 @@ window-padding-y = 10
 
 # Keybinds
 keybind = super+shift+ctrl+comma=reload_config
+
+# Send same escape sequence as opt+n for cmd+n for tmux M-n bindings
+# Both forms are overridden since Ghostty's defaults bind each to goto_tab
+keybind = super+1=text:\x1b1
+keybind = super+digit_1=text:\x1b1
+keybind = super+2=text:\x1b2
+keybind = super+digit_2=text:\x1b2
+keybind = super+3=text:\x1b3
+keybind = super+digit_3=text:\x1b3
+keybind = super+4=text:\x1b4
+keybind = super+digit_4=text:\x1b4
+keybind = super+5=text:\x1b5
+keybind = super+digit_5=text:\x1b5
+keybind = super+6=text:\x1b6
+keybind = super+digit_6=text:\x1b6
+keybind = super+7=text:\x1b7
+keybind = super+digit_7=text:\x1b7
+keybind = super+8=text:\x1b8
+keybind = super+digit_8=text:\x1b8
+keybind = super+9=text:\x1b9
+keybind = super+digit_9=text:\x1b9
