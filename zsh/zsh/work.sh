@@ -209,3 +209,32 @@ tsc() {
 	# Run the actual tsc command
 	command tsc "$@"
 }
+
+# run an extra frontend vite server against a backend already serving on :5173,
+# so a second worktree gets a UI without standing up its own chamber/AWS stack
+alias devweb="run_frontend_attached"
+run_frontend_attached() {
+	local root
+	root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+		echo "run_frontend_attached: not inside a git repo"
+		return 1
+	}
+	[[ -f "$root/apps/web/vite.config.mts" ]] || {
+		echo "run_frontend_attached: no apps/web/vite.config.mts under $root"
+		return 1
+	}
+
+	local port="${1:-${WEB_PORT:-5273}}"
+	local backend="${API_SERVER:-http://localhost:5173}"
+
+	# vite only proxies the API, so a missing backend shows up as confusing
+	# per-request failures rather than anything startup-shaped
+	curl -sf -o /dev/null --max-time 2 "$backend/health" || {
+		echo "run_frontend_attached: nothing answering at $backend/health"
+		echo "  start the full stack with 'npm run dev' in another worktree first"
+		return 1
+	}
+
+	echo "frontend http://localhost:$port  ->  api $backend"
+	(cd "$root" && API_SERVER="$backend" npx vite -c apps/web/vite.config.mts --port "$port" --strictPort)
+}
