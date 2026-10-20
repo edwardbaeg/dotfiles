@@ -29,6 +29,11 @@
 - ALWAYS prefer editing an existing file to creating a new one
 - NEVER proactively create documentation files (*.md) or README files unless explicitly requested
 
+## Diagrams
+- When explaining how something works (flows, architecture, data paths, state, relationships), include a text/ASCII diagram more often than not
+- When asked to diagram or draw something, default to a text/ASCII diagram in the response
+- Only suggest an artifact when the content would be much clearer as one (e.g. large, interactive, or heavily visual) — and ask before creating it
+
 ## IDE Integration
 - When user references "this file" or is vague about what file they mean, check for active IDE integration first
 - Use system reminders about opened files to determine the correct file instead of searching unnecessarily
