@@ -1,0 +1,11 @@
+session_name: worktree2
+
+windows:
+  - window_name: worktree2
+    start_directory: ~/dev/oneadvisory/worktrees/worktree2/
+    layout: main-vertical
+    options:
+      main-pane-width: 66%
+    panes:
+      - focus: true
+      - shell_command: []
