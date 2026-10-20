@@ -69,6 +69,9 @@ local function checkAfterWake()
       elapsed = elapsed + WIFI_POLL_INTERVAL
       if M.isOnWorkWifi() then
          pollTimer:stop()
+         -- TODO: Bluetooth devices (e.g. AirPods) can reconnect a few seconds after Wi-Fi,
+         -- so this may falsely report the built-in speakers. If the output is the speakers,
+         -- wait a grace period (~10s) and re-check before notifying; otherwise notify now
          notifyAudioOutput()
       elseif elapsed >= WIFI_POLL_TIMEOUT then
          pollTimer:stop()
