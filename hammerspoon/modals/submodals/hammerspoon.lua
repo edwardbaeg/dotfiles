@@ -1,8 +1,8 @@
 local config = require("modals.config")
 local registry = require("common.feature_registry")
-local appLauncher = require("application_launcher")
+local arc = require("utils-arc")
 
-local togglePersonalOverride = appLauncher.togglePersonalOverride
+local togglePersonalOverride = arc.togglePersonalOverride
 
 ---@type SimpleModalItem[]
 return {
