@@ -37,6 +37,9 @@
       }
     ]
   },
+  "worktree": {
+    "bgIsolation": "none"
+  },
   "statusLine": {
     "type": "command",
     "command": "command -v bunx >/dev/null 2>&1 && bunx -y ccstatusline@latest || npx -y ccstatusline@latest",
@@ -56,11 +59,20 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "tui": "fullscreen",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
   "autoCompactEnabled": true,
   "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "allowedTools": [
     "Grep",
@@ -68,9 +80,5 @@
   ],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
-  },
-  "agentPushNotifEnabled": true,
-  "worktree": {
-    "bgIsolation": "none"
   }
 }
