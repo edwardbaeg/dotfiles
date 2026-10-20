@@ -31,7 +31,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "TRANSCRIPT_PATH=$(jq -r '.transcript_path' | sed 's|^~|'\"$HOME\"'|'); TITLE=$(tac \"$TRANSCRIPT_PATH\" | grep -m 1 '\"type\":\"text\"' | jq -r '.message.content[0].text' | head -c 24); TITLE=${TITLE:-\"ClaudeCode FINISHED\"}; osascript -e 'beep 1'; open -g \"hammerspoon://alert-claudecode?title=${TITLE}&duration=10\""
+            "command": "TRANSCRIPT_PATH=$(jq -r '.transcript_path' | sed 's|^~|'\"$HOME\"'|'); TITLE=$(tac \"$TRANSCRIPT_PATH\" | grep -m 1 '\"type\":\"text\"' | jq -r '.message.content[0].text' | head -c 24); TITLE=${TITLE:-\"ClaudeCode FINISHED\"}; open -g \"hammerspoon://alert-claudecode?title=${TITLE}&duration=10\""
+          },
+          {
+            "_comment": "test",
+            "type": "command",
+            "command": "tty=$(ps -o tty= -p $PPID | tr -d ' '); [ -n \"$tty\" ] && [ \"$tty\" != \"??\" ] && printf '\\a' > \"/dev/$tty\"; exit 0"
           }
         ]
       }
@@ -74,10 +79,7 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "allowedTools": [
-    "Grep",
-    "Ls"
-  ],
+  "allowedTools": ["Grep", "Ls"],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
   }
