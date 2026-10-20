@@ -3,10 +3,18 @@
 # Font
 font-family = 0xProto
 font-size = 16
+adjust-cell-height = 15%
 
-# Padding
-window-padding-x = 10
-window-padding-y = 10
+# Window
+window-padding-x = 16
+window-padding-y = 16
+macos-titlebar-style = hidden
+
+# Bell
+bell-features = system,attention,title
+
+# Cursor trail (closest match to kitty's cursor_trail)
+custom-shader = shaders/cursor_warp.glsl
 
 # Keybinds
 keybind = super+shift+ctrl+comma=reload_config
