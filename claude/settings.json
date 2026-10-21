@@ -19,9 +19,8 @@
         "matcher": "",
         "hooks": [
           {
-            "_comment": "Show a Hammerspoon alert when Claude needs attention (permission prompt, idle input)",
             "type": "command",
-            "command": "open -g 'hammerspoon://alert-claudecode?title=ClaudeCode%20Notification!&duration=10'"
+            "command": ": 'Hammerspoon alert when Claude needs attention (permission prompt, idle input)'; open -g 'hammerspoon://alert-claudecode?title=ClaudeCode%20Notification!&duration=10'"
           }
         ]
       }
@@ -31,14 +30,12 @@
         "matcher": "",
         "hooks": [
           {
-            "_comment": "Show a Hammerspoon alert titled with the start of Claude's last reply",
             "type": "command",
-            "command": "TRANSCRIPT_PATH=$(jq -r '.transcript_path' | sed 's|^~|'\"$HOME\"'|'); TITLE=$(tac \"$TRANSCRIPT_PATH\" | grep -m 1 '\"type\":\"text\"' | jq -r '.message.content[0].text' | head -c 24); TITLE=${TITLE:-\"ClaudeCode FINISHED\"}; open -g \"hammerspoon://alert-claudecode?title=${TITLE}&duration=10\""
+            "command": ": 'Hammerspoon alert titled with the start of the last Claude reply'; TRANSCRIPT_PATH=$(jq -r '.transcript_path' | sed 's|^~|'\"$HOME\"'|'); TITLE=$(tac \"$TRANSCRIPT_PATH\" | grep -m 1 '\"type\":\"text\"' | jq -r '.message.content[0].text' | head -c 24); TITLE=${TITLE:-\"ClaudeCode FINISHED\"}; open -g \"hammerspoon://alert-claudecode?title=${TITLE}&duration=10\""
           },
           {
-            "_comment": "Ring the terminal bell when Claude finishes. Hooks have no terminal, so write it to Claude's (the parent's) tty; tr strips the space ps adds",
             "type": "command",
-            "command": "tty=$(ps -o tty= -p $PPID | tr -d ' '); [ -n \"$tty\" ] && [ \"$tty\" != \"??\" ] && printf '\\a' > \"/dev/$tty\"; exit 0"
+            "command": ": 'Terminal bell on finish. Hooks have no tty, so write to the parent (Claude) tty; tr strips the space ps adds'; tty=$(ps -o tty= -p $PPID | tr -d ' '); [ -n \"$tty\" ] && [ \"$tty\" != \"??\" ] && printf '\\a' > \"/dev/$tty\"; exit 0"
           }
         ]
       }
@@ -84,5 +81,6 @@
   "allowedTools": ["Grep", "Ls"],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
-  }
+  },
+  "theme": "auto"
 }
