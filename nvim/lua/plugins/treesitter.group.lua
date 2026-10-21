@@ -20,6 +20,62 @@ return {
       -- new default branch "main" has breaking changes, eg no incremental_selection, is compatible with 0.12
       -- consider using https://github.com/MeanderingProgrammer/treesitter-modules.nvim
       build = ":TSUpdate",
+      -- ========================================================================================
+      -- TEMPORARY: nvim 0.12 compat shim for nvim-treesitter `master` -- DELETE THIS WHOLE `init`
+      -- when migrating to the `main` branch (see nvim/UPGRADE-0.12.md). `main` does not need it.
+      -- ========================================================================================
+      init = function()
+         -- nvim 0.12 removed the `all = false` query option, so master (and endwise/textobjects on master)
+         -- now receive TSNode[] where they expect a single TSNode -> "attempt to call method 'range'".
+         -- Collapse to the last node (the old behavior) until migrating to the `main` branch.
+         -- This monkeypatches nvim core (vim.treesitter.query + Query:iter_matches) globally, which is
+         -- why it must not outlive the migration.
+         if vim.fn.has("nvim-0.12") == 0 then
+            return
+         end
+
+         local function collapse(match)
+            local single = {}
+            for id, nodes in pairs(match) do
+               single[id] = type(nodes) == "table" and nodes[#nodes] or nodes
+            end
+            return single
+         end
+
+         local ts_query = vim.treesitter.query
+         for _, register in ipairs({ "add_predicate", "add_directive" }) do
+            local orig = ts_query[register]
+            ts_query[register] = function(name, handler, opts)
+               if type(opts) == "table" and opts.all == false then
+                  local inner = handler
+                  handler = function(match, ...)
+                     return inner(collapse(match), ...)
+                  end
+               end
+               return orig(name, handler, opts)
+            end
+         end
+
+         -- Query class is local to the runtime module; reach it through a parsed query's metatable
+         local Query = getmetatable(ts_query.parse("lua", "(chunk) @c"))
+         local orig_iter_matches = Query.iter_matches
+         Query.iter_matches = function(self, node, source, start, stop, opts)
+            local iter = orig_iter_matches(self, node, source, start, stop, opts)
+            if not (opts and opts.all == false) then
+               return iter
+            end
+            return function()
+               local pattern, match, metadata, tree = iter()
+               if match then
+                  match = collapse(match)
+               end
+               return pattern, match, metadata, tree
+            end
+         end
+      end,
+      -- ========================================================================================
+      -- END TEMPORARY nvim 0.12 compat shim
+      -- ========================================================================================
       config = function()
          ---@diagnostic disable-next-line: missing-fields, param-type-mismatch
          require("nvim-treesitter.configs").setup({
