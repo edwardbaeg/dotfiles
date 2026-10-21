@@ -6,12 +6,13 @@ brew "eza" # better ls; better exa
 brew "fd" # better find
 brew "gdu" # file/directory size checker; better ncdu
 brew "fzf" # fuzzy finder
+brew "git-delta" # diff pager; used by git core.pager and lazygit
 brew "lazygit" # git TUI
 brew "qrcp" # qr code generator for file transfer
 brew "ripgrep" # better grep
 brew "scrcpy" # android screen sharing
 brew "stow" # symlink manager
-brew "thaw" # menubar manager
+cask "thaw" # menubar manager
 brew "tlrc" # quick reference; better tldr
 brew "tmux" # terminal multiplexer
 brew "tmuxp" # tmux session manager
@@ -20,4 +21,4 @@ brew "yazi" # file finder
 brew "zoxide" # better cd
 
 tap "FelixKratz/formulae" # required for janky borders
-brew "borders" # colored borders for active windows
+brew "felixkratz/formulae/borders", trusted: true # colored borders for active windows
