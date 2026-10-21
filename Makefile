@@ -1,9 +1,9 @@
 # TODO: add marksman.toml
 # NOTE: a downside to stowing a dir to a dir is that the contents of the dir are linked, not the dir itself. so new files are not tracked. A workaround to this would be to stow the containing dir. Eg, ~/.config/nvim instead of ~/nvim. But there are downsides to having hidden dirs.
 
-.PHONY: all clean test stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-ghostty stow-lazygit
+.PHONY: all clean test stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-ghostty stow-lazygit stow-yazi stow-stylua
 
-all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-claude stow-ghostty stow-lazygit
+all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-claude stow-ghostty stow-lazygit stow-yazi stow-stylua
 
 stow-nvim:
 	mkdir -p ~/.config/nvim
@@ -55,6 +55,13 @@ stow-ghostty:
 stow-lazygit:
 	mkdir -p ~/.config/lazygit
 	stow --verbose --restow -t ~/.config/lazygit lazygit
+
+stow-yazi:
+	mkdir -p ~/.config/yazi
+	stow --verbose --restow -t ~/.config/yazi yazi
+
+stow-stylua:
+	stow --verbose --restow -t ~ stylua
 
 test:
 	@echo "No tests defined."
