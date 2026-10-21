@@ -4,8 +4,10 @@
 brew "bat" # better cat
 brew "eza" # better ls; better exa
 brew "fd" # better find
+brew "ffmpeg" # video thumbnails for yazi
 brew "gdu" # file/directory size checker; better ncdu
 brew "fzf" # fuzzy finder
+brew "gh" # github cli; used by lazygit custom commands and gh-dash
 brew "git-delta" # diff pager; used by git core.pager and lazygit
 brew "lazygit" # git TUI
 brew "qrcp" # qr code generator for file transfer
@@ -19,6 +21,10 @@ brew "tmuxp" # tmux session manager
 brew "witr" # why is this running
 brew "yazi" # file finder
 brew "zoxide" # better cd
+
+# Casks
+cask "android-platform-tools" # adb; required by scrcpy
+cask "font-0xproto" # font for ghostty and kitty
 
 tap "FelixKratz/formulae" # required for janky borders
 brew "felixkratz/formulae/borders", trusted: true # colored borders for active windows
