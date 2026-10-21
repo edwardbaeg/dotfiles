@@ -222,13 +222,6 @@ export FZF_DEFAULT_OPTS='
 # setup zoxide completions. must be called after compinit
 eval "$(zoxide init zsh)"
 
-# setup thefuck
-alias f=fuck
-# lazy load thefuck instead of loading it every shell startup
-function fuck() {
-    eval $(thefuck --alias) && fuck "$@"
-}
-
 # To install shell completions, add this to your profile:
 if command -v ngrok &>/dev/null; then
     eval "$(ngrok completion)"
