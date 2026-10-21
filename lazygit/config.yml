@@ -3,7 +3,6 @@
 
 os:
   editPreset: "nvim-remote" # use remote when within neovim
-
 gui:
   showIcons: true # enable nerd fonts
   theme:
@@ -16,9 +15,9 @@ gui:
   sidePanelWidth: 0.25 #fraction of left side, default is 0.33
 git:
   branchLogCmd: "git log --color=always --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --date-order"
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never --side-by-side # side by side takes more horizontal space
+      command: delta --dark --paging=never --side-by-side # side by side takes more horizontal space
       # pager: delta --dark --paging=never
       # pager: delta --dark --paging=never --diff-so-fancy # diff-so-fancy mode breaks syntax highlighting
   disableForcePushing: true
