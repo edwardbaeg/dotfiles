@@ -3,7 +3,7 @@
 # Font
 font-family = 0xProto
 font-size = 16
-adjust-cell-height = 15%
+adjust-cell-height = 10%
 
 # Window
 window-padding-x = 16
