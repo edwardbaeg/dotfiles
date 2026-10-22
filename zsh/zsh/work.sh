@@ -3,12 +3,12 @@
 # -- Aliases
 alias lop="linear issue view -a"
 alias linear-open="linear issue view -a"
-alias back="cd ~/dev/oneadvisory/backend/"
-alias front="cd ~/dev/oneadvisory/frontend/"
+alias back="cd ~/dev/dispatch/backend/"
+alias front="cd ~/dev/dispatch/frontend/"
 alias gcm2="git checkout master2 && git reset --hard origin/master"
 alias grom="git reset --hard origin/master"
 alias vip='osascript ~/dev/dotfiles/applescripts/vip-access-copy.applescript'
-alias work="cd ~/dev/oneadvisory/worktrees/worktree1/"
+alias work="cd ~/dev/dispatch/worktrees/worktree1/"
 
 alias run_frontend="npm ci && npm run dev"                     # for frontend
 alias run_build_frontend="npm ci && npm run build:packages && npm run dev"             # for frontend
@@ -21,7 +21,7 @@ alias run_fs_interview="npm ci && npm run seed && npm run dev" # for fs intervie
 # checkout the worktree's branch and reset it to origin/master
 alias gcmw="git_checkout_master_worktree"
 git_checkout_master_worktree() {
-	local worktrees_dir=~/dev/oneadvisory/worktrees
+	local worktrees_dir=~/dev/dispatch/frontend-worktrees
 	if [[ "$(dirname "$PWD")" != "$worktrees_dir" ]]; then
 		echo "gcmw: must be run from a worktree root under $worktrees_dir"
 		return 1
@@ -105,7 +105,7 @@ test_unit_fuzzy() {
 alias workf="fuzzy_worktree_cd"
 alias fwork="fuzzy_worktree_cd"
 fuzzy_worktree_cd() {
-	local dir=~/dev/oneadvisory/worktrees
+	local dir=~/dev/dispatch/worktrees
 	[[ -d "$dir" ]] || {
 		echo "worktrees directory not found: $dir"
 		return 1
@@ -120,7 +120,7 @@ alias cf="fuzzy_frontend_claude_worktree_cd"
 alias cwf="fuzzy_frontend_claude_worktree_cd"
 alias claude_workflow_fuzzy="fuzzy_frontend_claude_worktree_cd"
 fuzzy_frontend_claude_worktree_cd() {
-	local dir=~/dev/oneadvisory/frontend/.claude/worktrees
+	local dir=~/dev/dispatch/frontend/.claude/worktrees
 	[[ -d "$dir" ]] || {
 		echo "worktrees directory not found: $dir"
 		return 1
@@ -132,7 +132,7 @@ fuzzy_frontend_claude_worktree_cd() {
 
 # decrypts argument or clipboard, outputs result and copies to clipboard
 decrypt-prod() {
-	pushd ~/dev/oneadvisory/backend/ || return 1
+	pushd ~/dev/dispatch/backend/ || return 1
 	export AWS_PROFILE=oa-prod # aws profile with `prod` acccess
 	ensure_sso
 	CRYPTO_PRIMARY_KEY_SECRET=$(chamber read -q prod/auth CRYPTO_PRIMARY_KEY_SECRET)
@@ -148,7 +148,7 @@ decrypt-prod() {
 }
 
 decrypt-default() {
-	pushd ~/dev/oneadvisory/backend/ || return 1
+	pushd ~/dev/dispatch/backend/ || return 1
 	ensure_sso
 	if [ $# -eq 0 ]; then
 		dispatch -p prod crypto decrypt "$(pbpaste)" | jq | tee >(pbcopy)
