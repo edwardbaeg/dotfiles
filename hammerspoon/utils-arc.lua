@@ -73,8 +73,8 @@ setupArcHotkeys = function()
       assignAppHotKey(hyperkey, BROWSER_KEY, "Arc", setPersonal)
       assignAppHotKey(allkey, BROWSER_KEY, "Arc", setWork)
    elseif constants.isPersonal then
-      assignAppHotKey(hyperkey, BROWSER_KEY, "Arc")
-      assignAppHotKey(allkey, BROWSER_KEY, "Arc")
+      assignAppHotKey(hyperkey, BROWSER_KEY, "Zen")
+      assignAppHotKey(allkey, BROWSER_KEY, "Zen")
    else
       assignAppHotKey(hyperkey, BROWSER_KEY, "Arc", setWork)
       assignAppHotKey(allkey, BROWSER_KEY, "Arc", setPersonal)
