@@ -41,10 +41,11 @@ keybind = super+9=text:\x1b9
 keybind = super+digit_9=text:\x1b9
 
 # Same idea for tmux's other prefixless M- bindings; overrides Ghostty's
-# defaults for these keys (split, search, undo, font size) in favor of tmux
+# defaults for these keys (split, search, find next, undo, font size) in favor of tmux
 keybind = super+s=text:\x1bs
 keybind = super+d=text:\x1bd
 keybind = super+f=text:\x1bf
+keybind = super+g=text:\x1bg
 keybind = super+z=text:\x1bz
 keybind = super+slash=text:\x1b/
 keybind = super+backslash=text:\x1b\\
