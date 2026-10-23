@@ -25,7 +25,7 @@ hs.urlevent.bind("alert-claudecode", function(_, params)
    local textOffsetY = 15
 
    local canvas = hs.canvas.new({
-      x = screen.w - width - screenPadding,
+      x = screen.x + (screen.w - width) / 2,
       y = screenPadding,
       w = width,
       h = height,
@@ -35,13 +35,22 @@ hs.urlevent.bind("alert-claudecode", function(_, params)
       return
    end
 
+   local borderWidth = 2
    canvas[1] = {
       type = "rectangle",
-      action = "fill",
-      fillColor = require("common.constants").colors.navy,
+      action = "strokeAndFill",
+      -- lighter than ghostty's #353941 bg so it stands out; opaque so the terminal doesn't bleed through
+      fillColor = require("common.external.catpuccin-frappe").getRgbColor("surface2", 1),
       strokeColor = { white = 1, alpha = 0.5 },
-      strokeWidth = 1,
+      strokeWidth = borderWidth,
       roundedRectRadii = { xRadius = 8, yRadius = 8 },
+      -- strokes straddle the path, so inset or the canvas edge clips half the border
+      frame = {
+         x = borderWidth / 2,
+         y = borderWidth / 2,
+         w = width - borderWidth,
+         h = height - borderWidth,
+      },
    }
 
    canvas[2] = {
@@ -59,11 +68,29 @@ hs.urlevent.bind("alert-claudecode", function(_, params)
       },
    }
 
+   local timer
+   local dismissed = false
+   local function dismiss()
+      -- click and timeout can both fire; deleting a canvas twice errors
+      if dismissed then
+         return
+      end
+      dismissed = true
+      if timer then
+         timer:stop()
+      end
+      canvas:delete()
+   end
+
+   -- canvas-level events so clicks on the text count too
+   canvas:canvasMouseEvents(true, false, false, false)
+   -- don't pull focus away from the terminal on click
+   canvas:clickActivating(false)
+   canvas:mouseCallback(dismiss)
+
    canvas:show()
 
-   hs.timer.doAfter(duration, function()
-      canvas:delete()
-   end)
+   timer = hs.timer.doAfter(duration, dismiss)
 end)
 
 hs.urlevent.bind("alertRaycast", function()
