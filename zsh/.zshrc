@@ -70,6 +70,9 @@ export PATH=$PATH:/$HOME/Library/Python/3.9/bin
 export DENO_INSTALL="/Users/edwardbaeg/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+# VeraCrypt CLI (lives inside the app bundle)
+export PATH="$PATH:/Applications/VeraCrypt.app/Contents/MacOS"
+
 # -- Zsh specific
 # In normal mode, use `v` to open command in editor
 autoload edit-command-line
