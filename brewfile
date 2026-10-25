@@ -5,8 +5,8 @@ brew "bat" # better cat
 brew "eza" # better ls; better exa
 brew "fd" # better find
 brew "ffmpeg" # video thumbnails for yazi
-brew "gdu" # file/directory size checker; better ncdu
 brew "fzf" # fuzzy finder
+brew "gdu" # file/directory size checker; better ncdu
 brew "gh" # github cli; used by lazygit custom commands and gh-dash
 brew "git-delta" # diff pager; used by git core.pager and lazygit
 brew "lazygit" # git TUI
@@ -14,13 +14,13 @@ brew "qrcp" # qr code generator for file transfer
 brew "ripgrep" # better grep
 brew "scrcpy" # android screen sharing
 brew "stow" # symlink manager
-cask "thaw" # menubar manager
 brew "tlrc" # quick reference; better tldr
 brew "tmux" # terminal multiplexer
 brew "tmuxp" # tmux session manager
 brew "witr" # why is this running
 brew "yazi" # file finder
 brew "zoxide" # better cd
+cask "thaw" # menubar manager
 
 # Casks
 cask "android-platform-tools" # adb; required by scrcpy
