@@ -7,39 +7,15 @@ if command -v direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
 
-# -- Instant prompt ------------------------------------------------------------
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# -- Private -------------------------------------------------------------------
-if [[ -f "$HOME/zsh-private/init.zsh" ]]; then
-    source "$HOME/zsh-private/init.zsh"
-fi
-
-# -- Core ----------------------------------------------------------------------
-# GITSTATUS_LOG_LEVEL=DEBUG
-
-# Improve colors
-export TERM="xterm-256color"
+# -- Environment ---------------------------------------------------------------
+# everything above the CLAUDECODE return is shared with Claude Code's Bash tool
 
 # Use nvim as default editor
 export EDITOR=nvim
 export VISUAL=nvim
 
-# -- History
-# Share history
-setopt inc_append_history
-setopt hist_ignore_dups
-setopt share_history
-
-HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEhist=100000
-setopt appendhistory
+# change default config directory for MacOS
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # -- Path
 # Add custom programs
@@ -61,11 +37,67 @@ export PATH=$HOME/bin:/opt/homebrew/bin:/usr/local/bin:$PATH
 export PATH=$PATH:/$HOME/Library/Python/3.9/bin
 
 # Add deno to path
-export DENO_INSTALL="/Users/edwardbaeg/.deno"
+export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # VeraCrypt CLI (lives inside the app bundle)
 export PATH="$PATH:/Applications/VeraCrypt.app/Contents/MacOS"
+
+# asdf
+# add shims directory to path
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+export PATH=$PATH:$HOME/.spicetify
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# I think this is for claude-code
+export PATH="$PATH:$HOME/.local/bin"
+
+# source ~/.env if it exists
+[ -f "$HOME/.env" ] && source "$HOME/.env"
+
+# -- Claude Code ---------------------------------------------------------------
+# Claude Code runs this file once per session (CLAUDECODE=1) and replays a snapshot of the result
+# before every Bash tool command. The prompt, plugins, aliases and fzf below are interactive-only,
+# and would bloat that snapshot or change what commands do, so stop here
+if [[ -n $CLAUDECODE ]]; then
+    # shims resolve the tool version per directory; hook mode freezes it at the session's start dir
+    eval "$(mise activate zsh --shims)"
+    return
+fi
+
+# -- Private -------------------------------------------------------------------
+if [[ -f "$HOME/zsh-private/init.zsh" ]]; then
+    source "$HOME/zsh-private/init.zsh"
+fi
+
+# -- Instant prompt ------------------------------------------------------------
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# -- Core ----------------------------------------------------------------------
+# GITSTATUS_LOG_LEVEL=DEBUG
+
+# Improve colors; not inside tmux, which gives panes TERM=tmux-256color (default-terminal)
+[[ -z $TMUX ]] && export TERM="xterm-256color"
+
+# -- History
+# Share history
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt share_history
+
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEhist=100000
+setopt appendhistory
 
 # -- Zsh specific
 # In normal mode, use `v` to open command in editor
@@ -95,12 +127,6 @@ export LESS="$LESS -FRXK"
 # Don't automatically load ranger rc to prevent loading it twice
 # TODO: make conditional for if the rc already exists
 export RANGER_LOAD_DEFAULT_RC=FALSE
-
-# change default config directory for MacOS
-export XDG_CONFIG_HOME="$HOME/.config"
-
-# source ~/.env if it exists
-[ -f "$HOME/.env" ] && source "$HOME/.env"
 
 # Don't automatically set terminal title, for tmux, required by tmuxp
 export DISABLE_AUTO_TITLE='true'
@@ -227,23 +253,11 @@ fi
 # run this command to add awscli autocompletion
 # complete -C aws_completer aws
 
-# asdf
-# add shims directory to path
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-
 # -- NOTES ---------------------------------------------------------------
 # Run the following to benchmark shell boot times
 # for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
 
-export PATH=$PATH:/Users/edwardbaeg/.spicetify
-
 # bun completions
-[ -s "/Users/edwardbaeg/.bun/_bun" ] && source "/Users/edwardbaeg/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# I think this is for claude-code
-export PATH="$PATH:$HOME/.local/bin"
 eval "$(mise activate zsh)"
