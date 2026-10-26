@@ -7,12 +7,6 @@ if command -v direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
 
-# TODO consider iterating over all files in the dir https://medium.com/codex/how-and-why-you-should-split-your-bashrc-or-zshrc-files-285e5cc3c843
-work_zsh_path="$HOME/zsh/work.sh"
-if [[ ! -f $work_zsh_path ]]; then
-    echo "work.zsh not found in \$HOME/zsh"
-fi
-
 # -- Instant prompt ------------------------------------------------------------
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -21,9 +15,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# -- OneAdvisory, Dispatch -------------------------------------------------------
-if [[ -f $work_zsh_path ]]; then
-    source "$work_zsh_path"
+# -- Private -------------------------------------------------------------------
+if [[ -f "$HOME/zsh-private/init.zsh" ]]; then
+    source "$HOME/zsh-private/init.zsh"
 fi
 
 # -- Core ----------------------------------------------------------------------

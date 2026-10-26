@@ -10,7 +10,7 @@ alias v="nvim"
 # TODO: change working dir for each? #TODO: see if theres benefits
 # TODO: s/vim/\$EDITOR for portability
 # alias vz="\$EDITOR ~/dev/dotfiles/zsh/.zshrc -c \":cd ~/dev/dotfiles/zsh\""
-alias vzw="vim ~/dev/dotfiles/zsh/zsh/work.sh"
+alias vzw="vim ~/dev/dotfiles-private/zsh-private/work.sh"
 alias vza="vim ~/dev/dotfiles/zsh/zsh/aliases.sh"
 alias vzf="vim ~/dev/dotfiles/zsh/zsh/functions.sh"
 # alias ez="vim ~/dev/dotfiles/.zshrc"
