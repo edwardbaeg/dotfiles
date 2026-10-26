@@ -12,7 +12,7 @@ macos-titlebar-style = hidden
 
 # Colors
 # Default is #282c34; lightened slightly
-background = #353941
+background = #2f333b
 
 # Bell
 bell-features = system,attention,title
