@@ -39,7 +39,6 @@ hs.urlevent.bind("alert-claudecode", function(_, params)
    canvas[1] = {
       type = "rectangle",
       action = "strokeAndFill",
-      -- lighter than ghostty's #353941 bg so it stands out; opaque so the terminal doesn't bleed through
       fillColor = require("common.external.catpuccin-frappe").getRgbColor("surface2", 1),
       strokeColor = { white = 1, alpha = 0.5 },
       strokeWidth = borderWidth,
