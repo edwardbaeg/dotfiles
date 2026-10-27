@@ -74,9 +74,6 @@ alias gblr="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) 
 #   git diff --merge-base master
 # }
 
-# from zsh git-open plugin
-alias gop="git open"
-
 #-- commands
 alias py="python3"
 alias vtop="vtop --theme brew"
