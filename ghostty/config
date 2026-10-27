@@ -52,5 +52,6 @@ keybind = super+f=text:\x1bf
 keybind = super+g=text:\x1bg
 keybind = super+z=text:\x1bz
 keybind = super+slash=text:\x1b/
-keybind = super+backslash=text:\x1b\\
+# M-| rather than M-\ in tmux; see the split binding there for why
+keybind = super+backslash=text:\x1b|
 keybind = super+-=text:\x1b-
