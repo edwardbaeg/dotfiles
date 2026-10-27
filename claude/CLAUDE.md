@@ -22,6 +22,9 @@
 ## Git
 - **NEVER run `git commit` or `git push` without explicit user instruction**
 - After completing code changes, report what was done and stop — wait for the user to ask before committing or pushing
+- **Name new worktree directories after the branch**, not just the ticket id, so they're distinguishable at a glance
+  - Drop a leading `<username>/` segment so the dir stays flat (a literal `/` nests every worktree under one folder)
+  - Example: branch `edward/eng-4453-fix-error-code` → dir `.claude/worktrees/eng-4453-fix-error-code`
 
 ## File Management
 - Do what has been asked; nothing more, nothing less
