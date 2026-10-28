@@ -52,6 +52,8 @@ return {
    {
       -- visual scrollbar
       "petertriho/nvim-scrollbar",
+      -- v2 replaces v1 on main 2026-11-16 and rejects these options; see docs/migration.md
+      branch = "v1",
       event = "VeryLazy",
       enabled = not vim.g.vscode,
       config = function()

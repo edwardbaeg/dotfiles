@@ -32,7 +32,7 @@ return {
       enabled = not vim.g.vscode,
       event = "VeryLazy",
       config = function()
-         require("scrollbar.handlers.search").setup({}) -- integrate with nvim-scrollbar
+         require("scrollbar.handlers.search").setup({}) -- integrate with nvim-scrollbar (v1 only; delete on v2)
          require("hlslens").setup({
             -- calm_down = true, -- this doesn't work? clear highlights when cursor leaves
             -- nearest_only = true, -- only add lens to the nearest matched instance
