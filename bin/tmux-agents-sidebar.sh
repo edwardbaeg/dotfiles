@@ -9,6 +9,8 @@ set -uo pipefail
 
 WIDTH=42
 REFRESH=2
+# one file per chat with a reply you haven't read, named by session id; kept by claude-unread.sh
+UNREAD_DIR="${XDG_STATE_HOME:-${HOME}/.local/state}/claude-unread"
 
 sidebar_pane() {
 	local pane
@@ -53,13 +55,14 @@ follow() {
 	tmux swap-pane -d -Z -s "${pane}" -t "${tmp}" \; kill-pane -t "${tmp}"
 }
 
-# Prints "<state>\t<alive>\t<name>\t<id>\t<session>\t<cwd>", sorted by what needs attention, newest
-# first. --all adds finished sessions like the agents view lists them; those have no pid or status.
-# state (done/blocked/working/...) is what the agents view shows, unlike the process-level status
+# Prints "<urgency>\t<state>\t<alive>\t<name>\t<id>\t<session>\t<started>\t<cwd>"; urgency ranks what
+# needs attention first. --all adds finished sessions like the agents view lists them; those have no
+# pid or status. state (done/blocked/working/...) is what the agents view shows, unlike the
+# process-level status. started is epoch seconds of the current process, see job_created for the first
 agents_tsv() {
-	claude agents --json --all 2>/dev/null | jq -r '
-		sort_by(({blocked: 0, working: 1, failed: 2, error: 2, crashed: 2}[.state] // 3), -(.startedAt // 0))[]
-		| [(.state // "unknown"), (if .pid then 1 else 0 end), .name, .id, .sessionId, .cwd] | @tsv'
+	claude agents --json --all 2>/dev/null | jq -r '.[]
+		| [({blocked: 0, working: 1, failed: 2, error: 2, crashed: 2}[.state] // 3), (.state // "unknown"),
+			(if .pid then 1 else 0 end), .name, .id, .sessionId, ((.startedAt // 0) / 1000 | floor), .cwd] | @tsv'
 }
 
 # Prints "<repo-path>\t<worktree>". Worktrees share the main checkout's git dir, so that names the
@@ -82,16 +85,22 @@ repo_of() {
 	fi
 }
 
-# Prints "<repo-path>\t<state>\t<alive>\t<name>\t<id>\t<session>\t<worktree>". Repos are ordered by
-# their most urgent agent, so a repo with a chat needing input stays near the top, and agents keep
-# agents_tsv's order within a repo. The often-empty worktree goes last because read collapses
-# adjacent tabs, shifting later fields
+# Prints "<repo-path>\t<state>\t<alive>\t<name>\t<id>\t<session>\t<started>\t<updated>\t<worktree>".
+# Chats are sorted by urgency, then most recently updated, where updated is the transcript's mtime
+# (every turn appends to it), or 0 without one. Repos are then ordered by their most urgent chat, so a
+# repo with a chat needing input stays near the top, keeping that order within a repo. The often-empty
+# worktree goes last because read collapses adjacent tabs, shifting later fields
 grouped_agents() {
-	local state alive name id sid cwd repo worktree
-	agents_tsv | while IFS=$'\t' read -r state alive name id sid cwd; do
+	local urgency state alive name id sid started cwd repo worktree file updated
+	agents_tsv | while IFS=$'\t' read -r urgency state alive name id sid started cwd; do
 		IFS=$'\t' read -r repo worktree < <(repo_of "${cwd}")
-		printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "${repo}" "${state}" "${alive}" "${name}" "${id}" "${sid}" "${worktree}"
+		file="$(transcript "${sid}")"
+		updated=0
+		[ -n "${file}" ] && updated="$(stat -f %m "${file}")"
+		printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "${urgency}" "${repo}" "${state}" "${alive}" "${name}" \
+			"${id}" "${sid}" "${started}" "${updated}" "${worktree}"
 	done |
+		sort -t $'\t' -k1,1n -k9,9nr | cut -f2- |
 		awk -F'\t' '!($1 in rank) { rank[$1] = n++ } { print rank[$1] "\t" NR "\t" $0 }' |
 		sort -t $'\t' -k1,1n -k2,2n | cut -f3-
 }
@@ -143,15 +152,17 @@ state_style() {
 	esac
 }
 
-# Same counts line as the agents view's header, e.g. "2 awaiting input · 1 working · 7 completed"
+# Same counts line as the agents view's header, e.g. "2 awaiting input · 1 working · 7 completed",
+# led by the <unread> count, which the agents view doesn't have
 summary_line() {
-	awk -F'\t' '
+	awk -F'\t' -v unread="$1" '
 		function add(key, label) {
 			if (n[key]) out = out (out ? " · " : "") n[key] " " label
 			delete n[key]
 		}
 		{ n[$2]++ }
 		END {
+			if (unread) out = unread " unread"
 			add("blocked", "awaiting input"); add("working", "working"); add("done", "completed")
 			for (k in n) add(k, k)
 			print out
@@ -162,6 +173,12 @@ summary_line() {
 # so unlike the away_summary recap it's current even mid-turn
 job_detail() {
 	jq -r '.detail // empty | gsub("\\s+"; " ")' "${HOME}/.claude/jobs/$1/state.json" 2>/dev/null
+}
+
+# Epoch seconds the chat was first created. --json's startedAt resets whenever the daemon respawns the
+# process, so a days-old chat can look minutes old; the job's createdAt doesn't
+job_created() {
+	jq -r '.createdAt // empty | sub("\\.[0-9]+Z$"; "Z") | fromdateiso8601' "${HOME}/.claude/jobs/$1/state.json" 2>/dev/null
 }
 
 # Transcripts live under a dir derived from the session's launch cwd, so glob rather than rebuild it
@@ -205,20 +222,27 @@ focused_chat() {
 
 render() {
 	local cols="$1" highlight="$2" frame="$3" now focused rows repo header state alive name id sid worktree prev_repo=""
-	local label colour glyph name_colour text_colour faint_colour file age detail lines line first bg
+	local label colour glyph name_colour text_colour faint_colour file age detail lines line first bg divider="" i
+	local unread unread_count name_width started created times
 	now="$(date +%s)"
 	focused="$(focused_chat)"
 	rows="$(grouped_agents)"
+	for ((i = 0; i < cols; i++)); do divider+="┈"; done
+	unread_count="$(cut -f6 <<<"${rows}" | while read -r sid; do [ -n "${sid}" ] && [ -f "${UNREAD_DIR}/${sid}" ] && echo; done | wc -l | tr -d ' ')"
 	printf '\e[1mclaude agents\e[0m\e[K\n'
-	summary_line <<<"${rows}" | fold -s -w "${cols}" | while IFS= read -r line; do
+	summary_line "${unread_count}" <<<"${rows}" | fold -s -w "${cols}" | while IFS= read -r line; do
 		printf '\e[38;5;246m%s\e[0m\e[K\n' "${line%"${line##*[! ]}"}"
 	done
-	while IFS=$'\t' read -r repo state alive name id sid worktree; do
+	while IFS=$'\t' read -r repo state alive name id sid started updated worktree; do
 		[ -n "${name}" ] || continue
 		if [ "${repo}" != "${prev_repo}" ]; then
 			prev_repo="${repo}"
 			header="${repo/#${HOME}/~}"
-			printf '\e[K\n\e[1;38;5;246m%s\e[0m\e[K\n' "${header:0:${cols}}"
+			# Claude's accent (the agents view's logo colour), kept clear of the state colours
+			printf '\e[K\n\e[1;38;5;174m%s\e[0m\e[K\n' "${header:0:${cols}}"
+		else
+			# Between chats in the same repo only; a repo header already separates the first one
+			printf '\e[38;5;238m%s\e[0m\e[K\n' "${divider}"
 		fi
 		IFS=$'\t' read -r label colour glyph < <(state_style "${state}" "${alive}" "${frame}")
 		# Lines below reset only the foreground (39) so this background runs to the \e[K at line end.
@@ -226,16 +250,27 @@ render() {
 		# too, since the dim ones vanish against the lavender highlight
 		bg="" name_colour='38;5;246' text_colour='38;5;246' faint_colour='38;5;244'
 		[ "${name}" = "${focused}" ] && bg="${highlight}" name_colour='38;5;231' text_colour='38;5;253' faint_colour='38;5;250'
-		file="$(transcript "${sid}")"
 		age=""
-		# Every turn appends to the transcript, so its mtime is the last activity
-		[ -n "${file}" ] && age="$(ago $((now - $(stat -f %m "${file}"))))"
+		((updated > 0)) && age="$(ago $((now - updated)))"
+		created="$(job_created "${id}")"
+		[ -z "${created}" ] && ((started > 0)) && created="${started}"
+		# "<updated> · <started>", e.g. "5m · 2d"; the start time is fainter as the less urgent one
+		times="${age}"
+		[ -n "${created}" ] && times="${age:+${age} · }$(ago $((now - created)))"
+		# The name gets whatever the glyph, unread mark and times leave, plus a space before the times
+		unread="" name_width=$((cols - 3 - ${#times}))
+		# A reply you haven't read: the same aqua ● as the tmux window marks, and a bold name
+		[ -f "${UNREAD_DIR}/${sid}" ] && unread=$'\e[38;5;14m● ' name_colour="1;${name_colour}" name_width=$((name_width - 2))
 		detail="$(job_detail "${id}")"
-		[ -z "${detail}" ] && [ -n "${file}" ] && detail="$(recap "${file}")"
-		# Jump to a column for the age, since printf pads by bytes and names can hold multibyte chars.
+		if [ -z "${detail}" ]; then
+			file="$(transcript "${sid}")"
+			[ -n "${file}" ] && detail="$(recap "${file}")"
+		fi
+		# Jump to a column for the times, since printf pads by bytes and names can hold multibyte chars.
 		# Clear before the jump, or the skipped gap keeps the previous frame's text
-		printf '%s\e[%sm%s\e[%sm %s\e[K\e[%sG\e[%sm%s\e[39m\e[K\e[0m\n' "${bg}" "${colour}" "${glyph}" "${name_colour}" \
-			"${name:0:$((cols - 8))}" "$((cols - ${#age} + 1))" "${text_colour}" "${age}"
+		printf '%s\e[%sm%s %s\e[%sm%s\e[22m\e[K\e[%sG\e[%sm%s\e[%sm%s\e[39m\e[K\e[0m\n' "${bg}" "${colour}" "${glyph}" "${unread}" \
+			"${name_colour}" "${name:0:${name_width}}" "$((cols - ${#times} + 1))" \
+			"${text_colour}" "${age}" "${faint_colour}" "${times#"${age}"}"
 		[ -n "${worktree}" ] && printf '%s  \e[%sm⎇ %s\e[39m\e[K\e[0m\n' "${bg}" "${faint_colour}" "${worktree:0:$((cols - 4))}"
 		# "<Label> · <detail>" as in the agents view, wrapped to 3 lines with only the label coloured
 		lines="$(fold -s -w $((cols - 3)) <<<"${label}${detail:+ · ${detail}}")"

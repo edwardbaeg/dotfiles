@@ -36,6 +36,21 @@
           {
             "type": "command",
             "command": ": 'Terminal bell on finish. Hooks have no tty, so write to the parent (Claude) tty; tr strips the space ps adds'; tty=$(ps -o tty= -p $PPID | tr -d ' '); [ -n \"$tty\" ] && [ \"$tty\" != \"??\" ] && printf '\\a' > \"/dev/$tty\"; exit 0"
+          },
+          {
+            "type": "command",
+            "command": ": 'Mark the chat unread in tmux unless it is on screen'; \"$HOME/bin/claude-unread.sh\" mark"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ": 'Replying marks the chat read in tmux. stdout would be added to the prompt, so drop it'; \"$HOME/bin/claude-unread.sh\" read >/dev/null"
           }
         ]
       }
@@ -58,7 +73,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "if command -v ccstatusline >/dev/null 2>&1; then ccstatusline; else echo 'ccstatusline not installed: bun add -g ccstatusline@2.2.32'; fi",
+    "command": "if command -v ccstatusline >/dev/null 2>&1; then ccstatusline; else echo 'ccstatusline not installed'; fi",
     "padding": 0
   },
   "enabledPlugins": {
@@ -100,10 +115,7 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "allowedTools": [
-    "Grep",
-    "Ls"
-  ],
+  "allowedTools": ["Grep", "Ls"],
   "feedbackSurveyState": {
     "lastShownTime": 1754085487247
   },
