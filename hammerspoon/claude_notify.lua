@@ -5,7 +5,7 @@
 
 local palette = require("common.external.catpuccin-frappe")
 
-local DURATION = 10
+local DURATION = 30
 local WIDTH = 420
 local HEIGHT = 80
 local GAP = 8
@@ -155,6 +155,20 @@ hs.urlevent.bind("claude-notify", function(_, params)
       payload = { kind = "notification", title = "", detail = "(unreadable payload)" }
    end
    push(payload)
+end)
+
+-- TODO(remove after 2026-11-04): temporary bridge for sessions that predate the
+-- claude-notify.sh hooks (added 2026-10-28). Claude Code reads hooks at session start, so older
+-- chats still fire the old URL with only a title. Before removing, check the Hammerspoon console
+-- has no recent `alert-claudecode` events
+hs.urlevent.bind("alert-claudecode", function(_, params)
+   local isNotification = params.title == "ClaudeCode Notification!"
+   push({
+      kind = isNotification and "notification" or "done",
+      title = "",
+      where = "older session",
+      detail = isNotification and "Claude needs your attention" or (params.title or ""),
+   })
 end)
 
 return { push = push }
