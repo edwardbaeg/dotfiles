@@ -42,7 +42,7 @@ toggle() {
 }
 
 # Moving with join-pane/move-pane reflows tiled layouts, so swap with a placeholder float instead;
-# the sidebar keeps its process and pane id
+# the sidebar keeps its process and pane id. -Z stops the swap unzooming both windows
 follow() {
 	local window="$1" pane tmp
 	pane="$(sidebar_pane)"
@@ -50,7 +50,7 @@ follow() {
 	[ "$(tmux display -p -t "${pane}" '#{window_id}')" = "${window}" ] && return 0
 	tmp="$(new_float "${window}")"
 	[ -n "${tmp}" ] || return 1
-	tmux swap-pane -d -s "${pane}" -t "${tmp}" \; kill-pane -t "${tmp}"
+	tmux swap-pane -d -Z -s "${pane}" -t "${tmp}" \; kill-pane -t "${tmp}"
 }
 
 # Sorted by what needs attention, newest first
