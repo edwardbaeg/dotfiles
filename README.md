@@ -193,12 +193,6 @@ Install zsh plugin manager
 https://github.com/tarjoilija/zgen | git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 ```
 
-Set up fzf
-
-```
-$(brew --prefix)/opt/fzf/install
-```
-
 ### Neovim setup
 
 Install neovim and pynvim (to support python plugins in nvim)

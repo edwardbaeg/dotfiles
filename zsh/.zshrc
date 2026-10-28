@@ -222,7 +222,13 @@ function vim_fuzzy() {
 # fix setting fzf keymaps after zsh-vi-mode
 # https://github.com/jeffreytse/zsh-vi-mode/issues/4
 function zvm_after_init() {
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    # whence, not $+commands: the command hash isn't populated yet when zsh-vi-mode runs this
+    whence -p fzf >/dev/null && source <(fzf --zsh)
+
+    # a missing fzf or a clobbered binding silently falls back to zsh's own history search
+    if [[ $(bindkey '^R') != *fzf-history-widget ]]; then
+        print -P "%F{yellow}warning:%f Ctrl-R is not using fzf ($(bindkey '^R')). Is fzf installed? (brew install fzf)"
+    fi
 }
 
 # Use rg for fzf
