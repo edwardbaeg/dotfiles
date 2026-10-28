@@ -1,0 +1,9 @@
+{
+  "name": "My Custom Theme",
+  "base": "dark",
+  "overrides": {
+    "userMessageBackground": "rgb(40, 62, 92)",
+    "userMessageBackgroundHover": "rgb(52, 76, 110)",
+    "subtle": "rgb(130, 140, 155)"
+  }
+}
