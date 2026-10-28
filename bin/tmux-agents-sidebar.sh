@@ -53,15 +53,17 @@ follow() {
 	tmux swap-pane -d -Z -s "${pane}" -t "${tmp}" \; kill-pane -t "${tmp}"
 }
 
-# Sorted by what needs attention, newest first
+# Prints "<state>\t<alive>\t<name>\t<id>\t<session>\t<cwd>", sorted by what needs attention, newest
+# first. --all adds finished sessions like the agents view lists them; those have no pid or status.
+# state (done/blocked/working/...) is what the agents view shows, unlike the process-level status
 agents_tsv() {
-	claude agents --json 2>/dev/null | jq -r '
-		sort_by(({waiting: 0, busy: 1}[.status] // 2), -.startedAt)[]
-		| [.status, .name, .sessionId, .cwd] | @tsv'
+	claude agents --json --all 2>/dev/null | jq -r '
+		sort_by(({blocked: 0, working: 1, failed: 2, error: 2, crashed: 2}[.state] // 3), -(.startedAt // 0))[]
+		| [(.state // "unknown"), (if .pid then 1 else 0 end), .name, .id, .sessionId, .cwd] | @tsv'
 }
 
-# Prints "<repo>\t<worktree>". Worktrees share the main checkout's git dir, so that names the repo;
-# the worktree is empty in the main checkout. Outside git, the cwd's basename stands in for the repo
+# Prints "<repo-path>\t<worktree>". Worktrees share the main checkout's git dir, so that names the
+# repo; the worktree is empty in the main checkout. Outside git, the cwd stands in for the repo
 repo_of() {
 	local common="" top="" main
 	{
@@ -69,25 +71,26 @@ repo_of() {
 		read -r top
 	} < <(git -C "$1" rev-parse --path-format=absolute --git-common-dir --show-toplevel 2>/dev/null)
 	if [ -z "${common}" ]; then
-		printf '%s\t\n' "${1##*/}"
+		printf '%s\t\n' "$1"
 		return
 	fi
 	main="${common%/.git}"
 	if [ "${top}" = "${main}" ]; then
-		printf '%s\t\n' "${main##*/}"
+		printf '%s\t\n' "${main}"
 	else
-		printf '%s\t%s\n' "${main##*/}" "${top##*/}"
+		printf '%s\t%s\n' "${main}" "${top##*/}"
 	fi
 }
 
-# Prints "<repo>\t<status>\t<name>\t<session>\t<worktree>". Repos are ordered by their most urgent
-# agent, so a waiting chat's repo stays near the top, and agents keep agents_tsv's order within a repo.
-# The often-empty worktree goes last because read collapses adjacent tabs, shifting later fields
+# Prints "<repo-path>\t<state>\t<alive>\t<name>\t<id>\t<session>\t<worktree>". Repos are ordered by
+# their most urgent agent, so a repo with a chat needing input stays near the top, and agents keep
+# agents_tsv's order within a repo. The often-empty worktree goes last because read collapses
+# adjacent tabs, shifting later fields
 grouped_agents() {
-	local status name sid cwd repo worktree
-	agents_tsv | while IFS=$'\t' read -r status name sid cwd; do
+	local state alive name id sid cwd repo worktree
+	agents_tsv | while IFS=$'\t' read -r state alive name id sid cwd; do
 		IFS=$'\t' read -r repo worktree < <(repo_of "${cwd}")
-		printf '%s\t%s\t%s\t%s\t%s\n' "${repo}" "${status}" "${name}" "${sid}" "${worktree}"
+		printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "${repo}" "${state}" "${alive}" "${name}" "${id}" "${sid}" "${worktree}"
 	done |
 		awk -F'\t' '!($1 in rank) { rank[$1] = n++ } { print rank[$1] "\t" NR "\t" $0 }' |
 		sort -t $'\t' -k1,1n -k2,2n | cut -f3-
@@ -124,10 +127,41 @@ highlight_bg() {
 	fi
 }
 
-rule() {
-	local i out=""
-	for ((i = 0; i < $1; i++)); do out+="─"; done
-	echo "${out}"
+# Prints "<label>\t<sgr colour>\t<glyph>" for <state> <alive> <frame>, matching the agents view:
+# Needs input in yellow, Done in green, Working in the default colour with a spinner (advanced once
+# per refresh), and ∙ for a finished session whose process has exited
+SPINNER=(✢ ✳ ✶ ✻ ✽)
+state_style() {
+	local live_glyph='∙'
+	[ "$2" = 1 ] && live_glyph='✻'
+	case "$1" in
+	blocked) printf 'Needs input\t38;5;220\t%s\n' "${live_glyph}" ;;
+	working) printf 'Working\t39\t%s\n' "${SPINNER[$(($3 % ${#SPINNER[@]}))]}" ;;
+	done) printf 'Done\t38;5;114\t%s\n' "${live_glyph}" ;;
+	failed | error | crashed) printf '%s\t38;5;203\t%s\n' "$(tr '[:lower:]' '[:upper:]' <<<"${1:0:1}")${1:1}" "${live_glyph}" ;;
+	*) printf '%s\t38;5;246\t%s\n' "$(tr '[:lower:]' '[:upper:]' <<<"${1:0:1}")${1:1}" "${live_glyph}" ;;
+	esac
+}
+
+# Same counts line as the agents view's header, e.g. "2 awaiting input · 1 working · 7 completed"
+summary_line() {
+	awk -F'\t' '
+		function add(key, label) {
+			if (n[key]) out = out (out ? " · " : "") n[key] " " label
+			delete n[key]
+		}
+		{ n[$2]++ }
+		END {
+			add("blocked", "awaiting input"); add("working", "working"); add("done", "completed")
+			for (k in n) add(k, k)
+			print out
+		}'
+}
+
+# The agents view's one-line status for an agent. The daemon rewrites it on every state change,
+# so unlike the away_summary recap it's current even mid-turn
+job_detail() {
+	jq -r '.detail // empty | gsub("\\s+"; " ")' "${HOME}/.claude/jobs/$1/state.json" 2>/dev/null
 }
 
 # Transcripts live under a dir derived from the session's launch cwd, so glob rather than rebuild it
@@ -170,59 +204,69 @@ focused_chat() {
 }
 
 render() {
-	local cols="$1" highlight="$2" now focused repo worktree status name sid prev_repo="" glyph colour file age summary lines line bg
+	local cols="$1" highlight="$2" frame="$3" now focused rows repo header state alive name id sid worktree prev_repo=""
+	local label colour glyph name_colour text_colour faint_colour file age detail lines line first bg
 	now="$(date +%s)"
 	focused="$(focused_chat)"
+	rows="$(grouped_agents)"
 	printf '\e[1mclaude agents\e[0m\e[K\n'
-	while IFS=$'\t' read -r repo status name sid worktree; do
+	summary_line <<<"${rows}" | fold -s -w "${cols}" | while IFS= read -r line; do
+		printf '\e[38;5;246m%s\e[0m\e[K\n' "${line%"${line##*[! ]}"}"
+	done
+	while IFS=$'\t' read -r repo state alive name id sid worktree; do
+		[ -n "${name}" ] || continue
 		if [ "${repo}" != "${prev_repo}" ]; then
 			prev_repo="${repo}"
-			printf '\e[K\n\e[1;38;5;245m%s\e[0m \e[38;5;238m%s\e[0m\e[K\n' "${repo:0:$((cols - 2))}" "$(rule $((cols - ${#repo} - 1)))"
+			header="${repo/#${HOME}/~}"
+			printf '\e[K\n\e[1;38;5;246m%s\e[0m\e[K\n' "${header:0:${cols}}"
 		fi
-		# Lines below reset only the foreground (39) so this background runs to the \e[K at line end
-		bg=""
-		[ "${name}" = "${focused}" ] && bg="${highlight}"
-		case "${status}" in
-		waiting) glyph='◆' colour='38;5;208' ;;
-		busy) glyph='●' colour='38;5;39' ;;
-		idle) glyph='○' colour='38;5;241' ;;
-		*) glyph='?' colour='38;5;241' ;;
-		esac
+		IFS=$'\t' read -r label colour glyph < <(state_style "${state}" "${alive}" "${frame}")
+		# Lines below reset only the foreground (39) so this background runs to the \e[K at line end.
+		# Like the agents view's selected row, the focused chat's name turns white; its greys lighten
+		# too, since the dim ones vanish against the lavender highlight
+		bg="" name_colour='38;5;246' text_colour='38;5;246' faint_colour='38;5;244'
+		[ "${name}" = "${focused}" ] && bg="${highlight}" name_colour='38;5;231' text_colour='38;5;253' faint_colour='38;5;250'
 		file="$(transcript "${sid}")"
-		age="" summary=""
-		if [ -n "${file}" ]; then
-			# Every turn appends to the transcript, so its mtime is the last activity
-			age="$(ago $((now - $(stat -f %m "${file}"))))"
-			summary="$(recap "${file}")"
-		fi
+		age=""
+		# Every turn appends to the transcript, so its mtime is the last activity
+		[ -n "${file}" ] && age="$(ago $((now - $(stat -f %m "${file}"))))"
+		detail="$(job_detail "${id}")"
+		[ -z "${detail}" ] && [ -n "${file}" ] && detail="$(recap "${file}")"
 		# Jump to a column for the age, since printf pads by bytes and names can hold multibyte chars.
 		# Clear before the jump, or the skipped gap keeps the previous frame's text
-		printf '%s\e[%sm%s\e[39m %s\e[K\e[%sG\e[38;5;241m%s\e[39m\e[K\e[0m\n' "${bg}" "${colour}" "${glyph}" \
-			"${name:0:$((cols - 8))}" "$((cols - ${#age} + 1))" "${age}"
-		[ -n "${worktree}" ] && printf '%s  \e[38;5;241m⎇ %s\e[39m\e[K\e[0m\n' "${bg}" "${worktree:0:$((cols - 4))}"
-		if [ -n "${summary}" ]; then
-			lines="$(fold -s -w $((cols - 3)) <<<"${summary}")"
-			[ "$(wc -l <<<"${lines}")" -gt 3 ] && lines="$(head -n 3 <<<"${lines}")…"
-			while IFS= read -r line; do
-				# fold -s keeps the space it broke at
-				printf '%s  \e[38;5;245m%s\e[39m\e[K\e[0m\n' "${bg}" "${line%"${line##*[! ]}"}"
-			done <<<"${lines}"
-		fi
-	done < <(grouped_agents)
+		printf '%s\e[%sm%s\e[%sm %s\e[K\e[%sG\e[%sm%s\e[39m\e[K\e[0m\n' "${bg}" "${colour}" "${glyph}" "${name_colour}" \
+			"${name:0:$((cols - 8))}" "$((cols - ${#age} + 1))" "${text_colour}" "${age}"
+		[ -n "${worktree}" ] && printf '%s  \e[%sm⎇ %s\e[39m\e[K\e[0m\n' "${bg}" "${faint_colour}" "${worktree:0:$((cols - 4))}"
+		# "<Label> · <detail>" as in the agents view, wrapped to 3 lines with only the label coloured
+		lines="$(fold -s -w $((cols - 3)) <<<"${label}${detail:+ · ${detail}}")"
+		[ "$(wc -l <<<"${lines}")" -gt 3 ] && lines="$(head -n 3 <<<"${lines}")…"
+		first=1
+		while IFS= read -r line; do
+			# fold -s keeps the space it broke at
+			line="${line%"${line##*[! ]}"}"
+			if ((first)); then
+				printf '%s  \e[%sm%s\e[%sm%s\e[39m\e[K\e[0m\n' "${bg}" "${colour}" "${label}" "${text_colour}" "${line#"${label}"}"
+				first=0
+			else
+				printf '%s  \e[%sm%s\e[39m\e[K\e[0m\n' "${bg}" "${text_colour}" "${line}"
+			fi
+		done <<<"${lines}"
+	done <<<"${rows}"
 }
 
 view() {
 	# Only clear the option if it's still ours, since a quick toggle may have started a new sidebar
 	trap '[ "$(tmux show -gv @agents_sidebar 2>/dev/null)" = "${TMUX_PANE}" ] && tmux set -gu @agents_sidebar' EXIT
 	tput civis
-	local cols rows frame highlight
+	local cols rows frame highlight tick=0
 	highlight="$(highlight_bg)"
 	while :; do
+		tick=$((tick + 1))
 		# tput can't see the terminal from inside $(...), so ask tmux
 		read -r cols rows < <(tmux display -p -t "${TMUX_PANE}" '#{pane_width} #{pane_height}')
 		# Render off-screen first so a slow `claude agents --json` doesn't blank the list, and cap it
 		# at the pane height, since printing past the bottom scrolls and breaks the redraw from home
-		frame="$(render "${cols}" "${highlight}" | head -n "${rows}")"
+		frame="$(render "${cols}" "${highlight}" "${tick}" | head -n "${rows}")"
 		printf '\e[H%s\e[J' "${frame}"
 		sleep "${REFRESH}"
 	done
