@@ -3,6 +3,7 @@ require("config_reloader") -- config watcher and reloader, load this first
 
 require("application_launcher") -- app launcher and switcher
 require("caffeine") -- force awake menubar
+require("claude_notify") -- stacked Claude Code hook notifications
 -- require("modals") -- modal mode keymaps -- disabled due to bug with toggle hotkey hijacking `d`
 require("remapper") -- simple system keymaps
 require("speaker_warning") -- notify on wake if on work wifi and audio is on speakers

@@ -20,7 +20,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ": 'Hammerspoon alert when Claude needs attention (permission prompt, idle input)'; open -g 'hammerspoon://alert-claudecode?title=ClaudeCode%20Notification!&duration=10'"
+            "command": ": 'Hammerspoon card when Claude needs attention (permission prompt, idle input)'; \"$HOME/bin/claude-notify.sh\""
           }
         ]
       }
@@ -31,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ": 'Hammerspoon alert titled with the start of the last Claude reply'; TRANSCRIPT_PATH=$(jq -r '.transcript_path' | sed 's|^~|'\"$HOME\"'|'); TITLE=$(tac \"$TRANSCRIPT_PATH\" | grep -m 1 '\"type\":\"text\"' | jq -r '.message.content[0].text' | head -c 24); TITLE=${TITLE:-\"ClaudeCode FINISHED\"}; open -g \"hammerspoon://alert-claudecode?title=${TITLE}&duration=10\""
+            "command": ": 'Hammerspoon card with chat title, repo/branch and the start of the last reply'; \"$HOME/bin/claude-notify.sh\""
           },
           {
             "type": "command",
