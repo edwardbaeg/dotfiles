@@ -2,7 +2,8 @@ return {
    {
       -- for showing virtual text with codeium, faster than codeium.vim
       "monkoose/neocodeium",
-      enabled = not vim.g.vscode,
+      -- enabled = not vim.g.vscode,
+      enabled = false,
       event = "VeryLazy",
       config = function()
          local neocodeium = require("neocodeium")
