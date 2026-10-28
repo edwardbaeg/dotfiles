@@ -71,7 +71,16 @@
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "notion@claude-plugins-official": true,
-    "figma@claude-plugins-official": true
+    "figma@claude-plugins-official": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
@@ -84,7 +93,7 @@
     }
   },
   "tui": "fullscreen",
-  "theme": "auto",
+  "theme": "custom:prompt-highlight",
   "editorMode": "vim",
   "preferredNotifChannel": "terminal_bell",
   "autoCompactEnabled": true,
