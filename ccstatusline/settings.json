@@ -9,6 +9,17 @@
         "rawValue": true
       },
       {
+        "id": "dc279de1-3e2d-415a-9a28-85e366fcc1be",
+        "type": "separator",
+        "character": " "
+      },
+      {
+        "id": "f34ed58f-51be-4d12-8677-1aefa70fbe57",
+        "type": "thinking-effort",
+        "color": "blue",
+        "rawValue": true
+      },
+      {
         "id": "2",
         "type": "separator",
         "character": " "
@@ -48,6 +59,30 @@
       {
         "id": "74ab0f93-581b-47d1-bde5-5ad97427d1d2",
         "type": "tokens-total"
+      },
+      {
+        "id": "2c5c45e9-4eab-4ce1-aca8-7f211a97c81b",
+        "type": "separator",
+        "character": " "
+      },
+      {
+        "id": "6967beaf-d188-402d-b940-7f4b8d01d22b",
+        "type": "compaction-counter",
+        "color": "red",
+        "metadata": {
+          "hide": "zero"
+        }
+      },
+      {
+        "id": "a4bdde1d-f34c-48e8-a4f9-141610a1ef19",
+        "type": "separator",
+        "character": " "
+      },
+      {
+        "id": "89435c8a-865c-42b8-b86d-666af941de5a",
+        "type": "session-name",
+        "color": "cyan",
+        "rawValue": true
       }
     ],
     [
@@ -69,6 +104,43 @@
         "id": "e61c3e00-3e26-4041-895f-f662ad67d8d7",
         "type": "git-branch",
         "color": "green"
+      },
+      {
+        "id": "5a65e37d-6829-4af8-b6d8-bb907c08b008",
+        "type": "separator",
+        "character": " "
+      },
+      {
+        "id": "87d14526-a464-4738-800d-8a6722461a87",
+        "type": "git-changes",
+        "color": "yellow",
+        "metadata": {
+          "hide": "no-git,zero"
+        }
+      },
+      {
+        "id": "52870514-4bff-443c-a99a-5285c0f13ef9",
+        "type": "separator",
+        "character": " "
+      },
+      {
+        "id": "69a49361-fb4b-42b5-8bbb-be1e958cc682",
+        "type": "git-review",
+        "metadata": {
+          "hide": "no-git,no-data"
+        }
+      },
+      {
+        "id": "ad753da0-8913-41f3-b340-e470f45312e7",
+        "type": "separator",
+        "character": " "
+      },
+      {
+        "id": "903c4c86-7898-496b-94c0-584551299117",
+        "type": "git-ci-status",
+        "metadata": {
+          "hide": "no-git,no-data"
+        }
       },
       {
         "id": "4f2f1902-975e-47b9-ae6f-c5eee6d1e84d",
