@@ -1,9 +1,9 @@
 # TODO: add marksman.toml
 # NOTE: a downside to stowing a dir to a dir is that the contents of the dir are linked, not the dir itself. so new files are not tracked. A workaround to this would be to stow the containing dir. Eg, ~/.config/nvim instead of ~/nvim. But there are downsides to having hidden dirs.
 
-.PHONY: all clean test stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-ghostty stow-lazygit stow-yazi stow-stylua
+.PHONY: all clean test stow-nvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-ghostty stow-lazygit stow-yazi stow-stylua stow-ccstatusline
 
-all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-claude stow-ghostty stow-lazygit stow-yazi stow-stylua
+all: stow-nvim stow-nvim-lazyvim stow-tmux stow-zsh stow-hammerspoon stow-wezterm stow-git stow-gh-dash stow-kitty stow-borders stow-bin stow-claude stow-ghostty stow-lazygit stow-yazi stow-stylua stow-ccstatusline
 
 stow-nvim:
 	mkdir -p ~/.config/nvim
@@ -62,6 +62,10 @@ stow-yazi:
 
 stow-stylua:
 	stow --verbose --restow -t ~ stylua
+
+stow-ccstatusline:
+	mkdir -p ~/.config/ccstatusline
+	stow --verbose --restow -t ~/.config/ccstatusline ccstatusline
 
 test:
 	@echo "No tests defined."
