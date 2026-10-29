@@ -11,6 +11,11 @@
       "Bash(ls:*)",
       "Bash(head:*)",
       "Bash(tail:*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(~/.env)",
+      "Read(//**/.env)"
     ]
   },
   "hooks": {
