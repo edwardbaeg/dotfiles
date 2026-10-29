@@ -1,5 +1,7 @@
 # Claude Instructions
 
+@AGENTS.md
+
 ## CLI and Terminal Commands
 
 ### Manual Pages (man)
