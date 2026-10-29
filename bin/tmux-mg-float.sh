@@ -1,6 +1,6 @@
 #!/bin/bash
-# M-g floating pane toggle, run with the active pane:
-# - In an M-g float: close it if its shell is idle. If the shell has work running or suspended
+# M-/ floating pane toggle, run with the active pane:
+# - In an M-/ float: close it if its shell is idle. If the shell has work running or suspended
 #   (e.g. lazygit mid-push, or Ctrl-Z'd), hide it instead, since closing would SIGHUP that work
 # - Elsewhere: bring back this window's hidden float, or open a new one
 #
@@ -54,7 +54,7 @@ hide() {
 	tmux break-pane -d -s "${PANE}" -t "=${STASH}:" \; set -w -t "${window}" @mg_hidden "${PANE}"
 	[ "${zoomed}" = 1 ] && tmux resize-pane -Z -t "${window}"
 	tmux kill-window -t "=${STASH}:=placeholder" 2>/dev/null
-	tmux display -d 1500 "Float hidden; M-g brings it back"
+	tmux display -d 1500 "Float hidden; M-/ brings it back"
 }
 
 # Moving it back with join-pane reflows the tiled layout, so swap it into a placeholder float instead;
