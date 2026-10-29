@@ -105,6 +105,8 @@ alias ca="claude agents"
 alias tel="nchat"
 alias gdu="gdu-go"
 alias ncdu="gdu-go"
+# single quotes so the unlock prompt runs on use, not when the shell loads
+alias bwu='export BW_SESSION=$(bw unlock --raw)'
 
 #-- Jumping
 alias dot="cd ~/dev/dotfiles"
