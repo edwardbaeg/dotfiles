@@ -25,6 +25,7 @@
 - **Name new worktree directories after the branch**, not just the ticket id, so they're distinguishable at a glance
   - Drop a leading `<username>/` segment so the dir stays flat (a literal `/` nests every worktree under one folder)
   - Example: branch `edward/eng-4453-fix-error-code` → dir `.claude/worktrees/eng-4453-fix-error-code`
+  - Same for the Herdr workspace name: with `herdr worktree create/open`, omit `--label` so it takes the folder name; never a bare ticket id like `eng-4006`
 
 ## File Management
 - Do what has been asked; nothing more, nothing less
