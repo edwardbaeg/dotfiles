@@ -21,6 +21,9 @@ local KINDS = {
    permission_prompt = { label = "Needs permission", color = "yellow" },
    idle_prompt = { label = "Waiting for input", color = "blue" },
    elicitation_dialog = { label = "Question", color = "mauve" },
+   -- from agent view, about a background chat
+   agent_needs_input = { label = "Needs input", color = "yellow" },
+   failed = { label = "Failed", color = "red" },
 }
 local FALLBACK_KIND = { label = "Notification", color = "peach" }
 
@@ -124,6 +127,12 @@ local function push(payload)
    if card then
       card.timer:stop()
       table.remove(cards, indexOf(card))
+      -- agent view's "finished" for a chat carries no detail; keep the reply its Stop card showed
+      for _, field in ipairs({ "title", "where", "detail" }) do
+         if (payload[field] or "") == "" then
+            payload[field] = card.payload[field]
+         end
+      end
    else
       card = { session = payload.session }
       card.canvas = hs.canvas.new({ x = 0, y = 0, w = WIDTH, h = HEIGHT })
@@ -140,6 +149,7 @@ local function push(payload)
       end)
    end
 
+   card.payload = payload
    card.canvas:replaceElements(elements(payload))
    card.timer = hs.timer.doAfter(DURATION, function()
       dismiss(card)
