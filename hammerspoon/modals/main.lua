@@ -1,6 +1,6 @@
 local config = require("modals.config")
 local helpers = require("common.helpers")
-local registry = require("common.feature_registry")
+local arc = require("utils-arc")
 
 ---@type SimpleModalItem[]
 return {
@@ -17,16 +17,7 @@ return {
       "O",
       "Todoist",
       function()
-         local constants = require("common/constants")
-         local personalOverride = registry.get("personalOverride")
-         local isPersonal = constants.isPersonal
-
-         -- If personalOverride is enabled, invert the behavior
-         if personalOverride and personalOverride.isEnabled() then
-            isPersonal = not isPersonal
-         end
-
-         if isPersonal then
+         if arc.getBrowser() ~= "arcWork" then
             hs.application.launchOrFocus("Todoist")
          else
             hs.urlevent.openURL("todoist://project?id=work-6fhMfJp63x2pVhjX")

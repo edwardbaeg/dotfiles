@@ -2,8 +2,6 @@ local config = require("modals.config")
 local registry = require("common.feature_registry")
 local arc = require("utils-arc")
 
-local togglePersonalOverride = arc.togglePersonalOverride
-
 ---@type SimpleModalItem[]
 return {
    "--Hammerspoon--",
@@ -39,11 +37,10 @@ return {
       type = "custom",
       "P",
       function()
-         local personalOverride = registry.get("personalOverride")
-         return config.getToggleLabel(personalOverride and personalOverride.isEnabled() or false, "Arc personal")
+         return "Browser: " .. arc.getBrowserLabel(arc.getBrowser())
       end,
       function()
-         togglePersonalOverride()
+         arc.cycleBrowser()
       end,
    },
    {
