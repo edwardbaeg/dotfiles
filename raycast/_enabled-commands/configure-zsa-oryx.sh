@@ -7,7 +7,7 @@
 
 # Optional parameters:
 # @raycast.icon ⌨️
-# @raycast.argument1 { "type": "dropdown", "placeholder": "select hardware....", "data": [{"title": "Moonlander", "value": "moonlander"}, {"title": "Voyager", "value": "voyager"}] }
+# @raycast.argument1 { "type": "dropdown", "placeholder": "hardware (default: voyager)", "optional": true, "data": [{"title": "Voyager", "value": "voyager"}, {"title": "Moonlander", "value": "moonlander"}] }
 
 # Documentation:
 # @raycast.author dwrdbg
@@ -21,8 +21,10 @@ open_browser() {
 	fi
 }
 
-if [ "$1" = "voyager" ]; then
-	open_browser "https://configure.zsa.io/voyager/layouts/Bq47A/latest/0"
-elif [ "$1" = "moonlander" ]; then
+hardware="${1:-voyager}"
+
+if [ "$hardware" = "voyager" ]; then
+	open_browser "https://configure.zsa.io/voyager/layouts/lBaWa/latest/0"
+elif [ "$hardware" = "moonlander" ]; then
 	open_browser "https://configure.zsa.io/moonlander/layouts/blnlP/latest/0"
 fi
