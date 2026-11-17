@@ -120,6 +120,37 @@ local function setupArcHotkeys()
    end
 end
 
+-- Choosy lists apps rather than profiles, so every Arc profile maps to Arc
+---@type table<Browser, string>
+local CHOOSY_APPS = {
+   zen = "Zen",
+   arcPersonal = "Arc",
+   arcWork = "Arc",
+   arc5 = "Arc",
+}
+local CHOOSY_SCRIPT = os.getenv("HOME") .. "/bin/choosy-default.sh"
+
+---@type hs.task|nil
+local choosyTask = nil
+
+-- Debounced so cycling through browsers restarts Choosy once, for the final pick
+local choosySync
+choosySync = hs.timer.delayed.new(0.5, function()
+   -- Two runs at once would race on Choosy's restart, so wait for the current one
+   if choosyTask and choosyTask:isRunning() then
+      choosySync:start()
+      return
+   end
+   choosyTask = hs.task.new(CHOOSY_SCRIPT, function(exitCode, _stdout, stderr)
+      if exitCode ~= 0 then
+         hs.alert("Choosy sync failed: " .. stderr)
+      end
+   end, { CHOOSY_APPS[M.getBrowser()] })
+   if not (choosyTask and choosyTask:start()) then
+      hs.alert("Choosy sync failed: couldn't run " .. CHOOSY_SCRIPT)
+   end
+end)
+
 ---@param browser Browser|nil nil falls back to the machine default
 function M.setBrowser(browser)
    if browser == nil then
@@ -129,6 +160,7 @@ function M.setBrowser(browser)
    end
    updateMenubar()
    setupArcHotkeys()
+   choosySync:start()
    hs.alert("Browser: " .. BROWSER_LABELS[M.getBrowser()] .. (browser == nil and " (default)" or ""))
 end
 
