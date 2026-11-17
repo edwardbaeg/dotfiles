@@ -5,12 +5,27 @@ local screenPadding = constants.screenPadding
 
 local M = {}
 
+-- Some apps (eg Yab) report a windowless helper process as the system-wide AX focused app,
+-- so hs.window.focusedWindow() is nil; ask the frontmost app directly instead
+---@return hs.window|nil
+M.focusedWindow = function()
+   local win = hs.window.focusedWindow()
+   if win then
+      return win
+   end
+   local app = hs.application.frontmostApplication()
+   return app and app:focusedWindow()
+end
+
 -- https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294971600
 -- Some applications (eg Firefox) animate resize instead of moving, due to AXEnhancedUserInterface
 -- So, temporarily disable it while moving the window
 local function axHotfix(win)
    if not win then
       win = hs.window.frontmostWindow()
+   end
+   if not win then
+      return
    end
 
    local axApp = hs.axuielement.applicationElement(win:application())
@@ -81,7 +96,10 @@ end
 ---Cycles through a list of rects to set focused window position
 ---@param options {h: number, w: number, x: number, y: number}[] list of rects to cycle through
 M.cyclePositions = function(options)
-   local win = hs.window.focusedWindow()
+   local win = M.focusedWindow()
+   if not win or not options then
+      return
+   end
    local frame = win:frame()
 
    local function calculateDuration(appName, sameSize, sameHeight)
@@ -117,9 +135,12 @@ end
 
 ---Converts a list of unit rects to screen rects
 ---@param unitRects {x: number, y: number, w: number, h: number}[]
----@return hs.geometry
+---@return hs.geometry[]|nil
 M.mapScreenUnitRects = function(unitRects)
-   local win = hs.window.focusedWindow()
+   local win = M.focusedWindow()
+   if not win then
+      return nil
+   end
    local screenFrame = win:screen():frame()
 
    ---@diagnostic disable-next-line: return-type-mismatch it's correct
@@ -131,7 +152,10 @@ end
 -- Resize and center windows ---------------------------------------------
 --------------------------------------------------------------------------
 M.resizeAndCenter = function(fraction)
-   local win = hs.window.focusedWindow()
+   local win = M.focusedWindow()
+   if not win then
+      return
+   end
    local f = win:frame()
    local screenMax = win:screen():frame()
 

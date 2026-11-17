@@ -71,7 +71,10 @@ end)
 
 -- Cycle through window sizes based on current position
 local function cycleWindowSize(sizes)
-   local win = hs.window.focusedWindow()
+   local win = utils.focusedWindow()
+   if not win then
+      return
+   end
    local f = win:frame()
    local screenFrame = win:screen():frame()
 
@@ -119,7 +122,10 @@ end)
 -- To the right
 -- NOTE: hs.window:moveToScreen doesn't wrap
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "L", function()
-   local win = hs.window.focusedWindow()
+   local win = utils.focusedWindow()
+   if not win then
+      return
+   end
    local screen = win:screen()
 
    withAxHotfix(function()
@@ -129,7 +135,10 @@ end)
 
 -- To the left
 hs.hotkey.bind({ "ctrl", "shift", "cmd" }, "H", function()
-   local win = hs.window.focusedWindow()
+   local win = utils.focusedWindow()
+   if not win then
+      return
+   end
    local screen = win:screen()
 
    withAxHotfix(function()
