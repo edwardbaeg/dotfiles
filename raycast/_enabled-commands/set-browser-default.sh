@@ -2,7 +2,7 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Reset Browser
+# @raycast.title Set Browser Default
 # @raycast.mode silent
 
 # Optional parameters:

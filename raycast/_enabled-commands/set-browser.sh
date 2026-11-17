@@ -10,7 +10,7 @@
 # @raycast.icon 🌐
 
 # Documentation:
-# @raycast.description Sets the browser for the Hammerspoon browser hotkey until Hammerspoon restarts
+# @raycast.description Sets the browser for the Hammerspoon browser hotkey (until Hammerspoon restarts) and Choosy's default
 # @raycast.author dwrdbg
 # @raycast.authorURL https://raycast.com/dwrdbg
 
