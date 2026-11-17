@@ -1,5 +1,20 @@
 local home_path = vim.fn.expand("~")
 
+local vault_paths = {
+   home_path .. "/Sync/Obsidian Vault", -- older machines
+   home_path .. "/syncthing/Obsidian Vault",
+}
+
+local workspaces = {}
+local vault_events = {}
+for _, path in ipairs(vault_paths) do
+   table.insert(vault_events, "BufReadPre " .. path .. "/*.md")
+   table.insert(vault_events, "BufNewFile " .. path .. "/*.md")
+   if vim.fn.isdirectory(path) == 1 then
+      table.insert(workspaces, { name = "main", path = path })
+   end
+end
+
 return {
    -- Obsidian functionality in neovim
    "obsidian-nvim/obsidian.nvim", -- this is the community maintained fork
@@ -7,27 +22,18 @@ return {
    lazy = true,
    -- only load on obsidian .md files, replaces ft = "markdown",
    -- TODO: update so that it also loads if in the obsidian vault dir
-   event = {
-      "BufReadPre " .. home_path .. "/Sync/Obsidian Vault/*.md",
-      "BufNewFile  " .. home_path .. "/Sync/Obsidian Vault/*.md",
-   },
+   event = vault_events,
+   cmd = "Obsidian",
    dependencies = {
       "nvim-lua/plenary.nvim", -- Required
       "nvim-treesitter", -- to improve syntax highlighting
    },
    opts = {
-      workspaces = {
-         {
-            name = "main",
-            path = "~/Sync/Obsidian Vault/",
-         },
-      },
+      workspaces = workspaces,
       picker = {
-         name = "snacks.pick",
+         name = "snacks.picker",
       },
       completion = {
-         nvim_cmp = false,
-         blink = true,
          min_chars = 1,
       },
       daily_notes = {
@@ -82,6 +88,22 @@ return {
          order = { " ", "x" },
       },
    },
+   config = function(_, opts)
+      -- obsidian.nvim hard-errors on an empty workspace list, so bail with a readable message instead
+      if vim.tbl_isempty(opts.workspaces) then
+         local function warn()
+            vim.notify(
+               "obsidian.nvim: no vault found, looked in:\n  " .. table.concat(vault_paths, "\n  "),
+               vim.log.levels.WARN
+            )
+         end
+         -- without a vault only :Obsidian can trigger a load, and lazy.nvim re-runs it
+         -- against this stub, so the warning shows without calling warn() here too
+         vim.api.nvim_create_user_command("Obsidian", warn, { nargs = "*" })
+         return
+      end
+      require("obsidian").setup(opts)
+   end,
    init = function()
       vim.api.nvim_create_autocmd("FileType", {
          pattern = { "markdown", "md" },
