@@ -267,3 +267,12 @@ fi
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 eval "$(mise activate zsh)"
+
+# >>> claude-multiprofile >>>
+# Managed by claude-multiprofile. Edits inside this block may be overwritten.
+# Run `claude-multiprofile list` to see what's configured.
+# updated 2026-11-23T19:11:18.321Z
+
+alias claude-personal='CLAUDE_CONFIG_DIR="/Users/edwardbaeg/.claude-personal" claude'
+
+# <<< claude-multiprofile <<<

@@ -1,6 +1,6 @@
 ---@type Constants
 local constants = require("common/constants")
-local hyperkey = constants.hyperkey
+local hyperkey, allkey = constants.hyperkey, constants.allkey
 local arc = require("utils-arc")
 
 local M = {}
@@ -26,18 +26,68 @@ local function assignAppHotKey(modifiers, key, appName, callback)
    end)
 end
 
+---@param path string
+---@return hs.application?
+local function findAppByPath(path)
+   for _, app in ipairs(hs.application.runningApplications()) do
+      -- path() throws for processes without a bundle
+      local ok, appPath = pcall(app.path, app)
+      if ok and appPath == path then
+         return app
+      end
+   end
+end
+
+-- For apps that share a name and bundle ID with another running app, so only the path tells them apart
+---@param modifiers table
+---@param key string
+---@param appName string
+---@param path string bundle path of the running app
+---@param openPath? string what to open when it isn't running (defaults to path)
+local function assignAppPathHotKey(modifiers, key, appName, path, openPath)
+   hs.hotkey.bind(modifiers, key, function()
+      local app = findAppByPath(path)
+      if app and #app:allWindows() > 0 then
+         app:activate()
+         return
+      end
+      if not app then
+         hs.alert("Launching " .. appName)
+      end
+      -- `open` also reopens a window when the app is running with none
+      hs.task.new("/usr/bin/open", nil, { "-a", openPath or path }):start()
+   end)
+end
+
+local home = os.getenv("HOME")
+
+-- { key, appName, modifiers?, path?, openPath? }; modifiers defaults to hyperkey
 local mappings = {
    -- { "0", "Ghostty" },
    { "return", "Ghostty" },
    -- { "'", "Ghostty" },
    -- { "8", "Slack" },
-   { "P", "Claude" },
+   -- Both Claude profiles run as "Claude" with the same bundle ID
+   { "P", "Claude", path = "/Applications/Claude.app" },
+   {
+      "P",
+      "Claude Personal",
+      allkey,
+      path = home .. "/Library/Application Support/claude-multiprofile/apps/Claude personal.app",
+      -- claude-multiprofile's launcher starts that copy on the personal profile
+      openPath = home .. "/Applications/Claude Personal.app",
+   },
    -- { "P", "Perplexity" },
 }
 
 function Main()
-   for _, pair in pairs(mappings) do
-      assignAppHotKey(hyperkey, pair[1], pair[2])
+   for _, mapping in ipairs(mappings) do
+      local key, appName, modifiers = mapping[1], mapping[2], mapping[3] or hyperkey
+      if mapping.path then
+         assignAppPathHotKey(modifiers, key, appName, mapping.path, mapping.openPath)
+      else
+         assignAppHotKey(modifiers, key, appName)
+      end
    end
 
    arc.setup(assignAppHotKey)
