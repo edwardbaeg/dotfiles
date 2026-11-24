@@ -52,22 +52,14 @@ return {
    {
       -- visual scrollbar
       "petertriho/nvim-scrollbar",
-      -- v2 replaces v1 on main 2026-11-16 and rejects these options; see docs/migration.md
-      branch = "v1",
       event = "VeryLazy",
       enabled = not vim.g.vscode,
       config = function()
          require("scrollbar").setup({
-            show_in_active_only = true, -- only show in active window
-            handle = {
-               color = "#444444",
-               -- color = "#111111",
-               -- color = "grey9",
-            },
-            handlers = {
-               -- cursor = false,
-               gitsigns = true,
-               search = true,
+            providers = { gitsigns = true }, -- search is enabled by default in v2
+            scrollbar = {
+               visibility = "active", -- only show in active window
+               thumb = { highlight = { bg = "#444444" } },
             },
          })
       end,
